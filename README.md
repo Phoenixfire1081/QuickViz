@@ -1,1 +1,1 @@
-# VisualizationMayavi
+# Visualization with Mayavi
