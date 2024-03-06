@@ -1,4 +1,4 @@
-# Visualization with Mayavi
+# Visualization with Mayavi and traitsUI
 
 In the current version only isosurfaces with 3D scalar fields are supported.
 
