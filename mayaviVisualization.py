@@ -60,8 +60,18 @@ class mayaviVisualizeWithThreshold(HasTraits):
 		# Modify threshold range based on data
 		# For some reason, Range doesn't like numpy float32
 		# Using float instead
-		self.add_trait("threshold", Range(float(round(_data.min())), float(np.ceil(_data.max())), 0.5, ))
 		
+		self.add_trait("threshold", Range(float(round(_data.min())), float(np.ceil(_data.max()))))
+		
+		# Set initial threshold value
+		
+		if _data.min() > 0:
+			self.threshold = float(np.ceil(_data.min()))
+		elif _data.max() < 0:
+			self.threshold = float(np.floor(_data.max()))
+		else:
+			self.threshold = float(0.0)
+
 		# Plot the isosurface with minimum value from data
 		sf = mlab.pipeline.scalar_field(_data, figure=self.scene.mayavi_scene)
 		
@@ -90,15 +100,22 @@ class mayaviVisualizeWithThreshold(HasTraits):
 		
 		# Set checkbox 
 		self.chkBox = True
-
+		
 	@on_trait_change('threshold')
 	def threshold_changed(self):
 		
-		# First pop the previous value
-		self.iso.contour.contours.pop()
-		
-		# Set new threshold data
-		self.iso.contour.contours = [np.round(self.threshold, 2)]
+		try:
+			
+			# First pop the previous value
+			self.iso.contour.contours.pop()
+			
+			# Set new threshold data
+			self.iso.contour.contours = [np.round(self.threshold, 2)]
+			
+		except AttributeError:
+			
+			# This probably occurs when the first threshold is set
+			pass
 	
 	@on_trait_change('outlineWidth, outlineColorRed, outlineColorGreen,\
 	outlineColorBlue')
@@ -135,9 +152,6 @@ class mayaviVisualizeWithThreshold(HasTraits):
 	def chkbox_changed(self):
 		
 		if self.chkBox == False:				
-			
-			# First pop the previous value
-			self.iso.contour.contours.pop()
 			
 			# Set new threshold data
 			self.iso.contour.contours = []
@@ -396,6 +410,7 @@ class mayaviVisualizeWithMultipleThreshold(HasTraits):
 	
 	)
 	),resizable=True, width=1, height=1)
+
 
 # NOTE: Setting width and height as 1 means maximized window 
 
