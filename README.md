@@ -1,4 +1,4 @@
-# Visualization with Mayavi
+# Visualization with Mayavi and traitsUI
 
 In the current version only isosurfaces with 3D scalar fields are supported.
 
@@ -16,6 +16,8 @@ pip install --upgrade traitsui==7.4.3
 In this case, a slider is presented to choose the threshold. A precise input can also be made in the text field.
 
 ```
+from mayaviVisualization import mayaviVisualizeWithThreshold
+
 visObject = mayaviVisualizeWithThreshold(scalarField)
 visObject.configure_traits()
 ```
@@ -25,6 +27,8 @@ visObject.configure_traits()
 The thresholds can be entered in the given text field within box brackets. 
 
 ```
+from mayaviVisualization import mayaviVisualizeWithMultipleThreshold
+
 visObject = mayaviVisualizeWithMultipleThreshold(scalarField)
 visObject.configure_traits()
 ```
