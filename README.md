@@ -32,3 +32,31 @@ from mayaviVisualization import mayaviVisualizeWithMultipleThreshold
 visObject = mayaviVisualizeWithMultipleThreshold(scalarField)
 visObject.configure_traits()
 ```
+
+## Usage - time series
+
+Similar to the multiple thresholds case, the required thresholds can be entered in the given text field within box brackets. 
+
+The time series data needs to be prepared in the following manner.
+
+```
+# Number of time steps
+nTs = 5
+
+# Create 4D scalar field with time as the last dimension
+# xlen, ylen, zlen corresponds to the size of the 3D scalar field
+timeSeries = np.zeros((xlen, ylen, zlen, ts), dtype = _dtype)
+
+# Loop and add scalar fields
+for i in range(ts):
+  timeSeries[:, :, :, i] += scalar
+
+```
+The next part is same as before
+
+```
+from mayaviVisualization import mayaviVisualizeTimeSeries
+
+visObject = mayaviVisualizeTimeSeries(timeSeries)
+visObject.configure_traits()
+```
