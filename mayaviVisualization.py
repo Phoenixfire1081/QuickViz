@@ -3,8 +3,12 @@ from mayavi import mlab
 import mayavi
 from copy import deepcopy
 from traits.api import HasTraits, Range, Instance, on_trait_change, Float, Enum, Bool, Str
+from traits.api import Button
 from traitsui.api import View, Item, HGroup, HSplit, VGroup, Heading, Group
 from mayavi.core.ui.api import MayaviScene, SceneEditor, MlabSceneModel
+from pyface.api import GUI
+from PIL import Image
+import os
 
 class mayaviVisualizeWithThreshold(HasTraits):
 	
@@ -485,6 +489,18 @@ class mayaviVisualizeTimeSeries(HasTraits):
 	'seismic', 'spectral', 'spring', 'summer', 'terrain', 'viridis', \
 	'winter'])
 	
+	# Create next time button
+	next_timeSeries  = Button('Next')
+	
+	# Create previous time button
+	previous_timeSeries  = Button('Previous')
+	
+	# Create play time series button
+	play_timeSeries  = Button('Play')
+	
+	# Create save movie button
+	save_timeSeries  = Button('Save movie')
+	
 	# Initiate scene
 	scene = Instance(MlabSceneModel, ())
 
@@ -719,6 +735,62 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			if ']' in self.threshold:
 				tmpthreshvals = self.threshold[1:-1].split(',')
 				self.iso.contour.contours = [np.float32(i) for i in tmpthreshvals]
+	
+	@on_trait_change('next_timeSeries')
+	def next_timeseries_button_fired(self):
+		
+		# Get current time first
+		current_time = self.whichTime
+		
+		if self.whichTime < int(np.shape(self._dataTs)[-1]-1):
+			self.whichTime = current_time + 1
+		
+	@on_trait_change('previous_timeSeries')
+	def previous_timeseries_button_fired(self):
+		
+		# Get current time first
+		current_time = self.whichTime
+		
+		if self.whichTime > 0:
+			self.whichTime = current_time - 1	
+	
+	@on_trait_change('play_timeSeries')
+	def play_timeseries_button_fired(self):
+		
+		# Get current time first
+		current_time = self.whichTime
+		
+		# Get total time
+		total_time = int(np.shape(self._dataTs)[-1]-1)
+		
+		# Fire next time series button
+		for i in range(current_time, total_time):
+			
+			self.next_timeseries_button_fired()
+			GUI.process_events()
+	
+	@on_trait_change('save_timeSeries')
+	def save_timeseries_button_fired(self):
+		
+		# Get current time first
+		current_time = self.whichTime
+		
+		# Get total time
+		total_time = int(np.shape(self._dataTs)[-1]-1)
+		
+		# Take screenshot and proceed to next frame
+		for i in range(current_time, total_time):
+			arr = mlab.screenshot(figure = self.scene.mayavi_scene, mode='rgba', antialiased=True)
+			img = Image.fromarray(np.array(arr*255, dtype=np.uint8))
+			img.save('img_'+ str(i).zfill(5) + '.png')
+			self.next_timeseries_button_fired()
+			GUI.process_events()
+		
+		# Use ffmpeg to combine into movie
+		os.system('ffmpeg -framerate 5 -i img_%05d.png -vf format=yuv420p video.mp4')
+		
+		# Remove all png files
+		os.system('rm -rf img*.png')
 
 	view = View(
 	
@@ -755,6 +827,10 @@ class mayaviVisualizeTimeSeries(HasTraits):
 	Group(label = 'Time options:'),
 	
 	Item("whichTime", label = 'Select time step:'), 
+	HGroup(Item("next_timeSeries", label = 'Animate'),
+	Item("previous_timeSeries", label = ' '),
+	Item("play_timeSeries", label = ' '),
+	Item("save_timeSeries", label = ' ')),
 	
 	# Changeable for each contour
 	
