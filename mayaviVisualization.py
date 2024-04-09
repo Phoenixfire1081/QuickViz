@@ -597,6 +597,18 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			
 			# Set outline color
 			self.out.actor.property.color = (self.outlineColorRed, self.outlineColorGreen, self.outlineColorBlue)
+			
+			# Change contour opacity
+			self.iso.actor.property.opacity = self.contourOpacity
+			
+			# Change contour representation
+			self.iso.actor.property.representation = self.contourRepresentation
+			
+			# Change contour colormap
+			self.iso.module_manager.scalar_lut_manager.lut_mode = self.contourColormap
+			
+			# Change colormap range
+			self.iso.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin, self.colormapMax])
 		
 		except AttributeError:
 			
@@ -614,6 +626,18 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			
 			# Set outline color
 			self.out.actor.property.color = (self.outlineColorRed, self.outlineColorGreen, self.outlineColorBlue)
+			
+			# Change contour opacity
+			self.iso.actor.property.opacity = self.contourOpacity
+			
+			# Change contour representation
+			self.iso.actor.property.representation = self.contourRepresentation
+			
+			# Change contour colormap
+			self.iso.module_manager.scalar_lut_manager.lut_mode = self.contourColormap
+			
+			# Change colormap range
+			self.iso.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin, self.colormapMax])
 		
 		try:
 		
