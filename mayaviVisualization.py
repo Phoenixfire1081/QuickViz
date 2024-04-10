@@ -579,6 +579,10 @@ class mayaviVisualizeTimeSeries(HasTraits):
 	@on_trait_change('whichTime')
 	def time_changed(self):
 		
+		# Get camera view
+		if not mlab.view() is None:
+			camAzimuth, camElevation, camDistance, focalPoint = mlab.view()
+		
 		# Choose data at other timestep
 		_data = self._dataTs[:, :, :, self.whichTime]
 		
@@ -661,6 +665,8 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			if ']' in self.threshold:
 				tmpthreshvals = self.threshold[1:-1].split(',')
 				self.iso.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				# Keep the previous view
+				viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
 		
 		except ValueError:
 			
@@ -684,6 +690,9 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			if ']' in self.threshold:
 				tmpthreshvals = self.threshold[1:-1].split(',')
 				self.iso.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				
+				# Get the current camera position
+				# self.camAzimuth, self.camElevation, self.camDistance, self.focalPoint = mlab.view()
 		
 		except ValueError:
 			
