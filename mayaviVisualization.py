@@ -690,9 +690,6 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			if ']' in self.threshold:
 				tmpthreshvals = self.threshold[1:-1].split(',')
 				self.iso.contour.contours = [np.float32(i) for i in tmpthreshvals]
-				
-				# Get the current camera position
-				# self.camAzimuth, self.camElevation, self.camDistance, self.focalPoint = mlab.view()
 		
 		except ValueError:
 			
