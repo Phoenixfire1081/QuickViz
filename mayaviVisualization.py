@@ -787,7 +787,7 @@ class mayaviVisualizeTimeSeries(HasTraits):
 			GUI.process_events()
 		
 		# Use ffmpeg to combine into movie
-		os.system('ffmpeg -framerate 5 -i img_%05d.png -vf format=yuv420p video.mp4')
+		os.system('ffmpeg -y -framerate 5 -i img_%05d.png -vf "format=yuv420p, pad=ceil(iw/2)*2:ceil(ih/2)*2" video.mp4')
 		
 		# Remove all png files
 		os.system('rm -rf img*.png')
