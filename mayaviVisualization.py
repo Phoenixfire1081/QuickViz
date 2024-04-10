@@ -782,7 +782,7 @@ class mayaviVisualizeTimeSeries(HasTraits):
 		for i in range(current_time, total_time):
 			arr = mlab.screenshot(figure = self.scene.mayavi_scene, mode='rgba', antialiased=True)
 			img = Image.fromarray(np.array(arr*255, dtype=np.uint8))
-			img.save('img_'+ str(i).zfill(5) + '.png')
+			img.save('img_'+ str(i-current_time).zfill(5) + '.png')
 			self.next_timeseries_button_fired()
 			GUI.process_events()
 		
