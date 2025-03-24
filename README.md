@@ -1,6 +1,6 @@
-# Visualization with Mayavi and traitsUI
+# A lightweight visualization package 
 
-In the current version only isosurfaces with 3D scalar fields are supported.
+A different UI built for the [mayavi](https://docs.enthought.com/mayavi/mayavi/) python package with TraitsUI. It supports 3D time series scalar data (currently up to 4) and has several tools for fast movie making.
 
 ## Required packages
 
@@ -9,28 +9,6 @@ The following packages are necessary - mayavi, PyQt5, traitsui==7.4.3 (8 causes 
 ```
 pip install mayavi PyQt5
 pip install --upgrade traitsui==7.4.3
-```
-
-## Usage - single threshold
-
-In this case, a slider is presented to choose the threshold. A precise input can also be made in the text field.
-
-```
-from mayaviVisualization import mayaviVisualizeWithThreshold
-
-visObject = mayaviVisualizeWithThreshold(scalarField)
-visObject.configure_traits()
-```
-
-## Usage - multiple thresholds
-
-The thresholds can be entered in the given text field within box brackets. 
-
-```
-from mayaviVisualization import mayaviVisualizeWithMultipleThreshold
-
-visObject = mayaviVisualizeWithMultipleThreshold(scalarField)
-visObject.configure_traits()
 ```
 
 ## Usage - time series
