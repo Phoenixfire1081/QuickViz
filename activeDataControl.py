@@ -3,6 +3,7 @@
 
 from traits.api import on_trait_change
 import numpy as np
+from mayavi import mlab
 
 class activeDataControlClass:
 
@@ -113,6 +114,18 @@ class activeDataControlClass:
 			self.radioButton1 = 'N'
 			self.radioButton3 = 'N'
 			self.radioButton4 = 'N'
+			
+			if not self.out2.actor.actor.visibility:
+				
+				# Enable outline
+				self.out2.actor.actor.visibility = True
+				
+				# Set camera similar to scene 1
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene1.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
+				
+				viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene2.mayavi_scene)
+				viewControlRoll = mlab.roll(camRoll, figure=self.scene2.mayavi_scene)
 	
 	@on_trait_change('radioButton3')
 	def radioButton3_changed(self):
@@ -122,6 +135,18 @@ class activeDataControlClass:
 			self.radioButton2 = 'N'
 			self.radioButton4 = 'N'
 			
+			if not self.out3.actor.actor.visibility:
+				
+				# Enable outline
+				self.out3.actor.actor.visibility = True
+				
+				# Set camera similar to scene 1
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene1.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
+				
+				viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene3.mayavi_scene)
+				viewControlRoll = mlab.roll(camRoll, figure=self.scene3.mayavi_scene)
+			
 	@on_trait_change('radioButton4')
 	def radioButton4_changed(self):
 		
@@ -129,3 +154,15 @@ class activeDataControlClass:
 			self.radioButton1 = 'N'
 			self.radioButton2 = 'N'
 			self.radioButton3 = 'N'
+			
+			if not self.out4.actor.actor.visibility:
+				
+				# Enable outline
+				self.out4.actor.actor.visibility = True
+				
+				# Set camera similar to scene 1
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene1.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
+				
+				viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene4.mayavi_scene)
+				viewControlRoll = mlab.roll(camRoll, figure=self.scene4.mayavi_scene)

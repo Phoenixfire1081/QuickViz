@@ -473,9 +473,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 1
 		
-		self.x1 = args[1]
-		self.y1 = args[2]
-		self.z1 = args[3]
+		self.x1 = args[0]
+		self.y1 = args[1]
+		self.z1 = args[2]
 
 		# Plot the isosurface with minimum value from data
 		self.sf1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
@@ -488,12 +488,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 2
 		
-		self.x2 = args[1]
-		self.y2 = args[2]
-		self.z2 = args[3]
+		self.x2 = args[0]
+		self.y2 = args[1]
+		self.z2 = args[2]
 
 		# Plot the isosurface with minimum value from data
-		self.sf2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
+		self.sf2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene2.mayavi_scene)
 		
 		# Set the threshold
 		self.iso2 = mlab.pipeline.iso_surface(self.sf2, contours=[_data2.min()])
@@ -503,9 +503,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 3
 		
-		self.x3 = args[1]
-		self.y3 = args[2]
-		self.z3 = args[3]
+		self.x3 = args[0]
+		self.y3 = args[1]
+		self.z3 = args[2]
 
 		# Plot the isosurface with minimum value from data
 		self.sf3 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
@@ -518,9 +518,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 4
 		
-		self.x4 = args[1]
-		self.y4 = args[2]
-		self.z4 = args[3]
+		self.x4 = args[0]
+		self.y4 = args[1]
+		self.z4 = args[2]
 
 		# Plot the isosurface with minimum value from data
 		self.sf4 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene1.mayavi_scene)
@@ -568,8 +568,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 		
-		# Set background color
+		# Set background color for all scenes by default
 		self.iso1.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso2.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso3.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso4.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
 		
 		# By default, set clamp to True
 		self.clamp = True
