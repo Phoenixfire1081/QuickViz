@@ -7,13 +7,13 @@ from mayavi import mlab
 
 class activeDataControlClass:
 
-	@on_trait_change('chkBox1')
-	def chkbox_changed1(self):
+	@on_trait_change('screen1_ts1')
+	def sc1_ts1_changed1(self):
 		
-		if self.chkBox1 == False:
+		if self.screen1_ts1 == False:
 			
 			# Set new threshold data
-			self.iso1.contour.contours = []
+			self.iso1_sc1.contour.contours = []
 		
 		else:
 			
@@ -22,13 +22,82 @@ class activeDataControlClass:
 					
 				# Set threshold range
 				tmpthreshvals = self.threshold1.split(',')
-				self.iso1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 			
 			if not self.thresholdPercent1 == '':
 				
 				# Set threshold range
 				tmpthreshvals = self.thresholdPercent1.split(',')
-				self.iso1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+				self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+	
+	@on_trait_change('screen2_ts1')
+	def sc2_ts1_changed1(self):
+		
+		if self.screen2_ts1 == False:
+			
+			# Set new threshold data
+			self.iso1_sc2.contour.contours = []
+		
+		else:
+			
+			# Set current threshold data
+			if not self.threshold1 == '':
+					
+				# Set threshold range
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+			
+			if not self.thresholdPercent1 == '':
+				
+				# Set threshold range
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+	
+	@on_trait_change('screen3_ts1')
+	def sc3_ts1_changed1(self):
+		
+		if self.screen3_ts1 == False:
+			
+			# Set new threshold data
+			self.iso1_sc3.contour.contours = []
+		
+		else:
+			
+			# Set current threshold data
+			if not self.threshold1 == '':
+					
+				# Set threshold range
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+			
+			if not self.thresholdPercent1 == '':
+				
+				# Set threshold range
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+	
+	@on_trait_change('screen4_ts1')
+	def sc4_ts1_changed1(self):
+		
+		if self.screen4_ts1 == False:
+			
+			# Set new threshold data
+			self.iso1_sc4.contour.contours = []
+		
+		else:
+			
+			# Set current threshold data
+			if not self.threshold1 == '':
+					
+				# Set threshold range
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+			
+			if not self.thresholdPercent1 == '':
+				
+				# Set threshold range
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 	
 	@on_trait_change('chkBox2')
 	def chkbox_changed2(self):

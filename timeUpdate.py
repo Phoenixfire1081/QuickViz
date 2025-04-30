@@ -11,12 +11,13 @@ class timeUpdateBehavior:
 	@on_trait_change('whichTime1')
 	def time_changed1(self):
 		
-		if self.chkBox1: # Update only of checkbox is active
+		# if self.chkBox1: # Update only of checkbox is active
+		if self.screen1_ts1: # Update only if screen 1 of ts1 is active
 		
 			# Get camera view
 			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view()
-				camRoll = mlab.roll()
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene1.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
 			
 			# Choose data at other timestep
 			_data1 = self._dataTs1[:, :, :, self.whichTime1]
@@ -28,7 +29,7 @@ class timeUpdateBehavior:
 			try:
 				
 				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					mlab.clf()	
+					mlab.clf(figure=self.scene1.mayavi_scene)	
 					
 			except AttributeError:
 				
@@ -38,33 +39,33 @@ class timeUpdateBehavior:
 			# With same threshold update contour
 			
 			# Plot the isosurface with minimum value from data
-			self.sf1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
+			self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
 			
 			# Set the threshold
-			self.iso1 = mlab.pipeline.iso_surface(self.sf1, contours=[_data1.min()])
+			self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[_data1.min()])
 			
 			if self.outlineToggle1:
 			
 				# Plot the outline
-				self.out1 = mayavi.tools.pipeline.outline(self.iso1)
+				self.out1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1)
 				
 				# Change outline width
-				self.out1.actor.property.line_width = self.outlineWidth1
+				self.out1_sc1.actor.property.line_width = self.outlineWidth1
 				
 				# Set outline color
-				self.out1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+				self.out1_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
 			
 			# Change contour opacity
-			self.iso1.actor.property.opacity = self.contourOpacity1
+			self.iso1_sc1.actor.property.opacity = self.contourOpacity1
 			
 			# Change contour representation
-			self.iso1.actor.property.representation = self.contourRepresentation1
+			self.iso1_sc1.actor.property.representation = self.contourRepresentation1
 			
 			# Change contour colormap
-			self.iso1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+			self.iso1_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
 			
 			# Change colormap range
-			self.iso1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 			
 			try:
 			
@@ -72,21 +73,282 @@ class timeUpdateBehavior:
 					
 					# Set threshold range
 					tmpthreshvals = self.threshold1.split(',')
-					self.iso1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					viewControlRoll = mlab.roll(camRoll)
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene1.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene1.mayavi_scene)
 				
 				if not self.thresholdPercent1 == '':
 					
 					# Set threshold range
 					tmpthreshvals = self.thresholdPercent1.split(',')
-					self.iso1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					viewControlRoll = mlab.roll(camRoll)
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene1.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene1.mayavi_scene)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+			
+			except AttributeError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen2_ts1: # Update only if screen 2 of ts1 is active
+		
+			# Get camera view
+			if not mlab.view() is None:
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene2.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene2.mayavi_scene)
+			
+			# Choose data at other timestep
+			_data1 = self._dataTs1[:, :, :, self.whichTime1]
+			
+			# Update min, max data
+			self.thresholdMinimum1 = np.floor(float(_data1.min()))
+			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			
+			try:
+				
+				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
+					mlab.clf(figure=self.scene2.mayavi_scene)	
+					
+			except AttributeError:
+				
+				# Wait until user enters the values
+				pass	
+			
+			# With same threshold update contour
+			
+			# Plot the isosurface with minimum value from data
+			self.sf1_sc2 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene2.mayavi_scene)
+			
+			# Set the threshold
+			self.iso1_sc2 = mlab.pipeline.iso_surface(self.sf1_sc2, contours=[_data1.min()])
+			
+			if self.outlineToggle1:
+			
+				# Plot the outline
+				self.out1_sc2 = mayavi.tools.pipeline.outline(self.iso1_sc2)
+				
+				# Change outline width
+				self.out1_sc2.actor.property.line_width = self.outlineWidth1
+				
+				# Set outline color
+				self.out1_sc2.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+			
+			# Change contour opacity
+			self.iso1_sc2.actor.property.opacity = self.contourOpacity1
+			
+			# Change contour representation
+			self.iso1_sc2.actor.property.representation = self.contourRepresentation1
+			
+			# Change contour colormap
+			self.iso1_sc2.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+			
+			# Change colormap range
+			self.iso1_sc2.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			
+			try:
+			
+				if not self.threshold1 == '':
+					
+					# Set threshold range
+					tmpthreshvals = self.threshold1.split(',')
+					self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					
+					# Keep the previous view
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene2.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene2.mayavi_scene)
+				
+				if not self.thresholdPercent1 == '':
+					
+					# Set threshold range
+					tmpthreshvals = self.thresholdPercent1.split(',')
+					self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					
+					# Keep the previous view
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene2.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene2.mayavi_scene)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+			
+			except AttributeError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts1: # Update only if screen 3 of ts1 is active
+		
+			# Get camera view
+			if not mlab.view() is None:
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene3.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene3.mayavi_scene)
+			
+			# Choose data at other timestep
+			_data1 = self._dataTs1[:, :, :, self.whichTime1]
+			
+			# Update min, max data
+			self.thresholdMinimum1 = np.floor(float(_data1.min()))
+			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			
+			try:
+				
+				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
+					mlab.clf(figure=self.scene3.mayavi_scene)	
+					
+			except AttributeError:
+				
+				# Wait until user enters the values
+				pass	
+			
+			# With same threshold update contour
+			
+			# Plot the isosurface with minimum value from data
+			self.sf1_sc3 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene3.mayavi_scene)
+			
+			# Set the threshold
+			self.iso1_sc3 = mlab.pipeline.iso_surface(self.sf1_sc3, contours=[_data1.min()])
+			
+			if self.outlineToggle1:
+			
+				# Plot the outline
+				self.out1_sc3 = mayavi.tools.pipeline.outline(self.iso1_sc3)
+				
+				# Change outline width
+				self.out1_sc3.actor.property.line_width = self.outlineWidth1
+				
+				# Set outline color
+				self.out1_sc3.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+			
+			# Change contour opacity
+			self.iso1_sc3.actor.property.opacity = self.contourOpacity1
+			
+			# Change contour representation
+			self.iso1_sc3.actor.property.representation = self.contourRepresentation1
+			
+			# Change contour colormap
+			self.iso1_sc3.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+			
+			# Change colormap range
+			self.iso1_sc3.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			
+			try:
+			
+				if not self.threshold1 == '':
+					
+					# Set threshold range
+					tmpthreshvals = self.threshold1.split(',')
+					self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					
+					# Keep the previous view
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene3.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene3.mayavi_scene)
+				
+				if not self.thresholdPercent1 == '':
+					
+					# Set threshold range
+					tmpthreshvals = self.thresholdPercent1.split(',')
+					self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					
+					# Keep the previous view
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene3.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene3.mayavi_scene)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+			
+			except AttributeError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts1: # Update only if screen 4 of ts1 is active
+		
+			# Get camera view
+			if not mlab.view() is None:
+				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene4.mayavi_scene)
+				camRoll = mlab.roll(figure=self.scene4.mayavi_scene)
+			
+			# Choose data at other timestep
+			_data1 = self._dataTs1[:, :, :, self.whichTime1]
+			
+			# Update min, max data
+			self.thresholdMinimum1 = np.floor(float(_data1.min()))
+			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			
+			try:
+				
+				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
+					mlab.clf(figure=self.scene4.mayavi_scene)	
+					
+			except AttributeError:
+				
+				# Wait until user enters the values
+				pass	
+			
+			# With same threshold update contour
+			
+			# Plot the isosurface with minimum value from data
+			self.sf1_sc4 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene4.mayavi_scene)
+			
+			# Set the threshold
+			self.iso1_sc4 = mlab.pipeline.iso_surface(self.sf1_sc4, contours=[_data1.min()])
+			
+			if self.outlineToggle1:
+			
+				# Plot the outline
+				self.out1_sc4 = mayavi.tools.pipeline.outline(self.iso1_sc4)
+				
+				# Change outline width
+				self.out1_sc4.actor.property.line_width = self.outlineWidth1
+				
+				# Set outline color
+				self.out1_sc4.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+			
+			# Change contour opacity
+			self.iso1_sc4.actor.property.opacity = self.contourOpacity1
+			
+			# Change contour representation
+			self.iso1_sc4.actor.property.representation = self.contourRepresentation1
+			
+			# Change contour colormap
+			self.iso1_sc4.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+			
+			# Change colormap range
+			self.iso1_sc4.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			
+			try:
+			
+				if not self.threshold1 == '':
+					
+					# Set threshold range
+					tmpthreshvals = self.threshold1.split(',')
+					self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					
+					# Keep the previous view
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene4.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene4.mayavi_scene)
+				
+				if not self.thresholdPercent1 == '':
+					
+					# Set threshold range
+					tmpthreshvals = self.thresholdPercent1.split(',')
+					self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					
+					# Keep the previous view
+					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene4.mayavi_scene)
+					viewControlRoll = mlab.roll(camRoll, figure=self.scene4.mayavi_scene)
 			
 			except ValueError:
 				
@@ -376,7 +638,8 @@ class timeUpdateBehavior:
 			camAzimuth, camElevation, camDistance, focalPoint = mlab.view()
 			camRoll = mlab.roll()
 		
-		if self.chkBox1: # Update only of checkbox is active
+		# if self.chkBox1: # Update only of checkbox is active
+		if self.screen1_ts1: # Update only of checkbox is active
 		
 			# Choose data at other timestep
 			_data1 = self._dataTs1[:, :, :, self.whichTimeGlobal]
@@ -401,30 +664,30 @@ class timeUpdateBehavior:
 			self.sf1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
 			
 			# Set the threshold
-			self.iso1 = mlab.pipeline.iso_surface(self.sf1, contours=[_data1.min()])
+			self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1, contours=[_data1.min()])
 			
 			if self.outlineToggle1:
 			
 				# Plot the outline
-				self.out1 = mayavi.tools.pipeline.outline(self.iso1)
+				self.iso1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1)
 				
 				# Change outline width
-				self.out1.actor.property.line_width = self.outlineWidth1
+				self.iso1_sc1.actor.property.line_width = self.outlineWidth1
 				
 				# Set outline color
-				self.out1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+				self.iso1_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
 			
 			# Change contour opacity
-			self.iso1.actor.property.opacity = self.contourOpacity1
+			self.iso1_sc1.actor.property.opacity = self.contourOpacity1
 			
 			# Change contour representation
-			self.iso1.actor.property.representation = self.contourRepresentation1
+			self.iso1_sc1.actor.property.representation = self.contourRepresentation1
 			
 			# Change contour colormap
-			self.iso1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+			self.iso1_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
 			
 			# Change colormap range
-			self.iso1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 			
 			try:
 			
@@ -432,7 +695,7 @@ class timeUpdateBehavior:
 					
 					# Set threshold range
 					tmpthreshvals = self.threshold1.split(',')
-					self.iso1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
 					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
@@ -442,7 +705,7 @@ class timeUpdateBehavior:
 					
 					# Set threshold range
 					tmpthreshvals = self.thresholdPercent1.split(',')
-					self.iso1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
 					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)

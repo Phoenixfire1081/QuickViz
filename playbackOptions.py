@@ -11,10 +11,10 @@ class allPlaybackOptions:
 	def next_timeseries_button_fired(self):
 		
 		# Get current time first
-		current_time = self.whichTime
+		current_time = self.whichTime1
 		
-		if self.whichTime < int(np.shape(self._dataTs)[-1]-1):
-			self.whichTime = current_time + 1
+		if self.whichTime1 < int(np.shape(self._dataTs1)[-1]-1):
+			self.whichTime1 = current_time + 1
 		
 		# Update camera values
 		self.updateCurrentVals_button_fired()
@@ -23,10 +23,10 @@ class allPlaybackOptions:
 	def previous_timeseries_button_fired(self):
 		
 		# Get current time first
-		current_time = self.whichTime
+		current_time = self.whichTime1
 		
-		if self.whichTime > 0:
-			self.whichTime = current_time - 1
+		if self.whichTime1 > 0:
+			self.whichTime1 = current_time - 1
 		
 		# Update camera values
 		self.updateCurrentVals_button_fired()	
@@ -35,10 +35,10 @@ class allPlaybackOptions:
 	def play_timeseries_button_fired(self):
 		
 		# Get current time first
-		current_time = self.whichTime
+		current_time = self.whichTime1
 		
 		# Get total time
-		total_time = int(np.shape(self._dataTs)[-1]-1)
+		total_time = int(np.shape(self._dataTs1)[-1]-1)
 		
 		# Fire next time series button
 		for i in range(current_time, total_time):
@@ -62,10 +62,10 @@ class allPlaybackOptions:
 	def play_timeseries_reverse_button_fired(self):
 		
 		# Get current time first
-		current_time = self.whichTime
+		current_time = self.whichTime1
 		
 		# Get total time
-		total_time = int(np.shape(self._dataTs)[-1]-1)
+		total_time = int(np.shape(self._dataTs1)[-1]-1)
 		
 		# Fire previous time series button
 		for i in range(current_time):

@@ -12,30 +12,30 @@ class allContourOptions:
 		
 		# Toggle outline
 		if not self.outlineToggle1:
-			self.out1.actor.actor.visibility = False
+			self.out1_sc1.actor.actor.visibility = False
 		else:
-			self.out1.actor.actor.visibility = True
+			self.out1_sc1.actor.actor.visibility = True
 			
 			# Change outline width
-			self.out1.actor.property.line_width = self.outlineWidth1
+			self.out1_sc1.actor.property.line_width = self.outlineWidth1
 			
 			# Change outline color
-			self.out1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+			self.out1_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
 	
 	@on_trait_change('contourOpacity1, contourRepresentation1, contourColormap1, colormapMin1, colormapMax1')
 	def contour_changed1(self):
 		
 		# Change contour opacity
-		self.iso1.actor.property.opacity = self.contourOpacity1
+		self.iso1_sc1.actor.property.opacity = self.contourOpacity1
 		
 		# Change contour representation
-		self.iso1.actor.property.representation = self.contourRepresentation1
+		self.iso1_sc1.actor.property.representation = self.contourRepresentation1
 		
 		# Change contour colormap
-		self.iso1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+		self.iso1_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
 		
 		# Change colormap range
-		self.iso1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+		self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 	
 	@on_trait_change('outlineWidth2, outlineColorRed2, outlineColorGreen2,\
 	outlineColorBlue2, outlineToggle2')

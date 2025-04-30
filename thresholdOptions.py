@@ -15,48 +15,152 @@ class allThresholdOptions:
 	@on_trait_change('setThreshold1')
 	def setThreshold_fired1(self):
 		
-		# First reset all contours
-		self.iso1.contour.contours = []
+		if self.screen1_ts1:
 		
-		try:
-		
-			tmpthreshvals = self.threshold1.split(',')
-			self.iso1.contour.contours = [np.float32(i) for i in tmpthreshvals]
-	
-			# Update camera values
-			self.updateCurrentVals_button_fired()
+			# First reset all contours
+			self.iso1_sc1.contour.contours = []
 			
-			# If the checkbox is not active already, activate it
-			if self.chkBox1 == False:
-				self.chkBox1 = True
-		
-		except ValueError:
+			try:
 			
-			# Wait until user enters the values
-			pass
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen2_ts1:
+		
+			# First reset all contours
+			self.iso1_sc2.contour.contours = []
+			
+			try:
+			
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts1:
+		
+			# First reset all contours
+			self.iso1_sc3.contour.contours = []
+			
+			try:
+			
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts1:
+		
+			# First reset all contours
+			self.iso1_sc4.contour.contours = []
+			
+			try:
+			
+				tmpthreshvals = self.threshold1.split(',')
+				self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
 	
 	@on_trait_change('setThresholdPercent1')
 	def setThresholdPercent_fired1(self):
 		
-		# First reset all contours
-		self.iso1.contour.contours = []
+		if self.screen1_ts1:
 		
-		try:
-		
-			tmpthreshvals = self.thresholdPercent1.split(',')
-			self.iso1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-	
-			# Update camera values
-			self.updateCurrentVals_button_fired()
+			# First reset all contours
+			self.iso1_sc1.contour.contours = []
 			
-			# If the checkbox is not active already, activate it
-			if self.chkBox1 == False:
-				self.chkBox1 = True
-		
-		except ValueError:
+			try:
 			
-			# Wait until user enters the values
-			pass
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen2_ts1:
+		
+			# First reset all contours
+			self.iso1_sc2.contour.contours = []
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts1:
+		
+			# First reset all contours
+			self.iso1_sc3.contour.contours = []
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts1:
+		
+			# First reset all contours
+			self.iso1_sc4.contour.contours = []
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent1.split(',')
+				self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+		
+				# Update camera values
+				self.updateCurrentVals_button_fired()
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
 	
 	@on_trait_change('threshold2, thresholdPercent2')
 	def threshold_changed2(self):

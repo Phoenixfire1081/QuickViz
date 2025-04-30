@@ -28,7 +28,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
-	# Create checkboxes
+	# Create checkboxes - deprecated, replaced by screenx_tsx
 	chkBox1 = Bool()
 	chkBox2 = Bool()
 	chkBox3 = Bool()
@@ -403,7 +403,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self.on_trait_change(self.time_changedGlobal, "whichTimeGlobal")
 		
 		# activeDataControlClass
-		self.on_trait_change(self.chkbox_changed1, "chkBox1")
+		# self.on_trait_change(self.chkbox_changed1, "chkBox1")
+		self.on_trait_change(self.sc1_ts1_changed1, "screen1_ts1")
+		self.on_trait_change(self.sc2_ts1_changed1, "screen2_ts1")
+		self.on_trait_change(self.sc3_ts1_changed1, "screen3_ts1")
+		self.on_trait_change(self.sc4_ts1_changed1, "screen4_ts1")
 		self.on_trait_change(self.chkbox_changed2, "chkBox2")
 		self.on_trait_change(self.chkbox_changed3, "chkBox3")
 		self.on_trait_change(self.chkbox_changed4, "chkBox4")
@@ -420,8 +424,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self._dataTs4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 		
 		# Number of input time series
-		# self.nts = int(args[0])
-		self.nts = 4
+		self.nts = int(args[0])
+		# self.nts = 4
 		
 		# Get data first
 		self._dataTs1 = args[-1]
@@ -473,27 +477,36 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 1
 		
-		self.x1 = args[0]
-		self.y1 = args[1]
-		self.z1 = args[2]
+		self.x1 = args[1]
+		self.y1 = args[2]
+		self.z1 = args[3]
 
 		# Plot the isosurface with minimum value from data
-		self.sf1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
+		self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
+		self.sf1_sc2 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene2.mayavi_scene)
+		self.sf1_sc3 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene3.mayavi_scene)
+		self.sf1_sc4 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene4.mayavi_scene)
 		
 		# Set the threshold
-		self.iso1 = mlab.pipeline.iso_surface(self.sf1, contours=[_data1.min()])
+		self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[_data1.min()])
+		self.iso1_sc2 = mlab.pipeline.iso_surface(self.sf1_sc2, contours=[_data1.min()])
+		self.iso1_sc3 = mlab.pipeline.iso_surface(self.sf1_sc3, contours=[_data1.min()])
+		self.iso1_sc4 = mlab.pipeline.iso_surface(self.sf1_sc4, contours=[_data1.min()])
 		
 		# Plot the outline
-		self.out1 = mayavi.tools.pipeline.outline(self.iso1)
+		self.out1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1)
+		self.out1_sc2 = mayavi.tools.pipeline.outline(self.iso1_sc2)
+		self.out1_sc3 = mayavi.tools.pipeline.outline(self.iso1_sc3)
+		self.out1_sc4 = mayavi.tools.pipeline.outline(self.iso1_sc4)
 		
 		# DATA 2
 		
-		self.x2 = args[0]
-		self.y2 = args[1]
-		self.z2 = args[2]
+		self.x2 = args[1]
+		self.y2 = args[2]
+		self.z2 = args[3]
 
 		# Plot the isosurface with minimum value from data
-		self.sf2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene2.mayavi_scene)
+		self.sf2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
 		
 		# Set the threshold
 		self.iso2 = mlab.pipeline.iso_surface(self.sf2, contours=[_data2.min()])
@@ -503,9 +516,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 3
 		
-		self.x3 = args[0]
-		self.y3 = args[1]
-		self.z3 = args[2]
+		self.x3 = args[1]
+		self.y3 = args[2]
+		self.z3 = args[3]
 
 		# Plot the isosurface with minimum value from data
 		self.sf3 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
@@ -518,9 +531,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# DATA 4
 		
-		self.x4 = args[0]
-		self.y4 = args[1]
-		self.z4 = args[2]
+		self.x4 = args[1]
+		self.y4 = args[2]
+		self.z4 = args[3]
 
 		# Plot the isosurface with minimum value from data
 		self.sf4 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene1.mayavi_scene)
@@ -561,7 +574,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self.radioButton4 = 'N'
 		
 		# Set outline color
-		self.out1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+		self.out1_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+		self.out1_sc2.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+		self.out1_sc3.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+		self.out1_sc4.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
 		self.out2.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
 		self.out3.actor.property.color = (self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
 		self.out4.actor.property.color = (self.outlineColorRed4, self.outlineColorGreen4, self.outlineColorBlue4)
@@ -569,13 +585,19 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 		
 		# Set background color for all scenes by default
-		self.iso1.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso1_sc1.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso1_sc2.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso1_sc3.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
+		self.iso1_sc4.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
 		self.iso2.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
 		self.iso3.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
 		self.iso4.scene.background = (self.BGColorRed, self.BGColorGreen, self.BGColorBlue)
 		
-		# By default, set clamp to True
-		self.clamp = True
+		# By default, set clamp to True if there are more than 1 TS
+		if self.nts > 1:
+			self.clamp = True
+		else:
+			self.clamp = False
 		
 		# By default, choose 1 screen
 		self.layout = '1'
@@ -686,7 +708,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	
 	Group(label = 'Screen layout:'),
 	
-	Item("layout", label = 'Choose number of split screens:', style='custom', width = 0.3),
+	Item("layout", label = 'Number of split screens:', style='custom', width = 0.3),
 	
 	# Global options
 	
