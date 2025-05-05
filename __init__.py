@@ -802,7 +802,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	HGroup(Item("camPathType", label = 'Camera path type'),
 	),
 	
-	show_border = True),
+	show_border = True, orientation = 'vertical', scrollable = True),
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -939,7 +939,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	Item("colormapMin4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
 	Item("colormapMax4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw)),
 	
-	show_border = True),
+	show_border = True, orientation = 'vertical', scrollable = True),
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -985,8 +985,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	Item("focalPointS3", show_label = False, height = tinyh, width = tinyw)
 	),
 	
-	show_border = True),
+	show_border = True, orientation = 'vertical', scrollable = True),
 	)
 	
-	,resizable=True, width=1, height=1, title='QuickViz')
+	, width=1, height=1, title='QuickViz')
 
