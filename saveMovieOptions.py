@@ -46,9 +46,54 @@ class allSaveMovieOptions:
 	def save_snapshot_button_fired(self):
 		
 		# Take screenshot 
-		arr = mlab.screenshot(figure = self.scene.mayavi_scene, mode='rgba', antialiased=True)
-		img = Image.fromarray(np.array(arr*255, dtype=np.uint8))
-		img.save(self.save_path + '/snapshot.png')
+		# For multiple windows, combine images
+		nactive = 0
+		activeImages = []
+		if self.screen1_ts1:
+			arr1 = mlab.screenshot(figure = self.scene1.mayavi_scene, mode='rgba', antialiased=True)
+			img = Image.fromarray(np.array(arr1*255, dtype=np.uint8))
+			img.save(self.save_path + '/tmp_sc1.png')
+			nactive += 1
+			activeImages.append('tmp_sc1.png')
+			
+		if self.screen2_ts1:
+			arr2 = mlab.screenshot(figure = self.scene2.mayavi_scene, mode='rgba', antialiased=True)
+			img = Image.fromarray(np.array(arr2*255, dtype=np.uint8))
+			img.save(self.save_path + '/tmp_sc2.png')
+			nactive += 1
+			activeImages.append('tmp_sc2.png')
+			
+		if self.screen3_ts1:
+			arr3 = mlab.screenshot(figure = self.scene3.mayavi_scene, mode='rgba', antialiased=True)
+			img = Image.fromarray(np.array(arr3*255, dtype=np.uint8))
+			img.save(self.save_path + '/tmp_sc3.png')
+			nactive += 1
+			activeImages.append('tmp_sc3.png')
+			
+		if self.screen4_ts1:
+			arr4 = mlab.screenshot(figure = self.scene4.mayavi_scene, mode='rgba', antialiased=True)
+			img = Image.fromarray(np.array(arr4*255, dtype=np.uint8))
+			img.save(self.save_path + '/tmp_sc4.png')
+			nactive += 1
+			activeImages.append('tmp_sc4.png')
+		
+		if nactive == 1:
+			os.system('mv tmp_sc*.png snapshot.png')
+		
+		if nactive == 2: # If two exist, append horizontally in ascending order
+			os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append snapshot.png')
+			
+		if nactive == 3: # If three exist, append first two horizontally and third vertically
+			os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc9.png')
+			os.system('magick tmp_sc9.png ' + activeImages[2] + ' -append snapshot.png')
+		
+		if nactive == 4: # If four exist, append first two horizontally, next two horizontally and finally all vertically
+			os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc8.png')
+			os.system('magick ' + activeImages[2] + ' ' + activeImages[3] + ' +append tmp_sc9.png')
+			os.system('magick tmp_sc8.png tmp_sc9.png -append snapshot.png')
+		
+		# Clean up temporary images	
+		os.system('rm -rf tmp_sc*.png')
 	
 	@on_trait_change('choose_folder')
 	def choose_folder_button_fired(self):
