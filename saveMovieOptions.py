@@ -20,18 +20,17 @@ class allSaveMovieOptions:
 		
 		# Get final time
 		if self.stopMovie == -1:
-			total_time = int(np.shape(self._dataTs)[-1]-1)
+			total_time = int(np.shape(self._dataTs1)[-1]-1)
 		else:
 			total_time = int(self.stopMovie)
 		
-		if not current_time == self.whichTime:
-			self.whichTime = int(current_time)
+		if not current_time == self.whichTime1:
+			self.whichTime1 = int(current_time)
 		
 		# Take screenshot and proceed to next frame
 		for i in range(current_time, total_time):
-			arr = mlab.screenshot(figure = self.scene.mayavi_scene, mode='rgba', antialiased=True)
-			img = Image.fromarray(np.array(arr*255, dtype=np.uint8))
-			img.save(self.save_path + '/img_'+ str(i-current_time).zfill(5) + '.png')
+			self.save_snapshot_button_fired()
+			os.system('mv snapshot.png ' + self.save_path + '/img_'+ str(i-current_time).zfill(5) + '.png')
 			self.next_timeseries_button_fired()
 			GUI.process_events()
 		
