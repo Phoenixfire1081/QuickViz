@@ -44,7 +44,7 @@ class UIOptionsClass:
 		
 		# Tiny sliders
 		
-		width = -200
+		width = -150
 		height = -20
 		
 		return width, height
@@ -54,7 +54,7 @@ class UIOptionsClass:
 		# Longer buttons
 		
 		width = -100
-		height = -20
+		height = -30
 		
 		return width, height
 		
@@ -62,8 +62,8 @@ class UIOptionsClass:
 		
 		# Button
 		
-		width = -70
-		height = -20
+		width = -80
+		height = -30
 		
 		return width, height
 	
