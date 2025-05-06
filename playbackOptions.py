@@ -17,7 +17,7 @@ class allPlaybackOptions:
 			self.whichTime1 = current_time + 1
 		
 		# Update camera values
-		self.updateCurrentVals_button_fired()
+		# self.updateCurrentVals_button_fired()
 		
 	@on_trait_change('previous_timeSeries')
 	def previous_timeseries_button_fired(self):
@@ -29,7 +29,7 @@ class allPlaybackOptions:
 			self.whichTime1 = current_time - 1
 		
 		# Update camera values
-		self.updateCurrentVals_button_fired()	
+		# self.updateCurrentVals_button_fired()	
 	
 	@on_trait_change('play_timeSeries')
 	def play_timeseries_button_fired(self):
