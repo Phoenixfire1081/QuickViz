@@ -19,13 +19,15 @@ from .cameraOptions import allCameraOptions
 from .activeDataControl import activeDataControlClass
 from .chooseFileDialog import fileChooserClass
 from .UICustomization import UIOptionsClass
+from .camPathControls import allPathControlsClass
 
 # Allow for a maximum of 4 scalar time series data
 
 class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
-	activeDataControlClass, fileChooserClass, UIOptionsClass):
+	activeDataControlClass, fileChooserClass, UIOptionsClass, \
+	allPathControlsClass):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -274,7 +276,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	setCurrentVals = Button('Set')
 	
 	# Camera path control options
-	camPathType = Enum(['None', 'Linear', 'Circle', 'Waypoints'])
+	camPathType = Enum(['None', 'Circle', 'Linear'])
+	startCamPath = Float(0)
+	stopCamPath = Float(-1)
+	addCamPath = Button('Add')
+	finishCamPath = Button('Finish')
+	resetCamPath = Button('Reset')
 	
 	# Create choose files button
 	select_files  = Button('Select')
@@ -357,7 +364,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self.on_trait_change(self.cam_angle_changed, "focalPointS3")
 		self.on_trait_change(self.cam_angle_changed, "camRollS")
 		
-		# self.on_trait_change(self.camPathType_, "camPathType")
+		# allPathControlsClass
+		self.on_trait_change(self.camPathTypeChanged, "camPathType")
+		self.on_trait_change(self.addCamPathChanged, "addCamPath")
+		self.on_trait_change(self.finishCamPathChanged, "finishCamPath")
+		self.on_trait_change(self.resetCamPathChanged, "resetCamPath")
 		
 		# fileChooserClass
 		self.on_trait_change(self.select_files_toggled, "select_files")
@@ -475,11 +486,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		
 		# Create time series range
 		
-		self.add_trait("whichTime1", Range(int(0.0), int(np.shape(self._dataTs1)[-1]-1), int(0)))
-		self.add_trait("whichTime2", Range(int(0.0), int(np.shape(self._dataTs2)[-1]-1), int(0)))
-		self.add_trait("whichTime3", Range(int(0.0), int(np.shape(self._dataTs3)[-1]-1), int(0)))
-		self.add_trait("whichTime4", Range(int(0.0), int(np.shape(self._dataTs4)[-1]-1), int(0)))
-		self.add_trait("whichTimeGlobal", Range(int(0.0), int(np.shape(self._dataTs1)[-1]-1), int(0))) # This assumes all TS have same length
+		self.numTs1 = int(np.shape(self._dataTs1)[-1]-1)
+		self.numTs2 = int(np.shape(self._dataTs2)[-1]-1)
+		self.numTs3 = int(np.shape(self._dataTs3)[-1]-1)
+		self.numTs4 = int(np.shape(self._dataTs4)[-1]-1)
+		
+		self.add_trait("whichTime1", Range(int(0.0), self.numTs1, int(0)))
+		self.add_trait("whichTime2", Range(int(0.0), self.numTs2, int(0)))
+		self.add_trait("whichTime3", Range(int(0.0), self.numTs3, int(0)))
+		self.add_trait("whichTime4", Range(int(0.0), self.numTs4, int(0)))
+		self.add_trait("whichTimeGlobal", Range(int(0.0), self.numTs1, int(0))) # This assumes all TS have same length
 		
 		# By default, choose the first time instance
 		_data1 = self._dataTs1[:, :, :, 0]
@@ -789,9 +805,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	Item("save_path", show_label = False, height = longh, width = longw),
 	Item("choose_folder", show_label = False, height = buttonh, width = buttonw),
 	),
-	HGroup(Item("StartTxt", style = 'readonly', show_label = False, height = smallh, width = -40),
+	HGroup(Item("StartTxt", style = 'readonly', show_label = False, height = smallh, width = -30),
 	Item("startMovie", show_label = False, height = tinyh, width = tinyw),
-	Item("StopTxt", style = 'readonly', show_label = False, height = smallh, width = -40),
+	Item("StopTxt", style = 'readonly', show_label = False, height = smallh, width = -30),
 	Item("stopMovie", show_label = False, height = tinyh, width = tinyw),
 	Item("FRTxt", style = 'readonly', show_label = False, height = smallh, width = -80),
 	Item("framerate", show_label = False, height = tinyh, width = tinyw),
@@ -804,7 +820,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	
 	Group(label = 'Animate camera path:'),
 	
-	HGroup(Item("camPathType", label = 'Camera path type'),
+	HGroup(Item("camPathType", show_label = False),
+	Item("StartTxt", style = 'readonly', show_label = False, height = smallh, width = -30, visible_when = 'camPathType != "None"'),
+	Item("startCamPath", show_label = False, height = tinyh, width = tinyw, visible_when = 'camPathType != "None"'),
+	Item("StopTxt", style = 'readonly', show_label = False, height = smallh, width = -30, visible_when = 'camPathType != "None"'),
+	Item("stopCamPath", show_label = False, height = tinyh, width = tinyw, visible_when = 'camPathType != "None"'),
+	Item("addCamPath", show_label = False, height = buttonh, width = buttonw, visible_when = 'camPathType != "None"'),
+	Item("finishCamPath", show_label = False, height = buttonh, width = buttonw, visible_when = 'camPathType != "None"'),
+	Item("resetCamPath", show_label = False, height = buttonh, width = buttonw, visible_when = 'camPathType != "None"'),
 	),
 	
 	show_border = True, orientation = 'vertical', scrollable = True),

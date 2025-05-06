@@ -76,6 +76,9 @@ class timeUpdateBehavior:
 					self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
+					# If camera path is set, use that instead
+					if not self.camPathType == 'None':
+						_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
 					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene1.mayavi_scene)
 					viewControlRoll = mlab.roll(camRoll, figure=self.scene1.mayavi_scene)
 				
@@ -86,6 +89,9 @@ class timeUpdateBehavior:
 					self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
+					# If camera path is set, use that instead
+					if not self.camPathType == 'None':
+						_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
 					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene1.mayavi_scene)
 					viewControlRoll = mlab.roll(camRoll, figure=self.scene1.mayavi_scene)
 			
