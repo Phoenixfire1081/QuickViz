@@ -21,6 +21,15 @@ from .chooseFileDialog import fileChooserClass
 from .UICustomization import UIOptionsClass
 from .camPathControls import allPathControlsClass
 
+# Import UI elements
+from .UI_elements.activeData_UI import activeDataUIelements
+from .UI_elements.scene_UI import sceneUIelements
+from .UI_elements.globalOptions_UI import globalUIelements
+from .UI_elements.localOptions_UI import localUIelements
+from .UI_elements.isosurface_UI import isoUIelements
+from .UI_elements.contourOptions_UI import contourUIelements
+from .UI_elements.cameraOptions_UI import cameraUIelements
+
 # Allow for a maximum of 4 scalar time series data
 
 class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
@@ -56,16 +65,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	outlineWidth4 = Range(0., 10., 2.0, ) 
 	outlineToggle4 = Bool(True)
 	
-	# Create colormap range
-	colormapMin1 = Float(0.0)
-	colormapMax1 = Float(1.0)
-	colormapMin2 = Float(0.0)
-	colormapMax2 = Float(1.0)
-	colormapMin3 = Float(0.0)
-	colormapMax3 = Float(1.0)
-	colormapMin4 = Float(0.0)
-	colormapMax4 = Float(1.0)
-	
 	# Create outline color floats
 	outlineColorRed1 = Float(0.0)
 	outlineColorGreen1 = Float(0.0)
@@ -79,6 +78,23 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	outlineColorRed4 = Float(0.0)
 	outlineColorGreen4 = Float(0.0)
 	outlineColorBlue4 = Float(0.0)	
+	
+	# All options
+	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice'], cols=3)
+	
+	# Isosurface options
+	hideShowIsosurface = Bool()
+	
+	
+	# Create colormap range
+	colormapMin1 = Float(0.0)
+	colormapMax1 = Float(1.0)
+	colormapMin2 = Float(0.0)
+	colormapMax2 = Float(1.0)
+	colormapMin3 = Float(0.0)
+	colormapMax3 = Float(1.0)
+	colormapMin4 = Float(0.0)
+	colormapMax4 = Float(1.0)
 	
 	# Set opacity of contour
 	contourOpacity1 = Float(1.0)
@@ -218,6 +234,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	ColormapMinMaxTxt = Str('Colormap(min, max):')
 	ShowHideOutlineTxt = Str('Show/Hide outline:')
 	ActiveDataTxt = Str('Active data:')
+	IsoOptionsTxt = Str('Isosurface options:')
+	ContourOptionsTxt = Str('Contour options:')
+	OutOptionsTxt = Str('Outline options:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -665,99 +684,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	
 	HSplit(
 	
-	VGroup(
-	Group(label = 'Active data'),
+	activeDataUIelements,
 	
-	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
-	
-	HGroup(
-	VGroup(
-	HGroup(Item("screen1_ts1", show_label = False, visible_when='nts >= 1 and layout >= "1"'),
-	Item("screen2_ts1", show_label = False, visible_when='nts >= 1 and layout >= "2"'),),
-	HGroup(Item("screen3_ts1", show_label = False, visible_when='nts >= 1 and layout >= "3"'),
-	Item("screen4_ts1", show_label = False, visible_when='nts >= 1 and layout >= "4"'),),),
-	Item("radioButton1", label = 'Time Series 1 : Control', style='custom', visible_when='nts >= 1'),
-	),
-	
-	HGroup(
-	VGroup(
-	HGroup(Item("screen1_ts2", show_label = False, visible_when='nts >= 2 and layout >= "1"'),
-	Item("screen2_ts2", show_label = False, visible_when='nts >= 2 and layout >= "2"'),),
-	HGroup(Item("screen3_ts2", show_label = False, visible_when='nts >= 2 and layout >= "3"'),
-	Item("screen4_ts2", show_label = False, visible_when='nts >= 2 and layout >= "4"'),),),
-	Item("radioButton2", label = 'Time series 2 : Control', style='custom', visible_when='nts >= 2'),
-	),
-	
-	HGroup(
-	VGroup(
-	HGroup(Item("screen1_ts3", show_label = False, visible_when='nts >= 3 and layout >= "1"'),
-	Item("screen2_ts3", show_label = False, visible_when='nts >= 3 and layout >= "2"'),),
-	HGroup(Item("screen3_ts3", show_label = False, visible_when='nts >= 3 and layout >= "3"'),
-	Item("screen4_ts3", show_label = False, visible_when='nts >= 3 and layout >= "4"'),),),
-	Item("radioButton3", label = 'Time series 3 : Control', style='custom', visible_when='nts >= 3'),
-	),
-	
-	HGroup(
-	VGroup(
-	HGroup(Item("screen1_ts4", show_label = False, visible_when='nts >= 4 and layout >= "1"'),
-	Item("screen2_ts4", show_label = False, visible_when='nts >= 4 and layout >= "2"'),),
-	HGroup(Item("screen3_ts4", show_label = False, visible_when='nts >= 4 and layout >= "3"'),
-	Item("screen4_ts4", show_label = False, visible_when='nts >= 4 and layout >= "4"'),),),
-	Item("radioButton4", label = 'Time series 4 : Control', style='custom', visible_when='nts >= 4'),
-	),
-	
-	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
-	
-	),
-	VGroup(
-	HGroup(Item('scene1', editor=SceneEditor(scene_class=MayaviScene),
-	show_label = False, visible_when='layout >= "1"'), 
-	Item('scene2', editor=SceneEditor(scene_class=MayaviScene),
-	show_label = False, visible_when='layout >= "2"'),
-	),
-	HGroup(Item('scene3', editor=SceneEditor(scene_class=MayaviScene),
-	show_label = False, visible_when='layout >= "3"'), 
-	Item('scene4', editor=SceneEditor(scene_class=MayaviScene),
-	show_label = False, visible_when='layout >= "4"'),
-	),
-	),
-	
-	# NOTE: width in the Hsplit controls the ratio of split
+	sceneUIelements,
 	
 	VGroup(
-	
-	# # Raw data helper (Intended for future update)
-	
-	# Group(label = 'Import data:'),
-	
-	# Group(
-	
-	# Group(label = 'Raw binary data options:'),
-	# HGroup(Item('select_files', label = 'Choose file (s)'),
-	# ),
-	
-	# HGroup(Item("xlength", label = 'xlen'),
-	# Item("ylength", label = 'ylen'),
-	# Item("zlength", label = 'zlen'),
-	# Item("numComponents", label = 'components')),
-	
-	# HGroup(Item("arrayOrder", label = 'Data order', style = 'custom'),
-	# ),
-	
-	# HGroup(Item("dataPrecision", label = 'Data precision', style = 'custom'),
-	# ),
-	
-	# HGroup(Item("bbxmin", label = 'xmin'),
-	# Item("bbxmax", label = 'xmax'),
-	# Item("bbymin", label = 'ymin'),
-	# Item("bbymax", label = 'ymax'),
-	# Item("bbzmin", label = 'zmin'),
-	# Item("bbzmax", label = 'zmax'),
-	# ),
-	
-	# Item("read_data", label = 'Process data'),
-	
-	# show_border = True),
 	
 	# Layout options
 	
@@ -765,256 +696,20 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	
 	Item("layout", label = 'Number of split screens:', style='custom'),
 	
-	# Global options
+	globalUIelements,
 	
-	Group(label = 'Global options:'),
+	localUIelements,
 	
-	Group(
-	Group(label = 'Background options:'),
+	isoUIelements,
 	
-	HGroup(Item("BGtext", style='readonly', show_label=False, height = smallh, width = -120), 
-	Item("BGColorRed", show_label = False, height = tinyh, width = tinyw),
-	Item("BGColorGreen", show_label = False, height = tinyh, width = tinyw),
-	Item("BGColorBlue", show_label = False, height = tinyh, width = tinyw),
-	),
-	
-	# Time options
-	
-	Group(label = 'Time step control:'),
-	
-	HGroup(Item("TStext", style = 'readonly', show_label = False, height = smallh, width = -115),
-	Item("whichTime1", show_label = False, visible_when='radioButton1 == "Y" and clamp == 0', height = sliderh, width = sliderw), 
-	Item("whichTime2", show_label = False, visible_when='radioButton2 == "Y" and clamp == 0', height = sliderh, width = sliderw), 
-	Item("whichTime3", show_label = False, visible_when='radioButton3 == "Y" and clamp == 0', height = sliderh, width = sliderw), 
-	Item("whichTime4", show_label = False, visible_when='radioButton4 == "Y" and clamp == 0', height = sliderh, width = sliderw),
-	Item("whichTimeGlobal", show_label = False, visible_when='clamp == 1'),
-	Item("clamp", label = 'All TS?', visible_when='nts > 1'),
-	),
-	
-	Group(label = 'Animation:'),
-	
-	HGroup(Item("next_timeSeries", show_label = False, height = buttonh, width = buttonw),
-	Item("previous_timeSeries", show_label = False, height = buttonh, width = buttonw),
-	Item("play_timeSeries", show_label = False, height = buttonh, width = buttonw),
-	Item("play_timeSeries_reverse", show_label = False, height = buttonh, width = buttonw),
-	Item("stop_timeSeries", show_label = False, height = buttonh, width = buttonw),
-	Item("save_snapshot", show_label = False, height = buttonLongh, width = buttonLongw),
-	),
-	
-	HGroup(Item("SaveTxt", style = 'readonly', show_label = False, height = smallh, width = -100),
-	Item("save_path", show_label = False, height = longh, width = longw),
-	Item("choose_folder", show_label = False, height = buttonh, width = buttonw),
-	),
-	HGroup(Item("StartTxt", style = 'readonly', show_label = False, height = smallh, width = -30),
-	Item("startMovie", show_label = False, height = tinyh, width = tinyw),
-	Item("StopTxt", style = 'readonly', show_label = False, height = smallh, width = -30),
-	Item("stopMovie", show_label = False, height = tinyh, width = tinyw),
-	Item("FRTxt", style = 'readonly', show_label = False, height = smallh, width = -80),
-	Item("framerate", show_label = False, height = tinyh, width = tinyw),
-	Item("SaveImgTxt", style = 'readonly', show_label = False, height = smallh, width = -90),
-	Item("save_images", show_label = False),
-	Item("save_timeSeries", show_label = False, height = buttonLongh, width = buttonLongw),
-	),
-	
-	# Camera path
-	
-	Group(label = 'Animate camera path:'),
-	
-	HGroup(Item("camPathType", show_label = False),
-	Item("StartTxt", style = 'readonly', show_label = False, height = smallh, width = -30, visible_when = 'camPathType != "None"'),
-	Item("startCamPath", show_label = False, height = tinyh, width = tinyw, visible_when = 'camPathType != "None"'),
-	Item("StopTxt", style = 'readonly', show_label = False, height = smallh, width = -30, visible_when = 'camPathType != "None"'),
-	Item("stopCamPath", show_label = False, height = tinyh, width = tinyw, visible_when = 'camPathType != "None"'),
-	Item("addCamPath", show_label = False, height = buttonh, width = buttonw, visible_when = 'camPathType != "None"'),
-	Item("finishCamPath", show_label = False, height = buttonh, width = buttonw, visible_when = 'camPathType != "None"'),
-	Item("resetCamPath", show_label = False, height = buttonh, width = buttonw, visible_when = 'camPathType != "None"'),
-	),
-	
-	show_border = True, orientation = 'vertical', scrollable = True),
-	
-	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
-	
-	Group(label = 'Local options:'),
-	
-	Group(
-	Group(label = 'Outline options:'),
-	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton1 == "Y"'),
-	Item("outlineToggle1", show_label = False, visible_when='radioButton1 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton1 == "Y"'),
-	Item("outlineWidth1", show_label = False, visible_when='radioButton1 == "Y"', height = slidertinyh, width = slidertinyw)),
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton1 == "Y"'),
-	Item("outlineColorRed1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorGreen1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorBlue1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw)),
-	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton2 == "Y"'),
-	Item("outlineToggle1", show_label = False, visible_when='radioButton2 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton2 == "Y"'),
-	Item("outlineWidth2", show_label = False, visible_when='radioButton2 == "Y"', height = slidertinyh, width = slidertinyw)),
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton2 == "Y"'),
-	Item("outlineColorRed2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorGreen2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorBlue2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw)),
-	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton3 == "Y"'),
-	Item("outlineToggle1", show_label = False, visible_when='radioButton3 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton3 == "Y"'),
-	Item("outlineWidth3", show_label = False, visible_when='radioButton3 == "Y"', height = slidertinyh, width = slidertinyw)),
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton3 == "Y"'),
-	Item("outlineColorRed3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorGreen3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorBlue3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw)),
-	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton4 == "Y"'),
-	Item("outlineToggle1", show_label = False, visible_when='radioButton4 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton4 == "Y"'),
-	Item("outlineWidth4", show_label = False, visible_when='radioButton4 == "Y"', height = slidertinyh, width = slidertinyw)),
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton4 == "Y"'),
-	Item("outlineColorRed4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorGreen4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
-	Item("outlineColorBlue4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw)),
-	
-	Group(label = 'Isosurface options:'),
-	
-	HGroup(Item("thresholdMinimum1", label = 'Minimum threshold:', style='readonly', visible_when='radioButton1 == "Y"'), 
-	Item("thresholdMaximum1", label = ', Maximum threshold:', visible_when='radioButton1 == "Y"'), style='readonly'),
-	HGroup(Item("ThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton1 == "Y"'),
-	Item("threshold1", show_label = False, visible_when='radioButton1 == "Y"', height = longh, width = longw), 
-	Item("setThreshold1", show_label = False, visible_when='radioButton1 == "Y"', height = buttonh, width = buttonw),
-	),
-	HGroup(Item("ThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='radioButton1 == "Y"'),
-	Item("thresholdPercent1", show_label = False, visible_when='radioButton1 == "Y"', height = longh, width = longw), 
-	Item("setThresholdPercent1", show_label = False, visible_when='radioButton1 == "Y"', height = buttonh, width = buttonw),
-	),
-	
-	HGroup(Item("thresholdMinimum2", label = 'Minimum threshold:', style='readonly', visible_when='radioButton2 == "Y"'), 
-	Item("thresholdMaximum2", label = ', Maximum threshold:', visible_when='radioButton2 == "Y"'), style='readonly'),
-	HGroup(Item("ThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton2 == "Y"'),
-	Item("threshold2", show_label = False, visible_when='radioButton2 == "Y"', height = longh, width = longw), 
-	Item("setThreshold2", show_label = False, visible_when='radioButton2 == "Y"', height = buttonh, width = buttonw),
-	),
-	HGroup(Item("ThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='radioButton2 == "Y"'),
-	Item("thresholdPercent2", show_label = False, visible_when='radioButton2 == "Y"', height = longh, width = longw), 
-	Item("setThresholdPercent2", show_label = False, visible_when='radioButton2 == "Y"', height = buttonh, width = buttonw),
-	),
-	
-	HGroup(Item("thresholdMinimum3", label = 'Minimum threshold:', style='readonly', visible_when='radioButton3 == "Y"'), 
-	Item("thresholdMaximum3", label = ', Maximum threshold:', visible_when='radioButton3 == "Y"'), style='readonly'),
-	HGroup(Item("ThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton3 == "Y"'),
-	Item("threshold3", show_label = False, visible_when='radioButton3 == "Y"', height = longh, width = longw), 
-	Item("setThreshold3", show_label = False, visible_when='radioButton3 == "Y"', height = buttonh, width = buttonw),
-	),
-	HGroup(Item("ThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='radioButton3 == "Y"'),
-	Item("thresholdPercent3", show_label = False, visible_when='radioButton3 == "Y"', height = longh, width = longw), 
-	Item("setThresholdPercent3", show_label = False, visible_when='radioButton3 == "Y"', height = buttonh, width = buttonw),
-	),
-	
-	HGroup(Item("thresholdMinimum4", label = 'Minimum threshold:', style='readonly', visible_when='radioButton4 == "Y"'), 
-	Item("thresholdMaximum4", show_label = False, visible_when='radioButton4 == "Y"'), style='readonly'),
-	HGroup(Item("ThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton4 == "Y"'),
-	Item("threshold4", label = 'Threshold(s)', visible_when='radioButton4 == "Y"', height = longh, width = longw), 
-	Item("setThreshold4", show_label = False, visible_when='radioButton4 == "Y"', height = buttonh, width = buttonw),
-	),
-	HGroup(Item("ThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='radioButton4 == "Y"'),
-	Item("thresholdPercent4", show_label = False, visible_when='radioButton4 == "Y"', height = longh, width = longw), 
-	Item("setThresholdPercent4", show_label = False, visible_when='radioButton4 == "Y"', height = buttonh, width = buttonw),
-	),
-	
-	Group(label = 'Contour options:'),
-	
-	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton1 == "Y"'),
-	Item("contourOpacity1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
-	Item("ColormapMinMaxTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton1 == "Y"'),
-	Item("contourRepresentation1", show_label = False, visible_when='radioButton1 == "Y"')),
-	
-	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton1 == "Y"'),
-	Item("contourColormap1", show_label = False, visible_when='radioButton1 == "Y"'),
-	Item("ColormapMinMaxTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton1 == "Y"'),
-	Item("colormapMin1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
-	Item("colormapMax1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw)),
-	
-	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton2 == "Y"'),
-	Item("contourOpacity2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton2 == "Y"'),
-	Item("contourRepresentation2", show_label = False, visible_when='radioButton2 == "Y"')),
-	
-	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton2 == "Y"'),
-	Item("contourColormap2", show_label = False, visible_when='radioButton2 == "Y"'),
-	Item("ColormapMinMaxTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton2 == "Y"'),
-	Item("colormapMin2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
-	Item("colormapMax2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw)),
-	
-	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton3 == "Y"'),
-	Item("contourOpacity3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton3 == "Y"'),
-	Item("contourRepresentation3", show_label = False, visible_when='radioButton3 == "Y"')),
-	
-	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton3 == "Y"'),
-	Item("contourColormap3", show_label = False, visible_when='radioButton3 == "Y"'),
-	Item("ColormapMinMaxTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton3 == "Y"'),
-	Item("colormapMin3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
-	Item("colormapMax3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw)),
-	
-	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton4 == "Y"'),
-	Item("contourOpacity4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton4 == "Y"'),
-	Item("contourRepresentation4", show_label = False, visible_when='radioButton4 == "Y"')),
-	
-	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton4 == "Y"'),
-	Item("contourColormap4", show_label = False, visible_when='radioButton4 == "Y"'),
-	Item("ColormapMinMaxTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton4 == "Y"'),
-	Item("colormapMin4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
-	Item("colormapMax4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw)),
-	
-	show_border = True, orientation = 'vertical', scrollable = True),
-	
-	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
+	contourUIelements,
 	
 	)
 	),
 	
-	# Camera options
-	Group(label = 'Camera control options'),
+	cameraUIelements,
 	
-	Group(
-	
-	HGroup(
-	Group(label = 'Current values:'),
-	Item("camAzimuthG", label = 'Azimuth:', style='readonly'), 
-	Item("camElevationG", label = 'Elevation:', style='readonly'), 
-	Item("camRollG", label = 'Roll:', style='readonly'), 
-	Item("camDistanceG", label = 'Distance:', style='readonly'), 
-	Item("focalPointG1", label = ' Focal point:', style='readonly'),
-	Item("focalPointG2", label = ',', style='readonly'),
-	Item("focalPointG3", label = ',', style='readonly'),
-	Item("updateCurrentVals", show_label = False)
 	),
 	
-	HGroup(
-	Group(label = 'Store camera positions:'),
-	Item("saveCam1", show_label = False, height = buttonh, width = buttonw),
-	Item("saveCam2", show_label = False, height = buttonh, width = buttonw),
-	Item("saveCam3", show_label = False, height = buttonh, width = buttonw),
-	Item("saveCam4", show_label = False, height = buttonh, width = buttonw),
-	Item("saveCam5", show_label = False, height = buttonh, width = buttonw),
-	Item("camReset", show_label = False, height = buttonh, width = buttonw)
-	),
-	
-	HGroup(
-	Item("camAzimuthS", label = 'Azimuth:', height = sliderh, width = sliderw), 
-	Item("camElevationS", label = 'Elevation:', height = sliderh, width = sliderw), 
-	Item("camRollS", label = 'Roll:', height = sliderh, width = sliderw),
-	# ),
-	# HGroup(
-	Item("camDistanceS", label = 'Distance:', height = tinyh, width = tinyw), 
-	Item("focalPointS1", label = ' Focal point:', height = tinyh, width = tinyw),
-	Item("focalPointS2", show_label = False, height = tinyh, width = tinyw),
-	Item("focalPointS3", show_label = False, height = tinyh, width = tinyw)
-	),
-	
-	show_border = True, orientation = 'vertical', scrollable = True),
-	)
-	
-	, width=1, height=1, title='QuickViz')
+	width=1, height=1, title='QuickViz')
 
