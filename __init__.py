@@ -18,7 +18,6 @@ from .contourOptions import allContourOptions
 from .cameraOptions import allCameraOptions
 from .activeDataControl import activeDataControlClass
 from .chooseFileDialog import fileChooserClass
-from .UICustomization import UIOptionsClass
 from .camPathControls import allPathControlsClass
 
 # Import UI elements
@@ -35,8 +34,7 @@ from .UI_elements.cameraOptions_UI import cameraUIelements
 class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
-	activeDataControlClass, fileChooserClass, UIOptionsClass, \
-	allPathControlsClass):
+	activeDataControlClass, fileChooserClass, allPathControlsClass):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -333,16 +331,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	scene2 = Instance(MlabSceneModel, ())
 	scene3 = Instance(MlabSceneModel, ())
 	scene4 = Instance(MlabSceneModel, ())
-	
-	# Initialize UI layout customization
-	allUIOptions = UIOptionsClass()
-	tinyw, tinyh = allUIOptions.textFieldTiny()
-	smallw, smallh = allUIOptions.textFieldSmall()
-	longw, longh = allUIOptions.textFieldLong()
-	sliderw, sliderh = allUIOptions.slider()
-	slidertinyw, slidertinyh = allUIOptions.slidertiny()
-	buttonw, buttonh = allUIOptions.button()
-	buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 	def __init__(self, *args):
 		
