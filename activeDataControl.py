@@ -12,8 +12,17 @@ class activeDataControlClass:
 		
 		if self.screen1_ts1 == False:
 			
-			# Set new threshold data
-			self.iso1_sc1.contour.contours = []
+			if self.allLocalOptions == "Isosurface":
+			
+				# Set new threshold data
+				self.iso1_sc1.contour.contours = []
+			
+			elif self.allLocalOptions == "Volume Rendering":
+				
+				try:
+					self.vol1_sc1.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 		
 		else:
 			
@@ -29,14 +38,27 @@ class activeDataControlClass:
 				# Set threshold range
 				tmpthreshvals = self.thresholdPercent1.split(',')
 				self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+			
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.volRender1_sc1()
 	
 	@on_trait_change('screen2_ts1')
 	def sc2_ts1_changed1(self):
 		
 		if self.screen2_ts1 == False:
 			
-			# Set new threshold data
-			self.iso1_sc2.contour.contours = []
+			if self.allLocalOptions == "Isosurface":
+			
+				# Set new threshold data
+				self.iso1_sc2.contour.contours = []
+			
+			elif self.allLocalOptions == "Volume Rendering":
+				
+				try:
+					self.vol1_sc2.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 		
 		else:
 			
@@ -52,14 +74,27 @@ class activeDataControlClass:
 				# Set threshold range
 				tmpthreshvals = self.thresholdPercent1.split(',')
 				self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+			
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.volRender1_sc2()
 	
 	@on_trait_change('screen3_ts1')
 	def sc3_ts1_changed1(self):
 		
 		if self.screen3_ts1 == False:
 			
-			# Set new threshold data
-			self.iso1_sc3.contour.contours = []
+			if self.allLocalOptions == "Isosurface":
+			
+				# Set new threshold data
+				self.iso1_sc3.contour.contours = []
+			
+			elif self.allLocalOptions == "Volume Rendering":
+				
+				try:
+					self.vol1_sc3.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 		
 		else:
 			
@@ -75,14 +110,27 @@ class activeDataControlClass:
 				# Set threshold range
 				tmpthreshvals = self.thresholdPercent1.split(',')
 				self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+			
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.volRender1_sc3()
 	
 	@on_trait_change('screen4_ts1')
 	def sc4_ts1_changed1(self):
 		
 		if self.screen4_ts1 == False:
 			
-			# Set new threshold data
-			self.iso1_sc4.contour.contours = []
+			if self.allLocalOptions == "Isosurface":
+			
+				# Set new threshold data
+				self.iso1_sc4.contour.contours = []
+			
+			elif self.allLocalOptions == "Volume Rendering":
+				
+				try:
+					self.vol1_sc4.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 		
 		else:
 			
@@ -98,6 +146,10 @@ class activeDataControlClass:
 				# Set threshold range
 				tmpthreshvals = self.thresholdPercent1.split(',')
 				self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+			
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.volRender1_sc4()
 	
 	@on_trait_change('radioButton1')
 	def radioButton1_changed(self):

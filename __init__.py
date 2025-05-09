@@ -23,6 +23,7 @@ from .camPathControls import allPathControlsClass
 # Import Visualization elements
 from .Visualization_elements.isosurfaceOptions import allIsosurfaceOptions
 from .Visualization_elements.volumeRenderingOptions import allVolRenderingOptions
+from .Visualization_elements.sliceOptions import allSliceOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -84,6 +85,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	
 	# Volume rendering options
 	enableVolRendering = Button('Set')
+	shade_volRender = Bool()
+	ambient_volRender = Float(0.0)
+	diffuse_volRender = Float(0.0)
+	specular_volRender = Float(0.0)
+	opacityFallOff_volRender = Float(0.0)
+	
+	# Slice options
+	sliceType = Enum(['Streamlines', 'Contour slice', 'Vector slice'])
+	# whichSlice = Range()
+	enableSlice = Button('Set')
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -238,6 +249,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	IsoOptionsTxt = Str('Isosurface options:')
 	ContourOptionsTxt = Str('Contour options:')
 	OutOptionsTxt = Str('Outline options:')
+	EnableShadowsTxt = Str('Enable shadows?')
+	AmbientOcclusionsTxt = Str('Ambient occlusion:')
+	DiffuseReflectionTxt = Str('Diffuse reflection:')
+	SpecularHighlightsTxt = Str('Specular highlights:')
+	OpacityFallOffTxt = Str('Opacity Fall Off:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -668,6 +684,13 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.screen1_ts2 = True
 		self.screen1_ts3 = True
 		self.screen1_ts4 = True
+		
+		# By default set shade as true and set other default values too
+		self.shade_volRender = False
+		self.ambient_volRender = 0.0
+		self.diffuse_volRender = 1.0
+		self.specular_volRender = 0.0
+		self.opacityFallOff_volRender = 0.1
 				
 	view = View(
 	
