@@ -7,6 +7,15 @@ from mayavi import mlab
 import mayavi
 
 class timeUpdateBehavior:
+	
+	def update_camera_at_current_timestep_with_camPath(self, \
+	camAzimuth, camElevation, camDistance, focalPoint, camRoll, fig_handle):
+		
+		# If camera path is set, use that instead
+		if not self.camPathType == 'None':
+			_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
+		viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=fig_handle)
+		viewControlRoll = mlab.roll(camRoll, figure=fig_handle)
 
 	@on_trait_change('whichTime1')
 	def time_changed1(self):
@@ -67,6 +76,14 @@ class timeUpdateBehavior:
 			# Change colormap range
 			self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 			
+			# If volume rendering is enabled, update that
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.enableVolRenderingChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
+			
 			try:
 			
 				if not self.threshold1 == '':
@@ -76,11 +93,8 @@ class timeUpdateBehavior:
 					self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
-					# If camera path is set, use that instead
-					if not self.camPathType == 'None':
-						_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene1.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene1.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 				
 				if not self.thresholdPercent1 == '':
 					
@@ -89,11 +103,8 @@ class timeUpdateBehavior:
 					self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
-					# If camera path is set, use that instead
-					if not self.camPathType == 'None':
-						_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene1.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene1.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
 			except ValueError:
 				
@@ -169,8 +180,8 @@ class timeUpdateBehavior:
 					self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene2.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene2.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
 				
 				if not self.thresholdPercent1 == '':
 					
@@ -179,8 +190,8 @@ class timeUpdateBehavior:
 					self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene2.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene2.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
 			
 			except ValueError:
 				
@@ -256,8 +267,8 @@ class timeUpdateBehavior:
 					self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene3.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene3.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
 				
 				if not self.thresholdPercent1 == '':
 					
@@ -266,8 +277,8 @@ class timeUpdateBehavior:
 					self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene3.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene3.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
 			
 			except ValueError:
 				
@@ -343,8 +354,8 @@ class timeUpdateBehavior:
 					self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene4.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene4.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
 				
 				if not self.thresholdPercent1 == '':
 					
@@ -353,8 +364,8 @@ class timeUpdateBehavior:
 					self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=self.scene4.mayavi_scene)
-					viewControlRoll = mlab.roll(camRoll, figure=self.scene4.mayavi_scene)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
 			
 			except ValueError:
 				
