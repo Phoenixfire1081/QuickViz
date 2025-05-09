@@ -17,7 +17,7 @@ localUIelements = (Group(label = 'Local options:'),
 
 	Group(
 	# Group(Item("OutOptionsTxt", show_label = False, style = 'readonly')),
-	Group(label = 'Outline options:'),
+	# Group(label = 'Outline options:'),
 	
 	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton1 == "Y"'),
 	Item("outlineToggle1", show_label = False, visible_when='radioButton1 == "Y"'),

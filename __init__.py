@@ -9,7 +9,7 @@ from mayavi.core.ui.api import MayaviScene, SceneEditor, MlabSceneModel
 from pyface.api import GUI
 from PIL import Image
 import os
-from .thresholdOptions import allThresholdOptions
+
 from .backgroundOptions import allBackgroundOptions
 from .playbackOptions import allPlaybackOptions
 from .saveMovieOptions import allSaveMovieOptions
@@ -19,6 +19,10 @@ from .cameraOptions import allCameraOptions
 from .activeDataControl import activeDataControlClass
 from .chooseFileDialog import fileChooserClass
 from .camPathControls import allPathControlsClass
+
+# Import Visualization elements
+from .Visualization_elements.isosurfaceOptions import allIsosurfaceOptions
+from .Visualization_elements.volumeRenderingOptions import allVolRenderingOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -31,18 +35,13 @@ from .UI_elements.cameraOptions_UI import cameraUIelements
 
 # Allow for a maximum of 4 scalar time series data
 
-class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
+class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
-	activeDataControlClass, fileChooserClass, allPathControlsClass):
+	activeDataControlClass, fileChooserClass, allPathControlsClass,\
+	allVolRenderingOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
-	
-	# Create checkboxes - deprecated, replaced by screenx_tsx
-	chkBox1 = Bool()
-	chkBox2 = Bool()
-	chkBox3 = Bool()
-	chkBox4 = Bool()
 	
 	# Clamp for changing all TS
 	clamp = Bool()
@@ -83,6 +82,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	# Isosurface options
 	hideShowIsosurface = Bool()
 	
+	# Volume rendering options
+	enableVolRendering = Button('Set')
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -192,6 +193,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	showHideLocal = Bool()
 	
 	# Create checkboxes for every screen and every TS
+	# These are global controls which turn off everything
+	# TODO - add local controls for iso, vol rendering, slice etc.
 	screen1_ts1 = Bool()
 	screen2_ts1 = Bool()
 	screen3_ts1 = Bool()
@@ -427,7 +430,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self.on_trait_change(self.contour_changed4, "colormapMin4")
 		self.on_trait_change(self.contour_changed4, "colormapMax4")
 		
-		# allThresholdOptions
+		# allIsosurfaceOptions
 		self.on_trait_change(self.threshold_changed1, "threshold1")
 		self.on_trait_change(self.setThreshold_fired1, "setThreshold1")
 		self.on_trait_change(self.threshold_changed1, "thresholdPercent1")
@@ -448,6 +451,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self.on_trait_change(self.threshold_changed4, "thresholdPercent4")
 		self.on_trait_change(self.setThresholdPercent_fired4, "setThresholdPercent4")
 		
+		# allVolRenderingOptions
+		self.on_trait_change(self.enableVolRenderingChanged, "enableVolRendering")
+		
 		# timeUpdateBehavior
 		self.on_trait_change(self.time_changed1, "whichTime1")
 		self.on_trait_change(self.time_changed2, "whichTime2")
@@ -461,9 +467,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 		self.on_trait_change(self.sc2_ts1_changed1, "screen2_ts1")
 		self.on_trait_change(self.sc3_ts1_changed1, "screen3_ts1")
 		self.on_trait_change(self.sc4_ts1_changed1, "screen4_ts1")
-		self.on_trait_change(self.chkbox_changed2, "chkBox2")
-		self.on_trait_change(self.chkbox_changed3, "chkBox3")
-		self.on_trait_change(self.chkbox_changed4, "chkBox4")
 		self.on_trait_change(self.radioButton1_changed, "radioButton1")
 		self.on_trait_change(self.radioButton2_changed, "radioButton2")
 		self.on_trait_change(self.radioButton3_changed, "radioButton3")
@@ -669,34 +672,22 @@ class mayaviVisualizeTimeSeries(HasTraits, allThresholdOptions,\
 	view = View(
 	
 	VGroup(
-	
 	HSplit(
-	
 	activeDataUIelements,
-	
 	sceneUIelements,
-	
 	VGroup(
 	
 	# Layout options
-	
 	Group(label = 'Screen layout:'),
-	
 	Item("layout", label = 'Number of split screens:', style='custom'),
 	
 	globalUIelements,
-	
 	localUIelements,
-	
 	isoUIelements,
-	
 	contourUIelements,
-	
 	)
 	),
-	
 	cameraUIelements,
-	
 	),
 	
 	width=1, height=1, title='QuickViz')

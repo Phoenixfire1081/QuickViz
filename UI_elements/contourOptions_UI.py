@@ -11,15 +11,16 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
-contourUIelements = (Group(Group(
+contourUIelements = (Group(
+	# Group(
 	# Item("ContourOptionsTxt", show_label = False, style = 'readonly')
-	label = "Contour options:"
-	),
+	# label = "Contour options:"
+	# ),
 	
 	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton1 == "Y"'),
 	Item("contourOpacity1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton1 == "Y"'),
-	Item("contourRepresentation1", show_label = False, visible_when='radioButton1 == "Y"')),
+	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface"'),
+	Item("contourRepresentation1", show_label = False, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface"')),
 	
 	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton1 == "Y"'),
 	Item("contourColormap1", show_label = False, visible_when='radioButton1 == "Y"'),
@@ -29,8 +30,8 @@ contourUIelements = (Group(Group(
 	
 	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton2 == "Y"'),
 	Item("contourOpacity2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton2 == "Y"'),
-	Item("contourRepresentation2", show_label = False, visible_when='radioButton2 == "Y"')),
+	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface"'),
+	Item("contourRepresentation2", show_label = False, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface"')),
 	
 	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton2 == "Y"'),
 	Item("contourColormap2", show_label = False, visible_when='radioButton2 == "Y"'),
@@ -40,8 +41,8 @@ contourUIelements = (Group(Group(
 	
 	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton3 == "Y"'),
 	Item("contourOpacity3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton3 == "Y"'),
-	Item("contourRepresentation3", show_label = False, visible_when='radioButton3 == "Y"')),
+	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface"'),
+	Item("contourRepresentation3", show_label = False, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface"')),
 	
 	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton3 == "Y"'),
 	Item("contourColormap3", show_label = False, visible_when='radioButton3 == "Y"'),
@@ -51,8 +52,8 @@ contourUIelements = (Group(Group(
 	
 	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton4 == "Y"'),
 	Item("contourOpacity4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
-	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton4 == "Y"'),
-	Item("contourRepresentation4", show_label = False, visible_when='radioButton4 == "Y"')),
+	Item("RepresentationTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface"'),
+	Item("contourRepresentation4", show_label = False, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface"')),
 	
 	HGroup(Item("ColormapTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton4 == "Y"'),
 	Item("contourColormap4", show_label = False, visible_when='radioButton4 == "Y"'),

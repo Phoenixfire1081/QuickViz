@@ -12,7 +12,7 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
-cameraUIelements = (Group(label = 'Camera control options'),
+cameraUIelements = (Group(label = 'Camera control'),
 	Group(
 	
 	HGroup(

@@ -4,7 +4,7 @@
 from traits.api import on_trait_change
 import numpy as np
 
-class allThresholdOptions:
+class allIsosurfaceOptions:
 
 	@on_trait_change('threshold1, thresholdPercent1')
 	def threshold_changed1(self):
