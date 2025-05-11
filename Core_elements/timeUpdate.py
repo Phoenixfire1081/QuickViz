@@ -84,6 +84,14 @@ class timeUpdateBehavior:
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Slice":
+				
+				self.enableSliceChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
+			
 			try:
 			
 				if not self.threshold1 == '':
@@ -170,6 +178,22 @@ class timeUpdateBehavior:
 			
 			# Change colormap range
 			self.iso1_sc2.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			
+			# If volume rendering is enabled, update that
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.enableVolRenderingChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
+			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Slice":
+				
+				self.enableSliceChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
 			
 			try:
 			
@@ -258,6 +282,22 @@ class timeUpdateBehavior:
 			# Change colormap range
 			self.iso1_sc3.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 			
+			# If volume rendering is enabled, update that
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.enableVolRenderingChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
+			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Slice":
+				
+				self.enableSliceChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
+			
 			try:
 			
 				if not self.threshold1 == '':
@@ -344,6 +384,22 @@ class timeUpdateBehavior:
 			
 			# Change colormap range
 			self.iso1_sc4.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+			
+			# If volume rendering is enabled, update that
+			if self.allLocalOptions == "Volume Rendering":
+				
+				self.enableVolRenderingChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
+			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Slice":
+				
+				self.enableSliceChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
 			
 			try:
 			

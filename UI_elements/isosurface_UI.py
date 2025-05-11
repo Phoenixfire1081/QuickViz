@@ -40,6 +40,46 @@ isoUIelements = (Group(Group(Item("allLocalOptions", show_label = False, style =
 	Item("opacityFallOff_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'", height = tinyh, width = tinyw),
 	),
 	
+	HGroup(
+	Item("ChooseSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='allLocalOptions == "Slice"'),
+	Item("sliceType", show_label = False, visible_when = "allLocalOptions == 'Slice'"),
+	),
+	HGroup(
+	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None"'),
+	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Slice' and sliceType != 'Contour slice' and sliceType != 'None'", style = 'custom'),
+	),
+	HGroup(
+	Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
+	Item("planeOrientation", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'", style = 'custom'),
+	),
+	HGroup(
+	Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
+	Item("whichSliceX", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None' and planeOrientation == 'X'", width = sliderw),
+	Item("whichSliceY", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None' and planeOrientation == 'Y'", width = sliderw),
+	Item("whichSliceZ", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None' and planeOrientation == 'Z'", width = sliderw),
+	),
+	HGroup(
+	Item("scaleFactorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice"'),
+	Item("scaleFactorSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Vector slice'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice"'),
+	Item("resolutionSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Vector slice'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("kernelLengthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Slice" and sliceType == "Streamlines"'),
+	Item("kernelLengthSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Streamlines'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Streamlines"'),
+	Item("noiseImageDimensionSliceX", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Streamlines'", width = tinyw, height = tinyh),
+	Item("noiseImageDimensionSliceY", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Streamlines'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
+	Item("enableSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'"),
+	),
+	
 	HGroup(Item("ThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface"'),
 	Item("threshold1", show_label = False, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface"', height = longh, width = longw), 
 	Item("setThreshold1", show_label = False, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface"', height = buttonh, width = buttonw),

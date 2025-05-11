@@ -18,11 +18,16 @@ class activeDataControlClass:
 				self.iso1_sc1.contour.contours = []
 			
 			elif self.allLocalOptions == "Volume Rendering":
-				
 				try:
 					self.vol1_sc1.remove()
 				except AttributeError:
 					pass # Set volume rendering first
+			
+			elif self.allLocalOptions == "Slice":
+				try:
+					self.volSlice1_sc1.remove()
+				except AttributeError:
+					pass # Set slice first
 		
 		else:
 			
@@ -41,7 +46,11 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
-				self.volRender1_sc1()
+				self.volRender1_actual(1, self.scene1.mayavi_scene)
+			
+			if self.allLocalOptions == "Slice":
+				
+				self.setSlice1_actual(1, self.scene1.mayavi_scene)
 	
 	@on_trait_change('screen2_ts1')
 	def sc2_ts1_changed1(self):
@@ -59,6 +68,12 @@ class activeDataControlClass:
 					self.vol1_sc2.remove()
 				except AttributeError:
 					pass # Set volume rendering first
+			
+			elif self.allLocalOptions == "Slice":
+				try:
+					self.volSlice1_sc2.remove()
+				except AttributeError:
+					pass # Set slice first
 		
 		else:
 			
@@ -77,7 +92,11 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
-				self.volRender1_sc2()
+				self.volRender1_actual(2, self.scene2.mayavi_scene)
+			
+			if self.allLocalOptions == "Slice":
+				
+				self.setSlice1_actual(2, self.scene2.mayavi_scene)
 	
 	@on_trait_change('screen3_ts1')
 	def sc3_ts1_changed1(self):
@@ -95,6 +114,12 @@ class activeDataControlClass:
 					self.vol1_sc3.remove()
 				except AttributeError:
 					pass # Set volume rendering first
+			
+			elif self.allLocalOptions == "Slice":
+				try:
+					self.volSlice1_sc3.remove()
+				except AttributeError:
+					pass # Set slice first
 		
 		else:
 			
@@ -113,7 +138,11 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
-				self.volRender1_sc3()
+				self.volRender1_actual(3, self.scene3.mayavi_scene)
+			
+			if self.allLocalOptions == "Slice":
+				
+				self.setSlice1_actual(3, self.scene3.mayavi_scene)
 	
 	@on_trait_change('screen4_ts1')
 	def sc4_ts1_changed1(self):
@@ -131,6 +160,12 @@ class activeDataControlClass:
 					self.vol1_sc4.remove()
 				except AttributeError:
 					pass # Set volume rendering first
+				
+			elif self.allLocalOptions == "Slice":
+				try:
+					self.volSlice1_sc4.remove()
+				except AttributeError:
+					pass # Set slice first
 		
 		else:
 			
@@ -149,7 +184,11 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
-				self.volRender1_sc4()
+				self.volRender1_actual(4, self.scene4.mayavi_scene)
+			
+			if self.allLocalOptions == "Slice":
+				
+				self.setSlice1_actual(4, self.scene4.mayavi_scene)
 	
 	@on_trait_change('radioButton1')
 	def radioButton1_changed(self):

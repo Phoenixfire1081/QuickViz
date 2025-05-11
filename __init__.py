@@ -10,15 +10,17 @@ from pyface.api import GUI
 from PIL import Image
 import os
 
-from .backgroundOptions import allBackgroundOptions
-from .playbackOptions import allPlaybackOptions
-from .saveMovieOptions import allSaveMovieOptions
-from .timeUpdate import timeUpdateBehavior
-from .contourOptions import allContourOptions
-from .cameraOptions import allCameraOptions
-from .activeDataControl import activeDataControlClass
-from .chooseFileDialog import fileChooserClass
-from .camPathControls import allPathControlsClass
+# Import Core elements
+from .Core_elements.addTraits import include_all_traits
+from .Core_elements.backgroundOptions import allBackgroundOptions
+from .Core_elements.playbackOptions import allPlaybackOptions
+from .Core_elements.saveMovieOptions import allSaveMovieOptions
+from .Core_elements.timeUpdate import timeUpdateBehavior
+from .Core_elements.contourOptions import allContourOptions
+from .Core_elements.cameraOptions import allCameraOptions
+from .Core_elements.activeDataControl import activeDataControlClass
+from .Core_elements.chooseFileDialog import fileChooserClass
+from .Core_elements.camPathControls import allPathControlsClass
 
 # Import Visualization elements
 from .Visualization_elements.isosurfaceOptions import allIsosurfaceOptions
@@ -40,7 +42,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
 	activeDataControlClass, fileChooserClass, allPathControlsClass,\
-	allVolRenderingOptions):
+	allVolRenderingOptions, allSliceOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -92,9 +94,19 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	opacityFallOff_volRender = Float(0.0)
 	
 	# Slice options
-	sliceType = Enum(['Streamlines', 'Contour slice', 'Vector slice'])
-	# whichSlice = Range()
+	sliceType = Enum(['None', 'Streamlines', 'Contour slice', 'Vector slice'])
+	planeOrientation = Enum(['X', 'Y', 'Z'], cols=3)
+	whichVector = Enum(['Velocity', 'Vorticity'], cols=2)
 	enableSlice = Button('Set')
+	
+	# vector slice
+	scaleFactorSlice = Float(1.0)
+	resolutionSlice = Int(8)
+	
+	# streamlines
+	kernelLengthSlice = Int(32)
+	noiseImageDimensionSliceX = Int(64)
+	noiseImageDimensionSliceY = Int(64)
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -254,6 +266,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	DiffuseReflectionTxt = Str('Diffuse reflection:')
 	SpecularHighlightsTxt = Str('Specular highlights:')
 	OpacityFallOffTxt = Str('Opacity Fall Off:')
+	ChooseSliceTxt = Str('Choose type of slice:')
+	planeOrientationTxt = Str('Plane Orientation:')
+	whichSliceTxt = Str('Set plane index:')
+	setSliceTxt = Str('Define options and set:')
+	scaleFactorTxt = Str('Scale Factor:')
+	resolutionTxt = Str('Resolution:')
+	whichVectorTxt = Str('Vector:')
+	kernelLengthTxt = Str('Kernel length:')
+	noiseImageDimensionTxt = Str('Noise image dimension:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -355,138 +376,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		
 		HasTraits.__init__(self)
 		
-		# Explicitly register observers from other files
-		
-		# allBackgroundOptions
-		self.on_trait_change(self.background_changed, "BGColorRed")
-		self.on_trait_change(self.background_changed, "BGColorGreen")
-		self.on_trait_change(self.background_changed, "BGColorBlue")
-		
-		# allPlaybackOptions
-		self.on_trait_change(self.next_timeseries_button_fired, "next_timeSeries")
-		self.on_trait_change(self.previous_timeseries_button_fired, "previous_timeSeries")
-		self.on_trait_change(self.play_timeseries_button_fired, "play_timeSeries")
-		self.on_trait_change(self.stop_timeseries_button_fired, "stop_timeSeries")
-		self.on_trait_change(self.play_timeseries_reverse_button_fired, "play_timeSeries_reverse")
-		
-		# allSaveMovieOptions
-		self.on_trait_change(self.save_timeseries_button_fired, "save_timeSeries")
-		self.on_trait_change(self.save_snapshot_button_fired, "save_snapshot")
-		self.on_trait_change(self.choose_folder_button_fired, "choose_folder")
-		
-		# allCameraOptions
-		self.on_trait_change(self.updateCurrentVals_button_fired, "updateCurrentVals")
-		self.on_trait_change(self.saveCam1_fired, "saveCam1")
-		self.on_trait_change(self.saveCam2_fired, "saveCam2")
-		self.on_trait_change(self.saveCam3_fired, "saveCam3")
-		self.on_trait_change(self.saveCam4_fired, "saveCam4")
-		self.on_trait_change(self.saveCam5_fired, "saveCam5")
-		self.on_trait_change(self.camReset_fired, "camReset")
-		self.on_trait_change(self.cam_angle_changed, "camAzimuthS")
-		self.on_trait_change(self.cam_angle_changed, "camElevationS")
-		self.on_trait_change(self.cam_angle_changed, "camDistanceS")
-		self.on_trait_change(self.cam_angle_changed, "focalPointS1")
-		self.on_trait_change(self.cam_angle_changed, "focalPointS2")
-		self.on_trait_change(self.cam_angle_changed, "focalPointS3")
-		self.on_trait_change(self.cam_angle_changed, "camRollS")
-		
-		# allPathControlsClass
-		self.on_trait_change(self.camPathTypeChanged, "camPathType")
-		self.on_trait_change(self.addCamPathChanged, "addCamPath")
-		self.on_trait_change(self.finishCamPathChanged, "finishCamPath")
-		self.on_trait_change(self.resetCamPathChanged, "resetCamPath")
-		
-		# fileChooserClass
-		self.on_trait_change(self.select_files_toggled, "select_files")
-		
-		# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
-		
-		# allContourOptions
-		self.on_trait_change(self.outline_changed1, "outlineWidth1")
-		self.on_trait_change(self.outline_changed1, "outlineColorRed1")
-		self.on_trait_change(self.outline_changed1, "outlineColorGreen1")
-		self.on_trait_change(self.outline_changed1, "outlineColorBlue1")
-		self.on_trait_change(self.outline_changed1, "outlineToggle1")
-		self.on_trait_change(self.contour_changed1, "contourOpacity1")
-		self.on_trait_change(self.contour_changed1, "contourRepresentation1")
-		self.on_trait_change(self.contour_changed1, "contourColormap1")
-		self.on_trait_change(self.contour_changed1, "colormapMin1")
-		self.on_trait_change(self.contour_changed1, "colormapMax1")
-		
-		self.on_trait_change(self.outline_changed2, "outlineWidth2")
-		self.on_trait_change(self.outline_changed2, "outlineColorRed2")
-		self.on_trait_change(self.outline_changed2, "outlineColorGreen2")
-		self.on_trait_change(self.outline_changed2, "outlineColorBlue2")
-		self.on_trait_change(self.outline_changed2, "outlineToggle2")
-		self.on_trait_change(self.contour_changed2, "contourOpacity2")
-		self.on_trait_change(self.contour_changed2, "contourRepresentation2")
-		self.on_trait_change(self.contour_changed2, "contourColormap2")
-		self.on_trait_change(self.contour_changed2, "colormapMin2")
-		self.on_trait_change(self.contour_changed2, "colormapMax2")
-		
-		self.on_trait_change(self.outline_changed3, "outlineWidth3")
-		self.on_trait_change(self.outline_changed3, "outlineColorRed3")
-		self.on_trait_change(self.outline_changed3, "outlineColorGreen3")
-		self.on_trait_change(self.outline_changed3, "outlineColorBlue3")
-		self.on_trait_change(self.outline_changed3, "outlineToggle3")
-		self.on_trait_change(self.contour_changed3, "contourOpacity3")
-		self.on_trait_change(self.contour_changed3, "contourRepresentation3")
-		self.on_trait_change(self.contour_changed3, "contourColormap3")
-		self.on_trait_change(self.contour_changed3, "colormapMin3")
-		self.on_trait_change(self.contour_changed3, "colormapMax3")
-		
-		self.on_trait_change(self.outline_changed4, "outlineWidth4")
-		self.on_trait_change(self.outline_changed4, "outlineColorRed4")
-		self.on_trait_change(self.outline_changed4, "outlineColorGreen4")
-		self.on_trait_change(self.outline_changed4, "outlineColorBlue4")
-		self.on_trait_change(self.outline_changed4, "outlineToggle4")
-		self.on_trait_change(self.contour_changed4, "contourOpacity4")
-		self.on_trait_change(self.contour_changed4, "contourRepresentation4")
-		self.on_trait_change(self.contour_changed4, "contourColormap4")
-		self.on_trait_change(self.contour_changed4, "colormapMin4")
-		self.on_trait_change(self.contour_changed4, "colormapMax4")
-		
-		# allIsosurfaceOptions
-		self.on_trait_change(self.threshold_changed1, "threshold1")
-		self.on_trait_change(self.setThreshold_fired1, "setThreshold1")
-		self.on_trait_change(self.threshold_changed1, "thresholdPercent1")
-		self.on_trait_change(self.setThresholdPercent_fired1, "setThresholdPercent1")
-		
-		self.on_trait_change(self.threshold_changed2, "threshold2")
-		self.on_trait_change(self.setThreshold_fired2, "setThreshold2")
-		self.on_trait_change(self.threshold_changed2, "thresholdPercent2")
-		self.on_trait_change(self.setThresholdPercent_fired2, "setThresholdPercent2")
-		
-		self.on_trait_change(self.threshold_changed3, "threshold3")
-		self.on_trait_change(self.setThreshold_fired3, "setThreshold3")
-		self.on_trait_change(self.threshold_changed3, "thresholdPercent3")
-		self.on_trait_change(self.setThresholdPercent_fired3, "setThresholdPercent3")
-		
-		self.on_trait_change(self.threshold_changed4, "threshold4")
-		self.on_trait_change(self.setThreshold_fired4, "setThreshold4")
-		self.on_trait_change(self.threshold_changed4, "thresholdPercent4")
-		self.on_trait_change(self.setThresholdPercent_fired4, "setThresholdPercent4")
-		
-		# allVolRenderingOptions
-		self.on_trait_change(self.enableVolRenderingChanged, "enableVolRendering")
-		
-		# timeUpdateBehavior
-		self.on_trait_change(self.time_changed1, "whichTime1")
-		self.on_trait_change(self.time_changed2, "whichTime2")
-		self.on_trait_change(self.time_changed3, "whichTime3")
-		self.on_trait_change(self.time_changed4, "whichTime4")
-		self.on_trait_change(self.time_changedGlobal, "whichTimeGlobal")
-		
-		# activeDataControlClass
-		# self.on_trait_change(self.chkbox_changed1, "chkBox1")
-		self.on_trait_change(self.sc1_ts1_changed1, "screen1_ts1")
-		self.on_trait_change(self.sc2_ts1_changed1, "screen2_ts1")
-		self.on_trait_change(self.sc3_ts1_changed1, "screen3_ts1")
-		self.on_trait_change(self.sc4_ts1_changed1, "screen4_ts1")
-		self.on_trait_change(self.radioButton1_changed, "radioButton1")
-		self.on_trait_change(self.radioButton2_changed, "radioButton2")
-		self.on_trait_change(self.radioButton3_changed, "radioButton3")
-		self.on_trait_change(self.radioButton4_changed, "radioButton4")
+		# Add all traits here
+		include_all_traits(self)
 		
 		# Define dummy time series - TODO: move elsewhere to keep __init__ clean
 		
@@ -500,10 +391,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		# self.nts = 4
 		
 		# Get data first
-		self._dataTs1 = args[-1]
-		self._dataTs2 = args[-1]
-		self._dataTs3 = args[-1]
-		self._dataTs4 = args[-1]
+		self._dataTs1 = args[4]
+		self._dataTs2 = args[4]
+		self._dataTs3 = args[4]
+		self._dataTs4 = args[4]
 		
 		# Check if data is 4d
 		
@@ -516,6 +407,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.numTs2 = int(np.shape(self._dataTs2)[-1]-1)
 		self.numTs3 = int(np.shape(self._dataTs3)[-1]-1)
 		self.numTs4 = int(np.shape(self._dataTs4)[-1]-1)
+		
+		# Get length data
+		self.xlength_data1, self.ylength_data1, self.zlength_data1, _ = np.shape(self._dataTs1)
+		self.add_trait("whichSliceX", Range(int(0.0), self.xlength_data1-1, int(0)))
+		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
+		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
 		
 		self.add_trait("whichTime1", Range(int(0.0), self.numTs1, int(0)))
 		self.add_trait("whichTime2", Range(int(0.0), self.numTs2, int(0)))
@@ -557,6 +454,20 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.x1 = args[1]
 		self.y1 = args[2]
 		self.z1 = args[3]
+		
+		self.u1 = args[5][:, :, :, :, 0]
+		self.v1 = args[5][:, :, :, :, 1]
+		self.w1 = args[5][:, :, :, :, 2]
+		self.omega1 = args[6][:, :, :, :, 0]
+		self.omega2 = args[6][:, :, :, :, 1]
+		self.omega3 = args[6][:, :, :, :, 2]
+		
+		self.xmin_data1 = self.x1.min()
+		self.ymin_data1 = self.y1.min()
+		self.zmin_data1 = self.z1.min()
+		self.dx_data1 = (self.x1.max() - self.x1.min())/(self.xlength_data1-1)
+		self.dy_data1 = (self.y1.max() - self.y1.min())/(self.ylength_data1-1)
+		self.dz_data1 = (self.z1.max() - self.z1.min())/(self.zlength_data1-1)
 
 		# Plot the isosurface with minimum value from data
 		self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
