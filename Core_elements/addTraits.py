@@ -116,12 +116,18 @@ def include_all_traits(self):
 	
 	# allVolRenderingOptions
 	self.on_trait_change(self.enableVolRenderingChanged, "enableVolRendering")
+	self.on_trait_change(self.removeVolRenderChanged, "removeVolRender")
 	
 	# allSliceOptions
 	self.on_trait_change(self.enableSliceChanged, "enableSlice")
+	self.on_trait_change(self.removeSliceChanged, "removeSlice")
 	# self.on_trait_change(self.enableSliceChanged, "whichSliceX")
 	# self.on_trait_change(self.enableSliceChanged, "whichSliceY")
 	# self.on_trait_change(self.enableSliceChanged, "whichSliceZ")
+	
+	# allStreamlineOptions
+	self.on_trait_change(self.enableStreamlinesChanged, "enableStreamlines")
+	self.on_trait_change(self.removeStreamlinesChanged, "removeStreamlines")
 	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")
