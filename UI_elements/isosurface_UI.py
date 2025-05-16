@@ -18,7 +18,12 @@ isoUIelements = (Group(Group(Item("allLocalOptions", show_label = False, style =
 	HGroup(Item("thresholdMinimum1", label = 'Minimum threshold:', style='readonly', visible_when='radioButton1 == "Y"'), 
 	Item("thresholdMaximum1", label = ', Maximum threshold:', visible_when='radioButton1 == "Y"'), style='readonly'),
 	
-	HGroup(Item("enableVolRendering", label = "Define options below and set:", visible_when = "allLocalOptions == 'Volume Rendering'"),),
+	# Volume rendering
+	
+	HGroup(
+	Item("enableVolRendering", label = "Define options below and set:", visible_when = "allLocalOptions == 'Volume Rendering'"),
+	Item("removeVolRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'"),
+	),
 	HGroup(
 	Item("EnableShadowsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='allLocalOptions == "Volume Rendering"'),
 	Item("shade_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'"),
@@ -40,6 +45,8 @@ isoUIelements = (Group(Group(Item("allLocalOptions", show_label = False, style =
 	Item("opacityFallOff_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'", height = tinyh, width = tinyw),
 	),
 	
+	# Slice
+	
 	HGroup(
 	Item("ChooseSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='allLocalOptions == "Slice"'),
 	Item("sliceType", show_label = False, visible_when = "allLocalOptions == 'Slice'"),
@@ -47,6 +54,10 @@ isoUIelements = (Group(Group(Item("allLocalOptions", show_label = False, style =
 	HGroup(
 	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None"'),
 	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Slice' and sliceType != 'Contour slice' and sliceType != 'None'", style = 'custom'),
+	),
+	HGroup(
+	Item("whichScalarSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None"'),
+	Item("whichScalarSlice", show_label = False, visible_when = "allLocalOptions == 'Slice' and sliceType == 'Contour slice' and sliceType != 'None'"),
 	),
 	HGroup(
 	Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
@@ -78,6 +89,46 @@ isoUIelements = (Group(Group(Item("allLocalOptions", show_label = False, style =
 	HGroup(
 	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
 	Item("enableSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'"),
+	Item("removeSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'"),
+	),
+	
+	# Streamlines
+	HGroup(
+	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	),
+	HGroup(
+	Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("seedType", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	),
+	HGroup(
+	Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("seedScale", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("seedResolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("seedResolution", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("seedRegionVisibleTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("seedRegionVisible", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'"),
+	),
+	HGroup(
+	Item("lineTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("lineType", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	),
+	HGroup(
+	Item("lineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("lineWidth", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", width = tinyw, height = tinyh),
+	),
+	HGroup(
+	Item("integrationDirectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("integrationDirection", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	),
+	HGroup(
+	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Streamlines (3D)"'),
+	Item("enableStreamlines", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'"),
+	Item("removeStreamlines", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'"),
 	),
 	
 	HGroup(Item("ThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface"'),

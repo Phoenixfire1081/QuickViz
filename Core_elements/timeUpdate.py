@@ -92,6 +92,14 @@ class timeUpdateBehavior:
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Streamlines (3D)":
+				
+				self.enableStreamlinesChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
+			
 			try:
 			
 				if not self.threshold1 == '':
@@ -191,6 +199,14 @@ class timeUpdateBehavior:
 			if self.allLocalOptions == "Slice":
 				
 				self.enableSliceChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
+			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Streamlines (3D)":
+				
+				self.enableStreamlinesChanged()
 				# Keep the previous view
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
@@ -298,6 +314,14 @@ class timeUpdateBehavior:
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
 			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Streamlines (3D)":
+				
+				self.enableStreamlinesChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
+			
 			try:
 			
 				if not self.threshold1 == '':
@@ -397,6 +421,14 @@ class timeUpdateBehavior:
 			if self.allLocalOptions == "Slice":
 				
 				self.enableSliceChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
+			
+			# If slice is enabled, update that
+			if self.allLocalOptions == "Streamlines (3D)":
+				
+				self.enableStreamlinesChanged()
 				# Keep the previous view
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)

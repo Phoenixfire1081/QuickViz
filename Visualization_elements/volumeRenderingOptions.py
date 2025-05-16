@@ -107,36 +107,75 @@ class allVolRenderingOptions:
 		
 		if self.screen1_ts1:
 			
-			try:
-				self.vol1_sc1.remove()
-			except AttributeError:
-				pass # Set volume rendering first
+			if not self.justRemovedVolRender:
+				try:
+					self.vol1_sc1.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 			
 			self.volRender1_actual(1, self.scene1.mayavi_scene)
 		
 		if self.screen2_ts1:
 			
-			try:
-				self.vol1_sc2.remove()
-			except AttributeError:
-				pass # Set volume rendering first
+			if not self.justRemovedVolRender:
+				try:
+					self.vol1_sc2.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 		
 			self.volRender1_actual(2, self.scene2.mayavi_scene)
 		
 		if self.screen3_ts1:
 			
-			try:
-				self.vol1_sc3.remove()
-			except AttributeError:
-				pass # Set volume rendering first
+			if not self.justRemovedVolRender:
+				try:
+					self.vol1_sc3.remove()
+				except AttributeError:
+					pass # Set volume rendering first
 		
 			self.volRender1_actual(3, self.scene3.mayavi_scene)
 		
 		if self.screen4_ts1:
 			
+			if not self.justRemovedVolRender:
+				try:
+					self.vol1_sc4.remove()
+				except AttributeError:
+					pass # Set volume rendering first
+		
+			self.volRender1_actual(4, self.scene4.mayavi_scene)
+		
+		self.justRemovedVolRender = False
+
+	@on_trait_change('removeVolRender')
+	def removeVolRenderChanged(self):
+		
+		if self.screen1_ts1:
+		
+			try:
+				self.vol1_sc1.remove()
+			except AttributeError:
+				pass # Set slice first
+		
+		if self.screen2_ts1:
+		
+			try:
+				self.vol1_sc2.remove()
+			except AttributeError:
+				pass # Set slice first
+		
+		if self.screen3_ts1:
+		
+			try:
+				self.vol1_sc3.remove()
+			except AttributeError:
+				pass # Set slice first
+		
+		if self.screen4_ts1:
+		
 			try:
 				self.vol1_sc4.remove()
 			except AttributeError:
-				pass # Set volume rendering first
-		
-			self.volRender1_actual(4, self.scene4.mayavi_scene)
+				pass # Set slice first
+			
+		self.justRemovedVolRender = True
