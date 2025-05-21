@@ -26,6 +26,7 @@ from .Core_elements.camPathControls import allPathControlsClass
 from .Visualization_elements.isosurfaceOptions import allIsosurfaceOptions
 from .Visualization_elements.volumeRenderingOptions import allVolRenderingOptions
 from .Visualization_elements.sliceOptions import allSliceOptions
+from .Visualization_elements.streamlineOptions import allStreamlineOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -42,7 +43,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
 	activeDataControlClass, fileChooserClass, allPathControlsClass,\
-	allVolRenderingOptions, allSliceOptions):
+	allVolRenderingOptions, allSliceOptions, allStreamlineOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -80,10 +81,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	outlineColorBlue4 = Float(0.0)	
 	
 	# All options
-	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice'], cols=3)
+	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Streamlines (3D)'], cols=4)
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
+	colorFields = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', \
+	'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
 	
 	# Volume rendering options
 	enableVolRendering = Button('Set')
@@ -92,21 +95,36 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	diffuse_volRender = Float(0.0)
 	specular_volRender = Float(0.0)
 	opacityFallOff_volRender = Float(0.0)
+	removeVolRender = Button('Remove')
 	
 	# Slice options
 	sliceType = Enum(['None', 'Streamlines', 'Contour slice', 'Vector slice'])
 	planeOrientation = Enum(['X', 'Y', 'Z'], cols=3)
+	whichScalarSlice = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',\
+	'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
 	whichVector = Enum(['Velocity', 'Vorticity'], cols=2)
 	enableSlice = Button('Set')
+	removeSlice = Button('Remove')
 	
 	# vector slice
 	scaleFactorSlice = Float(1.0)
 	resolutionSlice = Int(8)
 	
-	# streamlines
+	# streamlines (2D)
 	kernelLengthSlice = Int(32)
 	noiseImageDimensionSliceX = Int(64)
 	noiseImageDimensionSliceY = Int(64)
+	
+	# Streamlines (3D)
+	enableStreamlines = Button('Set')
+	removeStreamlines = Button('Remove')
+	seedRegionVisible = Bool()
+	seedType = Enum(['line', 'plane', 'point', 'sphere'], cols = 4)
+	seedScale = Float(1.0)
+	seedResolution = Int(1)
+	lineType = Enum(['line', 'ribbon', 'tube'], cols = 3)
+	lineWidth = Float(2.0)
+	integrationDirection = Enum(['both', 'forward', 'backward'], cols = 3)
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -275,6 +293,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	whichVectorTxt = Str('Vector:')
 	kernelLengthTxt = Str('Kernel length:')
 	noiseImageDimensionTxt = Str('Noise image dimension:')
+	whichScalarSliceTxt = Str('Which scalar:')
+	seedRegionVisibleTxt = Str('Seed region visibility:')
+	seedTypeTxt = Str('Seed type:')
+	seedScaleTxt = Str('Seed scale:')
+	seedResolutionTxt = Str('Seed resolution:')
+	lineTypeTxt = Str('Line type:')
+	lineWidthTxt = Str('Line width:')
+	integrationDirectionTxt = Str('Integration direction:')
+	colorFieldsTxt = Str('Color field:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -388,7 +415,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		
 		# Number of input time series
 		self.nts = int(args[0])
-		# self.nts = 4
 		
 		# Get data first
 		self._dataTs1 = args[4]
@@ -489,9 +515,27 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		
 		# DATA 2
 		
-		self.x2 = args[1]
-		self.y2 = args[2]
-		self.z2 = args[3]
+		if self.nts > 1:
+		
+			self.x2 = args[7]
+			self.y2 = args[8]
+			self.z2 = args[9]
+			
+			self._dataTs2 = args[10]
+			_data2 = self._dataTs2[:, :, :, 0]
+			
+			self.u2 = args[11][:, :, :, :, 0]
+			self.v2 = args[11][:, :, :, :, 1]
+			self.w2 = args[11][:, :, :, :, 2]
+			self.omega1_2 = args[12][:, :, :, :, 0]
+			self.omega2_2 = args[12][:, :, :, :, 1]
+			self.omega3_2 = args[12][:, :, :, :, 2]
+		
+		else:
+			
+			self.x2 = args[1]
+			self.y2 = args[2]
+			self.z2 = args[3]
 
 		# Plot the isosurface with minimum value from data
 		self.sf2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
@@ -602,6 +646,23 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.diffuse_volRender = 1.0
 		self.specular_volRender = 0.0
 		self.opacityFallOff_volRender = 0.1
+		
+		# Default option for slice
+		self.justRemovedSlice = False
+		self.justRemovedVolRender = False
+		self.justRemovedStreamlines = False
+		
+		# Default options for streamlines
+		self.seedCenterx = 0
+		self.seedCentery = 0
+		self.seedCenterz = 0
+		self.firstRun = False
+		
+		# Default option for color field
+		self.colorFieldSet_sc1 = False
+		self.colorFieldSet_sc2 = False
+		self.colorFieldSet_sc3 = False
+		self.colorFieldSet_sc4 = False
 				
 	view = View(
 	
@@ -624,5 +685,5 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	cameraUIelements,
 	),
 	
-	width=1, height=1, title='QuickViz')
+	width=0.8, height=0.8, resizable = True, title='QuickViz')
 

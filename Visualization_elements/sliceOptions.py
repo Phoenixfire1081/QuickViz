@@ -4,9 +4,12 @@
 from traits.api import on_trait_change
 import numpy as np
 from mayavi import mlab
-import lic_internal
+import numpy.ctypeslib as npct
 import numpy as np
 from scipy.ndimage import zoom
+import os
+
+lic_internal = npct.load_library("lic_internal.cpython-312-x86_64-linux-gnu.so", os.getcwd() + '/mayaviVisualization/Visualization_elements')
 
 class allSliceOptions:
 	
@@ -116,7 +119,7 @@ class allSliceOptions:
 				# self.dx_data1*6 corrects for a strange offset in imshow.
 				
 				if scNumber == 1:
-					self.volSlice1_sc1 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc1 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 				
 					self.volSlice1_sc1.actor.orientation = [90, 0, 0]
@@ -125,7 +128,7 @@ class allSliceOptions:
 					self.volSlice1_sc1.actor.scale = [self.dx_data1/scalex, self.dz_data1/scaley, self.dy_data1]
 				
 				if scNumber == 2:
-					self.volSlice1_sc2 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc2 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc2.actor.orientation = [90, 0, 0]
@@ -134,7 +137,7 @@ class allSliceOptions:
 					self.volSlice1_sc2.actor.scale = [self.dx_data1/scalex, self.dz_data1/scaley, self.dy_data1]
 				
 				if scNumber == 3:
-					self.volSlice1_sc3 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc3 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc3.actor.orientation = [90, 0, 0]
@@ -143,7 +146,7 @@ class allSliceOptions:
 					self.volSlice1_sc3.actor.scale = [self.dx_data1/scalex, self.dz_data1/scaley, self.dy_data1]
 				
 				if scNumber == 4:
-					self.volSlice1_sc4 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc4 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc4.actor.orientation = [90, 0, 0]
@@ -179,7 +182,7 @@ class allSliceOptions:
 				# self.dx_data1*6 corrects for a strange offset in imshow.
 				
 				if scNumber == 1:
-					self.volSlice1_sc1 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc1 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 				
 					self.volSlice1_sc1.actor.orientation = [0, 0, 0]
@@ -188,7 +191,7 @@ class allSliceOptions:
 					self.volSlice1_sc1.actor.scale = [self.dx_data1/scalex, self.dy_data1/scaley, self.dz_data1]
 				
 				if scNumber == 2:
-					self.volSlice1_sc2 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc2 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc2.actor.orientation = [0, 0, 0]
@@ -197,7 +200,7 @@ class allSliceOptions:
 					self.volSlice1_sc2.actor.scale = [self.dx_data1/scalex, self.dy_data1/scaley, self.dz_data1]
 				
 				if scNumber == 3:
-					self.volSlice1_sc4 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc4 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc3.actor.orientation = [0, 0, 0]
@@ -206,7 +209,7 @@ class allSliceOptions:
 					self.volSlice1_sc3.actor.scale = [self.dx_data1/scalex, self.dy_data1/scaley, self.dz_data1]
 				
 				if scNumber == 4:
-					self.volSlice1_sc4 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc4 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc4.actor.orientation = [0, 0, 0]

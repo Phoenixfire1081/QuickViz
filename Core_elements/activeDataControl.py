@@ -16,6 +16,10 @@ class activeDataControlClass:
 			
 				# Set new threshold data
 				self.iso1_sc1.contour.contours = []
+				
+				if self.colorFieldSet_sc1:
+					self.mesh1.remove() # remove mesh if already exists
+					self.colorFieldSet_sc1 = False
 			
 			elif self.allLocalOptions == "Volume Rendering":
 				try:
@@ -34,15 +38,11 @@ class activeDataControlClass:
 			# Set current threshold data
 			if not self.threshold1 == '':
 					
-				# Set threshold range
-				tmpthreshvals = self.threshold1.split(',')
-				self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				self.setThreshold_fired1()
 			
 			if not self.thresholdPercent1 == '':
 				
-				# Set threshold range
-				tmpthreshvals = self.thresholdPercent1.split(',')
-				self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+				self.setThresholdPercent_fired1()
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
@@ -61,6 +61,10 @@ class activeDataControlClass:
 			
 				# Set new threshold data
 				self.iso1_sc2.contour.contours = []
+				
+				if self.colorFieldSet_sc2:
+					self.mesh2.remove() # remove mesh if already exists
+					self.colorFieldSet_sc2 = False
 			
 			elif self.allLocalOptions == "Volume Rendering":
 				
@@ -79,16 +83,12 @@ class activeDataControlClass:
 			
 			# Set current threshold data
 			if not self.threshold1 == '':
-					
-				# Set threshold range
-				tmpthreshvals = self.threshold1.split(',')
-				self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				
+				self.setThreshold_fired1()
 			
 			if not self.thresholdPercent1 == '':
 				
-				# Set threshold range
-				tmpthreshvals = self.thresholdPercent1.split(',')
-				self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+				self.setThresholdPercent_fired1()
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
@@ -107,6 +107,10 @@ class activeDataControlClass:
 			
 				# Set new threshold data
 				self.iso1_sc3.contour.contours = []
+				
+				if self.colorFieldSet_sc3:
+					self.mesh3.remove() # remove mesh if already exists
+					self.colorFieldSet_sc3 = False
 			
 			elif self.allLocalOptions == "Volume Rendering":
 				
@@ -126,15 +130,11 @@ class activeDataControlClass:
 			# Set current threshold data
 			if not self.threshold1 == '':
 					
-				# Set threshold range
-				tmpthreshvals = self.threshold1.split(',')
-				self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				self.setThreshold_fired1()
 			
 			if not self.thresholdPercent1 == '':
 				
-				# Set threshold range
-				tmpthreshvals = self.thresholdPercent1.split(',')
-				self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+				self.setThresholdPercent_fired1()
 			
 			if self.allLocalOptions == "Volume Rendering":
 				
@@ -153,6 +153,10 @@ class activeDataControlClass:
 			
 				# Set new threshold data
 				self.iso1_sc4.contour.contours = []
+				
+				if self.colorFieldSet_sc4:
+					self.mesh4.remove() # remove mesh if already exists
+					self.colorFieldSet_sc4 = False
 			
 			elif self.allLocalOptions == "Volume Rendering":
 				
@@ -172,15 +176,11 @@ class activeDataControlClass:
 			# Set current threshold data
 			if not self.threshold1 == '':
 					
-				# Set threshold range
-				tmpthreshvals = self.threshold1.split(',')
-				self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				self.setThreshold_fired1()
 			
 			if not self.thresholdPercent1 == '':
 				
-				# Set threshold range
-				tmpthreshvals = self.thresholdPercent1.split(',')
-				self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+				self.setThresholdPercent_fired1()
 			
 			if self.allLocalOptions == "Volume Rendering":
 				

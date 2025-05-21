@@ -105,8 +105,9 @@ class timeUpdateBehavior:
 				if not self.threshold1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.threshold1.split(',')
-					self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					# tmpthreshvals = self.threshold1.split(',')
+					# self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					self.setThreshold_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -115,8 +116,9 @@ class timeUpdateBehavior:
 				if not self.thresholdPercent1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.thresholdPercent1.split(',')
-					self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					# tmpthreshvals = self.thresholdPercent1.split(',')
+					# self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					self.setThresholdPercent_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -216,8 +218,9 @@ class timeUpdateBehavior:
 				if not self.threshold1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.threshold1.split(',')
-					self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					# tmpthreshvals = self.threshold1.split(',')
+					# self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					self.setThreshold_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -226,8 +229,9 @@ class timeUpdateBehavior:
 				if not self.thresholdPercent1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.thresholdPercent1.split(',')
-					self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					# tmpthreshvals = self.thresholdPercent1.split(',')
+					# self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					self.setThresholdPercent_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -327,8 +331,9 @@ class timeUpdateBehavior:
 				if not self.threshold1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.threshold1.split(',')
-					self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					# tmpthreshvals = self.threshold1.split(',')
+					# self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					self.setThreshold_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -337,8 +342,9 @@ class timeUpdateBehavior:
 				if not self.thresholdPercent1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.thresholdPercent1.split(',')
-					self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					# tmpthreshvals = self.thresholdPercent1.split(',')
+					# self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					self.setThresholdPercent_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -438,8 +444,9 @@ class timeUpdateBehavior:
 				if not self.threshold1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.threshold1.split(',')
-					self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					# tmpthreshvals = self.threshold1.split(',')
+					# self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					self.setThreshold_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -448,8 +455,9 @@ class timeUpdateBehavior:
 				if not self.thresholdPercent1 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.thresholdPercent1.split(',')
-					self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					# tmpthreshvals = self.thresholdPercent1.split(',')
+					# self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
+					self.setThresholdPercent_fired1()
 					
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
