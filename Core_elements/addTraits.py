@@ -142,6 +142,22 @@ def include_all_traits(self):
 	self.on_trait_change(self.sc2_ts1_changed1, "screen2_ts1")
 	self.on_trait_change(self.sc3_ts1_changed1, "screen3_ts1")
 	self.on_trait_change(self.sc4_ts1_changed1, "screen4_ts1")
+	
+	self.on_trait_change(self.sc1_ts2_changed1, "screen1_ts2")
+	self.on_trait_change(self.sc2_ts2_changed1, "screen2_ts2")
+	self.on_trait_change(self.sc3_ts2_changed1, "screen3_ts2")
+	self.on_trait_change(self.sc4_ts2_changed1, "screen4_ts2")
+	
+	self.on_trait_change(self.sc1_ts3_changed1, "screen1_ts3")
+	self.on_trait_change(self.sc2_ts3_changed1, "screen2_ts3")
+	self.on_trait_change(self.sc3_ts3_changed1, "screen3_ts3")
+	self.on_trait_change(self.sc4_ts3_changed1, "screen4_ts3")
+	
+	self.on_trait_change(self.sc1_ts4_changed1, "screen1_ts4")
+	self.on_trait_change(self.sc2_ts4_changed1, "screen2_ts4")
+	self.on_trait_change(self.sc3_ts4_changed1, "screen3_ts4")
+	self.on_trait_change(self.sc4_ts4_changed1, "screen4_ts4")
+	
 	self.on_trait_change(self.radioButton1_changed, "radioButton1")
 	self.on_trait_change(self.radioButton2_changed, "radioButton2")
 	self.on_trait_change(self.radioButton3_changed, "radioButton3")

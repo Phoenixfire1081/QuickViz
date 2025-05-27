@@ -43,89 +43,89 @@ class allContourOptions:
 		
 		# Toggle outline
 		if not self.outlineToggle2:
-			self.out2.actor.actor.visibility = False
+			self.out2_sc1.actor.actor.visibility = False
 		else:
-			self.out2.actor.actor.visibility = True
+			self.out2_sc1.actor.actor.visibility = True
 			
 			# Change outline width
-			self.out2.actor.property.line_width = self.outlineWidth2
+			self.out2_sc1.actor.property.line_width = self.outlineWidth2
 			
 			# Change outline color
-			self.out2.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
+			self.out2_sc1.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
 	
 	@on_trait_change('contourOpacity2, contourRepresentation2, contourColormap2, colormapMin2, colormapMax2')
 	def contour_changed2(self):
 		
 		# Change contour opacity
-		self.iso2.actor.property.opacity = self.contourOpacity2
+		self.iso2_sc1.actor.property.opacity = self.contourOpacity2
 		
 		# Change contour representation
-		self.iso2.actor.property.representation = self.contourRepresentation2
+		self.iso2_sc1.actor.property.representation = self.contourRepresentation2
 		
 		# Change contour colormap
-		self.iso2.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
+		self.iso2_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
 		
 		# Change colormap range
-		self.iso2.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
+		self.iso2_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
 	
 	@on_trait_change('outlineWidth3, outlineColorRed3, outlineColorGreen3,\
 	outlineColorBlue3, outlineToggle3')
 	def outline_changed3(self):
 		
 		# Toggle outline
-		if not self.outlineToggle3:
-			self.out3.actor.actor.visibility = False
+		if not self.outlineToggle1:
+			self.out3_sc1.actor.actor.visibility = False
 		else:
-			self.out3.actor.actor.visibility = True
+			self.out3_sc1.actor.actor.visibility = True
 			
 			# Change outline width
-			self.out3.actor.property.line_width = self.outlineWidth3
+			self.out3_sc1.actor.property.line_width = self.outlineWidth1
 			
 			# Change outline color
-			self.out3.actor.property.color = (self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
+			self.out3_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
 	
 	@on_trait_change('contourOpacity3, contourRepresentation3, contourColormap3, colormapMin3, colormapMax3')
 	def contour_changed3(self):
 		
 		# Change contour opacity
-		self.iso3.actor.property.opacity = self.contourOpacity3
+		self.iso3_sc1.actor.property.opacity = self.contourOpacity1
 		
 		# Change contour representation
-		self.iso3.actor.property.representation = self.contourRepresentation3
+		self.iso3_sc1.actor.property.representation = self.contourRepresentation1
 		
 		# Change contour colormap
-		self.iso3.module_manager.scalar_lut_manager.lut_mode = self.contourColormap3
+		self.iso3_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
 		
 		# Change colormap range
-		self.iso3.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin3, self.colormapMax3])
+		self.iso3_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 	
 	@on_trait_change('outlineWidth4, outlineColorRed4, outlineColorGreen4,\
 	outlineColorBlue4, outlineToggle4')
 	def outline_changed4(self):
 		
 		# Toggle outline
-		if not self.outlineToggle4:
-			self.out4.actor.actor.visibility = False
+		if not self.outlineToggle1:
+			self.out4_sc1.actor.actor.visibility = False
 		else:
-			self.out4.actor.actor.visibility = True
+			self.out4_sc1.actor.actor.visibility = True
 			
 			# Change outline width
-			self.out4.actor.property.line_width = self.outlineWidth4
+			self.out4_sc1.actor.property.line_width = self.outlineWidth1
 			
 			# Change outline color
-			self.out4.actor.property.color = (self.outlineColorRed4, self.outlineColorGreen4, self.outlineColorBlue4)
+			self.out4_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
 	
 	@on_trait_change('contourOpacity4, contourRepresentation4, contourColormap4, colormapMin4, colormapMax4')
 	def contour_changed4(self):
 		
 		# Change contour opacity
-		self.iso4.actor.property.opacity = self.contourOpacity4
+		self.iso4_sc1.actor.property.opacity = self.contourOpacity1
 		
 		# Change contour representation
-		self.iso4.actor.property.representation = self.contourRepresentation4
+		self.iso4_sc1.actor.property.representation = self.contourRepresentation1
 		
 		# Change contour colormap
-		self.iso4.module_manager.scalar_lut_manager.lut_mode = self.contourColormap4
+		self.iso4_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
 		
 		# Change colormap range
-		self.iso4.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin4, self.colormapMax4])
+		self.iso4_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])

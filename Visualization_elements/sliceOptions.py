@@ -4,9 +4,12 @@
 from traits.api import on_trait_change
 import numpy as np
 from mayavi import mlab
-import lic_internal
+import numpy.ctypeslib as npct
 import numpy as np
 from scipy.ndimage import zoom
+import os
+
+lic_internal = npct.load_library("lic_internal.cpython-313-darwin.so", os.getcwd() + '/mayaviVisualization/Visualization_elements')
 
 class allSliceOptions:
 	
@@ -40,13 +43,13 @@ class allSliceOptions:
 				
 				if self.whichVector == 'Velocity':
 				
-					tmpVectorSlice[:, :, 0] += zoom(self.v1[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
-					tmpVectorSlice[:, :, 1] += zoom(self.w1[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 0] += zoom(self.w1[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 1] += zoom(self.v1[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
 				
 				else:
 					
-					tmpVectorSlice[:, :, 0] += zoom(self.omega2[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
-					tmpVectorSlice[:, :, 1] += zoom(self.omega3[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 0] += zoom(self.omega3[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 1] += zoom(self.omega2[self.whichSliceX, :, :, self.whichTime1], (scalex, scaley), order = 1)
 				
 				texture = np.random.rand(self.noiseImageDimensionSliceX, self.noiseImageDimensionSliceY).astype(np.float32)
 				
@@ -57,7 +60,7 @@ class allSliceOptions:
 				pos = (self.whichSliceX * self.dx_data1) + self.xmin_data1
 				
 				if scNumber == 1:
-					self.volSlice1_sc1 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc1 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc1.actor.orientation = [0, 90, 0]
@@ -65,7 +68,7 @@ class allSliceOptions:
 					self.volSlice1_sc1.actor.scale = [self.dz_data1/scalex, self.dy_data1/scaley, self.dx_data1]
 					
 				if scNumber == 2:
-					self.volSlice1_sc2 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc2 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc2.actor.orientation = [0, 90, 0]
@@ -73,7 +76,7 @@ class allSliceOptions:
 					self.volSlice1_sc2.actor.scale = [self.dz_data1/scalex, self.dy_data1/scaley, self.dx_data1]
 				
 				if scNumber == 3:
-					self.volSlice1_sc3 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc3 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc3.actor.orientation = [0, 90, 0]
@@ -81,7 +84,7 @@ class allSliceOptions:
 					self.volSlice1_sc3.actor.scale = [self.dz_data1/scalex, self.dy_data1/scaley, self.dx_data1]
 				
 				if scNumber == 4:
-					self.volSlice1_sc4 = mlab.imshow(image, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
+					self.volSlice1_sc4 = mlab.imshow(image.T, colormap = self.contourColormap1, opacity = self.contourOpacity1, \
 					figure=figureHandle)
 					
 					self.volSlice1_sc4.actor.orientation = [0, 90, 0]
@@ -97,13 +100,13 @@ class allSliceOptions:
 				
 				if self.whichVector == 'Velocity':
 					
-					tmpVectorSlice[:, :, 0] += zoom(self.u1[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
-					tmpVectorSlice[:, :, 1] += zoom(self.w1[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 0] += zoom(self.w1[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 1] += zoom(self.u1[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
 					
 				else:
 					
-					tmpVectorSlice[:, :, 0] += zoom(self.omega1[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
-					tmpVectorSlice[:, :, 1] += zoom(self.omega3[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 0] += zoom(self.omega3[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 1] += zoom(self.omega1[:, self.whichSliceY, :, self.whichTime1], (scalex, scaley), order = 1)
 				
 				texture = np.random.rand(self.noiseImageDimensionSliceX, self.noiseImageDimensionSliceY).astype(np.float32)
 				
@@ -160,13 +163,13 @@ class allSliceOptions:
 				
 				if self.whichVector == 'Velocity':
 				
-					tmpVectorSlice[:, :, 0] += zoom(self.u1[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
-					tmpVectorSlice[:, :, 1] += zoom(self.v1[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 0] += zoom(self.v1[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 1] += zoom(self.u1[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
 				
 				else:
 					
-					tmpVectorSlice[:, :, 0] += zoom(self.omega1[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
-					tmpVectorSlice[:, :, 1] += zoom(self.omega2[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 0] += zoom(self.omega2[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
+					tmpVectorSlice[:, :, 1] += zoom(self.omega1[:, :, self.whichSliceZ, self.whichTime1], (scalex, scaley), order = 1)
 				
 				texture = np.random.rand(self.noiseImageDimensionSliceX, self.noiseImageDimensionSliceY).astype(np.float32)
 				
