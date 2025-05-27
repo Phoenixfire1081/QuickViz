@@ -536,6 +536,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 			self.x2 = args[1]
 			self.y2 = args[2]
 			self.z2 = args[3]
+<<<<<<< HEAD
 
 		self.xmin_data2 = self.x2.min()
 		self.ymin_data2 = self.y2.min()
@@ -543,6 +544,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.dx_data2 = (self.x2.max() - self.x2.min())/(self.xlength_data2-1)
 		self.dy_data2 = (self.y2.max() - self.y2.min())/(self.ylength_data2-1)
 		self.dz_data2 = (self.z2.max() - self.z2.min())/(self.zlength_data2-1)
+=======
+>>>>>>> 94a9a4e28684558965de07f6f0fdbacab6440191
 
 		# Plot the isosurface with minimum value from data
 		self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
