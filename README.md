@@ -18,4 +18,4 @@ pip install --upgrade traitsui==7.4.3
 
 ## Usage 
 
-Documentation is being built. Some components may not work. 
+Documentation is being built with Sphinx and readthedocs and can be seen at https://quickviz.readthedocs.io/en/latest/. Some components may not work. 
