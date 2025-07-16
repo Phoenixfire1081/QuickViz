@@ -10,10 +10,16 @@ Welcome to QuickViz's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+About
+#####
 
+QuickViz is a python-based visualization framework built with the `Mayavi<https://docs.enthought.com/mayavi/mayavi/>` engine. The UI is built with Enthought's `TraitsUI<https://docs.enthought.com/traitsui/>` framework. QuickViz as the name implies is intented for fast visualization of 3D time-series data, particularly those from numerical simulations and experimental datasets. 
 
-Indices and tables
-==================
+The software package currently supports the following:
+- Isosurfaces
+- Volume rendering
+- 2D slice (filled contours, streamlines with line integral convolution, vector slice)
+- 3D streamlines
 
 * :ref:`genindex`
 * :ref:`modindex`
