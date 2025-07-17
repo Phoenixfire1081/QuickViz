@@ -16,6 +16,11 @@ pip install mayavi PyQt5
 pip install --upgrade traitsui==7.4.3
 ```
 
+## UI
+
+![Screenshot](resources/Layout.png)
+
+
 ## Usage 
 
 Documentation is being built with Sphinx and readthedocs and can be seen at https://quickviz.readthedocs.io/en/latest/. Some components may not work. 
