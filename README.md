@@ -18,9 +18,18 @@ pip install --upgrade traitsui==7.4.3
 
 ## UI
 
-![Screenshot](resources/Layout.png)
+The UI allows you to split the screen up to a maximum of 4 panels, each with it's own view control. 
 
+![Screenshot](resources/Layout.png)
 
 ## Usage 
 
 Documentation is being built with Sphinx and readthedocs and can be seen at https://quickviz.readthedocs.io/en/latest/. Some components may not work. 
+
+## Known issues
+
+The UI works reasonably well on Linux machines but the elements appear to be spaced out oddly on Mac OS.
+Tested machines:
+
+- Ubuntu 24.04
+- Mac OS Sequoia
