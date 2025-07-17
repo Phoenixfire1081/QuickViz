@@ -9,7 +9,7 @@ import numpy as np
 from scipy.ndimage import zoom
 import os
 
-lic_internal = npct.load_library("lic_internal.cpython-313-darwin.so", os.getcwd() + '/mayaviVisualization/Visualization_elements')
+# lic_internal = npct.load_library("lic_internal.cpython-313-darwin.so", os.getcwd() + '/mayaviVisualization/Visualization_elements')
 
 class allSliceOptions:
 	
