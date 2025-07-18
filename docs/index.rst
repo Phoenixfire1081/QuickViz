@@ -7,20 +7,28 @@ Welcome to QuickViz's documentation!
 ====================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Getting started
+   
+   GettingStarted/InputData
+   
+.. toctree::
+   :maxdepth: 1
+   :caption: Data analysis
+
+.. toctree::
+   :maxdepth: 1
+   :caption: QuickViz + pyloggrid
 
 About
 #####
 
-QuickViz is a python-based visualization framework built with the `Mayavi <https://docs.enthought.com/mayavi/mayavi/>`_ engine. The UI is built with Enthought's `TraitsUI <https://docs.enthought.com/traitsui/>`_ framework. QuickViz as the name implies is intented for fast visualization of 3D time-series data, particularly those from numerical simulations and experimental datasets. 
+QuickViz is a python-based visualization and data analysis framework built with the `Mayavi <https://docs.enthought.com/mayavi/mayavi/>`_ engine. The UI is built with Enthought's `TraitsUI <https://docs.enthought.com/traitsui/>`_ framework. QuickViz as the name implies is intented for fast visualization of 3D time-series data, particularly those from numerical simulations and experimental datasets. 
 
-The software package currently supports the following:
-- Isosurfaces
-- Volume rendering
-- 2D slice (filled contours, streamlines with line integral convolution, vector slice)
-- 3D streamlines
+On the visualization side, the following are currently supported:
+.. - Isosurfaces
+.. - Volume rendering
+.. - 2D slice (filled contours, streamlines with line integral convolution, vector slice)
+.. - 3D streamlines
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+

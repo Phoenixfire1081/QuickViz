@@ -18,7 +18,7 @@ pip install --upgrade traitsui==7.4.3
 
 ## UI
 
-The UI allows you to split the screen up to a maximum of 4 panels, each with it's own view control. 
+The UI allows you to split the screen up to a maximum of 4 panels, each with it's own view control. The panels on the left and right are resizable.
 
 ![Screenshot](resources/Layout.png)
 
