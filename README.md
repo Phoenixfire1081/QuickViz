@@ -13,7 +13,8 @@ The following packages are necessary - mayavi, PyQt5, traitsui==7.4.3 (8 causes 
 
 ```
 pip install mayavi PyQt5
-pip install --upgrade traitsui==7.4.3
+pip install traitsui==7.4.3
+pip install pyface==7.4.4
 ```
 
 ## UI
