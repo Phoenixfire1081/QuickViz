@@ -8,8 +8,7 @@ import numpy.ctypeslib as npct
 import numpy as np
 from scipy.ndimage import zoom
 import os
-
-# lic_internal = npct.load_library("lic_internal.cpython-313-darwin.so", os.getcwd() + '/mayaviVisualization/Visualization_elements')
+from lic_internal import line_integral_convolution
 
 class allSliceOptions:
 	
@@ -56,7 +55,7 @@ class allSliceOptions:
 				kernel = np.sin(np.arange(self.kernelLengthSlice)*np.pi/self.kernelLengthSlice)
 				kernel = kernel.astype(np.float32)
 				
-				image = lic_internal.line_integral_convolution(tmpVectorSlice, texture, kernel)
+				image = line_integral_convolution(tmpVectorSlice, texture, kernel)
 				pos = (self.whichSliceX * self.dx_data1) + self.xmin_data1
 				
 				if scNumber == 1:
@@ -113,7 +112,7 @@ class allSliceOptions:
 				kernel = np.sin(np.arange(self.kernelLengthSlice)*np.pi/self.kernelLengthSlice)
 				kernel = kernel.astype(np.float32)
 				
-				image = lic_internal.line_integral_convolution(tmpVectorSlice, texture, kernel)
+				image = line_integral_convolution(tmpVectorSlice, texture, kernel)
 				pos = (self.whichSliceY * self.dy_data1) + self.ymin_data1
 				
 				# self.dx_data1*6 corrects for a strange offset in imshow.
@@ -176,7 +175,7 @@ class allSliceOptions:
 				kernel = np.sin(np.arange(self.kernelLengthSlice)*np.pi/self.kernelLengthSlice)
 				kernel = kernel.astype(np.float32)
 				
-				image = lic_internal.line_integral_convolution(tmpVectorSlice, texture, kernel)
+				image = line_integral_convolution(tmpVectorSlice, texture, kernel)
 				pos = (self.whichSliceZ * self.dz_data1) + self.zmin_data1
 				
 				# self.dx_data1*6 corrects for a strange offset in imshow.
