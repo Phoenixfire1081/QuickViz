@@ -80,6 +80,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	outlineColorGreen4 = Float(0.0)
 	outlineColorBlue4 = Float(0.0)	
 	
+	# Mode
+	allModeOptions = Enum(['Visualization', 'Analysis', 'Log lattice'])
+	
 	# All options
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Streamlines (3D)'], cols=4)
 	
