@@ -26,7 +26,7 @@ class UIOptionsClass:
 		
 		# For very long text field entries
 		
-		width = -300
+		width = -150
 		height = -20
 		
 		return width, height

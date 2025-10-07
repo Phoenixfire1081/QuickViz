@@ -272,7 +272,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	OutlineWidthTxt = Str('Outline width:')
 	OutlineColorTxt = Str('Outline color (r,g,b):')
 	ThresholdTxt = Str('Threshold(s):')
-	ThresholdPercentTxt = Str('Threshold(s) percent:')
+	ThresholdPercentTxt = Str('Threshold(s) %:')
 	OpacityTxt = Str('Opacity:')
 	ColormapTxt = Str('Colormap:')
 	RepresentationTxt = Str('Representation:')
