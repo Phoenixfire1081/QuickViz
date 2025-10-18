@@ -20,7 +20,7 @@ class allSliceOptions:
         viewControlRoll = mlab.roll(camRoll, figure=figureHandle)
 
     def setSlice1_actual(self, scNumber, figureHandle):
-        if self.sliceType == "Streamlines":
+        if self.sliceType == "Fieldlines":
             # Set constant seed
             np.random.seed(12345)
 

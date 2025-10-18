@@ -27,6 +27,7 @@ from .Visualization_elements.isosurfaceOptions import allIsosurfaceOptions
 from .Visualization_elements.volumeRenderingOptions import allVolRenderingOptions
 from .Visualization_elements.sliceOptions import allSliceOptions
 from .Visualization_elements.streamlineOptions import allStreamlineOptions
+from .Visualization_elements.surfaceExtractionOptions import allSurfaceExtractionOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -37,13 +38,14 @@ from .UI_elements.isosurface_UI import isoUIelements
 from .UI_elements.contourOptions_UI import contourUIelements
 from .UI_elements.cameraOptions_UI import cameraUIelements
 
-# Allow for a maximum of 4 scalar time series data
+# Allow for a maximum of 4 time series datasets
 
 class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
 	activeDataControlClass, fileChooserClass, allPathControlsClass,\
-	allVolRenderingOptions, allSliceOptions, allStreamlineOptions):
+	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,\
+	allSurfaceExtractionOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -81,10 +83,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	outlineColorBlue4 = Float(0.0)	
 	
 	# Mode
-	allModeOptions = Enum(['Visualization', 'Analysis', 'Log lattice'])
+	allModeOptions = Enum(['Visualization', 'Analysis', 'Log lattice', 'Blender exports'])
 	
-	# All options
-	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Streamlines (3D)'], cols=4)
+	# All Visualization options
+	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
+	
+	# All Analysis options
+	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Q-tensor'], cols=4)
+	
+	# All Log lattice options
+	# allLLOptions = Enum(['']) # Necessary?
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
@@ -101,7 +109,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	removeVolRender = Button('Remove')
 	
 	# Slice options
-	sliceType = Enum(['None', 'Streamlines', 'Contour slice', 'Vector slice'])
+	sliceType = Enum(['None', 'Fieldlines', 'Contour slice', 'Vector slice'])
 	planeOrientation = Enum(['X', 'Y', 'Z'], cols=3)
 	whichScalarSlice = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',\
 	'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
@@ -128,6 +136,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	lineType = Enum(['line', 'ribbon', 'tube'], cols = 3)
 	lineWidth = Float(2.0)
 	integrationDirection = Enum(['both', 'forward', 'backward'], cols = 3)
+	
+	# Structure extraction
+	thresholdExtractionSet = Str('')
+	verboseStructureExtraction = Bool()
+	useMarchingCubes = Bool()
+	extractStructures = Button('Extract')
+	totalNumberOfExtractedStructures = Str('')
+	chooseStructure = Range(0, 100, 0) # Use 100 by default
+	# writeLabelGrid
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -305,6 +322,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	lineWidthTxt = Str('Line width:')
 	integrationDirectionTxt = Str('Integration direction:')
 	colorFieldsTxt = Str('Color field:')
+	thresholdExtractionTxt = Str('Threshold:')
+	verboseStructureExtractionTxt = Str('Verbose:')
+	useMarchingCubesTxt = Str('Marching Cubes:')
+	totalNumberOfExtractedStructuresTxt = Str('Total number of extracted structures:')
+	chooseStructureTxt = Str('Select structure:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -465,8 +487,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.add_trait("thresholdPercent1", Str(''))
 		self.add_trait("thresholdMinimum1", Float(np.floor(float(_data1.min()))))
 		self.add_trait("thresholdMaximum1", Float(np.ceil(float(_data1.max()))))
-		
-		
 		
 		self.add_trait("threshold3", Str(''))
 		self.add_trait("thresholdPercent3", Str(''))
@@ -790,6 +810,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.colorFieldSet_sc2 = False
 		self.colorFieldSet_sc3 = False
 		self.colorFieldSet_sc4 = False
+		
+		# Default option for structure extraction
+		self.useMarchingCubes = True
+		self.verboseStructureExtraction = False
 				
 	view = View(
 	

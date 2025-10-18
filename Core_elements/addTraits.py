@@ -129,6 +129,10 @@ def include_all_traits(self):
 	self.on_trait_change(self.enableStreamlinesChanged, "enableStreamlines")
 	self.on_trait_change(self.removeStreamlinesChanged, "removeStreamlines")
 	
+	# allSurfaceExtractionOptions
+	self.on_trait_change(self.enableExtractStructures, "extractStructures")
+	self.on_trait_change(self.extractSpecificStructure, "chooseStructure")
+	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")
 	self.on_trait_change(self.time_changed2, "whichTime2")

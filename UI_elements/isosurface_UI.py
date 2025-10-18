@@ -14,6 +14,37 @@ buttonLongw, buttonLongh = allUIOptions.buttonLong()
 isoUIelements = (Group(
 	Group(
 	Item("allModeOptions", label = 'Mode:')),
+	
+	Group(
+	Item("allAnalysisOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis"')
+	),
+	
+	# Structure extraction
+	
+	HGroup(
+	Item("thresholdExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	Item("thresholdExtractionSet", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = longh, width = longw),
+	),
+	HGroup(
+	Item("verboseStructureExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	Item("verboseStructureExtraction", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	),
+	HGroup(
+	Item("useMarchingCubesTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	Item("useMarchingCubes", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = longh, width = longw),
+	),
+	HGroup(
+	Item("extractStructures", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = buttonh, width = buttonw),
+	),
+	HGroup(
+	Item("totalNumberOfExtractedStructuresTxt", style = 'readonly', show_label = False, height = smallh, width = -230, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	Item("totalNumberOfExtractedStructures", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	),
+	HGroup(
+	Item("chooseStructureTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	Item("chooseStructure", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+	),
+	
 	Group(
 	Item("allLocalOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Visualization"')
 	),
@@ -83,13 +114,13 @@ isoUIelements = (Group(
 	Item("resolutionSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Vector slice'", width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("kernelLengthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Slice" and sliceType == "Streamlines"'),
-	Item("kernelLengthSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Streamlines'", width = tinyw, height = tinyh),
+	Item("kernelLengthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines"'),
+	Item("kernelLengthSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Fieldlines'", width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Streamlines"'),
-	Item("noiseImageDimensionSliceX", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Streamlines'", width = tinyw, height = tinyh),
-	Item("noiseImageDimensionSliceY", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Streamlines'", width = tinyw, height = tinyh),
+	Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines"'),
+	Item("noiseImageDimensionSliceX", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Fieldlines'", width = tinyw, height = tinyh),
+	Item("noiseImageDimensionSliceY", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Fieldlines'", width = tinyw, height = tinyh),
 	),
 	HGroup(
 	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
@@ -97,43 +128,43 @@ isoUIelements = (Group(
 	Item("removeSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'"),
 	),
 	
-	# Streamlines
+	# Fieldlines
 	HGroup(
-	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
 	),
 	HGroup(
-	Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("seedType", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("seedType", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
 	),
 	HGroup(
-	Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("seedScale", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", width = tinyw, height = tinyh),
+	Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("seedScale", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("seedResolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("seedResolution", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", width = tinyw, height = tinyh),
+	Item("seedResolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("seedResolution", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("seedRegionVisibleTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("seedRegionVisible", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'"),
+	Item("seedRegionVisibleTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("seedRegionVisible", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'"),
 	),
 	HGroup(
-	Item("lineTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("lineType", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	Item("lineTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("lineType", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
 	),
 	HGroup(
-	Item("lineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("lineWidth", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", width = tinyw, height = tinyh),
+	Item("lineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("lineWidth", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("integrationDirectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("integrationDirection", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'", style = 'custom'),
+	Item("integrationDirectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("integrationDirection", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
 	),
 	HGroup(
-	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Streamlines (3D)"'),
-	Item("enableStreamlines", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'"),
-	Item("removeStreamlines", show_label = False, visible_when = "allLocalOptions == 'Streamlines (3D)'"),
+	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Fieldlines (3D)"'),
+	Item("enableStreamlines", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'"),
+	Item("removeStreamlines", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'"),
 	),
 	
 	# Isosurface
