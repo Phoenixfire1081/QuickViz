@@ -3,6 +3,10 @@
 
 from traits.api import on_trait_change
 import numpy as np
+import mayavi
+from mayavi import mlab
+import os
+from copy import deepcopy
 try:
 	from extractStructuresWithMC import extractStructuresMC
 except:
@@ -10,15 +14,142 @@ except:
 
 class allSurfaceExtractionOptions:
 	
+	def clip_grid(self, n, Q, _structValuedGrid, _lastVal, verbose):
+		
+		# If the structure is last [0] indexing is not necessary when reading the file
+		if _lastVal:
+		
+			_structureExtent = np.loadtxt('NeighborInformation.txt', skiprows = n-1, dtype = int)
+
+		else:
+			
+			_structureExtent = np.loadtxt('NeighborInformation.txt', skiprows = n-1, dtype = int)[0]
+		
+		if verbose:
+			print('Original Extent:',_structureExtent)
+		
+		_structureExtentOrig = deepcopy(_structureExtent)
+		
+		# Expanded grid is necessary to read and write files properly
+		_expandedGrid = 1
+		
+		_structureExtent[1] += -_expandedGrid
+		_structureExtent[2] += _expandedGrid
+		_structureExtent[3] += -_expandedGrid
+		_structureExtent[4] += _expandedGrid
+		_structureExtent[5] += -_expandedGrid
+		_structureExtent[6] += _expandedGrid
+		
+		if _expandedGrid >= 1:
+			
+			if _structureExtent[1] < 0:
+				_structureExtent[1] = 0
+			
+			if _structureExtent[2] > self.xlength_data1:
+				_structureExtent[2] = self.xlength_data1
+			
+			if _structureExtent[3] < 0:
+				_structureExtent[3] = 0
+			
+			if _structureExtent[4] > self.ylength_data1:
+				_structureExtent[4] = self.ylength_data1
+			
+			if _structureExtent[5] < 0:
+				_structureExtent[5] = 0
+			
+			if _structureExtent[6] > self.zlength_data1:
+				_structureExtent[6] = self.zlength_data1
+		
+		if verbose:
+			print('Modified Extent:',_structureExtent)
+		
+		xlen_structure = _structureExtent[2] - _structureExtent[1]
+		ylen_structure = _structureExtent[4] - _structureExtent[3]
+		zlen_structure = _structureExtent[6] - _structureExtent[5]
+		
+		_newGrid = np.zeros((xlen_structure, ylen_structure, zlen_structure), dtype = np.float32)
+		_newGrid = _newGrid.ravel()
+		
+		Q = Q[_structureExtent[1]:_structureExtent[2], _structureExtent[3]:_structureExtent[4], _structureExtent[5]:_structureExtent[6]]
+		Q = Q.ravel()
+		
+		_structValuedGrid = np.reshape(_structValuedGrid, [self.xlength_data1, self.ylength_data1, self.zlength_data1])
+		_structValuedGrid = _structValuedGrid[_structureExtent[1]:_structureExtent[2], _structureExtent[3]:_structureExtent[4], _structureExtent[5]:_structureExtent[6]]
+		_structValuedGrid = _structValuedGrid.ravel()
+		
+		largeArray = []
+		
+		# Reconstruct grid with original values
+		for i, val in enumerate(_structValuedGrid):
+			
+			if val == n:
+				
+				_newGrid[i] = Q[i]
+				largeArray.append(Q[i])
+			
+			else:
+				
+				_newGrid[i] = 0
+				
+		_newGrid = np.reshape(_newGrid, [xlen_structure, ylen_structure, zlen_structure])
+		
+		return _newGrid, _structureExtent, largeArray, _structureExtentOrig
+	
 	@on_trait_change('chooseStructure')
 	def extractSpecificStructure(self):
 		
-		if self.chooseStructure < int(self.totalNumberOfExtractedStructures):
-			
-			print(self.chooseStructure)
-			self.structuredGrid == self.chooseStructure
+		try:
+			self.structure1_sc1.remove()
+		except:
+			pass
 		
-	
+		if self.chooseStructure <= int(self.totalNumberOfExtractedStructures) and self.chooseStructure > 0:
+			
+			if self.chooseStructure == int(self.totalNumberOfExtractedStructures):
+				_, _, largeArrayxx, largeArrayIdx = self.clip_grid(self.chooseStructure, self.x1, self.structuredGrid, True, self.verboseStructureExtraction)
+				_, _, largeArrayyy, _ = self.clip_grid(self.chooseStructure, self.y1, self.structuredGrid, True, self.verboseStructureExtraction)
+				_, _, largeArrayzz, _ = self.clip_grid(self.chooseStructure, self.z1, self.structuredGrid, True, self.verboseStructureExtraction)
+			else:
+				_, _, largeArrayxx, largeArrayIdx = self.clip_grid(self.chooseStructure, self.x1, self.structuredGrid, False, self.verboseStructureExtraction)
+				_, _, largeArrayyy, _ = self.clip_grid(self.chooseStructure, self.y1, self.structuredGrid, False, self.verboseStructureExtraction)
+				_, _, largeArrayzz, _ = self.clip_grid(self.chooseStructure, self.z1, self.structuredGrid, False, self.verboseStructureExtraction)
+			
+			xmin = np.min(largeArrayxx)
+			xmax = np.max(largeArrayxx)
+			xmaxOrig = xmax
+			if np.allclose([xmin], [xmax]) == True:
+				xmax = xmax * 1.01
+			ymin = np.min(largeArrayyy)
+			ymax = np.max(largeArrayyy)
+			ymaxOrig = ymax
+			if np.allclose([ymin], [ymax]) == True:
+				ymax = ymax * 1.01
+			zmin = np.min(largeArrayzz)
+			zmax = np.max(largeArrayzz)
+			zmaxOrig = zmax
+			if np.allclose([zmin], [zmax]) == True:
+				zmax = zmax * 1.01
+				
+			# Set extent (Idx and Act)
+			self.structXminAct = str(np.round(xmin, 3))
+			self.structXmaxAct = str(np.round(xmaxOrig, 3))
+			self.structYminAct = str(np.round(ymin, 3))
+			self.structYmaxAct = str(np.round(ymaxOrig, 3))
+			self.structZminAct = str(np.round(zmin, 3))
+			self.structZmaxAct = str(np.round(zmaxOrig, 3))
+			
+			self.structXminIdx = str(largeArrayIdx[1])
+			self.structXmaxIdx = str(largeArrayIdx[2])
+			self.structYminIdx = str(largeArrayIdx[3])
+			self.structYmaxIdx = str(largeArrayIdx[4])
+			self.structZminIdx = str(largeArrayIdx[5])
+			self.structZmaxIdx = str(largeArrayIdx[6])
+			
+			self.structVolume = str((largeArrayIdx[2] - largeArrayIdx[1]) * (largeArrayIdx[4] - largeArrayIdx[3]) * (largeArrayIdx[6] - largeArrayIdx[5]))
+			
+			self.structure1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1, 
+			color = (1, 0, 0), line_width = 2, opacity = 1, extent = [xmin, xmax, ymin, ymax, zmin, zmax])
+		
 	def actualExtraction(self, _threshVal, data, 
 	xlen, ylen, zlen, _zFastest, _verbose, 
 	_writeNeighborInformation, _writePercolationData, _marchingCubesExt):
@@ -32,315 +163,17 @@ class allSurfaceExtractionOptions:
 	@on_trait_change('extractStructures')
 	def enableExtractStructures(self):
 		
+		# Remove NeighborInformation.txt if present
+		os.system('rm -rf NeighborInformation.txt')
+		
 		# Perform extraction for objects on screen 1
 		
 		self.structuredGrid = self.actualExtraction(float(self.thresholdExtractionSet), self._dataTs1[:, :, :, self.whichTime1], 
 		self.xlength_data1, self.ylength_data1, self.zlength_data1, True, self.verboseStructureExtraction,
-		False, False, self.useMarchingCubes)
+		True, False, self.useMarchingCubes)
 		
 		# Update total number of extracted structures
 		
-		self.totalNumberOfExtractedStructures = str(np.max(self.structuredGrid))
-		
-		# Use range slider to select a particular structure
+		self.totalNumberOfExtractedStructures = int(np.max(self.structuredGrid))
 		
 		
-		
-		# Choose extracted structure with a small box around it
-		
-		# Assign structValuedGrid to timeSeries2
-		
-		# if self.radioButton1 == 'Y' or self.clamp == 1:
-			
-			# if self.screen1_ts1:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol1_sc1.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-				
-				# self.volRender1_actual(1, self.scene1.mayavi_scene)
-			
-			# if self.screen2_ts1:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol1_sc2.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender1_actual(2, self.scene2.mayavi_scene)
-			
-			# if self.screen3_ts1:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol1_sc3.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender1_actual(3, self.scene3.mayavi_scene)
-			
-			# if self.screen4_ts1:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol1_sc4.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender1_actual(4, self.scene4.mayavi_scene)
-			
-		# if self.radioButton2 == 'Y' or self.clamp == 1:
-			
-			# if self.screen1_ts2:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol2_sc1.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-				
-				# self.volRender2_actual(1, self.scene1.mayavi_scene)
-			
-			# if self.screen2_ts2:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol2_sc2.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender2_actual(2, self.scene2.mayavi_scene)
-			
-			# if self.screen3_ts2:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol2_sc3.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender2_actual(3, self.scene3.mayavi_scene)
-			
-			# if self.screen4_ts2:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol2_sc4.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender2_actual(4, self.scene4.mayavi_scene)
-		
-		# if self.radioButton3 == 'Y' or self.clamp == 1:
-			
-			# if self.screen1_ts3:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol3_sc1.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-				
-				# self.volRender3_actual(1, self.scene1.mayavi_scene)
-			
-			# if self.screen2_ts3:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol3_sc2.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender3_actual(2, self.scene2.mayavi_scene)
-			
-			# if self.screen3_ts3:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol3_sc3.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender3_actual(3, self.scene3.mayavi_scene)
-			
-			# if self.screen4_ts3:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol3_sc4.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender3_actual(4, self.scene4.mayavi_scene)
-		
-		# if self.radioButton4 == 'Y' or self.clamp == 1:
-			
-			# if self.screen1_ts4:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol4_sc1.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-				
-				# self.volRender4_actual(1, self.scene1.mayavi_scene)
-			
-			# if self.screen2_ts4:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol4_sc2.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender4_actual(2, self.scene2.mayavi_scene)
-			
-			# if self.screen3_ts4:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol4_sc3.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender4_actual(3, self.scene3.mayavi_scene)
-			
-			# if self.screen4_ts4:
-				
-				# if not self.justRemovedVolRender:
-					# try:
-						# self.vol4_sc4.remove()
-					# except AttributeError:
-						# pass # Set volume rendering first
-			
-				# self.volRender4_actual(4, self.scene4.mayavi_scene)		
-		
-		# self.justRemovedVolRender = False
-
-	# @on_trait_change('removeVolRender')
-	# def removeVolRenderChanged(self):
-		
-		# if self.radioButton1 == 'Y':
-			
-			# if self.screen1_ts1:
-			
-				# try:
-					# self.vol1_sc1.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen2_ts1:
-			
-				# try:
-					# self.vol1_sc2.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen3_ts1:
-			
-				# try:
-					# self.vol1_sc3.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen4_ts1:
-			
-				# try:
-					# self.vol1_sc4.remove()
-				# except AttributeError:
-					# pass # Set slice first
-		
-		# if self.radioButton2 == 'Y':
-			
-			# if self.screen1_ts2:
-			
-				# try:
-					# self.vol2_sc1.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen2_ts2:
-			
-				# try:
-					# self.vol2_sc2.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen3_ts2:
-			
-				# try:
-					# self.vol2_sc3.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen4_ts2:
-			
-				# try:
-					# self.vol2_sc4.remove()
-				# except AttributeError:
-					# pass # Set slice first
-		
-		# if self.radioButton3 == 'Y':
-			
-			# if self.screen1_ts3:
-			
-				# try:
-					# self.vol3_sc1.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen2_ts3:
-			
-				# try:
-					# self.vol3_sc2.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen3_ts3:
-			
-				# try:
-					# self.vol3_sc3.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen4_ts3:
-			
-				# try:
-					# self.vol3_sc4.remove()
-				# except AttributeError:
-					# pass # Set slice first
-		
-		# if self.radioButton4 == 'Y':
-			
-			# if self.screen1_ts4:
-			
-				# try:
-					# self.vol4_sc1.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen2_ts4:
-			
-				# try:
-					# self.vol4_sc2.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen3_ts4:
-			
-				# try:
-					# self.vol4_sc3.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-			# if self.screen4_ts4:
-			
-				# try:
-					# self.vol4_sc4.remove()
-				# except AttributeError:
-					# pass # Set slice first
-			
-		# self.justRemovedVolRender = True

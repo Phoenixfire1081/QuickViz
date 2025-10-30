@@ -142,9 +142,22 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	verboseStructureExtraction = Bool()
 	useMarchingCubes = Bool()
 	extractStructures = Button('Extract')
-	totalNumberOfExtractedStructures = Str('')
-	chooseStructure = Range(0, 100, 0) # Use 100 by default
-	# writeLabelGrid
+	totalNumberOfExtractedStructures = Int()
+	includeEmptySpace = Int()
+	chooseStructure = Range(0, 100, 0, low_name = 'includeEmptySpace', high_name='totalNumberOfExtractedStructures') # Dynamically adjust depending on what's found
+	structXminIdx = Str('')
+	structXmaxIdx = Str('')
+	structYminIdx = Str('')
+	structYmaxIdx = Str('')
+	structZminIdx = Str('')
+	structZmaxIdx = Str('')
+	structXminAct = Str('')
+	structXmaxAct = Str('')
+	structYminAct = Str('')
+	structYmaxAct = Str('')
+	structZminAct = Str('')
+	structZmaxAct = Str('')
+	structVolume = Str('')
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -327,6 +340,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	useMarchingCubesTxt = Str('Marching Cubes:')
 	totalNumberOfExtractedStructuresTxt = Str('Total number of extracted structures:')
 	chooseStructureTxt = Str('Select structure:')
+	structInfoTxt = Str('Structure Information:')
+	extentIdxTxt = Str('Extent (Idx):')
+	extentActTxt = Str('Extent (Act):')
+	structVolTxt = Str('Structure volume (Idx):')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -814,6 +831,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		# Default option for structure extraction
 		self.useMarchingCubes = True
 		self.verboseStructureExtraction = False
+		self.totalNumberOfExtractedStructures = 0
+		self.includeEmptySpace = 0
 				
 	view = View(
 	
