@@ -119,16 +119,22 @@ class allSurfaceExtractionOptions:
 			xmaxOrig = xmax
 			if np.allclose([xmin], [xmax]) == True:
 				xmax = xmax * 1.01
+				if xmax == 0:
+					xmax = 0.01
 			ymin = np.min(largeArrayyy)
 			ymax = np.max(largeArrayyy)
 			ymaxOrig = ymax
 			if np.allclose([ymin], [ymax]) == True:
 				ymax = ymax * 1.01
+				if ymax == 0:
+					ymax = 0.01
 			zmin = np.min(largeArrayzz)
 			zmax = np.max(largeArrayzz)
 			zmaxOrig = zmax
 			if np.allclose([zmin], [zmax]) == True:
 				zmax = zmax * 1.01
+				if zmax == 0:
+					zmax = 0.01
 				
 			# Set extent (Idx and Act)
 			self.structXminAct = str(np.round(xmin, 3))
