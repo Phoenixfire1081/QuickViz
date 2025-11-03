@@ -31,6 +31,15 @@ class UIOptionsClass:
 		
 		return width, height
 	
+	def textFieldHuge(self):
+		
+		# For huge text field entries
+		
+		width = -300
+		height = -100
+		
+		return width, height
+	
 	def slider(self):
 		
 		# Slider controls

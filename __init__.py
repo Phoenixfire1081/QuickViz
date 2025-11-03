@@ -28,6 +28,7 @@ from .Visualization_elements.volumeRenderingOptions import allVolRenderingOption
 from .Visualization_elements.sliceOptions import allSliceOptions
 from .Visualization_elements.streamlineOptions import allStreamlineOptions
 from .Visualization_elements.surfaceExtractionOptions import allSurfaceExtractionOptions
+from .Visualization_elements.playgroundOptions import allPlaygroundOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -45,7 +46,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
 	activeDataControlClass, fileChooserClass, allPathControlsClass,\
 	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,\
-	allSurfaceExtractionOptions):
+	allSurfaceExtractionOptions, allPlaygroundOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -94,7 +95,22 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	# All Log lattice options
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
 	
+	# All Playground options
 	allPlaygroundOptions = Enum(['Linear modes', 'Golden mean', 'Plastic number', 'Others'], cols = 4) 
+	initCondition1 = Str('')
+	# initCondition2 = Str('')
+	# initCondition3 = Str('')
+	# initCondition4 = Str('')
+	# initCondition5 = Str('') 
+	# Add1 = Button('Add')
+	# Add2 = Button('Add')
+	# Add3 = Button('Add')
+	# Add4 = Button('Add')
+	# Remove2 = Button('Remove')
+	# Remove3 = Button('Remove')
+	# Remove4 = Button('Remove')
+	GenerateStructure = Button('Generate')
+	ResetStructure = Button('Reset')
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
@@ -346,6 +362,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	extentIdxTxt = Str('Extent (Idx):')
 	extentActTxt = Str('Extent (Act):')
 	structVolTxt = Str('Structure volume (Idx):')
+	defineStructureTxt = Str('Define vortex structure:')
+	defineStructureDescriptionVorticityTxt = Str('For vorticity, use wx, wy, wz')
+	defineStructureDescriptionVelocityTxt = Str('For velocity, ux, uy, uz')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

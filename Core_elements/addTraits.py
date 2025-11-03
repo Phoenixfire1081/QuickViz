@@ -133,6 +133,10 @@ def include_all_traits(self):
 	self.on_trait_change(self.enableExtractStructures, "extractStructures")
 	self.on_trait_change(self.extractSpecificStructure, "chooseStructure")
 	
+	# allPlaygroundOptions
+	self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
+	# self.on_trait_change(self.removeStructure, "removeStructure")
+	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")
 	self.on_trait_change(self.time_changed2, "whichTime2")
