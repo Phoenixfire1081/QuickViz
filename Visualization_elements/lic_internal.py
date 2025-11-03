@@ -5,7 +5,6 @@
 import numpy as np
 from numba import jit
 
-
 @jit(nopython=True, cache=True)
 def _advance(vx, vy, x, y, fx, fy, w, h):
     if vx >= 0:

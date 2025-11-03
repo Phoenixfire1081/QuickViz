@@ -83,7 +83,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	outlineColorBlue4 = Float(0.0)	
 	
 	# Mode
-	allModeOptions = Enum(['Visualization', 'Analysis', 'Log lattice', 'Blender exports'])
+	allModeOptions = Enum(['Visualization', 'Analysis', 'Log Lattice', 'Blender exports'])
 	
 	# All Visualization options
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
@@ -92,7 +92,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Q-tensor'], cols=4)
 	
 	# All Log lattice options
-	# allLLOptions = Enum(['']) # Necessary?
+	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
+	
+	allPlaygroundOptions = Enum(['Linear modes', 'Golden mean', 'Plastic number', 'Others'], cols = 4) 
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()

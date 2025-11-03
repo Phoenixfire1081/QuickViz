@@ -12,11 +12,24 @@ buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 isoUIelements = (Group(
+
+	# All mode options
 	Group(
 	Item("allModeOptions", label = 'Mode:')),
 	
+	# All analysis options
 	Group(
 	Item("allAnalysisOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis"')
+	),
+	
+	# All Log lattice options
+	Group(
+	Item("allLLOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Log Lattice"')
+	),
+	
+	# Log lattice - playground
+	Group(
+	Item("allPlaygroundOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"')
 	),
 	
 	# Structure extraction
