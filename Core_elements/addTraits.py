@@ -137,6 +137,9 @@ def include_all_traits(self):
 	self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
 	# self.on_trait_change(self.removeStructure, "removeStructure")
 	
+	# allAnalysisOptions
+	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")
+	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")
 	self.on_trait_change(self.time_changed2, "whichTime2")

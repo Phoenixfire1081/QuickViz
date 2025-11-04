@@ -11,6 +11,8 @@ class allPlaygroundOptions:
 		
 		# TODO - Show dialog box that this will overwrite time series 1
 		
-		print(1)
+		print(self.initCondition1)
+		
+		
 		
 		

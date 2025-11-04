@@ -29,6 +29,7 @@ from .Visualization_elements.sliceOptions import allSliceOptions
 from .Visualization_elements.streamlineOptions import allStreamlineOptions
 from .Visualization_elements.surfaceExtractionOptions import allSurfaceExtractionOptions
 from .Visualization_elements.playgroundOptions import allPlaygroundOptions
+from .Visualization_elements.analysisOptions import allAnalysisOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -46,7 +47,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	timeUpdateBehavior, allContourOptions, allCameraOptions, \
 	activeDataControlClass, fileChooserClass, allPathControlsClass,\
 	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,\
-	allSurfaceExtractionOptions, allPlaygroundOptions):
+	allSurfaceExtractionOptions, allPlaygroundOptions, allAnalysisOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -91,6 +92,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	
 	# All Analysis options
 	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Q-tensor'], cols=4)
+	
+	# Q-tensor
+	calculateQtensor = Button('Calculate')
 	
 	# All Log lattice options
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
@@ -364,7 +368,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	structVolTxt = Str('Structure volume (Idx):')
 	defineStructureTxt = Str('Define vortex structure:')
 	defineStructureDescriptionVorticityTxt = Str('For vorticity, use wx, wy, wz')
-	defineStructureDescriptionVelocityTxt = Str('For velocity, ux, uy, uz')
+	defineStructureDescriptionVelocityTxt = Str('For velocity, use ux, uy, uz')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
