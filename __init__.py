@@ -120,6 +120,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	LL_path = Str(os.getcwd())
 	choose_folder_LLPath = Button('ChooseLLPath')
 	
+	
 	# Isosurface options
 	hideShowIsosurface = Bool()
 	colorFields = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', \
@@ -373,6 +374,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	defineStructureTxt = Str('Define vortex structure:')
 	defineStructureDescriptionVorticityTxt = Str('For vorticity, use wx, wy, wz')
 	defineStructureDescriptionVelocityTxt = Str('For velocity, use ux, uy, uz')
+	LoadLLTxt = Str('LL data path:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

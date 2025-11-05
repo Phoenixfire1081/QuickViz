@@ -5,6 +5,7 @@ from .fieldLines_UI import fieldLinesUIelements
 from .slice_UI import sliceUIelements
 from .structureExtraction_UI import structureExtractionUIelements
 from .volumeRendering_UI import volumeRenderingUIelements
+from .realSpaceVisualization_UI import realSpaceVisualizationUIelements
 
 # Initialize UI layout customization
 allUIOptions = UIOptionsClass()
@@ -42,6 +43,10 @@ isoUIelements = (Group(
 	# Structure extraction
 	
 	structureExtractionUIelements,
+	
+	# Real space visualization
+	
+	realSpaceVisualizationUIelements,
 	
 	# Group(Item("IsoOptionsTxt", show_label = False, visible_when = 'allLocalOptions == "Isosurface"', style = 'readonly')),
 	
