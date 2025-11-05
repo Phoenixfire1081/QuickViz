@@ -116,6 +116,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	GenerateStructure = Button('Generate')
 	ResetStructure = Button('Reset')
 	
+	# All Real Space Visualization options
+	LL_path = Str(os.getcwd())
+	choose_folder_LLPath = Button('ChooseLLPath')
+	
 	# Isosurface options
 	hideShowIsosurface = Bool()
 	colorFields = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', \

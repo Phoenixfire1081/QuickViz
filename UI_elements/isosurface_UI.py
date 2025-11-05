@@ -1,5 +1,10 @@
 from traitsui.api import VGroup, HSplit, Group, Item, HGroup, RangeEditor
 from .UICustomization import UIOptionsClass
+from .LLPlayground_UI import LLPlayGroundUIelements
+from .fieldLines_UI import fieldLinesUIelements
+from .slice_UI import sliceUIelements
+from .structureExtraction_UI import structureExtractionUIelements
+from .volumeRendering_UI import volumeRenderingUIelements
 
 # Initialize UI layout customization
 allUIOptions = UIOptionsClass()
@@ -31,73 +36,12 @@ isoUIelements = (Group(
 	),
 	
 	# Log lattice - playground
-	Group(
-	Item("allPlaygroundOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"')
-	),
 	
-	HGroup(Item("defineStructureTxt", style = 'readonly', show_label = False, visible_when='allModeOptions == "Log Lattice" and allLLOptions == "Playground"'),),
-	HGroup(Item("defineStructureDescriptionVorticityTxt", style = 'readonly', show_label = False, visible_when='allModeOptions == "Log Lattice" and allLLOptions == "Playground"'),),
-	HGroup(Item("defineStructureDescriptionVelocityTxt", style = 'readonly', show_label = False, visible_when='allModeOptions == "Log Lattice" and allLLOptions == "Playground"'),),
-	HGroup(Item("initCondition1", show_label = False, visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"', height = hugeh, width = hugew),),
-	
-	HGroup(
-	Item("GenerateStructure", show_label = False, visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"', height = buttonh, width = buttonw),
-	Item("ResetStructure", show_label = False, visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"', height = buttonh, width = buttonw),
-	),
+	LLPlayGroundUIelements,
 	
 	# Structure extraction
 	
-	HGroup(
-	Item("thresholdExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	Item("thresholdExtractionSet", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = longh, width = longw),
-	),
-	HGroup(
-	Item("verboseStructureExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	Item("verboseStructureExtraction", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	),
-	HGroup(
-	Item("useMarchingCubesTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	Item("useMarchingCubes", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = longh, width = longw),
-	),
-	HGroup(
-	Item("extractStructures", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = buttonh, width = buttonw),
-	),
-	HGroup(
-	Item("totalNumberOfExtractedStructuresTxt", style = 'readonly', show_label = False, height = smallh, width = -230, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	Item("totalNumberOfExtractedStructures", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	),
-	HGroup(
-	Item("chooseStructureTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	Item("chooseStructure", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='totalNumberOfExtractedStructures'), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
-	),
-	HGroup(
-	Item("structInfoTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	),
-	HGroup(
-	Item("extentIdxTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structXminIdx", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structXmaxIdx", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structYminIdx", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structYmaxIdx", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structZminIdx", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structZmaxIdx", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	),
-	HGroup(
-	Item("extentActTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structXminAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structXmaxAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structYminAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structYmaxAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structZminAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structZmaxAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	),
-	HGroup(
-	Item("structVolTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	Item("structVolume", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-	),
-	Group(
-	Item("allLocalOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Visualization"')
-	),
+	structureExtractionUIelements,
 	
 	# Group(Item("IsoOptionsTxt", show_label = False, visible_when = 'allLocalOptions == "Isosurface"', style = 'readonly')),
 	
@@ -106,116 +50,15 @@ isoUIelements = (Group(
 	
 	# Volume rendering
 	
-	HGroup(
-	Item("enableVolRendering", label = "Define options below and set:", visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	Item("removeVolRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	),
-	HGroup(
-	Item("EnableShadowsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	Item("shade_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	),
-	HGroup(
-	Item("AmbientOcclusionsTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	Item("ambient_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
-	),
-	HGroup(
-	Item("DiffuseReflectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	Item("diffuse_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
-	),
-	HGroup(
-	Item("SpecularHighlightsTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	Item("specular_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
-	),
-	HGroup(
-	Item("OpacityFallOffTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
-	Item("opacityFallOff_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
-	),
+	volumeRenderingUIelements,
 	
 	# Slice
 	
-	HGroup(
-	Item("ChooseSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='allLocalOptions == "Slice" and allModeOptions == "Visualization"'),
-	Item("sliceType", show_label = False, visible_when = 'allLocalOptions == "Slice" and allModeOptions == "Visualization"'),
-	),
-	HGroup(
-	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-	Item("whichVector", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"', style = 'custom'),
-	),
-	HGroup(
-	Item("whichScalarSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-	Item("whichScalarSlice", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-	),
-	HGroup(
-	Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-	Item("planeOrientation", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"', style = 'custom'),
-	),
-	HGroup(
-	Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-	Item("whichSliceX", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "X" and allModeOptions == "Visualization"', width = sliderw),
-	Item("whichSliceY", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Y" and allModeOptions == "Visualization"', width = sliderw),
-	Item("whichSliceZ", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Z" and allModeOptions == "Visualization"', width = sliderw),
-	),
-	HGroup(
-	Item("scaleFactorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice" and allModeOptions == "Visualization"'),
-	Item("scaleFactorSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Vector slice" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice" and allModeOptions == "Visualization"'),
-	Item("resolutionSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Vector slice" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("kernelLengthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines" and allModeOptions == "Visualization"'),
-	Item("kernelLengthSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines" and allModeOptions == "Visualization"'),
-	Item("noiseImageDimensionSliceX", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	Item("noiseImageDimensionSliceY", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-	Item("enableSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"'),
-	Item("removeSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"'),
-	),
+	sliceUIelements,
 	
 	# Fieldlines
-	HGroup(
-	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("whichVector", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
-	),
-	HGroup(
-	Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("seedType", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
-	),
-	HGroup(
-	Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("seedScale", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("seedResolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("seedResolution", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("seedRegionVisibleTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("seedRegionVisible", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	),
-	HGroup(
-	Item("lineTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("lineType", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
-	),
-	HGroup(
-	Item("lineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("lineWidth", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
-	),
-	HGroup(
-	Item("integrationDirectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("integrationDirection", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
-	),
-	HGroup(
-	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("enableStreamlines", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	Item("removeStreamlines", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
-	),
+	
+	fieldLinesUIelements,
 	
 	# Isosurface
 	
