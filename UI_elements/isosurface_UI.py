@@ -107,114 +107,114 @@ isoUIelements = (Group(
 	# Volume rendering
 	
 	HGroup(
-	Item("enableVolRendering", label = "Define options below and set:", visible_when = "allLocalOptions == 'Volume Rendering'"),
-	Item("removeVolRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'"),
+	Item("enableVolRendering", label = "Define options below and set:", visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
+	Item("removeVolRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
 	),
 	HGroup(
-	Item("EnableShadowsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when="allLocalOptions == 'Volume Rendering'"),
-	Item("shade_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'"),
+	Item("EnableShadowsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
+	Item("shade_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
 	),
 	HGroup(
-	Item("AmbientOcclusionsTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when="allLocalOptions == 'Volume Rendering'"),
-	Item("ambient_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'", height = tinyh, width = tinyw),
+	Item("AmbientOcclusionsTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
+	Item("ambient_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
 	),
 	HGroup(
-	Item("DiffuseReflectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when="allLocalOptions == 'Volume Rendering'"),
-	Item("diffuse_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'", height = tinyh, width = tinyw),
+	Item("DiffuseReflectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
+	Item("diffuse_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
 	),
 	HGroup(
-	Item("SpecularHighlightsTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when="allLocalOptions == 'Volume Rendering'"),
-	Item("specular_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'", height = tinyh, width = tinyw),
+	Item("SpecularHighlightsTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
+	Item("specular_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
 	),
 	HGroup(
-	Item("OpacityFallOffTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when="allLocalOptions == 'Volume Rendering'"),
-	Item("opacityFallOff_volRender", show_label = False, visible_when = "allLocalOptions == 'Volume Rendering'", height = tinyh, width = tinyw),
+	Item("OpacityFallOffTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"'),
+	Item("opacityFallOff_volRender", show_label = False, visible_when = 'allLocalOptions == "Volume Rendering" and allModeOptions == "Visualization"', height = tinyh, width = tinyw),
 	),
 	
 	# Slice
 	
 	HGroup(
-	Item("ChooseSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='allLocalOptions == "Slice"'),
-	Item("sliceType", show_label = False, visible_when = "allLocalOptions == 'Slice'"),
+	Item("ChooseSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='allLocalOptions == "Slice" and allModeOptions == "Visualization"'),
+	Item("sliceType", show_label = False, visible_when = 'allLocalOptions == "Slice" and allModeOptions == "Visualization"'),
 	),
 	HGroup(
-	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None"'),
-	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Slice' and sliceType != 'Contour slice' and sliceType != 'None'", style = 'custom'),
+	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
+	Item("whichVector", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"', style = 'custom'),
 	),
 	HGroup(
-	Item("whichScalarSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None"'),
-	Item("whichScalarSlice", show_label = False, visible_when = "allLocalOptions == 'Slice' and sliceType == 'Contour slice' and sliceType != 'None'"),
+	Item("whichScalarSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
+	Item("whichScalarSlice", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
 	),
 	HGroup(
-	Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
-	Item("planeOrientation", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'", style = 'custom'),
+	Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
+	Item("planeOrientation", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"', style = 'custom'),
 	),
 	HGroup(
-	Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
-	Item("whichSliceX", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None' and planeOrientation == 'X'", width = sliderw),
-	Item("whichSliceY", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None' and planeOrientation == 'Y'", width = sliderw),
-	Item("whichSliceZ", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None' and planeOrientation == 'Z'", width = sliderw),
+	Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
+	Item("whichSliceX", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "X" and allModeOptions == "Visualization"', width = sliderw),
+	Item("whichSliceY", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Y" and allModeOptions == "Visualization"', width = sliderw),
+	Item("whichSliceZ", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Z" and allModeOptions == "Visualization"', width = sliderw),
 	),
 	HGroup(
-	Item("scaleFactorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice"'),
-	Item("scaleFactorSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Vector slice'", width = tinyw, height = tinyh),
+	Item("scaleFactorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice" and allModeOptions == "Visualization"'),
+	Item("scaleFactorSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Vector slice" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice"'),
-	Item("resolutionSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Vector slice'", width = tinyw, height = tinyh),
+	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice" and allModeOptions == "Visualization"'),
+	Item("resolutionSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Vector slice" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("kernelLengthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines"'),
-	Item("kernelLengthSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Fieldlines'", width = tinyw, height = tinyh),
+	Item("kernelLengthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines" and allModeOptions == "Visualization"'),
+	Item("kernelLengthSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines"'),
-	Item("noiseImageDimensionSliceX", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Fieldlines'", width = tinyw, height = tinyh),
-	Item("noiseImageDimensionSliceY", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType == 'Fieldlines'", width = tinyw, height = tinyh),
+	Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Fieldlines" and allModeOptions == "Visualization"'),
+	Item("noiseImageDimensionSliceX", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
+	Item("noiseImageDimensionSliceY", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None"'),
-	Item("enableSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'"),
-	Item("removeSlice", show_label = False, visible_when = "allLocalOptions == 'Slice'  and sliceType != 'None'"),
+	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
+	Item("enableSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"'),
+	Item("removeSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"'),
 	),
 	
 	# Fieldlines
 	HGroup(
-	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("whichVector", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
+	Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("whichVector", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
 	),
 	HGroup(
-	Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("seedType", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
+	Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("seedType", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
 	),
 	HGroup(
-	Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("seedScale", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", width = tinyw, height = tinyh),
+	Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("seedScale", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("seedResolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("seedResolution", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", width = tinyw, height = tinyh),
+	Item("seedResolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("seedResolution", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("seedRegionVisibleTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("seedRegionVisible", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'"),
+	Item("seedRegionVisibleTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("seedRegionVisible", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
 	),
 	HGroup(
-	Item("lineTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("lineType", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
+	Item("lineTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("lineType", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
 	),
 	HGroup(
-	Item("lineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("lineWidth", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", width = tinyw, height = tinyh),
+	Item("lineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("lineWidth", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 	),
 	HGroup(
-	Item("integrationDirectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("integrationDirection", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'", style = 'custom'),
+	Item("integrationDirectionTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("integrationDirection", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
 	),
 	HGroup(
-	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Fieldlines (3D)"'),
-	Item("enableStreamlines", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'"),
-	Item("removeStreamlines", show_label = False, visible_when = "allLocalOptions == 'Fieldlines (3D)'"),
+	Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("enableStreamlines", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
+	Item("removeStreamlines", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
 	),
 	
 	# Isosurface
