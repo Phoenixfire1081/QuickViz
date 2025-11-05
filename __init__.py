@@ -118,7 +118,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	
 	# All Real Space Visualization options
 	LL_path = Str(os.getcwd())
-	choose_folder_LLPath = Button('ChooseLLPath')
+	choose_folder_LLPath = Button('Set')
 	
 	
 	# Isosurface options

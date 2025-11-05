@@ -12,12 +12,14 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
+visibilityRSV = 'allModeOptions == "Log Lattice" and allLLOptions == "Real Space Visualization"'
+
 realSpaceVisualizationUIelements = Group(
 
 HGroup(
-Item("LoadLLTxt", style = 'readonly', show_label = False, height = smallh, width = -100),
-Item("LL_path", show_label = False, height = longh, width = longw),
-Item("choose_folder_LLPath", show_label = False, height = buttonh, width = buttonw),
+Item("LoadLLTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when = visibilityRSV),
+Item("LL_path", show_label = False, height = longh, width = longw, visible_when = visibilityRSV),
+Item("choose_folder_LLPath", show_label = False, height = buttonh, width = buttonw, visible_when = visibilityRSV),
 ),
 
 ),
