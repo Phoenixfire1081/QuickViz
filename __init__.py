@@ -29,6 +29,7 @@ from .Visualization_elements.sliceOptions import allSliceOptions
 from .Visualization_elements.streamlineOptions import allStreamlineOptions
 from .Visualization_elements.surfaceExtractionOptions import allSurfaceExtractionOptions
 from .Visualization_elements.playgroundOptions import allPlaygroundOptions
+from .Visualization_elements.realSpaceVisualizationOptions import allRealSpaceVisualizationOptions
 from .Visualization_elements.analysisOptions import allAnalysisOptions
 
 # Import UI elements
@@ -42,12 +43,13 @@ from .UI_elements.cameraOptions_UI import cameraUIelements
 
 # Allow for a maximum of 4 time series datasets
 
-class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
-	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, \
-	timeUpdateBehavior, allContourOptions, allCameraOptions, \
-	activeDataControlClass, fileChooserClass, allPathControlsClass,\
-	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,\
-	allSurfaceExtractionOptions, allPlaygroundOptions, allAnalysisOptions):
+class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
+	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, 
+	timeUpdateBehavior, allContourOptions, allCameraOptions, 
+	activeDataControlClass, fileChooserClass, allPathControlsClass,
+	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,
+	allSurfaceExtractionOptions, allPlaygroundOptions, allAnalysisOptions,
+	allRealSpaceVisualizationOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -118,7 +120,19 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	
 	# All Real Space Visualization options
 	LL_path = Str(os.getcwd())
-	choose_folder_LLPath = Button('Set')
+	choose_folder_LLPath = Button('Browse')
+	computeLL = Button('Compute')
+	timeStep_LL = Str('')
+	xmin_LL = Str('')
+	xmax_LL = Str('')
+	ymin_LL = Str('')
+	ymax_LL = Str('')
+	zmin_LL = Str('')
+	zmax_LL = Str('')
+	xres_LL = Str('')
+	yres_LL = Str('')
+	zres_LL = Str('')
+	whichScalar_LL = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
 	
 	
 	# Isosurface options
@@ -375,6 +389,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 	defineStructureDescriptionVorticityTxt = Str('For vorticity, use wx, wy, wz')
 	defineStructureDescriptionVelocityTxt = Str('For velocity, use ux, uy, uz')
 	LoadLLTxt = Str('LL data path:')
+	whichTimeStepLLTxt = Str('Which time step (s):')
+	parametersTxt = Str('Set parameters for visualization:')
+	minExtentTxt = Str('Min. extent:')
+	maxExtentTxt = Str('Max. extent:')
+	resolutionTxt = Str('Resolution:')
+	whichScalarTxt = Str('Choose scalar:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -864,6 +884,19 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,\
 		self.verboseStructureExtraction = False
 		self.totalNumberOfExtractedStructures = 0
 		self.includeEmptySpace = 0
+		
+		# Default option for real space visualization
+		# self.showRSVOptions = False
+		self.timeStep_LL = '1'
+		self.xmin_LL = '-0.5'
+		self.ymin_LL = '-0.5'
+		self.zmin_LL = '-0.5'
+		self.xmax_LL = '0.5'
+		self.ymax_LL = '0.5'
+		self.zmax_LL = '0.5'
+		self.xres_LL = '41'
+		self.yres_LL = '41'
+		self.zres_LL = '41'
 				
 	view = View(
 	

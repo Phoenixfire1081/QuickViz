@@ -137,6 +137,9 @@ def include_all_traits(self):
 	self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
 	# self.on_trait_change(self.removeStructure, "removeStructure")
 	
+	# allRealSpaceVisualizationOptions
+	self.on_trait_change(self.computeLL_fired, "computeLL")
+	
 	# allAnalysisOptions
 	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")
 	

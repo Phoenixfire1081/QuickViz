@@ -66,6 +66,15 @@ class UIOptionsClass:
 		height = -30
 		
 		return width, height
+	
+	def buttonLonger(self):
+		
+		# Longer buttons
+		
+		width = -150
+		height = -30
+		
+		return width, height
 		
 	def button(self):
 		
