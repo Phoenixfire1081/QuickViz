@@ -54,6 +54,8 @@ Item("zres_LL", show_label = False, height = tinyh, width = tinyw , visible_when
 ),
 
 HGroup(
+Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = visibilityRSV),
+Item("whichScalar_LL", show_label = False, visible_when = visibilityRSV),
 Item("computeLL", height = buttonh, width = buttonw, show_label = False, visible_when = visibilityRSV),
 ),
 
