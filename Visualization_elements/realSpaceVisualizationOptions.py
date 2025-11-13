@@ -77,27 +77,29 @@ class allRealSpaceVisualizationOptions:
 			minTs = int(self.timeStep_LL.split('-')[0])
 			maxTs = int(self.timeStep_LL.split('-')[1]) + 1
 			
+			# Check if skip values are provided
+			try: 
+				skipTs = int(self.timeStep_LL.split('-')[2])
+			except:
+				skipTs = 1
+			
 		else:
 			minTs = int(self.timeStep_LL)
 			maxTs = int(self.timeStep_LL) + 1
 			
 		# Completely replace TS1 with new data
 		
-		self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
-		self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
-		self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
-		self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
-		self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
-		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
-		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
 		
-		print(self.ts1max)
+		self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
 		
-		self.ts1max = maxTs - minTs - 1 # This updates the slider
-		
-		print(self.ts1max)
-		
-		for ts in range(minTs, maxTs):
+		for ts in range(minTs, maxTs, skipTs):
 	
 			# Load the chosen time step
 			data, grid = dexp.load_step(ts)
@@ -225,8 +227,6 @@ class allRealSpaceVisualizationOptions:
 			vortices = vortexExtract(velx, vely, velz, dx, dy, dz)
 			vortx, vorty, vortz = vortices.vorticityComponents()
 			
-			# 'Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'
-			
 			if self.whichScalar_LL == 'Vorticity magnitude':
 				scalar = vortices.vorticityMagnitude()
 			elif self.whichScalar_LL == 'Q-criterion':
@@ -253,6 +253,7 @@ class allRealSpaceVisualizationOptions:
 			ctr += 1
 			
 		# Choose the last time step to force refresh
-		self.whichTime1 = maxTs-minTs-1
+		# Doesn't work when only one time step is calculated
+		self.whichTime1 = (maxTs-minTs)//skipTs - 1
 		
 		

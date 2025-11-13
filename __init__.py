@@ -408,7 +408,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	maxExtentTxt = Str('Max. extent:')
 	resolutionTxt = Str('Resolution:')
 	whichScalarTxt = Str('Choose scalar:')
-	exampleTSTxt = Str('(ex:1 or 3-6)')
+	exampleTSTxt = Str('(ex:1 or 3-6 or 1-100-10)')
 	samplingPointsTxt = Str('Sampling points:')
 	
 	# Create next time button
