@@ -56,6 +56,19 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Clamp for changing all TS
 	clamp = Bool()
 	
+	# Add time series
+	
+	ts1max = Int()
+	ts2max = Int()
+	ts3max = Int()
+	ts4max = Int()
+	
+	whichTime1 = Range(0, 100, 0, low_name = 'includeEmptySpace', high_name='ts1max') 
+	whichTime2 = Range(0, 100, 0, low_name = 'includeEmptySpace', high_name='ts2max') 
+	whichTime3 = Range(0, 100, 0, low_name = 'includeEmptySpace', high_name='ts3max') 
+	whichTime4 = Range(0, 100, 0, low_name = 'includeEmptySpace', high_name='ts4max') 
+	whichTimeGlobal = Range(0, 100, 0, low_name = 'includeEmptySpace', high_name='ts1max') 
+	
 	# Create radio button
 	radioButton1 = Enum('N', 'Y')
 	radioButton2 = Enum('N', 'Y')
@@ -542,12 +555,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.ts2max = self.numTs2
 		self.ts3max = self.numTs3
 		self.ts4max = self.numTs4
-		
-		self.add_trait("whichTime1", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts1max'))
-		self.add_trait("whichTime2", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts2max'))
-		self.add_trait("whichTime3", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts3max'))
-		self.add_trait("whichTime4", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts4max'))
-		self.add_trait("whichTimeGlobal", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts1max')) # This assumes all TS have same length
 		
 		# By default, choose the first time instance
 		_data1 = self._dataTs1[:, :, :, 0]

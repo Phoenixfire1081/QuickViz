@@ -91,9 +91,11 @@ class allRealSpaceVisualizationOptions:
 		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
 		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
 		
-		print(np.shape(self._dataTs1))
+		print(self.ts1max)
 		
-		self.ts1max = maxTs - minTs # This updates the slider
+		self.ts1max = maxTs - minTs - 1 # This updates the slider
+		
+		print(self.ts1max)
 		
 		for ts in range(minTs, maxTs):
 	

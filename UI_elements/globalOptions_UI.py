@@ -23,7 +23,6 @@ Item("BGColorBlue", show_label = False, height = tinyh, width = tinyw),
 # Time options
 
 Group(label = 'Time step control:'),
-
 HGroup(Item("TStext", style = 'readonly', show_label = False, height = smallh, width = -80),
 Item("whichTime1", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='ts1max'), visible_when = 'radioButton1 == "Y" and clamp == 0', width = sliderw),
 # Item("whichTime1", label = '1', visible_when='radioButton1 == "Y" and clamp == 0', width = sliderw), 
