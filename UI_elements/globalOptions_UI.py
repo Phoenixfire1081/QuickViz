@@ -1,4 +1,4 @@
-from traitsui.api import VGroup, HSplit, Group, Item, HGroup
+from traitsui.api import VGroup, HSplit, Group, Item, HGroup, RangeEditor
 from .UICustomization import UIOptionsClass
 
 # Initialize UI layout customization
@@ -24,8 +24,9 @@ Item("BGColorBlue", show_label = False, height = tinyh, width = tinyw),
 
 Group(label = 'Time step control:'),
 
-HGroup(Item("TStext", style = 'readonly', show_label = False, height = smallh, width = -115),
-Item("whichTime1", label = '1', visible_when='radioButton1 == "Y" and clamp == 0', width = sliderw), 
+HGroup(Item("TStext", style = 'readonly', show_label = False, height = smallh, width = -80),
+Item("whichTime1", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='ts1max'), visible_when = 'radioButton1 == "Y" and clamp == 0', width = sliderw),
+# Item("whichTime1", label = '1', visible_when='radioButton1 == "Y" and clamp == 0', width = sliderw), 
 Item("whichTime2", label = '2', visible_when='radioButton2 == "Y" and clamp == 0', width = sliderw), 
 Item("whichTime3", show_label = False, visible_when='radioButton3 == "Y" and clamp == 0', width = sliderw), 
 Item("whichTime4", show_label = False, visible_when='radioButton4 == "Y" and clamp == 0', width = sliderw),

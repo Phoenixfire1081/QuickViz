@@ -6,9 +6,7 @@ import numpy as np
 from mayavi import mlab
 from PIL import Image
 from pyface.api import GUI
-import os
-import tkinter
-from tkinter import filedialog
+from .tKinter import folderBrowser
 
 class allSaveMovieOptions:
 
@@ -97,11 +95,4 @@ class allSaveMovieOptions:
 	@on_trait_change('choose_folder')
 	def choose_folder_button_fired(self):
 		
-		# Initialize tKinter
-		root = tkinter.Tk()
-		root.withdraw()
-		
-		currdir = os.getcwd()
-		tkFolderPicker = filedialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
-		
-		self.save_path = tkFolderPicker
+		self.save_path = folderBrowser()

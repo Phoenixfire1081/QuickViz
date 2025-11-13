@@ -139,6 +139,7 @@ def include_all_traits(self):
 	
 	# allRealSpaceVisualizationOptions
 	self.on_trait_change(self.computeLL_fired, "computeLL")
+	self.on_trait_change(self.choose_folder_LLPath_fired, "choose_folder_LLPath")
 	
 	# allAnalysisOptions
 	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")

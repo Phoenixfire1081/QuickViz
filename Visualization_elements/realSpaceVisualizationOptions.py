@@ -3,14 +3,62 @@
 
 from traits.api import on_trait_change
 import numpy as np
-from .iDFT import inverseDFT
+from scipy.interpolate import RegularGridInterpolator
 from .vortexExtraction import vortexExtract
+from ..Core_elements.tKinter import folderBrowser
 try:
 	from pyloggrid.LogGrid.DataExplorer import DataExplorer
 except:
 	print('Log lattice data explorer is necessary to run these computations. Try pip install pyloggrid.')
 
+# Check for cupy
+try:
+	import cupy as cp
+	from .iDFT import inverseDFTcupy as inverseDFT
+except:
+	print('Calculation will be done with CPU. GPU recommended. See the CuPy installation page.')
+	from .iDFT import inverseDFT
+
 class allRealSpaceVisualizationOptions:
+	
+	@on_trait_change('choose_folder_LLPath')
+	def choose_folder_LLPath_fired(self):
+		
+		self.LL_path = folderBrowser()
+	
+	def get_sampling_points(self, l_value, N):
+		
+		if self.samplingPoints_LL == 'Linear':
+			
+			x, dx = np.linspace(float(self.xmin_LL), float(self.xmax_LL), int(self.xres_LL), retstep = True)
+			y, dy = np.linspace(float(self.ymin_LL), float(self.ymax_LL), int(self.yres_LL), retstep = True)
+			z, dz = np.linspace(float(self.zmin_LL), float(self.zmax_LL), int(self.zres_LL), retstep = True)
+			
+			xx, yy, zz = np.meshgrid(x, y, z, indexing = 'ij')
+		
+		else:
+			
+			# Use logarithmic sampling points which mimics the Fourier grid
+			starting_value = 1/l_value**N
+			x = [starting_value]
+			for _ in range(N-1):
+				x.append((l_value*x[-1])%1)
+			pts = np.sort(x)
+			
+			# Keep all points, even if they fall outside of the requested domain.
+			# This will ensure that the RegularGridInterpolator won't throw
+			# a out of bounds error
+			x = np.unique([-i for i in pts] + [0] + [i for i in pts])
+			y = np.unique([-i for i in pts] + [0] + [i for i in pts])
+			z = np.unique([-i for i in pts] + [0] + [i for i in pts])
+			
+			dx = np.gradient(x)
+			dy = np.gradient(y)
+			dz = np.gradient(z)
+			
+			xx, yy, zz = np.meshgrid(x, y, z, indexing = 'ij')
+			
+		return x, y, z, dx, dy, dz, xx, yy, zz
 		
 	@on_trait_change('computeLL')
 	def computeLL_fired(self):
@@ -32,6 +80,20 @@ class allRealSpaceVisualizationOptions:
 		else:
 			minTs = int(self.timeStep_LL)
 			maxTs = int(self.timeStep_LL) + 1
+			
+		# Completely replace TS1 with new data
+		
+		self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), maxTs - minTs), dtype = np.float32)
+		
+		print(np.shape(self._dataTs1))
+		
+		self.ts1max = maxTs - minTs # This updates the slider
 		
 		for ts in range(minTs, maxTs):
 	
@@ -121,18 +183,42 @@ class allRealSpaceVisualizationOptions:
 				ky = KY
 				kz = KZ
 			
-			# Build real-space grid
-			x, dx = np.linspace(float(self.xmin_LL), float(self.xmax_LL), int(self.xres_LL), retstep = True)
-			y, dy = np.linspace(float(self.ymin_LL), float(self.ymax_LL), int(self.yres_LL), retstep = True)
-			z, dz = np.linspace(float(self.zmin_LL), float(self.zmax_LL), int(self.zres_LL), retstep = True)
-			
-			xx, yy, zz = np.meshgrid(x, y, z, indexing = 'ij')
+			# Get the required sampling points based on whether the grid is
+			# linearly spaced or logarithmic
+			x, y, z, dx, dy, dz, xx, yy, zz = self.get_sampling_points(grid.l, N)
 			
 			# Compute inverse DFT
-			velx, vely, velz = inverseDFT(int(self.xres_LL), int(self.yres_LL), 
-			int(self.zres_LL), kx.ravel(), ky.ravel(), kz.ravel(), xx, yy, zz, 
+			velx, vely, velz = inverseDFT(len(x), len(y), len(z), 
+			kx.ravel(), ky.ravel(), kz.ravel(), xx, yy, zz, 
 			ux.ravel(), uy.ravel(), uz.ravel())
 			
+			# If logarithmic sampling points are used, interpolate onto 
+			# a regularly spaced grid for final visualization
+			
+			if self.samplingPoints_LL == 'Logarithmic':
+				
+				interpx = RegularGridInterpolator((x, y, z), velx)
+				interpy = RegularGridInterpolator((x, y, z), vely)
+				interpz = RegularGridInterpolator((x, y, z), velz)
+				
+				x, dx = np.linspace(float(self.xmin_LL), float(self.xmax_LL), int(self.xres_LL), retstep = True)
+				y, dy = np.linspace(float(self.ymin_LL), float(self.ymax_LL), int(self.yres_LL), retstep = True)
+				z, dz = np.linspace(float(self.zmin_LL), float(self.zmax_LL), int(self.zres_LL), retstep = True)
+
+				xx_i, yy_i, zz_i = np.mgrid[x[0]:x[-1]:len(x)*1j, y[0]:y[-1]:len(y)*1j, z[0]:z[-1]:len(z)*1j]
+				
+				velx_i = interpx(np.c_[xx_i.ravel(), yy_i.ravel(), zz_i.ravel()])
+				vely_i = interpy(np.c_[xx_i.ravel(), yy_i.ravel(), zz_i.ravel()])
+				velz_i = interpz(np.c_[xx_i.ravel(), yy_i.ravel(), zz_i.ravel()])
+				
+				velx_i = np.reshape(velx_i, np.shape(xx_i))
+				vely_i = np.reshape(vely_i, np.shape(xx_i))
+				velz_i = np.reshape(velz_i, np.shape(xx_i))
+				
+				velx = np.float32(velx_i)
+				vely = np.float32(vely_i)
+				velz = np.float32(velz_i)
+				
 			# Compute vorticity vector and requested scalar
 			vortices = vortexExtract(velx, vely, velz, dx, dy, dz)
 			vortx, vorty, vortz = vortices.vorticityComponents()
@@ -164,6 +250,7 @@ class allRealSpaceVisualizationOptions:
 			
 			ctr += 1
 			
-			print('Done')
+		# Choose the last time step to force refresh
+		self.whichTime1 = maxTs-minTs-1
 		
 		

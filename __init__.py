@@ -133,7 +133,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	yres_LL = Str('')
 	zres_LL = Str('')
 	whichScalar_LL = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
-	
+	samplingPoints_LL = Enum(['Linear', 'Logarithmic'], cols = 2)
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
@@ -395,6 +395,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	maxExtentTxt = Str('Max. extent:')
 	resolutionTxt = Str('Resolution:')
 	whichScalarTxt = Str('Choose scalar:')
+	exampleTSTxt = Str('(ex:1 or 3-6)')
+	samplingPointsTxt = Str('Sampling points:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -419,7 +421,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Movie save path
 	save_path = Str(os.getcwd())
-	choose_folder = Button('Choose')
+	choose_folder = Button('Browse')
 	
 	# Set start ts, stop ts, framerate, save_images
 	startMovie = Float(0)
@@ -536,11 +538,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
 		
-		self.add_trait("whichTime1", Range(int(0.0), self.numTs1, int(0)))
-		self.add_trait("whichTime2", Range(int(0.0), self.numTs2, int(0)))
-		self.add_trait("whichTime3", Range(int(0.0), self.numTs3, int(0)))
-		self.add_trait("whichTime4", Range(int(0.0), self.numTs4, int(0)))
-		self.add_trait("whichTimeGlobal", Range(int(0.0), self.numTs1, int(0))) # This assumes all TS have same length
+		self.ts1max = self.numTs1
+		self.ts2max = self.numTs2
+		self.ts3max = self.numTs3
+		self.ts4max = self.numTs4
+		
+		self.add_trait("whichTime1", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts1max'))
+		self.add_trait("whichTime2", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts2max'))
+		self.add_trait("whichTime3", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts3max'))
+		self.add_trait("whichTime4", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts4max'))
+		self.add_trait("whichTimeGlobal", Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts1max')) # This assumes all TS have same length
 		
 		# By default, choose the first time instance
 		_data1 = self._dataTs1[:, :, :, 0]
