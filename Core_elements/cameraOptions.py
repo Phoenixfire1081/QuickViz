@@ -36,14 +36,23 @@ class allCameraOptions:
 			self.focalPointG1, self.focalPointG2, self.focalPointG3 = fp
 			self.camRollG = mlab.roll(figure=self.scene4.mayavi_scene)
 		
+		# Round off values to make the GUI neat
+		self.camAzimuthG = np.round(self.camAzimuthG, 2)
+		self.camElevationG = np.round(self.camElevationG, 2)
+		self.camDistanceG = np.round(self.camDistanceG, 2)
+		self.focalPointG1 = np.round(self.focalPointG1, 2)
+		self.focalPointG2 = np.round(self.focalPointG2, 2)
+		self.focalPointG3 = np.round(self.focalPointG3, 2)
+		self.camRollG = np.round(self.camRollG, 2)
+		
 		# Update setting options too
-		self.camAzimuthS = np.float32(self.camAzimuthG)
-		self.camElevationS = np.float32(self.camElevationG)
-		self.camDistanceS = np.float32(self.camDistanceG)
-		self.focalPointS1 = np.float32(self.focalPointG1)
-		self.focalPointS2 = np.float32(self.focalPointG2)
-		self.focalPointS3 = np.float32(self.focalPointG3)
-		self.camRollS = np.float32(self.camRollG)
+		self.camAzimuthS = np.round(self.camAzimuthG, 2)
+		self.camElevationS = np.round(self.camElevationG, 2)
+		self.camDistanceS = np.round(self.camDistanceG, 2)
+		self.focalPointS1 = np.round(self.focalPointG1, 2)
+		self.focalPointS2 = np.round(self.focalPointG2, 2)
+		self.focalPointS3 = np.round(self.focalPointG3, 2)
+		self.camRollS = np.round(self.camRollG, 2)
 	
 	@on_trait_change('saveCam1')
 	def saveCam1_fired(self):
