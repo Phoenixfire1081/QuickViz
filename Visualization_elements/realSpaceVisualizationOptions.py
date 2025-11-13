@@ -251,6 +251,12 @@ class allRealSpaceVisualizationOptions:
 			self._dataTs1[:, :, :, ctr] = scalar
 			
 			ctr += 1
+		
+		# Update x, y, z data as well. Necessary if the visualization was
+		# performed for different resolution
+		self.x1 = xx
+		self.y1 = yy
+		self.z1 = zz
 			
 		# Choose the last time step to force refresh
 		# Doesn't work when only one time step is calculated

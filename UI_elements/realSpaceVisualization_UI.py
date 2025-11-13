@@ -30,7 +30,7 @@ Item("parametersTxt", style = 'readonly', show_label = False, height = smallh, w
 HGroup(
 Item("whichTimeStepLLTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when = visibilityRSV),
 Item("timeStep_LL", show_label = False, height = longh, width = longw , visible_when = visibilityRSV),
-Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when = visibilityRSV),
+Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when = visibilityRSV),
 ),
 
 HGroup(
