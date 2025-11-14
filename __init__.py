@@ -148,6 +148,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	whichScalar_LL = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
 	samplingPoints_LL = Enum(['Linear', 'Logarithmic'], cols = 2)
 	filterOptions_LL = Enum(['None', 'Low-pass', 'Band-pass', 'High-pass', 'Gaussian'], cols = 5)
+	numModesLP = Str('')
+	numModesMinBP = Str('')
+	numModesMaxBP = Str('')
+	numModesHP = Str('')
+	gaussianSize = Str('')
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
@@ -412,6 +417,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	exampleTSTxt = Str('(ex:1 or 3-6 or 1-100-10)')
 	samplingPointsTxt = Str('Sampling points:')
 	filterOptionsTxt = Str('Filter options:')
+	numModesLPTxt = Str('First modes:')
+	numModesHPTxt = Str('Last modes:')
+	numModesMinBPTxt = Str('Start mode:')
+	numModesMaxBPTxt = Str('End mode:')
+	gaussianSizeTxt = Str('Radius:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -569,18 +579,23 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		# Using float instead
 		self.add_trait("threshold1", Str(''))
 		self.add_trait("thresholdPercent1", Str(''))
-		self.add_trait("thresholdMinimum1", Float(np.floor(float(_data1.min()))))
-		self.add_trait("thresholdMaximum1", Float(np.ceil(float(_data1.max()))))
+		self.add_trait("thresholdMinimum1", Float(float(_data1.min())))
+		self.add_trait("thresholdMaximum1", Float(float(_data1.max())))
+		
+		self.add_trait("threshold2", Str(''))
+		self.add_trait("thresholdPercent2", Str(''))
+		self.add_trait("thresholdMinimum2", Float(float(_data2.min())))
+		self.add_trait("thresholdMaximum2", Float(float(_data2.max())))
 		
 		self.add_trait("threshold3", Str(''))
 		self.add_trait("thresholdPercent3", Str(''))
-		self.add_trait("thresholdMinimum3", Float(np.floor(float(_data3.min()))))
-		self.add_trait("thresholdMaximum3", Float(np.ceil(float(_data3.max()))))
+		self.add_trait("thresholdMinimum3", Float(float(_data3.min())))
+		self.add_trait("thresholdMaximum3", Float(float(_data3.max())))
 		
 		self.add_trait("threshold4", Str(''))
 		self.add_trait("thresholdPercent4", Str(''))
-		self.add_trait("thresholdMinimum4", Float(np.floor(float(_data4.min()))))
-		self.add_trait("thresholdMaximum4", Float(np.ceil(float(_data4.max()))))
+		self.add_trait("thresholdMinimum4", Float(float(_data4.min())))
+		self.add_trait("thresholdMaximum4", Float(float(_data4.max())))
 		
 		# DATA 1
 		

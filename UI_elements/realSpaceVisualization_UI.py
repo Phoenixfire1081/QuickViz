@@ -69,6 +69,28 @@ Item("filterOptions_LL", show_label = False, visible_when = visibilityRSV),
 ),
 
 HGroup(
+Item("numModesLPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityLP),
+Item("numModesLP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityLP),
+),
+
+HGroup(
+Item("numModesHPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityHP),
+Item("numModesHP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityHP),
+),
+
+HGroup(
+Item("numModesMinBPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityBP),
+Item("numModesMinBP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityBP),
+Item("numModesMaxBPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityBP),
+Item("numModesMaxBP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityBP),
+),
+
+HGroup(
+Item("gaussianSizeTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when = visibilityGauss),
+Item("gaussianSize", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityGauss),
+),
+
+HGroup(
 Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = visibilityRSV),
 Item("whichScalar_LL", show_label = False, visible_when = visibilityRSV),
 Item("computeLL", height = buttonh, width = buttonw, show_label = False, visible_when = visibilityRSV),

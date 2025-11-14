@@ -71,8 +71,6 @@ class allRealSpaceVisualizationOptions:
 		# Load path into data explorer
 		dexp = DataExplorer(self.LL_path)
 			
-		ctr = 0
-		
 		if '-' in self.timeStep_LL:
 			minTs = int(self.timeStep_LL.split('-')[0])
 			maxTs = int(self.timeStep_LL.split('-')[1]) + 1
@@ -86,6 +84,7 @@ class allRealSpaceVisualizationOptions:
 		else:
 			minTs = int(self.timeStep_LL)
 			maxTs = int(self.timeStep_LL) + 1
+			skipTs = 1
 			
 		# Completely replace TS1 with new data
 		
@@ -99,6 +98,9 @@ class allRealSpaceVisualizationOptions:
 		
 		self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
 		
+		# Initialize counter
+		ctr = 0
+		
 		for ts in range(minTs, maxTs, skipTs):
 	
 			# Load the chosen time step
@@ -108,16 +110,16 @@ class allRealSpaceVisualizationOptions:
 			N = data['N_points'] # Number of points
 			k0 = data["k0"] # If k0 mode was used in simulation
 			
-			# Velocity data
-			ux = data['fields']['ux']
-			uy = data['fields']['uy']
-			uz = data['fields']['uz']
-			
 			# Actual time
 			t = data["t"]
 			
 			# Get k-grid
 			kx, ky, kz = grid.ks
+			
+			# Velocity data
+			ux = data['fields']['ux']
+			uy = data['fields']['uy']
+			uz = data['fields']['uz']
 			
 			# Since simulation is run with N x 2N x 2N modes, build back the velocity
 			# fields and k-grid to 2N x 2N x 2N.
@@ -187,6 +189,47 @@ class allRealSpaceVisualizationOptions:
 				ky = KY
 				kz = KZ
 			
+			# numModesLP = Str('')
+	# numModesMinBP = Str('')
+	# numModesMaxBP = Str('')
+	# numModesHP = Str('')
+	# gaussianSize = Str('')
+			
+			# Apply filters if chosen
+			if self.filterOptions_LL == 'Low-pass':
+				
+				firstModes = int(self.numModesLP)
+
+				xresmin = N - firstModes + 1
+				xresmax = N + firstModes
+				
+				kx = kx[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				ky = ky[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				kz = kz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+
+				ux = ux[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				uy = uy[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				uz = uz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+			
+			elif self.filterOptions_LL == 'Band-pass': # This is quite difficult to do. Let's circle back to it later.
+				
+				xresmin = int(self.numModesMinBP)
+				xresmax = int(self.numModesMaxBP)
+			
+			elif self.filterOptions_LL == 'High-pass': # I'll get back to this too.
+				
+				xresmin = int(self.numModesMinBP)
+				xresmax = int(self.numModesMaxBP)
+			
+			elif self.filterOptions_LL == 'Gaussian':
+				
+				radius = float(self.gaussianSize)
+				ks = np.sqrt(kx**2 + ky**2 + kz**2)
+				
+				ux = ux * radius * np.exp(-(radius*ks)**2)
+				uy = uy * radius * np.exp(-(radius*ks)**2)
+				uz = uz * radius * np.exp(-(radius*ks)**2)
+			
 			# Get the required sampling points based on whether the grid is
 			# linearly spaced or logarithmic
 			x, y, z, dx, dy, dz, xx, yy, zz = self.get_sampling_points(grid.l, N)
@@ -208,6 +251,8 @@ class allRealSpaceVisualizationOptions:
 				x, dx = np.linspace(float(self.xmin_LL), float(self.xmax_LL), int(self.xres_LL), retstep = True)
 				y, dy = np.linspace(float(self.ymin_LL), float(self.ymax_LL), int(self.yres_LL), retstep = True)
 				z, dz = np.linspace(float(self.zmin_LL), float(self.zmax_LL), int(self.zres_LL), retstep = True)
+				
+				xx, yy, zz = np.meshgrid(x, y, z, indexing = 'ij')
 
 				xx_i, yy_i, zz_i = np.mgrid[x[0]:x[-1]:len(x)*1j, y[0]:y[-1]:len(y)*1j, z[0]:z[-1]:len(z)*1j]
 				
@@ -254,6 +299,8 @@ class allRealSpaceVisualizationOptions:
 		
 		# Update x, y, z data as well. Necessary if the visualization was
 		# performed for different resolution
+		
+		print(np.min(xx), np.max(xx))
 		self.x1 = xx
 		self.y1 = yy
 		self.z1 = zz

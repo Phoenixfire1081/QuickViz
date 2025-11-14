@@ -32,8 +32,8 @@ class timeUpdateBehavior:
 			_data1 = self._dataTs1[:, :, :, self.whichTime1]
 			
 			# Update min, max data
-			self.thresholdMinimum1 = np.floor(float(_data1.min()))
-			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			self.thresholdMinimum1 = float(_data1.min())
+			self.thresholdMaximum1 = float(_data1.max())
 			
 			try:
 				
@@ -145,8 +145,8 @@ class timeUpdateBehavior:
 			_data1 = self._dataTs1[:, :, :, self.whichTime1]
 			
 			# Update min, max data
-			self.thresholdMinimum1 = np.floor(float(_data1.min()))
-			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			self.thresholdMinimum1 = float(_data1.min())
+			self.thresholdMaximum1 = float(_data1.max())
 			
 			try:
 				
@@ -258,8 +258,8 @@ class timeUpdateBehavior:
 			_data1 = self._dataTs1[:, :, :, self.whichTime1]
 			
 			# Update min, max data
-			self.thresholdMinimum1 = np.floor(float(_data1.min()))
-			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			self.thresholdMinimum1 = float(_data1.min())
+			self.thresholdMaximum1 = float(_data1.max())
 			
 			try:
 				
@@ -371,8 +371,8 @@ class timeUpdateBehavior:
 			_data1 = self._dataTs1[:, :, :, self.whichTime1]
 			
 			# Update min, max data
-			self.thresholdMinimum1 = np.floor(float(_data1.min()))
-			self.thresholdMaximum1 = np.ceil(float(_data1.max()))
+			self.thresholdMinimum1 = float(_data1.min())
+			self.thresholdMaximum1 = float(_data1.max())
 			
 			try:
 				
@@ -488,8 +488,8 @@ class timeUpdateBehavior:
 			_data2 = self._dataTs2[:, :, :, self.whichTime2]
 			
 			# Update min, max data
-			self.thresholdMinimum2 = np.floor(float(_data2.min()))
-			self.thresholdMaximum2 = np.ceil(float(_data2.max()))
+			self.thresholdMinimum2 = float(_data2.min())
+			self.thresholdMaximum2 = float(_data2.max())
 			
 			try:
 				
@@ -601,8 +601,8 @@ class timeUpdateBehavior:
 			_data2 = self._dataTs2[:, :, :, self.whichTime2]
 			
 			# Update min, max data
-			self.thresholdMinimum2 = np.floor(float(_data2.min()))
-			self.thresholdMaximum2 = np.ceil(float(_data2.max()))
+			self.thresholdMinimum2 = float(_data2.min())
+			self.thresholdMaximum2 = float(_data2.max())
 			
 			try:
 				
@@ -714,8 +714,8 @@ class timeUpdateBehavior:
 			_data2 = self._dataTs2[:, :, :, self.whichTime2]
 			
 			# Update min, max data
-			self.thresholdMinimum2 = np.floor(float(_data2.min()))
-			self.thresholdMaximum2 = np.ceil(float(_data2.max()))
+			self.thresholdMinimum2 = float(_data2.min())
+			self.thresholdMaximum2 = float(_data2.max())
 			
 			try:
 				
@@ -827,8 +827,8 @@ class timeUpdateBehavior:
 			_data2 = self._dataTs2[:, :, :, self.whichTime2]
 			
 			# Update min, max data
-			self.thresholdMinimum2 = np.floor(float(_data2.min()))
-			self.thresholdMaximum2 = np.ceil(float(_data2.max()))
+			self.thresholdMinimum2 = float(_data2.min())
+			self.thresholdMaximum2 = float(_data2.max())
 			
 			try:
 				
@@ -943,8 +943,8 @@ class timeUpdateBehavior:
 			_data3 = self._dataTs3[:, :, :, self.whichTime3]
 			
 			# Update min, max data
-			self.thresholdMinimum3 = np.floor(float(_data3.min()))
-			self.thresholdMaximum3 = np.ceil(float(_data3.max()))
+			self.thresholdMinimum3 = float(_data3.min())
+			self.thresholdMaximum3 = float(_data3.max())
 			
 			try:
 				
@@ -1033,8 +1033,8 @@ class timeUpdateBehavior:
 			_data4 = self._dataTs4[:, :, :, self.whichTime4]
 			
 			# Update min, max data
-			self.thresholdMinimum4 = np.floor(float(_data4.min()))
-			self.thresholdMaximum4 = np.ceil(float(_data4.max()))
+			self.thresholdMinimum4 = float(_data4.min())
+			self.thresholdMaximum4 = float(_data4.max())
 			
 			try:
 				
