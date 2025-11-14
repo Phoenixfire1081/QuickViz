@@ -147,6 +147,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	zres_LL = Str('')
 	whichScalar_LL = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
 	samplingPoints_LL = Enum(['Linear', 'Logarithmic'], cols = 2)
+	filterOptions_LL = Enum(['None', 'Low-pass', 'Band-pass', 'High-pass', 'Gaussian'], cols = 5)
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
@@ -410,6 +411,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	whichScalarTxt = Str('Choose scalar:')
 	exampleTSTxt = Str('(ex:1 or 3-6 or 1-100-10)')
 	samplingPointsTxt = Str('Sampling points:')
+	filterOptionsTxt = Str('Filter options:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

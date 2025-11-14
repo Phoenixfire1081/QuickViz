@@ -14,6 +14,10 @@ buttonLongw, buttonLongh = allUIOptions.buttonLong()
 buttonLongerw, buttonLongerh = allUIOptions.buttonLonger()
 
 visibilityRSV = 'allModeOptions == "Log Lattice" and allLLOptions == "Real Space Visualization"'
+visibilityLP = visibilityRSV + ' and filterOptions_LL == "Low-pass"'
+visibilityBP = visibilityRSV + ' and filterOptions_LL == "Band-pass"'
+visibilityHP = visibilityRSV + ' and filterOptions_LL == "High-pass"'
+visibilityGauss = visibilityRSV + ' and filterOptions_LL == "Gaussian"'
 
 realSpaceVisualizationUIelements = Group(
 
@@ -57,6 +61,11 @@ Item("zres_LL", show_label = False, height = tinyh, width = tinyw , visible_when
 HGroup(
 Item("samplingPointsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when = visibilityRSV),
 Item("samplingPoints_LL", style = 'custom', show_label = False, visible_when = visibilityRSV),
+),
+
+HGroup(
+Item("filterOptionsTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when = visibilityRSV),
+Item("filterOptions_LL", show_label = False, visible_when = visibilityRSV),
 ),
 
 HGroup(
