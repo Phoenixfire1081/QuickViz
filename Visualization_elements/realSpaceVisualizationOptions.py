@@ -189,12 +189,6 @@ class allRealSpaceVisualizationOptions:
 				ky = KY
 				kz = KZ
 			
-			# numModesLP = Str('')
-	# numModesMinBP = Str('')
-	# numModesMaxBP = Str('')
-	# numModesHP = Str('')
-	# gaussianSize = Str('')
-			
 			# Apply filters if chosen
 			if self.filterOptions_LL == 'Low-pass':
 				
@@ -211,20 +205,52 @@ class allRealSpaceVisualizationOptions:
 				uy = uy[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
 				uz = uz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
 			
-			elif self.filterOptions_LL == 'Band-pass': # This is quite difficult to do. Let's circle back to it later.
+			elif self.filterOptions_LL == 'Band-pass':
 				
-				xresmin = int(self.numModesMinBP)
-				xresmax = int(self.numModesMaxBP)
+				startVal = int(self.numModesMinBP)
+				endVal = int(self.numModesMaxBP)
+				
+				# Use endVal to slice the grid similar to low pass
+				
+				xresmin = N - endVal + 1
+				xresmax = N + endVal
+				
+				kx = kx[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				ky = ky[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				kz = kz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+
+				ux = ux[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				uy = uy[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				uz = uz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax]
+				
+				# Now, zero out the mid-velocity values
+				
+				xresmin = N - startVal + 1
+				xresmax = N + startVal
+				
+				ux[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax] = complex(0)
+				uy[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax] = complex(0)
+				uz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax] = complex(0)
 			
-			elif self.filterOptions_LL == 'High-pass': # I'll get back to this too.
+			elif self.filterOptions_LL == 'High-pass':
 				
-				xresmin = int(self.numModesMinBP)
-				xresmax = int(self.numModesMaxBP)
+				lastModes = int(self.numModesHP)
+				
+				# Now, zero out the mid-velocity values
+				
+				xresmin = N - lastModes + 1
+				xresmax = N + lastModes
+				
+				ux[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax] = complex(0)
+				uy[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax] = complex(0)
+				uz[xresmin:xresmax, xresmin:xresmax, xresmin:xresmax] = complex(0)
 			
 			elif self.filterOptions_LL == 'Gaussian':
 				
-				radius = float(self.gaussianSize)
+				# Get magnitude
 				ks = np.sqrt(kx**2 + ky**2 + kz**2)
+				
+				radius = float(self.gaussianSize)
 				
 				ux = ux * radius * np.exp(-(radius*ks)**2)
 				uy = uy * radius * np.exp(-(radius*ks)**2)
@@ -300,7 +326,6 @@ class allRealSpaceVisualizationOptions:
 		# Update x, y, z data as well. Necessary if the visualization was
 		# performed for different resolution
 		
-		print(np.min(xx), np.max(xx))
 		self.x1 = xx
 		self.y1 = yy
 		self.z1 = zz
