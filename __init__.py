@@ -145,7 +145,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	xres_LL = Str('')
 	yres_LL = Str('')
 	zres_LL = Str('')
-	whichScalar_LL = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
+	whichScalar_LL = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate', 'Temperature'])
 	samplingPoints_LL = Enum(['Linear', 'Logarithmic'], cols = 2)
 	filterOptions_LL = Enum(['None', 'Low-pass', 'Band-pass', 'High-pass', 'Gaussian'], cols = 5)
 	numModesLP = Str('')
