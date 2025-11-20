@@ -7,6 +7,7 @@ from mayavi import mlab
 from PIL import Image
 from pyface.api import GUI
 from .tKinter import folderBrowser
+import os
 
 class allSaveMovieOptions:
 

@@ -6,6 +6,7 @@ from .slice_UI import sliceUIelements
 from .structureExtraction_UI import structureExtractionUIelements
 from .volumeRendering_UI import volumeRenderingUIelements
 from .realSpaceVisualization_UI import realSpaceVisualizationUIelements
+from .fieldLineTracking_UI import fieldLineTrackingUIelements
 
 # Initialize UI layout customization
 allUIOptions = UIOptionsClass()
@@ -29,6 +30,10 @@ isoUIelements = (Group(
 	Item("allAnalysisOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis"')
 	),
 	
+	# Fieldline tracking
+	fieldLineTrackingUIelements,
+	
+	# Q-tensor
 	HGroup(Item("calculateQtensor", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Q-tensor"', height = buttonh, width = buttonw),),
 	
 	# All Log lattice options

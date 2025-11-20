@@ -183,67 +183,6 @@ class allRealSpaceVisualizationOptions:
 			if tempExists:
 				temperature = self.build_full_grid(temp, N, k0.all())
 			
-			# if k0.all():
-				# UX = np.zeros((2*N+1,2*N+1,2*N+1),dtype=complex)
-				# UY = np.zeros((2*N+1,2*N+1,2*N+1),dtype=complex)
-				# UZ = np.zeros((2*N+1,2*N+1,2*N+1),dtype=complex)
-				# UX[N:,:,:] = ux
-				# UY[N:,:,:] = uy
-				# UZ[N:,:,:] = uz
-				# UX[:N+1,:,:] = ux[::-1, ::-1, ::-1].conjugate()
-				# UY[:N+1,:,:] = uy[::-1, ::-1, ::-1].conjugate()
-				# UZ[:N+1,:,:] = uz[::-1, ::-1, ::-1].conjugate()
-				# UX = (UX+UX[::-1, ::-1, ::-1].conjugate())/2
-				# UY = (UY+UY[::-1, ::-1, ::-1].conjugate())/2
-				# UZ = (UZ+UZ[::-1, ::-1, ::-1].conjugate())/2
-				# KX = np.zeros((2*N+1,2*N+1,2*N+1),dtype=float)
-				# KY = np.zeros((2*N+1,2*N+1,2*N+1),dtype=float)
-				# KZ = np.zeros((2*N+1,2*N+1,2*N+1),dtype=float)
-				# KX[N:,:,:] = kx
-				# KY[N:,:,:] = ky
-				# KZ[N:,:,:] = kz
-				# KX[:N+1,:,:] = -kx[::-1,:,:]
-				# KY[:N+1,:,:] = ky[::-1,:,:]
-				# KZ[:N+1,:,:] = kz[::-1,:,:]
-				
-				# ux = UX
-				# uy = UY
-				# uz = UZ
-				# kx = KX
-				# ky = KY
-				# kz = KZ
-			
-			# else:
-				
-				# UX = np.zeros((2*N,2*N,2*N),dtype=complex)
-				# UY = np.zeros((2*N,2*N,2*N),dtype=complex)
-				# UZ = np.zeros((2*N,2*N,2*N),dtype=complex)
-				# UX[N:,:,:] = ux
-				# UY[N:,:,:] = uy
-				# UZ[N:,:,:] = uz
-				# UX[:N,:,:] = ux[::-1, ::-1, ::-1].conjugate()
-				# UY[:N,:,:] = uy[::-1, ::-1, ::-1].conjugate()
-				# UZ[:N,:,:] = uz[::-1, ::-1, ::-1].conjugate()
-				# UX = (UX+UX[::-1, ::-1, ::-1].conjugate())/2
-				# UY = (UY+UY[::-1, ::-1, ::-1].conjugate())/2
-				# UZ = (UZ+UZ[::-1, ::-1, ::-1].conjugate())/2
-				# KX = np.zeros((2*N,2*N,2*N),dtype=float)
-				# KY = np.zeros((2*N,2*N,2*N),dtype=float)
-				# KZ = np.zeros((2*N,2*N,2*N),dtype=float)
-				# KX[N:,:,:] = kx
-				# KY[N:,:,:] = ky
-				# KZ[N:,:,:] = kz
-				# KX[:N,:,:] = -kx[::-1,:,:]
-				# KY[:N,:,:] = ky[::-1,:,:]
-				# KZ[:N,:,:] = kz[::-1,:,:]
-				
-				# ux = UX
-				# uy = UY
-				# uz = UZ
-				# kx = KX
-				# ky = KY
-				# kz = KZ
-			
 			# Apply filters if chosen
 			if self.filterOptions_LL == 'Low-pass':
 				

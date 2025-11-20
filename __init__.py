@@ -108,6 +108,44 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# All Analysis options
 	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Q-tensor'], cols=4)
 	
+	# Fieldline tracking options
+	# Some fieldline options are repeated. 
+	# This ensures visualization and analysis options remain separate.
+	# Seed type - fixed as a sphere
+	# Line type - fixed as a line
+	# Integration direction - fixed to both
+	
+	whichVector_flt = Enum(['Velocity', 'Vorticity'], cols=2)
+	
+	seedRegionVisible_fl1 = Bool()
+	seedScale_fl1 = Float(1.0)
+	seedResolution_fl1 = Int(1)
+	seedRegionVisible_fl1 = Bool()
+	lineWidth_fl1 = Float(2.0)
+	planeOrientation_fl1 = Enum(['X', 'Y', 'Z'], cols=3)
+	whichScalarSlice_fl1 = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',
+	'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
+	thresholdPercent1_fl1 = Str('')
+	setThresholdPercent1_fl1 = Button('Set')
+	red_fl1 = Float(1.0)
+	green_fl1 = Float(0.0)
+	blue_fl1 = Float(0.0)
+	
+	seedRegionVisible_fl2 = Bool()
+	seedScale_fl2 = Float(1.0)
+	seedResolution_fl2 = Int(1)
+	seedRegionVisible_fl2 = Bool()
+	lineWidth_fl2 = Float(2.0)
+	planeOrientation_fl2 = Enum(['X', 'Y', 'Z'], cols=3)
+	whichScalarSlice_fl2 = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',
+	'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
+	ThresholdPercent_fl2 = Str('')
+	thresholdPercent1_fl2 = Str('')
+	setThresholdPercent1_fl2 = Button('Set')
+	red_fl2 = Float(0.0)
+	green_fl2 = Float(0.0)
+	blue_fl2 = Float(1.0)
+	
 	# Q-tensor
 	calculateQtensor = Button('Calculate')
 	
@@ -237,9 +275,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Set representation
 	contourRepresentation1 = Enum(['points', 'surface', 'wireframe'])
-	contourRepresentation2 = Enum(['points', 'surface', 'wireframe'])
-	contourRepresentation3 = Enum(['points', 'surface', 'wireframe'])
-	contourRepresentation4 = Enum(['points', 'surface', 'wireframe'])
+	contourRepresentation2 = deepcopy(contourRepresentation1)
+	contourRepresentation3 = deepcopy(contourRepresentation1)
+	contourRepresentation4 = deepcopy(contourRepresentation1)
 	
 	# Set threshold
 	setThreshold1  = Button('Set')
@@ -258,62 +296,23 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	setThresholdFired4 = False
 	
 	# Set colormap
-	contourColormap1 = Enum(['Accent', 'Blues', 'BrBG', 'BuGn', 'BuPu', \
-	'CMRmap', 'Dark2', 'GnBu', 'Greens', 'Greys', 'OrRd', 'Oranges', \
-	'PRGn', 'Paired', 'Pastel1', 'Pastel2', 'PiYG', 'PuBu', 'PuBuGn', \
-	'PuOr', 'PuRd', 'Purples', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', \
-	'RdYlGn', 'Reds', 'Set1', 'Set2', 'Set3', 'Spectral', 'Vega10', \
-	'Vega20', 'Vega20b', 'Vega20c', 'Wistia', 'YlGn', 'YlGnBu', \
-	'YlOrBr', 'YlOrRd', 'afmhot', 'autumn', 'binary', 'black-white', \
-	'blue-red', 'bone', 'brg', 'bwr', 'cool', 'coolwarm', 'copper', \
-	'cubehelix', 'file', 'flag', 'gist_earth', 'gist_gray', 'gist_heat', \
-	'gist_ncar', 'gist_rainbow', 'gist_stern', 'gist_yarg', 'gnuplot', \
-	'gnuplot2', 'gray', 'hot', 'hsv', 'inferno', 'jet', 'magma', \
-	'nipy_spectral', 'ocean', 'pink', 'plasma', 'prism', 'rainbow', \
-	'seismic', 'spectral', 'spring', 'summer', 'terrain', 'viridis', \
+	contourColormap1 = Enum(['Accent', 'Blues', 'BrBG', 'BuGn', 'BuPu', 
+	'CMRmap', 'Dark2', 'GnBu', 'Greens', 'Greys', 'OrRd', 'Oranges', 
+	'PRGn', 'Paired', 'Pastel1', 'Pastel2', 'PiYG', 'PuBu', 'PuBuGn', 
+	'PuOr', 'PuRd', 'Purples', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', 
+	'RdYlGn', 'Reds', 'Set1', 'Set2', 'Set3', 'Spectral', 'Vega10', 
+	'Vega20', 'Vega20b', 'Vega20c', 'Wistia', 'YlGn', 'YlGnBu', 
+	'YlOrBr', 'YlOrRd', 'afmhot', 'autumn', 'binary', 'black-white', 
+	'blue-red', 'bone', 'brg', 'bwr', 'cool', 'coolwarm', 'copper', 
+	'cubehelix', 'file', 'flag', 'gist_earth', 'gist_gray', 'gist_heat', 
+	'gist_ncar', 'gist_rainbow', 'gist_stern', 'gist_yarg', 'gnuplot', 
+	'gnuplot2', 'gray', 'hot', 'hsv', 'inferno', 'jet', 'magma', 
+	'nipy_spectral', 'ocean', 'pink', 'plasma', 'prism', 'rainbow', 
+	'seismic', 'spectral', 'spring', 'summer', 'terrain', 'viridis', 
 	'winter'])
-	contourColormap2 = Enum(['Accent', 'Blues', 'BrBG', 'BuGn', 'BuPu', \
-	'CMRmap', 'Dark2', 'GnBu', 'Greens', 'Greys', 'OrRd', 'Oranges', \
-	'PRGn', 'Paired', 'Pastel1', 'Pastel2', 'PiYG', 'PuBu', 'PuBuGn', \
-	'PuOr', 'PuRd', 'Purples', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', \
-	'RdYlGn', 'Reds', 'Set1', 'Set2', 'Set3', 'Spectral', 'Vega10', \
-	'Vega20', 'Vega20b', 'Vega20c', 'Wistia', 'YlGn', 'YlGnBu', \
-	'YlOrBr', 'YlOrRd', 'afmhot', 'autumn', 'binary', 'black-white', \
-	'blue-red', 'bone', 'brg', 'bwr', 'cool', 'coolwarm', 'copper', \
-	'cubehelix', 'file', 'flag', 'gist_earth', 'gist_gray', 'gist_heat', \
-	'gist_ncar', 'gist_rainbow', 'gist_stern', 'gist_yarg', 'gnuplot', \
-	'gnuplot2', 'gray', 'hot', 'hsv', 'inferno', 'jet', 'magma', \
-	'nipy_spectral', 'ocean', 'pink', 'plasma', 'prism', 'rainbow', \
-	'seismic', 'spectral', 'spring', 'summer', 'terrain', 'viridis', \
-	'winter'])
-	contourColormap3 = Enum(['Accent', 'Blues', 'BrBG', 'BuGn', 'BuPu', \
-	'CMRmap', 'Dark2', 'GnBu', 'Greens', 'Greys', 'OrRd', 'Oranges', \
-	'PRGn', 'Paired', 'Pastel1', 'Pastel2', 'PiYG', 'PuBu', 'PuBuGn', \
-	'PuOr', 'PuRd', 'Purples', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', \
-	'RdYlGn', 'Reds', 'Set1', 'Set2', 'Set3', 'Spectral', 'Vega10', \
-	'Vega20', 'Vega20b', 'Vega20c', 'Wistia', 'YlGn', 'YlGnBu', \
-	'YlOrBr', 'YlOrRd', 'afmhot', 'autumn', 'binary', 'black-white', \
-	'blue-red', 'bone', 'brg', 'bwr', 'cool', 'coolwarm', 'copper', \
-	'cubehelix', 'file', 'flag', 'gist_earth', 'gist_gray', 'gist_heat', \
-	'gist_ncar', 'gist_rainbow', 'gist_stern', 'gist_yarg', 'gnuplot', \
-	'gnuplot2', 'gray', 'hot', 'hsv', 'inferno', 'jet', 'magma', \
-	'nipy_spectral', 'ocean', 'pink', 'plasma', 'prism', 'rainbow', \
-	'seismic', 'spectral', 'spring', 'summer', 'terrain', 'viridis', \
-	'winter'])
-	contourColormap4 = Enum(['Accent', 'Blues', 'BrBG', 'BuGn', 'BuPu', \
-	'CMRmap', 'Dark2', 'GnBu', 'Greens', 'Greys', 'OrRd', 'Oranges', \
-	'PRGn', 'Paired', 'Pastel1', 'Pastel2', 'PiYG', 'PuBu', 'PuBuGn', \
-	'PuOr', 'PuRd', 'Purples', 'RdBu', 'RdGy', 'RdPu', 'RdYlBu', \
-	'RdYlGn', 'Reds', 'Set1', 'Set2', 'Set3', 'Spectral', 'Vega10', \
-	'Vega20', 'Vega20b', 'Vega20c', 'Wistia', 'YlGn', 'YlGnBu', \
-	'YlOrBr', 'YlOrRd', 'afmhot', 'autumn', 'binary', 'black-white', \
-	'blue-red', 'bone', 'brg', 'bwr', 'cool', 'coolwarm', 'copper', \
-	'cubehelix', 'file', 'flag', 'gist_earth', 'gist_gray', 'gist_heat', \
-	'gist_ncar', 'gist_rainbow', 'gist_stern', 'gist_yarg', 'gnuplot', \
-	'gnuplot2', 'gray', 'hot', 'hsv', 'inferno', 'jet', 'magma', \
-	'nipy_spectral', 'ocean', 'pink', 'plasma', 'prism', 'rainbow', \
-	'seismic', 'spectral', 'spring', 'summer', 'terrain', 'viridis', \
-	'winter'])
+	contourColormap2 = deepcopy(contourColormap1)
+	contourColormap3 = deepcopy(contourColormap1)
+	contourColormap4 = deepcopy(contourColormap1)
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -363,6 +362,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	OutlineColorTxt = Str('Outline color (r,g,b):')
 	ThresholdTxt = Str('Threshold(s):')
 	ThresholdPercentTxt = Str('Threshold(s) %:')
+	ThresholdPercentflTxt = Str('Threshold %:')
 	OpacityTxt = Str('Opacity:')
 	ColormapTxt = Str('Colormap:')
 	RepresentationTxt = Str('Representation:')
@@ -387,6 +387,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	kernelLengthTxt = Str('Kernel length:')
 	noiseImageDimensionTxt = Str('Noise image dimension:')
 	whichScalarSliceTxt = Str('Which scalar:')
+	whichScalarSliceflTxt = Str('Tracking scalar:')
 	seedRegionVisibleTxt = Str('Seed region visibility:')
 	seedTypeTxt = Str('Seed type:')
 	seedScaleTxt = Str('Seed scale:')
@@ -422,6 +423,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	numModesMinBPTxt = Str('Start mode:')
 	numModesMaxBPTxt = Str('End mode:')
 	gaussianSizeTxt = Str('Radius:')
+	trackFieldLinesTxt = Str('Track at most two set of field lines concurrently')
+	fieldLine1Txt = Str('Fieldline 1:')
+	fieldLine2Txt = Str('Fieldline 2:')
+	colorFLTxt = Str('Line color (r, g, b):')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -562,6 +567,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.add_trait("whichSliceX", Range(int(0.0), self.xlength_data1-1, int(0)))
 		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
+		self.add_trait("whichSliceX_fl1", Range(int(0.0), self.xlength_data1-1, int(0)))
+		self.add_trait("whichSliceY_fl1", Range(int(0.0), self.ylength_data1-1, int(0)))
+		self.add_trait("whichSliceZ_fl1", Range(int(0.0), self.zlength_data1-1, int(0)))
+		self.add_trait("whichSliceX_fl2", Range(int(0.0), self.xlength_data1-1, int(0)))
+		self.add_trait("whichSliceY_fl2", Range(int(0.0), self.ylength_data1-1, int(0)))
+		self.add_trait("whichSliceZ_fl2", Range(int(0.0), self.zlength_data1-1, int(0)))
 		
 		self.ts1max = self.numTs1
 		self.ts2max = self.numTs2
@@ -928,6 +939,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.xres_LL = '41'
 		self.yres_LL = '41'
 		self.zres_LL = '41'
+		
+		# Default options for fieldline tracking
+		self.whichScalarSlice_fl1 = 'Computed scalar (default)'
+		self.whichScalarSlice_fl2 = 'Computed scalar (default)'
+		self.planeOrientation_fl1 = 'X'
+		self.planeOrientation_fl2 = 'X'
 				
 	view = View(
 	
