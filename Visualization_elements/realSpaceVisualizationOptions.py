@@ -32,10 +32,12 @@ class allRealSpaceVisualizationOptions:
 		
 		if k0:
 			gridSize = N+1
+			res = 2*N+1
 		else:
 			gridSize = N
+			res = 2*N
 		
-		scalar = np.zeros((2*gridSize,2*gridSize,2*gridSize),dtype=complex)
+		scalar = np.zeros((res, res, res),dtype=complex)
 		scalar[N:,:,:] = scalarField
 		scalar[:gridSize,:,:] = scalarField[::-1, ::-1, ::-1].conjugate()
 		scalar = (scalar+scalar[::-1, ::-1, ::-1].conjugate())/2
@@ -46,12 +48,14 @@ class allRealSpaceVisualizationOptions:
 		
 		if k0:
 			gridSize = N+1
+			res = 2*N+1
 		else:
 			gridSize = N
+			res = 2*N
 		
-		KX = np.zeros((2*gridSize,2*gridSize,2*gridSize),dtype=complex)
-		KY = np.zeros((2*gridSize,2*gridSize,2*gridSize),dtype=complex)
-		KZ = np.zeros((2*gridSize,2*gridSize,2*gridSize),dtype=complex)
+		KX = np.zeros((res, res, res),dtype=complex)
+		KY = np.zeros((res, res, res),dtype=complex)
+		KZ = np.zeros((res, res, res),dtype=complex)
 		
 		KX[N:,:,:] = kx
 		KY[N:,:,:] = ky
@@ -161,7 +165,7 @@ class allRealSpaceVisualizationOptions:
 				temp = data['fields']['theta']
 				tempExists = True
 			except:
-				print('Check other scalar fields that can be plotted:', dir(data['fields']))
+				print('Check other scalar fields that can be plotted:', data['fields'].keys())
 				tempExists = False
 			
 			# Since simulation is run with N x 2N x 2N modes, build back the velocity
