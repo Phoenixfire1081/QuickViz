@@ -27,6 +27,7 @@ from .Visualization_elements.isosurfaceOptions import allIsosurfaceOptions
 from .Visualization_elements.volumeRenderingOptions import allVolRenderingOptions
 from .Visualization_elements.sliceOptions import allSliceOptions
 from .Visualization_elements.streamlineOptions import allStreamlineOptions
+from .Visualization_elements.fieldLineTrackingOptions import allFieldLineTrackingOptions
 from .Visualization_elements.surfaceExtractionOptions import allSurfaceExtractionOptions
 from .Visualization_elements.playgroundOptions import allPlaygroundOptions
 from .Visualization_elements.realSpaceVisualizationOptions import allRealSpaceVisualizationOptions
@@ -49,7 +50,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	activeDataControlClass, fileChooserClass, allPathControlsClass,
 	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,
 	allSurfaceExtractionOptions, allPlaygroundOptions, allAnalysisOptions,
-	allRealSpaceVisualizationOptions):
+	allRealSpaceVisualizationOptions, allFieldLineTrackingOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -116,6 +117,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Integration direction - fixed to both
 	
 	whichVector_flt = Enum(['Velocity', 'Vorticity'], cols=2)
+	minThreshold_flt = Float(0.0)
+	maxThreshold_flt = Float(0.0)
 	
 	seedRegionVisible_fl1 = Bool()
 	seedScale_fl1 = Float(1.0)

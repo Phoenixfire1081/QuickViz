@@ -92,10 +92,18 @@ class timeUpdateBehavior:
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
-			# If slice is enabled, update that
+			# If fieldlines are enabled, update that
 			if self.allLocalOptions == "Streamlines (3D)":
 				
 				self.enableStreamlinesChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
+			
+			# If fieldline tracking is enabled, update that
+			if self.allAnalysisOptions == "Fieldline tracking":
+				
+				self.enableFieldlinesChanged()
 				# Keep the previous view
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)

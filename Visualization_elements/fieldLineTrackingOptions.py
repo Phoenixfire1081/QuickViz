@@ -1,18 +1,158 @@
 # Supplement to Mayavi Visualization
-# All playground options are defined here
+# All threshold options are defined here
 
 from traits.api import on_trait_change
 import numpy as np
+from mayavi import mlab
+from tvtk.util.ctf import PiecewiseFunction
+from tvtk.util.ctf import ColorTransferFunction
+from vtk.util import numpy_support
+import mayavi
+from scipy.interpolate import splprep, splev
 
-class allPlaygroundOptions:
+class allFieldLineTrackingOptions:
+	
+	def update_camera_at_current_timestep_with_camPath(self, \
+	camAzimuth, camElevation, camDistance, focalPoint, camRoll, figureHandle):
 		
-	@on_trait_change('GenerateStructure')
-	def generateStructureChanged(self):
+		# If camera path is set, use that instead
+		if not self.camPathType == 'None':
+			_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
+		viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=figureHandle)
+		viewControlRoll = mlab.roll(camRoll, figure=figureHandle)
+	
+	def fieldlineRender1_actual(self, figureHandle):
 		
-		# TODO - Show dialog box that this will overwrite time series 1
+		# Get camera view
+		if not mlab.view() is None:
+			camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=figureHandle)
+			camRoll = mlab.roll(figure=figureHandle)
 		
-		print(self.initCondition1)
+		# Setup vector data
+			
+		if self.whichVector_flt == 'Velocity':
+			
+			self.sf1_sc1 = mlab.pipeline.vector_field(self.x1, self.y1, self.z1, self.u1[:, :, :, self.whichTime1], 
+			self.v1[:, :, :, self.whichTime1], self.w1[:, :, :, self.whichTime1], figure=figureHandle)
+			magnitude = mlab.pipeline.extract_vector_norm(self.sf1_sc1)
 		
+		else:
+			
+			self.sf1_sc1 = mlab.pipeline.vector_field(self.x1, self.y1, self.z1, self.omega1[:, :, :, self.whichTime1], 
+			self.omega2[:, :, :, self.whichTime1], self.omega3[:, :, :, self.whichTime1], figure=figureHandle)
+			magnitude = mlab.pipeline.extract_vector_norm(self.sf1_sc1)
+			
+		self.volStream1_sc1 = mlab.pipeline.streamline(
+		magnitude, 
+		seedtype = 'sphere', 
+		seed_visible = self.seedRegionVisible_fl1, 
+		seed_scale = self.seedScale_fl1, 
+		seed_resolution = self.seedResolution_fl1, 
+		linetype = 'line', 
+		line_width = self.lineWidth_fl1, 
+		opacity = self.contourOpacity1, 
+		integration_direction = 'both', 
+		color = (self.red_fl1, self.green_fl1, self.blue_fl1),
+		figure = figureHandle
+		)
 		
+		# Get the center of the sphere with the tracking scalar and 
+		# set threshold
 		
+		# whichScalarSlice = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',\
+	#'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
 		
+		if self.whichScalarSlice_fl1 == 'Computed scalar (default)':
+			trackingScalar = self._dataTs1[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Vorticity x':
+			trackingScalar = self.omega1[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Vorticity y':
+			trackingScalar = self.omega2[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Vorticity z':
+			trackingScalar = self.omega3[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Vorticity magnitude':
+			trackingScalar = np.sqrt(self.omega1[:, :, :, self.whichTime1] + self.omega2[:, :, :, self.whichTime1] + self.omega3[:, :, :, self.whichTime1])
+		elif self.whichScalarSlice_fl1 == 'Velocity x':
+			trackingScalar = self.u1[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Velocity y':
+			trackingScalar = self.v1[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Velocity z':
+			trackingScalar = self.w1[:, :, :, self.whichTime1]
+		elif self.whichScalarSlice_fl1 == 'Velocity magnitude':
+			trackingScalar = np.sqrt(self.u1[:, :, :, self.whichTime1] + self.v1[:, :, :, self.whichTime1] + self.w1[:, :, :, self.whichTime1])
+		
+		if self.planeOrientation_fl1 == 'X':
+			trackingScalar = trackingScalar[self.whichSliceX_fl1, :, :]
+		elif self.planeOrientation_fl1 == 'Y':
+			trackingScalar = trackingScalar[:, self.whichSliceY_fl1, :]
+		elif self.planeOrientation_fl1 == 'Z':
+			trackingScalar = trackingScalar[:, :, self.whichSliceZ_fl1]
+		
+		if '-' in self.thresholdPercent1_fl1:
+			ind_pos = np.where(trackingScalar > float(self.thresholdPercent1_fl1) * trackingScalar.max())
+		else:
+			ind_pos = np.where(trackingScalar < -float(self.thresholdPercent1_fl1) * trackingScalar.min())
+		
+		whereArgmax = np.unravel_index(np.argmax(trackingScalar), np.shape(trackingScalar))
+			
+			# # Check if it is actually argmax. Yes it is..
+			# # print(whichSlices[whereArgmax])
+			# # print(np.max(whichSlices))
+			
+			# # Store argmax for ts = 0 and then calculate Euclidean distance from next time step
+			# # to adjust the location of the structure
+			
+			# # whichSlices_xx = self.xx[:, self.ylen//2:, (self.zlen//2)-16]
+			# # whichSlices_yy = self.yy[:, self.ylen//2:, (self.zlen//2)-16]
+			# # whichSlices_zz = self.zz[:, self.ylen//2:, (self.zlen//2)-16]
+			
+			# whichSlices_xx = self.xx[:, self.ylen//2, self.zlen//2:]
+			# whichSlices_yy = self.yy[:, self.ylen//2, self.zlen//2:]
+			# whichSlices_zz = self.zz[:, self.ylen//2, self.zlen//2:]
+			
+			# if t == 0:
+			
+				# self.argMaxLoc_ts0 = np.array([whichSlices_xx[whereArgmax], whichSlices_yy[whereArgmax], whichSlices_zz[whereArgmax]])
+		
+		if self.planeOrientation_fl1 == 'X':
+			xval = np.unique(self.x1)[self.whichSliceX_fl1]
+			yval = np.mean(np.unique(self.y1)[ind_pos[0]])
+			zval = np.mean(np.unique(self.z1)[ind_pos[1]])
+			self.volStream1_sc1.seed.widget.center = [xval, yval, zval]
+		
+		elif self.planeOrientation_fl1 == 'Y':
+			xval = np.mean(np.unique(self.x1)[ind_pos[0]])
+			yval = np.unique(self.y1)[self.whichSliceY_fl1]
+			zval = np.mean(np.unique(self.z1)[ind_pos[1]])
+			self.volStream1_sc1.seed.widget.center = [xval, yval, zval]
+		
+		elif self.planeOrientation_fl1 == 'Z':
+			xval = np.mean(np.unique(self.x1)[ind_pos[0]])
+			yval = np.mean(np.unique(self.y1)[ind_pos[1]])
+			zval = np.unique(self.z1)[self.whichSliceZ_fl1]
+			self.volStream1_sc1.seed.widget.center = [xval, yval, zval]
+		
+		self.update_camera_at_current_timestep_with_camPath(camAzimuth, camElevation, camDistance, focalPoint, camRoll, figureHandle) 
+		self.volStream1_sc1.update_streamlines = 1
+			
+		self.firstRun = True
+	
+	@on_trait_change('setThresholdPercent1_fl1')
+	def enableFieldlinesChanged(self):
+		
+		if self.thresholdPercent1_fl1 == '':
+			try:
+				self.volStream1_sc1.remove()
+			except AttributeError:
+				pass 
+		else:
+			
+			try:
+				self.volStream1_sc1.remove()
+			except AttributeError:
+				pass 
+			
+			self.fieldlineRender1_actual(self.scene1.mayavi_scene)
+			
+			if self.firstRun:
+				self.seedCenterx, self.seedCentery, self.seedCenterz = self.volStream1_sc1.seed.widget.center
