@@ -142,7 +142,8 @@ def include_all_traits(self):
 	self.on_trait_change(self.choose_folder_LLPath_fired, "choose_folder_LLPath")
 	
 	# allAnalysisOptions
-	self.on_trait_change(self.enableFieldlinesChanged, "setThresholdPercent1_fl1")
+	self.on_trait_change(self.enableFieldlinesChanged1, "setThresholdPercent1_fl1")
+	self.on_trait_change(self.enableFieldlinesChanged2, "setThresholdPercent1_fl2")
 	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")
 	
 	# timeUpdateBehavior

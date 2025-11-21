@@ -103,7 +103,8 @@ class timeUpdateBehavior:
 			# If fieldline tracking is enabled, update that
 			if self.allAnalysisOptions == "Fieldline tracking":
 				
-				self.enableFieldlinesChanged()
+				self.enableFieldlinesChanged1()
+				self.enableFieldlinesChanged2()
 				# Keep the previous view
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
