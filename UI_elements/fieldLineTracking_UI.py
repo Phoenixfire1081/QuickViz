@@ -13,12 +13,24 @@ buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 visibilityFLT = 'allModeOptions == "Analysis" and allAnalysisOptions == "Fieldline tracking"'
-visibilityFLTX_fl1 = visibilityFLT + ' and planeOrientation_fl1 == "X"'
-visibilityFLTY_fl1 = visibilityFLT + ' and planeOrientation_fl1 == "Y"'
-visibilityFLTZ_fl1 = visibilityFLT + ' and planeOrientation_fl1 == "Z"'
-visibilityFLTX_fl2 = visibilityFLT + ' and planeOrientation_fl2 == "X"'
-visibilityFLTY_fl2 = visibilityFLT + ' and planeOrientation_fl2 == "Y"'
-visibilityFLTZ_fl2 = visibilityFLT + ' and planeOrientation_fl2 == "Z"'
+
+visibilityFLTM_fl1 = visibilityFLT + ' and trackingOptions_fl1 == "Manual"'
+visibilityFLTMM_fl1 = visibilityFLT + ' and trackingOptions_fl2 == "Manual" and Mirror_fl1 == True'
+visibilityFLTT_fl1 = visibilityFLT + ' and trackingOptions_fl1 == "Auto"'
+
+visibilityFLTX_fl1 = visibilityFLTT_fl1 + ' and planeOrientation_fl1 == "X"'
+visibilityFLTY_fl1 = visibilityFLTT_fl1 + ' and planeOrientation_fl1 == "Y"'
+visibilityFLTZ_fl1 = visibilityFLTT_fl1 + ' and planeOrientation_fl1 == "Z"'
+
+visibilityFLTM_fl2 = visibilityFLT + ' and trackingOptions_fl2 == "Manual"'
+visibilityFLTMM_fl2 = visibilityFLT + ' and trackingOptions_fl2 == "Manual" and Mirror_fl2 == True'
+visibilityFLTT_fl2 = visibilityFLT + ' and trackingOptions_fl2 == "Auto"'
+
+visibilityFLTX_fl2 = visibilityFLTT_fl2 + ' and planeOrientation_fl2 == "X"'
+visibilityFLTY_fl2 = visibilityFLTT_fl2 + ' and planeOrientation_fl2 == "Y"'
+visibilityFLTZ_fl2 = visibilityFLTT_fl2 + ' and planeOrientation_fl2 == "Z"'
+
+
 
 fieldLineTrackingUIelements = Group(
 
@@ -63,25 +75,49 @@ Item("blue_fl1", show_label = False, visible_when=visibilityFLT, height = tinyh,
 ),
 
 HGroup(
-Item("whichScalarSliceflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLT),
-Item("whichScalarSlice_fl1", show_label = False, visible_when=visibilityFLT),
+Item("mirrorTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLT),
+Item("Mirror_fl1", show_label = False, visible_when=visibilityFLT),
 ),
 
 HGroup(
-Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when=visibilityFLT),
-Item("planeOrientation_fl1", show_label = False, visible_when=visibilityFLT, style = 'custom'),
+Item("trackingTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when=visibilityFLT),
+Item("trackingOptions_fl1", show_label = False, visible_when = visibilityFLT, style = 'custom'),
 ),
 
 HGroup(
-Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when=visibilityFLT),
+Item("positionTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when=visibilityFLTM_fl1),
+Item("fl1_xpos", show_label = False, visible_when=visibilityFLTM_fl1, height = tinyh, width = tinyw),
+Item("fl1_ypos", show_label = False, visible_when=visibilityFLTM_fl1, height = tinyh, width = tinyw),
+Item("fl1_zpos", show_label = False, visible_when=visibilityFLTM_fl1, height = tinyh, width = tinyw),
+),
+
+HGroup(
+Item("positionAltTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when=visibilityFLTM_fl2),
+Item("fl1_xposm", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+Item("fl1_yposm", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+Item("fl1_zposm", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+),
+
+HGroup(
+Item("whichScalarSliceflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLTT_fl1),
+Item("whichScalarSlice_fl1", show_label = False, visible_when=visibilityFLTT_fl1),
+),
+
+HGroup(
+Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when=visibilityFLTT_fl1),
+Item("planeOrientation_fl1", show_label = False, visible_when=visibilityFLTT_fl1, style = 'custom'),
+),
+
+HGroup(
+Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when=visibilityFLTT_fl1),
 Item("whichSliceX_fl1", show_label = False, visible_when = visibilityFLTX_fl1, width = sliderw),
 Item("whichSliceY_fl1", show_label = False, visible_when = visibilityFLTY_fl1, width = sliderw),
 Item("whichSliceZ_fl1", show_label = False, visible_when = visibilityFLTZ_fl1, width = sliderw),
 ),
 
 HGroup(
-Item("ThresholdPercentflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLT),
-Item("thresholdPercent1_fl1", show_label = False, visible_when=visibilityFLT, height = longh, width = longw), 
+Item("ThresholdPercentflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLTT_fl1),
+Item("thresholdPercent1_fl1", show_label = False, visible_when=visibilityFLTT_fl1, height = longh, width = longw), 
 Item("setThresholdPercent1_fl1", show_label = False, visible_when=visibilityFLT, height = buttonh, width = buttonw),
 ),
 
@@ -117,25 +153,49 @@ Item("blue_fl2", show_label = False, visible_when=visibilityFLT, height = tinyh,
 ),
 
 HGroup(
-Item("whichScalarSliceflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLT),
-Item("whichScalarSlice_fl2", show_label = False, visible_when=visibilityFLT),
+Item("mirrorTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLT),
+Item("Mirror_fl2", show_label = False, visible_when=visibilityFLT),
 ),
 
 HGroup(
-Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when=visibilityFLT),
-Item("planeOrientation_fl2", show_label = False, visible_when=visibilityFLT, style = 'custom'),
+Item("trackingTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when=visibilityFLT),
+Item("trackingOptions_fl2", show_label = False, visible_when = visibilityFLT, style = 'custom'),
 ),
 
 HGroup(
-Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when=visibilityFLT),
+Item("positionTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when=visibilityFLTM_fl2),
+Item("fl2_xpos", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+Item("fl2_ypos", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+Item("fl2_zpos", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+),
+
+HGroup(
+Item("positionAltTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when=visibilityFLTM_fl2),
+Item("fl2_xposm", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+Item("fl2_yposm", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+Item("fl2_zposm", show_label = False, visible_when=visibilityFLTM_fl2, height = tinyh, width = tinyw),
+),
+
+HGroup(
+Item("whichScalarSliceflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLTT_fl2),
+Item("whichScalarSlice_fl2", show_label = False, visible_when=visibilityFLTT_fl2),
+),
+
+HGroup(
+Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when=visibilityFLTT_fl2),
+Item("planeOrientation_fl2", show_label = False, visible_when=visibilityFLTT_fl2, style = 'custom'),
+),
+
+HGroup(
+Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when=visibilityFLTT_fl2),
 Item("whichSliceX_fl2", show_label = False, visible_when = visibilityFLTX_fl2, width = sliderw),
 Item("whichSliceY_fl2", show_label = False, visible_when = visibilityFLTY_fl2, width = sliderw),
 Item("whichSliceZ_fl2", show_label = False, visible_when = visibilityFLTZ_fl2, width = sliderw),
 ),
 
 HGroup(
-Item("ThresholdPercentflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLT),
-Item("thresholdPercent1_fl2", show_label = False, visible_when=visibilityFLT, height = longh, width = longw), 
+Item("ThresholdPercentflTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when=visibilityFLTT_fl2),
+Item("thresholdPercent1_fl2", show_label = False, visible_when=visibilityFLTT_fl2, height = longh, width = longw), 
 Item("setThresholdPercent1_fl2", show_label = False, visible_when=visibilityFLT, height = buttonh, width = buttonw),
 ),
 

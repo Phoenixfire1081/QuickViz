@@ -133,6 +133,27 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	red_fl1 = Float(1.0)
 	green_fl1 = Float(0.0)
 	blue_fl1 = Float(0.0)
+	Mirror_fl1 = Bool()
+	Mirror_fl2 = Bool()
+	
+	fl1_xpos = Float(0.0)
+	fl1_ypos = Float(0.0)
+	fl1_zpos = Float(0.0)
+	
+	fl1_xposm = Float(0.0)
+	fl1_yposm = Float(0.0)
+	fl1_zposm = Float(0.0)
+	
+	fl2_xpos = Float(0.0)
+	fl2_ypos = Float(0.0)
+	fl2_zpos = Float(0.0)
+	
+	fl2_xposm = Float(0.0)
+	fl2_yposm = Float(0.0)
+	fl2_zposm = Float(0.0)
+	
+	trackingOptions_fl1 = Enum(['Manual', 'Auto'], cols=2)
+	trackingOptions_fl2 = Enum(['Manual', 'Auto'], cols=2)
 	
 	seedRegionVisible_fl2 = Bool()
 	seedScale_fl2 = Float(1.0)
@@ -430,6 +451,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	fieldLine1Txt = Str('Fieldline 1:')
 	fieldLine2Txt = Str('Fieldline 2:')
 	colorFLTxt = Str('Line color (r, g, b):')
+	mirrorTxt = Str('Mirror fieldline?')
+	positionTxt = Str('Position:')
+	trackingTypeTxt = Str('Tracking type:')
+	positionAltTxt = Str('Position(m):')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -948,6 +973,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.whichScalarSlice_fl2 = 'Computed scalar (default)'
 		self.planeOrientation_fl1 = 'X'
 		self.planeOrientation_fl2 = 'X'
+		self.Mirror_fl1 = True
+		self.Mirror_fl2 = True
 				
 	view = View(
 	
