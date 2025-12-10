@@ -107,7 +107,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
 	
 	# All Analysis options
-	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Q-tensor'], cols=4)
+	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor'], cols=5)
 	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
@@ -169,6 +169,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	red_fl2 = Float(0.0)
 	green_fl2 = Float(0.0)
 	blue_fl2 = Float(1.0)
+	
+	# Reconnection
+	altBBox = Bool()
+	calcReconnection = Button('Calculate')
 	
 	# Q-tensor
 	calculateQtensor = Button('Calculate')
@@ -455,6 +459,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	positionTxt = Str('Position:')
 	trackingTypeTxt = Str('Tracking type:')
 	positionAltTxt = Str('Position(m):')
+	altBBoxTxt = Str('Use alternate bounding box:')
+	calcAndPlotTxt = Str('Calculate and plot for all times:')
+	reconnX1Txt = Str('xmin:')
+	reconnY1Txt = Str('ymin:')
+	reconnZ1Txt = Str('zmin:')
+	reconnX2Txt = Str('xmax:')
+	reconnY2Txt = Str('ymax:')
+	reconnZ2Txt = Str('zmax:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -595,6 +607,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.add_trait("whichSliceX", Range(int(0.0), self.xlength_data1-1, int(0)))
 		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
+		self.add_trait("whichSliceX1_reconn", Range(int(0.0), self.xlength_data1-1, int(0)))
+		self.add_trait("whichSliceY1_reconn", Range(int(0.0), self.ylength_data1-1, int(0)))
+		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), self.zlength_data1-1, int(0)))
+		self.add_trait("whichSliceX2_reconn", Range(int(0.0), self.xlength_data1-1, int(1)))
+		self.add_trait("whichSliceY2_reconn", Range(int(0.0), self.ylength_data1-1, int(1)))
+		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), self.zlength_data1-1, int(1)))
 		self.add_trait("whichSliceX_fl1", Range(int(0.0), self.xlength_data1-1, int(0)))
 		self.add_trait("whichSliceY_fl1", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ_fl1", Range(int(0.0), self.zlength_data1-1, int(0)))
@@ -975,6 +993,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.planeOrientation_fl2 = 'X'
 		self.Mirror_fl1 = True
 		self.Mirror_fl2 = True
+		
+		# Default options for Reconnection
+		self.altBBox = False
 				
 	view = View(
 	

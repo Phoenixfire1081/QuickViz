@@ -33,6 +33,42 @@ isoUIelements = (Group(
 	# Fieldline tracking
 	fieldLineTrackingUIelements,
 	
+	# Reconnection
+	HGroup(
+	Item("altBBoxTxt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection"', height = smallh, width = -170,),
+	Item("altBBox", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection"'),
+	),
+	
+	HGroup(
+	Item("reconnX1Txt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', height = smallh, width = -35,),
+	Item("whichSliceX1_reconn", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', width = sliderw), 
+	),
+	HGroup(
+	Item("reconnX2Txt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', height = smallh, width = -35,),
+	Item("whichSliceX2_reconn", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', width = sliderw), 
+	),
+	HGroup(
+	Item("reconnY1Txt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', height = smallh, width = -35,),
+	Item("whichSliceY1_reconn", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', width = sliderw), 
+	),
+	HGroup(
+	Item("reconnY2Txt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', height = smallh, width = -35,),
+	Item("whichSliceY2_reconn", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', width = sliderw), 
+	),
+	HGroup(
+	Item("reconnZ1Txt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', height = smallh, width = -35,),
+	Item("whichSliceZ1_reconn", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', width = sliderw), 
+	),
+	HGroup(
+	Item("reconnZ2Txt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', height = smallh, width = -35,),
+	Item("whichSliceZ2_reconn", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" and altBBox == True', width = sliderw), 
+	),
+	
+	HGroup(
+	Item("calcAndPlotTxt", show_label = False, style = 'readonly', visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection"', height = smallh, width = -180,),
+	Item("calcReconnection", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection"', height = buttonh, width = buttonw),
+	),
+	
 	# Q-tensor
 	HGroup(Item("calculateQtensor", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Q-tensor"', height = buttonh, width = buttonw),),
 	

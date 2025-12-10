@@ -144,6 +144,13 @@ def include_all_traits(self):
 	# allAnalysisOptions
 	self.on_trait_change(self.enableFieldlinesChanged1, "setThresholdPercent1_fl1")
 	self.on_trait_change(self.enableFieldlinesChanged2, "setThresholdPercent1_fl2")
+	self.on_trait_change(self.bboxChangedReconn, "whichSliceX1_reconn")
+	self.on_trait_change(self.bboxChangedReconn, "whichSliceY1_reconn")
+	self.on_trait_change(self.bboxChangedReconn, "whichSliceZ1_reconn")
+	self.on_trait_change(self.bboxChangedReconn, "whichSliceX2_reconn")
+	self.on_trait_change(self.bboxChangedReconn, "whichSliceY2_reconn")
+	self.on_trait_change(self.bboxChangedReconn, "whichSliceZ2_reconn")
+	self.on_trait_change(self.calcReconnectionChanged, "calcReconnection")
 	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")
 	
 	# timeUpdateBehavior
