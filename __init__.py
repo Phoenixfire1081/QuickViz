@@ -607,15 +607,27 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.add_trait("whichSliceX", Range(int(0.0), self.xlength_data1-1, int(0)))
 		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
-		self.add_trait("whichSliceX1_reconn", Range(int(0.0), self.xlength_data1-1, int(0)))
-		self.add_trait("whichSliceY1_reconn", Range(int(0.0), self.ylength_data1-1, int(0)))
-		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), self.zlength_data1-1, int(0)))
-		self.add_trait("whichSliceX2_reconn", Range(int(0.0), self.xlength_data1-1, int(1)))
-		self.add_trait("whichSliceY2_reconn", Range(int(0.0), self.ylength_data1-1, int(1)))
-		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), self.zlength_data1-1, int(1)))
+		
+		self.add_trait("whichSliceX1_reconn", Range(int(0.0), self.xlength_data1-1, int(0), low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY1_reconn", Range(int(0.0), self.ylength_data1-1, int(0), low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), self.zlength_data1-1, int(0), low_name = 'minz1', high_name='maxz1'))
+		
+		self.add_trait("whichSliceX2_reconn", Range(int(0.0), self.xlength_data1-1, int(1), low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY2_reconn", Range(int(0.0), self.ylength_data1-1, int(1), low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), self.zlength_data1-1, int(1), low_name = 'minz1', high_name='maxz1'))
+		
+		self.minx1 = 0
+		self.miny1 = 0
+		self.minz1 = 0
+		
+		self.maxx1 = self.xlength_data1-1
+		self.maxy1 = self.ylength_data1-1
+		self.maxz1 = self.zlength_data1-1
+		
 		self.add_trait("whichSliceX_fl1", Range(int(0.0), self.xlength_data1-1, int(0)))
 		self.add_trait("whichSliceY_fl1", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ_fl1", Range(int(0.0), self.zlength_data1-1, int(0)))
+		
 		self.add_trait("whichSliceX_fl2", Range(int(0.0), self.xlength_data1-1, int(0)))
 		self.add_trait("whichSliceY_fl2", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ_fl2", Range(int(0.0), self.zlength_data1-1, int(0)))

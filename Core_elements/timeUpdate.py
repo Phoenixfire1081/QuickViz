@@ -109,6 +109,14 @@ class timeUpdateBehavior:
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
+			# If Qtensor is enabled, update that
+			if self.allAnalysisOptions == "Q-tensor":
+				
+				self.calculateQtensorChanged()
+				# Keep the previous view
+				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
+			
 			try:
 			
 				if not self.threshold1 == '':
