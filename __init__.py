@@ -235,13 +235,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	removeVolRender = Button('Remove')
 	
 	# Slice options
-	sliceType = Enum(['None', 'Fieldlines', 'Contour slice', 'Vector slice'])
+	sliceType = Enum(['None', 'Fieldlines', 'Contour slice (filled)', 'Contour slice (unfilled)', 'Vector slice'])
 	planeOrientation = Enum(['X', 'Y', 'Z'], cols=3)
 	whichScalarSlice = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',\
 	'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
 	whichVector = Enum(['Velocity', 'Vorticity'], cols=2)
 	enableSlice = Button('Set')
 	removeSlice = Button('Remove')
+	numberOfContours = Int(10)
 	
 	# vector slice
 	scaleFactorSlice = Float(1.0)
@@ -467,6 +468,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	reconnX2Txt = Str('xmax:')
 	reconnY2Txt = Str('ymax:')
 	reconnZ2Txt = Str('zmax:')
+	numberOfContoursTxt = Str('Number of contours:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

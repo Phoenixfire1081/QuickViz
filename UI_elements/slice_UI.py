@@ -19,12 +19,12 @@ Item("ChooseSliceTxt", style = 'readonly', show_label = False, height = smallh, 
 Item("sliceType", show_label = False, visible_when = 'allLocalOptions == "Slice" and allModeOptions == "Visualization"'),
 ),
 HGroup(
-Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-Item("whichVector", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType != "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"', style = 'custom'),
+Item("whichVectorTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allLocalOptions == "Slice" and sliceType != "Contour slice (filled)" and sliceType != "Contour slice (unfilled)" and sliceType != "None" and allModeOptions == "Visualization"'),
+Item("whichVector", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType != "Contour slice (filled)" and sliceType != "Contour slice (unfilled)" and sliceType != "None" and allModeOptions == "Visualization"', style = 'custom'),
 ),
 HGroup(
-Item("whichScalarSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-Item("whichScalarSlice", show_label = False, visible_when = 'allLocalOptions == "Slice" and sliceType == "Contour slice" and sliceType != "None" and allModeOptions == "Visualization"'),
+Item("whichScalarSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Slice" and (sliceType == "Contour slice (filled)" or sliceType == "Contour slice (unfilled)") and sliceType != "None" and allModeOptions == "Visualization"'),
+Item("whichScalarSlice", show_label = False, visible_when = 'allLocalOptions == "Slice" and (sliceType == "Contour slice (filled)" or sliceType == "Contour slice (unfilled)") and sliceType != "None" and allModeOptions == "Visualization"'),
 ),
 HGroup(
 Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
@@ -53,6 +53,12 @@ Item("noiseImageDimensionTxt", style = 'readonly', show_label = False, height = 
 Item("noiseImageDimensionSliceX", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 Item("noiseImageDimensionSliceY", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Fieldlines" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 ),
+
+HGroup(
+Item("numberOfContoursTxt", style = 'readonly', show_label = False, height = smallh, width = -150, visible_when='allLocalOptions == "Slice" and sliceType == "Contour slice (unfilled)" and allModeOptions == "Visualization"'),
+Item("numberOfContours", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType == "Contour slice (unfilled)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
+),
+
 HGroup(
 Item("setSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
 Item("enableSlice", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and allModeOptions == "Visualization"'),

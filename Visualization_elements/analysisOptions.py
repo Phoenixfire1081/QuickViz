@@ -115,43 +115,43 @@ class allAnalysisOptions:
 			
 			# First calculate the time-averaged Q-tensor
 			
-			# Get total time
-			total_time = int(np.shape(self._dataTs1)[-1]-1)
+			# # Get total time
+			# total_time = int(np.shape(self._dataTs1)[-1]-1)
 			
-			# Fire next time series button
-			for i in range(0, total_time):
+			# # Fire next time series button
+			# for i in range(0, total_time):
 				
-				# Reset self.whichTime1
-				self.whichTime1 = i
+				# # Reset self.whichTime1
+				# self.whichTime1 = i
 				
-				# Get vorticity
-				if self.altBBox:
-					w1 = self.omega1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
-					w2 = self.omega2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
-					w3 = self.omega3[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
-				else:
-					w1 = self.omega1[:, :, :, self.whichTime1]
-					w2 = self.omega2[:, :, :, self.whichTime1]
-					w3 = self.omega3[:, :, :, self.whichTime1]
+				# # Get vorticity
+				# if self.altBBox:
+					# w1 = self.omega1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+					# w2 = self.omega2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+					# w3 = self.omega3[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				# else:
+					# w1 = self.omega1[:, :, :, self.whichTime1]
+					# w2 = self.omega2[:, :, :, self.whichTime1]
+					# w3 = self.omega3[:, :, :, self.whichTime1]
 				
-				print('Q-tensor calc.. processing time step: ' + str(i) + '/' + str(total_time))
+				# print('Q-tensor calc.. processing time step: ' + str(i) + '/' + str(total_time))
 				
-				vortVec = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
+				# vortVec = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
 				
-				# Calculate q-tensor and recalculate enstrophy and its components in the new basis
-				QT, EigVec, EigVal = calculate_QTensor3D(vortVec, 
-				self.dx_data1, self.dy_data1, self.dz_data1)
+				# # Calculate q-tensor and recalculate enstrophy and its components in the new basis
+				# QT, EigVec, EigVal = calculate_QTensor3D(vortVec, 
+				# self.dx_data1, self.dy_data1, self.dz_data1)
 				
-				points = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
+				# points = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
 				
-				if i == 0:
+				# if i == 0:
 					
-					EigVecSorted = np.zeros((np.shape(EigVec)))
+					# EigVecSorted = np.zeros((np.shape(EigVec)))
 				
-				# Sort the eigenvectors with the descending order of eigenvalues
-				EigVecSorted += EigVec[np.argsort(EigVal)[::-1]]
+				# # Sort the eigenvectors with the descending order of eigenvalues
+				# EigVecSorted += EigVec[np.argsort(EigVal)[::-1]]
 			
-			EigVecSorted /= total_time
+			# EigVecSorted /= total_time
 			
 			# Calculate enstrophy components for all time (with and without Q-tensor)
 			# and plot
@@ -194,9 +194,9 @@ class allAnalysisOptions:
 				ET.append(E1[i] + E2[i] + E3[i])
 				
 				# Calculate q-tensor and recalculate enstrophy and its components in the new basis
-				# QT, EigVec, EigVal = self.calculate_QTensor3D(self.omega1[:, :, :, self.whichTime1], 
-				# self.omega2[:, :, :, self.whichTime1], self.omega3[:, :, :, self.whichTime1], 
-				# self.dx_data1, self.dy_data1, self.dz_data1, True)
+				vortVec = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
+				QT, EigVec, EigVal = calculate_QTensor3D(vortVec, 
+				self.dx_data1, self.dy_data1, self.dz_data1)
 				
 				points = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
 				

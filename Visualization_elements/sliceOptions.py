@@ -194,7 +194,7 @@ class allSliceOptions:
             # Keep the previous view
             self.update_camera_at_current_timestep_with_camPath(camAzimuth, camElevation, camDistance, focalPoint, camRoll, figureHandle)
 
-        elif self.sliceType == "Contour slice":
+        elif self.sliceType == "Contour slice (filled)":
             # Get camera view
             if not mlab.view() is None:
                 camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=figureHandle)
@@ -365,6 +365,200 @@ class allSliceOptions:
                         self.sf1_sc4,
                         plane_orientation="z_axes",
                         slice_index=self.whichSliceZ,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+
+            # Keep the previous view
+            self.update_camera_at_current_timestep_with_camPath(camAzimuth, camElevation, camDistance, focalPoint, camRoll, figureHandle)
+        
+        elif self.sliceType == "Contour slice (unfilled)":
+            # Get camera view
+            if not mlab.view() is None:
+                camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=figureHandle)
+                camRoll = mlab.roll(figure=figureHandle)
+
+            if self.whichScalarSlice == "Computed scalar (default)":
+                setScalarSlice = self._dataTs1[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Vorticity x":
+                setScalarSlice = self.omega1[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Vorticity y":
+                setScalarSlice = self.omega2[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Vorticity z":
+                setScalarSlice = self.omega3[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Vorticity magnitude":
+                setScalarSlice = np.sqrt(
+                    self.omega1[:, :, :, self.whichTime1] ** 2 + self.omega2[:, :, :, self.whichTime1] ** 2 + self.omega3[:, :, :, self.whichTime1] ** 2
+                )
+            elif self.whichScalarSlice == "Velocity x":
+                setScalarSlice = self.u1[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Velocity y":
+                setScalarSlice = self.v1[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Velocity z":
+                setScalarSlice = self.w1[:, :, :, self.whichTime1]
+            elif self.whichScalarSlice == "Velocity magnitude":
+                setScalarSlice = np.sqrt(
+                    self.u1[:, :, :, self.whichTime1] ** 2 + self.v1[:, :, :, self.whichTime1] ** 2 + self.w1[:, :, :, self.whichTime1] ** 2
+                )
+
+            # Setup scalar data
+            if scNumber == 1:
+                self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
+            if scNumber == 2:
+                self.sf1_sc2 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
+            if scNumber == 3:
+                self.sf1_sc3 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
+            if scNumber == 4:
+                self.sf1_sc4 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
+
+            # Use scalar_cut_plane to show unfilled contour data
+            if self.planeOrientation == "X":
+                if scNumber == 1:
+                    self.volSlice1_sc1 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc1,
+                        plane_orientation="x_axes",
+                        line_width = 2,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                    # Additional options for the scalar_cut_plane
+                    self.volSlice1_sc1.implicit_plane.widget.enabled = False # Removes the object to move around the widget
+                    self.volSlice1_sc1.enable_contours = True # Enables unfilled contours
+                    self.volSlice1_sc1.contour.number_of_contours = self.numberOfContours # Sets the number of contours
+                    self.volSlice1_sc1.implicit_plane.widget.origin = np.array([np.unique(self.x1)[self.whichSliceX], 0,  0]) # Changes the origin correctly
+                if scNumber == 2:
+                    self.volSlice1_sc2 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc2,
+                        plane_orientation="x_axes",
+                        # slice_index=self.whichSliceX,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                if scNumber == 3:
+                    self.volSlice1_sc3 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc3,
+                        plane_orientation="x_axes",
+                        # slice_index=self.whichSliceX,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                if scNumber == 4:
+                    self.volSlice1_sc4 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc4,
+                        plane_orientation="x_axes",
+                        # slice_index=self.whichSliceX,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+
+            elif self.planeOrientation == "Y":
+                if scNumber == 1:
+                    self.volSlice1_sc1 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc1,
+                        plane_orientation="y_axes",
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                    # Additional options for the scalar_cut_plane
+                    self.volSlice1_sc1.implicit_plane.widget.enabled = False # Removes the object to move around the widget
+                    self.volSlice1_sc1.enable_contours = True # Enables unfilled contours
+                    self.volSlice1_sc1.contour.number_of_contours = self.numberOfContours # Sets the number of contours
+                    self.volSlice1_sc1.implicit_plane.widget.origin = np.array([0, np.unique(self.y1)[self.whichSliceY],  0]) # Changes the origin correctly
+                if scNumber == 2:
+                    self.volSlice1_sc2 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc2,
+                        plane_orientation="y_axes",
+                        # slice_index=self.whichSliceY,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                if scNumber == 3:
+                    self.volSlice1_sc3 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc3,
+                        plane_orientation="y_axes",
+                        # slice_index=self.whichSliceY,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                if scNumber == 4:
+                    self.volSlice1_sc4 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc4,
+                        plane_orientation="y_axes",
+                        # slice_index=self.whichSliceY,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+
+            elif self.planeOrientation == "Z":
+                if scNumber == 1:
+                    self.volSlice1_sc1 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc1,
+                        plane_orientation="z_axes",
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                    # Additional options for the scalar_cut_plane
+                    self.volSlice1_sc1.implicit_plane.widget.enabled = False # Removes the object to move around the widget
+                    self.volSlice1_sc1.enable_contours = True # Enables unfilled contours
+                    self.volSlice1_sc1.contour.number_of_contours = self.numberOfContours # Sets the number of contours
+                    self.volSlice1_sc1.implicit_plane.widget.origin = np.array([0, 0, np.unique(self.z1)[self.whichSliceZ]]) # Changes the origin correctly
+                if scNumber == 2:
+                    self.volSlice1_sc2 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc2,
+                        plane_orientation="z_axes",
+                        # slice_index=self.whichSliceZ,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                if scNumber == 3:
+                    self.volSlice1_sc3 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc3,
+                        plane_orientation="z_axes",
+                        # slice_index=self.whichSliceZ,
+                        colormap=self.contourColormap1,
+                        opacity=self.contourOpacity1,
+                        figure=figureHandle,
+                        vmin=self.colormapMin1,
+                        vmax=self.colormapMax1,
+                    )
+                if scNumber == 4:
+                    self.volSlice1_sc4 = mlab.pipeline.scalar_cut_plane(
+                        self.sf1_sc4,
+                        plane_orientation="z_axes",
+                        # slice_index=self.whichSliceZ,
                         colormap=self.contourColormap1,
                         opacity=self.contourOpacity1,
                         figure=figureHandle,

@@ -40,7 +40,8 @@ class allIsosurfaceOptions:
 			
 				# Construct the triangular_mesh with the required scalar data
 				self.mesh1 = mlab.triangular_mesh(actualPts[:, 0], actualPts[:, 1], \
-				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), figure = figureHandle)
+				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), 
+				colormap = self.contourColormap1, figure = figureHandle)
 				
 				# Set the colormap min, max
 				self.mesh1.module_manager.scalar_lut_manager.data_range = [self.colormapMin1, self.colormapMax1]
@@ -57,7 +58,8 @@ class allIsosurfaceOptions:
 			
 				# Construct the triangular_mesh with the required scalar data
 				self.mesh2 = mlab.triangular_mesh(actualPts[:, 0], actualPts[:, 1], \
-				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), figure = figureHandle)
+				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), 
+				colormap = self.contourColormap1, figure = figureHandle)
 				
 				# Set the colormap min, max
 				self.mesh2.module_manager.scalar_lut_manager.data_range = [self.colormapMin1, self.colormapMax1]
@@ -69,7 +71,8 @@ class allIsosurfaceOptions:
 			
 				# Construct the triangular_mesh with the required scalar data
 				self.mesh3 = mlab.triangular_mesh(actualPts[:, 0], actualPts[:, 1], \
-				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), figure = figureHandle)
+				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), 
+				colormap = self.contourColormap1, figure = figureHandle)
 				
 				# Set the colormap min, max
 				self.mesh3.module_manager.scalar_lut_manager.data_range = [self.colormapMin1, self.colormapMax1]
@@ -81,7 +84,8 @@ class allIsosurfaceOptions:
 			
 				# Construct the triangular_mesh with the required scalar data
 				self.mesh4 = mlab.triangular_mesh(actualPts[:, 0], actualPts[:, 1], \
-				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), figure = figureHandle)
+				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), 
+				colormap = self.contourColormap1, figure = figureHandle)
 				
 				# Set the colormap min, max
 				self.mesh4.module_manager.scalar_lut_manager.data_range = [self.colormapMin1, self.colormapMax1]
