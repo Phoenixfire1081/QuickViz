@@ -32,6 +32,7 @@ from .Visualization_elements.surfaceExtractionOptions import allSurfaceExtractio
 from .Visualization_elements.playgroundOptions import allPlaygroundOptions
 from .Visualization_elements.realSpaceVisualizationOptions import allRealSpaceVisualizationOptions
 from .Visualization_elements.analysisOptions import allAnalysisOptions
+from .Visualization_elements.localDatasetOptions import allLocalDatasetOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -50,7 +51,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	activeDataControlClass, fileChooserClass, allPathControlsClass,
 	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,
 	allSurfaceExtractionOptions, allPlaygroundOptions, allAnalysisOptions,
-	allRealSpaceVisualizationOptions, allFieldLineTrackingOptions):
+	allRealSpaceVisualizationOptions, allFieldLineTrackingOptions,
+	allLocalDatasetOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -101,13 +103,35 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	outlineColorBlue4 = Float(0.0)	
 	
 	# Mode
-	allModeOptions = Enum(['Visualization', 'Analysis', 'Log Lattice', 'Blender exports'])
+	allModeOptions = Enum(['Dataset', 'Visualization', 'Analysis', 'Log Lattice', 'Blender exports'])
+	
+	# All Dataset options
+	allDatasetOptions = Enum('Local', 'Turbulence Database (JHTDB)', cols = 2)
+	
+	# Local data options
+	LocalData_path = Str(os.getcwd())
+	choose_folder_LocalDataPath = Button('Browse')
+	timeSteps_LocalData = Str('')
+	load_LocalData = Button('Load')
+	precision_LocalData = Enum(['Single', 'Double'], cols = 2)
+	whichScalar_LocalData = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
+	
+	# Store min, max, res data separately from LL
+	xmin_Local = Str('')
+	xmax_Local = Str('')
+	ymin_Local = Str('')
+	ymax_Local = Str('')
+	zmin_Local = Str('')
+	zmax_Local = Str('')
+	xres_Local = Str('')
+	yres_Local = Str('')
+	zres_Local = Str('')
 	
 	# All Visualization options
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
 	
 	# All Analysis options
-	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor'], cols=5)
+	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert'], cols=3)
 	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
@@ -469,6 +493,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	reconnY2Txt = Str('ymax:')
 	reconnZ2Txt = Str('zmax:')
 	numberOfContoursTxt = Str('Number of contours:')
+	LoadLocalDataTxt = Str('Local data path:')
+	timestepsTxt = Str('Number of time steps:')
+	adjustTxt = Str('Adjust parameters, if incorrect:')
+	precisionTxt = Str('Precision:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

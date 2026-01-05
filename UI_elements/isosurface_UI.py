@@ -23,11 +23,68 @@ reconnectionVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions ==
 reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor"'
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
 
+localDatasetVisibility = 'allModeOptions == "Dataset" and allDatasetOptions == "Local"'
+
 isoUIelements = (Group(
 
 	# All mode options
 	Group(
 	Item("allModeOptions", label = 'Mode:')),
+	
+	# All data options
+	
+	Group(
+	Item("allDatasetOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Dataset"')
+	),
+	
+	# Local data
+	
+	HGroup(
+	Item("LoadLocalDataTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when = localDatasetVisibility),
+	Item("LocalData_path", show_label = False, height = longh, width = longw, visible_when = localDatasetVisibility),
+	Item("choose_folder_LocalDataPath", show_label = False, height = buttonh, width = buttonw, visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("adjustTxt", style = 'readonly', show_label = False, height = smallh, width = -200, visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("minExtentTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = localDatasetVisibility),
+	Item("xmin_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("ymin_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("zmin_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	),
+
+	HGroup(
+	Item("maxExtentTxt", style = 'readonly', show_label = False, height = tinyh, width = -80, visible_when = localDatasetVisibility),
+	Item("xmax_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("ymax_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("zmax_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	),
+
+	HGroup(
+	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = localDatasetVisibility),
+	Item("xres_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("yres_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("zres_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("timestepsTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when = localDatasetVisibility),
+	Item("timeSteps_LocalData", style = 'readonly', show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("precisionTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibility),
+	Item("precision_LocalData", show_label = False, style = 'custom' , visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = localDatasetVisibility),
+	Item("whichScalar_LocalData", show_label = False, visible_when = localDatasetVisibility),
+	Item("load_LocalData", height = buttonh, width = buttonw, show_label = False, visible_when = localDatasetVisibility),
+	),
 	
 	# All analysis options
 	Group(

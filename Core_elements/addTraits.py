@@ -141,6 +141,10 @@ def include_all_traits(self):
 	self.on_trait_change(self.computeLL_fired, "computeLL")
 	self.on_trait_change(self.choose_folder_LLPath_fired, "choose_folder_LLPath")
 	
+	# allLocalDatasetOptions
+	self.on_trait_change(self.load_LocalData_fired, "load_LocalData")
+	self.on_trait_change(self.choose_folder_LocalDataPath_fired, "choose_folder_LocalDataPath")
+	
 	# allAnalysisOptions
 	self.on_trait_change(self.enableFieldlinesChanged1, "setThresholdPercent1_fl1")
 	self.on_trait_change(self.enableFieldlinesChanged2, "setThresholdPercent1_fl2")
