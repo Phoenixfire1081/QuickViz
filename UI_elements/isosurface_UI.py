@@ -24,6 +24,8 @@ reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and allAnalysisOpt
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
 
 localDatasetVisibility = 'allModeOptions == "Dataset" and allDatasetOptions == "Local"'
+localDatasetVisibilityRaw3D = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "Raw 3D"'
+localDatasetVisibilitynetCDF = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
 
 isoUIelements = (Group(
 
@@ -40,9 +42,34 @@ isoUIelements = (Group(
 	# Local data
 	
 	HGroup(
+	Item("allLocalDatasetOptions", show_label = False, style = 'custom', visible_when = localDatasetVisibility)
+	),
+	
+	HGroup(
 	Item("LoadLocalDataTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when = localDatasetVisibility),
 	Item("LocalData_path", show_label = False, height = longh, width = longw, visible_when = localDatasetVisibility),
 	Item("choose_folder_LocalDataPath", show_label = False, height = buttonh, width = buttonw, visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("assignTxt", style = 'readonly', show_label = False, height = smallh, width = -200, visible_when = localDatasetVisibilitynetCDF),
+	),
+	HGroup(
+	Item("availableAttributesTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when = localDatasetVisibilitynetCDF),
+	Item("allAttributes", style = 'readonly', show_label = False, height = smallh, width = -1000, visible_when = localDatasetVisibilitynetCDF),
+	),
+	
+	HGroup(
+	Item("velxTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilitynetCDF),
+	Item("velxLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDF),
+	),
+	HGroup(
+	Item("velyTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilitynetCDF),
+	Item("velyLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDF),
+	),
+	HGroup(
+	Item("velzTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilitynetCDF),
+	Item("velzLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDF),
 	),
 	
 	HGroup(
@@ -76,8 +103,14 @@ isoUIelements = (Group(
 	),
 	
 	HGroup(
-	Item("precisionTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibility),
-	Item("precision_LocalData", show_label = False, style = 'custom' , visible_when = localDatasetVisibility),
+	Item("whichTimeStepLLTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when = localDatasetVisibility),
+	Item("timeStep_LocalData", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibility),
+	Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("precisionTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilityRaw3D),
+	Item("precision_LocalData", show_label = False, style = 'custom' , visible_when = localDatasetVisibilityRaw3D),
 	),
 	
 	HGroup(

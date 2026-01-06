@@ -107,6 +107,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# All Dataset options
 	allDatasetOptions = Enum('Local', 'Turbulence Database (JHTDB)', cols = 2)
+	allLocalDatasetOptions = Enum('Raw 3D', 'netCDF', cols = 2)
 	
 	# Local data options
 	LocalData_path = Str(os.getcwd())
@@ -115,6 +116,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	load_LocalData = Button('Load')
 	precision_LocalData = Enum(['Single', 'Double'], cols = 2)
 	whichScalar_LocalData = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
+	timeStep_LocalData = Str('')
 	
 	# Store min, max, res data separately from LL
 	xmin_Local = Str('')
@@ -126,6 +128,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	xres_Local = Str('')
 	yres_Local = Str('')
 	zres_Local = Str('')
+	
+	# All netcdf options
+	velxLabel = Str('')
+	velyLabel = Str('')
+	velzLabel = Str('')
+	allAttributes = Str('')
 	
 	# All Visualization options
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
@@ -497,6 +505,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	timestepsTxt = Str('Number of time steps:')
 	adjustTxt = Str('Adjust parameters, if incorrect:')
 	precisionTxt = Str('Precision:')
+	assignTxt = Str('Assign velocity data, if incorrect:')
+	velxTxt = Str('Velocity x:')
+	velyTxt = Str('Velocity y:')
+	velzTxt = Str('Velocity z:')
+	availableAttributesTxt = Str('Available attributes:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
