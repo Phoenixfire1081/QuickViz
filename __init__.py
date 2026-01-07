@@ -115,8 +115,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	timeSteps_LocalData = Str('')
 	load_LocalData = Button('Load')
 	precision_LocalData = Enum(['Single', 'Double'], cols = 2)
-	whichScalar_LocalData = Enum(['Vorticity magnitude', 'Q-criterion', 'Lambda_2', 'Delta criterion', 'Enstrophy density', 'Enstrophy Prod. Rate'])
+	whichScalar_LocalData = Enum(['Velocity magnitude', 'Vorticity magnitude', 
+	'Q-criterion', 'Lambda_2', 
+	'Delta criterion', 'Enstrophy density', 
+	'Enstrophy Prod. Rate', 'Velocity x', 
+	'Velocity y', 'Velocity z', 
+	'Vorticity x', 'Vorticity y', 
+	'Vorticity z'])
 	timeStep_LocalData = Str('')
+	cancel_LocalData = Button('Cancel')
 	
 	# Store min, max, res data separately from LL
 	xmin_Local = Str('')
@@ -205,9 +212,25 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Reconnection
 	altBBox = Bool()
 	calcReconnection = Button('Calculate')
+	minx1 = Int()
+	maxx1 = Int()
+	miny1 = Int()
+	maxy1 = Int()
+	minz1 = Int()
+	maxz1 = Int() # Declaration is necessary to enable dynamic changes
 	
 	# Q-tensor
 	calculateQtensor = Button('Calculate')
+	
+	# Duchon Robert
+	allDROptions = Enum(['DR', 'Dnu', 'Both'], cols=3)
+	a_DR = Float(30)
+	probedScale_DR = Int(1)
+	l_c_DR = Float(0)
+	eta_DR = Float(0)
+	l_c_eta_DR = Float(0)
+	calculate_DR = Button('Calculate')
+	remove_DR = Button('Remove')
 	
 	# All Log lattice options
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
@@ -510,6 +533,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	velyTxt = Str('Velocity y:')
 	velzTxt = Str('Velocity z:')
 	availableAttributesTxt = Str('Available attributes:')
+	trimDatasetTxt = Str('Trim dataset:')
+	cutoffTxt = Str('Prefactor (a):')
+	probedScaleTxt = Str('Probed Scale:')
+	probedScaleIdxTxt = Str('(integer values only)')
+	lcTxt = Str('l_c:')
+	etaTxt = Str('Kolmogorov scale:')
+	lcetaTxt = Str('l_c_eta:')
+	lcetaKolmogorovTxt = Str('(if eta is provided)')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -651,13 +682,13 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
 		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
 		
-		self.add_trait("whichSliceX1_reconn", Range(int(0.0), self.xlength_data1-1, int(0), low_name = 'minx1', high_name='maxx1'))
-		self.add_trait("whichSliceY1_reconn", Range(int(0.0), self.ylength_data1-1, int(0), low_name = 'miny1', high_name='maxy1'))
-		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), self.zlength_data1-1, int(0), low_name = 'minz1', high_name='maxz1'))
+		self.add_trait("whichSliceX1_reconn", Range(int(0.0), 10000, int(0), low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY1_reconn", Range(int(0.0), 10000, int(0), low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), 10000, int(0), low_name = 'minz1', high_name='maxz1'))
 		
-		self.add_trait("whichSliceX2_reconn", Range(int(0.0), self.xlength_data1-1, int(1), low_name = 'minx1', high_name='maxx1'))
-		self.add_trait("whichSliceY2_reconn", Range(int(0.0), self.ylength_data1-1, int(1), low_name = 'miny1', high_name='maxy1'))
-		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), self.zlength_data1-1, int(1), low_name = 'minz1', high_name='maxz1'))
+		self.add_trait("whichSliceX2_reconn", Range(int(0.0), 10000, int(1), low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY2_reconn", Range(int(0.0), 10000, int(1), low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), 10000, int(1), low_name = 'minz1', high_name='maxz1'))
 		
 		self.minx1 = 0
 		self.miny1 = 0

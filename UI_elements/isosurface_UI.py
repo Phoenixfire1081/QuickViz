@@ -24,8 +24,11 @@ reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and allAnalysisOpt
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
 
 localDatasetVisibility = 'allModeOptions == "Dataset" and allDatasetOptions == "Local"'
+localDatasetVisibilityBBox = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and altBBox == True'
 localDatasetVisibilityRaw3D = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "Raw 3D"'
 localDatasetVisibilitynetCDF = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
+
+DRVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Duchon Robert"'
 
 isoUIelements = (Group(
 
@@ -114,9 +117,40 @@ isoUIelements = (Group(
 	),
 	
 	HGroup(
+	Item("trimDatasetTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = localDatasetVisibility),
+	Item("altBBox", show_label = False, visible_when = localDatasetVisibility),
+	),
+	
+	HGroup(
+	Item("reconnX1Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceX1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minx1',  high_name='maxx1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnX2Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceX2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minx1',  high_name='maxx1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnY1Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceY1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'miny1',  high_name='maxy1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnY2Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceY2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'miny1',  high_name='maxy1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnZ1Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceZ1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnZ2Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceZ2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	
+	HGroup(
 	Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = localDatasetVisibility),
 	Item("whichScalar_LocalData", show_label = False, visible_when = localDatasetVisibility),
 	Item("load_LocalData", height = buttonh, width = buttonw, show_label = False, visible_when = localDatasetVisibility),
+	Item("cancel_LocalData", height = buttonh, width = buttonw, show_label = False, visible_when = localDatasetVisibility),
 	),
 	
 	# All analysis options
@@ -165,7 +199,55 @@ isoUIelements = (Group(
 	
 	# Q-tensor
 	
-	HGroup(Item("calculateQtensor", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Q-tensor"', height = buttonh, width = buttonw),),
+	HGroup(
+	Item("calculateQtensor", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Q-tensor"', height = buttonh, width = buttonw),
+	),
+	
+	# Duchon Robert
+	
+	# cutoffTxt = Str('Prefactor (a):')
+	# probedScaleTxt = Str('Probed Scale:')
+	# probedScaleIdxTxt = Str('(integer values only)')
+	# lcTxt = Str('l_c:')
+	# etaTxt = Str('Kolmogorov scale:')
+	# lcetaTxt = Str('l_c_eta:')
+	# lcetaKolmogorovTxt = Str('(if eta is provided)')
+	
+	HGroup(
+	Item("allDROptions", show_label = False, style = 'custom', format_func=lambda x: x, visible_when = DRVisibility)
+	),
+	
+	HGroup(
+	Item("cutoffTxt", style = 'readonly', show_label = False, height = tinyh, width = -80, visible_when = DRVisibility),
+	Item("a_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRVisibility),
+	),
+	
+	HGroup(
+	Item("probedScaleTxt", style = 'readonly', show_label = False, height = tinyh, width = -100, visible_when = DRVisibility),
+	Item("probedScale_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRVisibility),
+	Item("probedScaleIdxTxt", style = 'readonly', show_label = False, height = tinyh, width = -150, visible_when = DRVisibility),
+	),
+	
+	HGroup(
+	Item("lcTxt", style = 'readonly', show_label = False, height = tinyh, width = -20, visible_when = DRVisibility),
+	Item("l_c_DR", style = 'readonly', show_label = False, visible_when = DRVisibility),
+	),
+	
+	HGroup(
+	Item("etaTxt", style = 'readonly', show_label = False, height = tinyh, width = -120, visible_when = DRVisibility),
+	Item("eta_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRVisibility),
+	),
+	
+	HGroup(
+	Item("lcetaTxt", style = 'readonly', show_label = False, height = tinyh, width = -50, visible_when = DRVisibility),
+	Item("l_c_eta_DR", style = 'readonly', show_label = False, visible_when = DRVisibility),
+	Item("lcetaKolmogorovTxt", style = 'readonly', show_label = False, height = tinyh, width = -120, visible_when = DRVisibility),
+	),
+	
+	HGroup(
+	Item("calculate_DR", show_label = False, visible_when = DRVisibility, height = buttonh, width = buttonw),
+	Item("remove_DR", show_label = False, visible_when = DRVisibility, height = buttonh, width = buttonw),
+	),
 	
 	# All Log lattice options
 	Group(

@@ -69,7 +69,6 @@ class allAnalysisOptions:
 			
 			# plot quiver of EigVecs
 			self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
-			
 	
 	@on_trait_change('whichSliceX1_reconn, whichSliceY1_reconn, whichSliceZ1_reconn, whichSliceX2_reconn, whichSliceY2_reconn, whichSliceZ2_reconn')
 	def bboxChangedReconn(self):
@@ -225,7 +224,16 @@ class allAnalysisOptions:
 			ax[1].set_title('With q-tensor')
 			ax[1].legend()
 			plt.show()
-			
+	
+	@on_trait_change('calculate_DR')
+	def calculate_DR_fired(self):
+		
+		pass
+		
+	@on_trait_change('remove_DR')
+	def remove_DR_fired(self):
+		
+		pass
 			
 			
 		

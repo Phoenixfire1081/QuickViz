@@ -143,6 +143,7 @@ def include_all_traits(self):
 	
 	# allLocalDatasetOptions
 	self.on_trait_change(self.load_LocalData_fired, "load_LocalData")
+	self.on_trait_change(self.cancel_LocalData_fired, "cancel_LocalData")
 	self.on_trait_change(self.choose_folder_LocalDataPath_fired, "choose_folder_LocalDataPath")
 	
 	# allAnalysisOptions
@@ -156,6 +157,8 @@ def include_all_traits(self):
 	self.on_trait_change(self.bboxChangedReconn, "whichSliceZ2_reconn")
 	self.on_trait_change(self.calcReconnectionChanged, "calcReconnection")
 	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")
+	self.on_trait_change(self.calculate_DR_fired, "calculate_DR")
+	self.on_trait_change(self.remove_DR_fired, "remove_DR")
 	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")
