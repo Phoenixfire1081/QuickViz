@@ -8,8 +8,8 @@ import mayavi
 
 class timeUpdateBehavior:
 	
-	def __init__(self):
-		self.globalTimeUpdate = False
+	# def __init__(self):
+		# self.globalTimeUpdate = False
 		# TODO - fix global time update slider
 	
 	def update_camera_at_current_timestep_with_camPath(self, \
@@ -42,7 +42,7 @@ class timeUpdateBehavior:
 			try:
 				
 				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					if not self.globalTimeUpdate:
+					# if not self.globalTimeUpdate:
 						mlab.clf(figure=self.scene1.mayavi_scene)	
 					
 			except AttributeError:
@@ -518,7 +518,7 @@ class timeUpdateBehavior:
 			try:
 				
 				if not self.threshold2 == '' or not self.thresholdPercent2 == '':
-					if not self.globalTimeUpdate:
+					# if not self.globalTimeUpdate:
 						mlab.clf(figure=self.scene1.mayavi_scene)	
 					
 			except AttributeError:
@@ -977,7 +977,7 @@ class timeUpdateBehavior:
 			try:
 				
 				if not self.threshold3 == '' or not self.thresholdPercent3 == '':
-					if not self.globalTimeUpdate:
+					# if not self.globalTimeUpdate:
 						mlab.clf(figure=self.scene1.mayavi_scene)
 					
 			except AttributeError:
@@ -1159,4 +1159,4 @@ class timeUpdateBehavior:
 		self.whichTime3 = self.whichTimeGlobal
 		#self.whichTime1 = self.whichTimeGlobal
 		
-		self.globalTimeUpdate = True
+		# self.globalTimeUpdate = True

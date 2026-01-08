@@ -309,6 +309,8 @@ class allAnalysisOptions:
 					
 					if ts == allTs-1:
 						self.whichTime2 = allTs-1
+						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
+						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
 				
 				elif self.allDROptions == "Dnu":
 					
@@ -317,6 +319,8 @@ class allAnalysisOptions:
 					
 					if ts == allTs-1:
 						self.whichTime2 = allTs-1
+						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
+						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
 				
 				else:
 					
@@ -329,6 +333,10 @@ class allAnalysisOptions:
 					if ts == allTs-1:
 						self.whichTime2 = allTs-1
 						self.whichTime3 = allTs-1
+						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
+						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
+						self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, self._dataTs3[:, :, :, ts], figure=self.scene1.mayavi_scene)
+						self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[self._dataTs3[:, :, :, ts].min()])
 			
 		
 	@on_trait_change('remove_DR')
