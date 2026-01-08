@@ -251,29 +251,92 @@ class allAnalysisOptions:
 			Vfield3D['dy'] = self.dx_data1 
 			Vfield3D['dz'] = self.dx_data1 
 			
-			Vfield3D['u'] = self.u1[:, :, :, 0]
-			Vfield3D['v'] = self.v1[:, :, :, 0]
-			Vfield3D['w'] = self.w1[:, :, :, 0]
+			# Replace ts2 with new data for DR
+			# If both are activated, replace ts2 and ts3 with DR and Dnu respectively
+			# Calculate for all available data
 			
-			if self.allDROptions == "DR":
-			
-				DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
-			
-			elif self.allDROptions == "Dnu":
+			xres, yres, zres, allTs = np.shape(self.u1)
 				
-				Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
+			# Copy all data from ts1
+			self.u2 = self.u1
+			self.v2 = self.v1
+			self.w2 = self.w1
+			self.omega1_2 = self.omega1
+			self.omega2_2 = self.omega2
+			self.omega3_2 = self.omega3
 			
+			self.x2 = self.x1
+			self.y2 = self.y1
+			self.z2 = self.z1
+			self.dx_data2 = self.dx_data1
+			self.dy_data2 = self.dy_data1
+			self.dz_data2 = self.dz_data1
+			
+			if self.allDROptions == "DR" or self.allDROptions == "Dnu":
+				self._dataTs2 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
+				self.nts = 2
+				
 			else:
+				self._dataTs2 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
+				self._dataTs3 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
+				self.nts = 3
 				
-				DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
-				Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
+				# Copy all data from ts1
+				self.u3 = self.u1
+				self.v3 = self.v1
+				self.w3 = self.w1
+				self.omega1_3 = self.omega1
+				self.omega2_3 = self.omega2
+				self.omega3_3 = self.omega3
 				
+				self.x3 = self.x1
+				self.y3 = self.y1
+				self.z3 = self.z1
+				self.dx_data3 = self.dx_data1
+				self.dy_data3 = self.dy_data1
+				self.dz_data3 = self.dz_data1
+			
+			for ts in range(allTs):
+			
+				Vfield3D['u'] = self.u1[:, :, :, ts]
+				Vfield3D['v'] = self.v1[:, :, :, ts]
+				Vfield3D['w'] = self.w1[:, :, :, ts]
+				
+				if self.allDROptions == "DR":
+				
+					DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
+					self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
+					
+					if ts == allTs-1:
+						self.whichTime2 = allTs-1
+				
+				elif self.allDROptions == "Dnu":
+					
+					Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
+					self._dataTs2[:, :, :, ts] = Dnuw3d[:, :, :, 0]
+					
+					if ts == allTs-1:
+						self.whichTime2 = allTs-1
+				
+				else:
+					
+					DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
+					Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
+					
+					self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
+					self._dataTs3[:, :, :, ts] = Dnuw3d[:, :, :, 0]
+					
+					if ts == allTs-1:
+						self.whichTime2 = allTs-1
+						self.whichTime3 = allTs-1
 			
 		
 	@on_trait_change('remove_DR')
 	def remove_DR_fired(self):
 		
-		pass
+		self.nts = 1 # Nothing is deleted but controls for both the time series are taken away
+		self.l_c_DR = 0
+		self.l_c_eta_DR = 0
 			
 			
 		

@@ -8,6 +8,10 @@ import mayavi
 
 class timeUpdateBehavior:
 	
+	def __init__(self):
+		self.globalTimeUpdate = False
+		# TODO - fix global time update slider
+	
 	def update_camera_at_current_timestep_with_camPath(self, \
 	camAzimuth, camElevation, camDistance, focalPoint, camRoll, fig_handle):
 		
@@ -38,7 +42,8 @@ class timeUpdateBehavior:
 			try:
 				
 				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					mlab.clf(figure=self.scene1.mayavi_scene)	
+					if not self.globalTimeUpdate:
+						mlab.clf(figure=self.scene1.mayavi_scene)	
 					
 			except AttributeError:
 				
@@ -150,6 +155,8 @@ class timeUpdateBehavior:
 				
 				# Wait until user enters the values
 				pass
+			
+			# self.globalTimeUpdate = False
 		
 		if self.screen2_ts1: # Update only if screen 2 of ts1 is active
 		
@@ -510,8 +517,9 @@ class timeUpdateBehavior:
 			
 			try:
 				
-				if not self.threshold2 == '' and not self.thresholdPercent2 == '':
-					mlab.clf(figure=self.scene1.mayavi_scene)	
+				if not self.threshold2 == '' or not self.thresholdPercent2 == '':
+					if not self.globalTimeUpdate:
+						mlab.clf(figure=self.scene1.mayavi_scene)	
 					
 			except AttributeError:
 				
@@ -586,7 +594,7 @@ class timeUpdateBehavior:
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
 					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 				
-				if not self.thresholdPercent1 == '':
+				if not self.thresholdPercent2 == '':
 					
 					# Set threshold range
 					# tmpthreshvals = self.thresholdPercent1.split(',')
@@ -606,6 +614,8 @@ class timeUpdateBehavior:
 				
 				# Wait until user enters the values
 				pass
+			
+			# self.globalTimeUpdate = False
 		
 		if self.screen2_ts2: # Update only if screen 2 of ts1 is active
 		
@@ -949,12 +959,13 @@ class timeUpdateBehavior:
 	@on_trait_change('whichTime3')
 	def time_changed3(self):
 		
-		if self.chkBox3: # Update only of checkbox is active
+		# if self.chkBox3: # Update only of checkbox is active
+		if self.screen1_ts3: # Update only if screen 1 of ts3 is active
 		
 			# Get camera view
 			if not mlab.view() is None:
 				camAzimuth, camElevation, camDistance, focalPoint = mlab.view()
-				camRoll = mlab.roll()
+				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
 			
 			# Choose data at other timestep
 			_data3 = self._dataTs3[:, :, :, self.whichTime3]
@@ -966,7 +977,8 @@ class timeUpdateBehavior:
 			try:
 				
 				if not self.threshold3 == '' or not self.thresholdPercent3 == '':
-					mlab.clf()	
+					if not self.globalTimeUpdate:
+						mlab.clf(figure=self.scene1.mayavi_scene)
 					
 			except AttributeError:
 				
@@ -976,55 +988,65 @@ class timeUpdateBehavior:
 			# With same threshold update contour
 			
 			# Plot the isosurface with minimum value from data
-			self.sf3 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
+			self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
 			
 			# Set the threshold
-			self.iso3 = mlab.pipeline.iso_surface(self.sf3, contours=[_data3.min()])
+			self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[_data3.min()])
 			
 			if self.outlineToggle3:
 			
 				# Plot the outline
-				self.out3 = mayavi.tools.pipeline.outline(self.iso3)
+				self.out3_sc1 = mayavi.tools.pipeline.outline(self.iso3_sc1)
 				
 				# Change outline width
-				self.out3.actor.property.line_width = self.outlineWidth3
+				self.out3_sc1.actor.property.line_width = self.outlineWidth3
 				
 				# Set outline color
-				self.out3.actor.property.color = (self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
+				self.out3_sc1.actor.property.color = (self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
 			
 			# Change contour opacity
-			self.iso3.actor.property.opacity = self.contourOpacity3
+			self.iso3_sc1.actor.property.opacity = self.contourOpacity3
 			
 			# Change contour representation
-			self.iso3.actor.property.representation = self.contourRepresentation3
+			self.iso3_sc1.actor.property.representation = self.contourRepresentation3
 			
 			# Change contour colormap
-			self.iso3.module_manager.scalar_lut_manager.lut_mode = self.contourColormap3
+			self.iso3_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap3
 			
 			# Change colormap range
-			self.iso3.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin3, self.colormapMax3])
+			self.iso3_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin3, self.colormapMax3])
 			
 			try:
 			
 				if not self.threshold3 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.threshold3.split(',')
-					self.iso3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					# tmpthreshvals = self.threshold3.split(',')
+					# self.iso3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					
+					# # Keep the previous view
+					# viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
+					# viewControlRoll = mlab.roll(camRoll)
+					self.setThreshold_fired3()
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					viewControlRoll = mlab.roll(camRoll)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 				
 				if not self.thresholdPercent3 == '':
 					
 					# Set threshold range
-					tmpthreshvals = self.thresholdPercent3.split(',')
-					self.iso3.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
+					# tmpthreshvals = self.thresholdPercent3.split(',')
+					# self.iso3.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
+					
+					# # Keep the previous view
+					# viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
+					# viewControlRoll = mlab.roll(camRoll)
+					self.setThresholdPercent_fired3()
 					
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					viewControlRoll = mlab.roll(camRoll)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
 			except ValueError:
 				
@@ -1035,6 +1057,8 @@ class timeUpdateBehavior:
 				
 				# Wait until user enters the values
 				pass
+			
+			# self.globalTimeUpdate = False
 		
 	@on_trait_change('whichTime4')
 	def time_changed4(self):
@@ -1132,5 +1156,7 @@ class timeUpdateBehavior:
 		# Change self.whichTimex and trigger time_changedx
 		self.whichTime1 = self.whichTimeGlobal
 		self.whichTime2 = self.whichTimeGlobal
+		self.whichTime3 = self.whichTimeGlobal
 		#self.whichTime1 = self.whichTimeGlobal
-		#self.whichTime1 = self.whichTimeGlobal
+		
+		self.globalTimeUpdate = True

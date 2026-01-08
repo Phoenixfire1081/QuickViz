@@ -396,29 +396,29 @@ class allIsosurfaceOptions:
 	@on_trait_change('setThresholdPercent2')
 	def setThresholdPercent_fired2(self):
 		
-		if self.screen1_ts1:
+		if self.screen1_ts2:
 		
 			# First reset all contours
 			self.iso2_sc1.contour.contours = []
 			
-			# if self.colorFieldSet_sc1:
-				# self.mesh1.remove() # remove mesh if already exists
-				# self.colorFieldSet_sc1 = False
+			if self.colorFieldSet_sc1:
+				self.mesh1.remove() # remove mesh if already exists
+				self.colorFieldSet_sc1 = False
 			
 			try:
 			
 				tmpthreshvals = self.thresholdPercent2.split(',')
 				
 				self.iso2_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum2 for i in tmpthreshvals]
-				# if self.colorFields != 'None':
-					# self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, True)
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, True)
 			
 			except ValueError:
 				
 				# Wait until user enters the values
 				pass
 		
-		if self.screen2_ts1:
+		if self.screen2_ts2:
 		
 			# First reset all contours
 			self.iso2_sc2.contour.contours = []
@@ -440,7 +440,7 @@ class allIsosurfaceOptions:
 				# Wait until user enters the values
 				pass
 		
-		if self.screen3_ts1:
+		if self.screen3_ts2:
 		
 			# First reset all contours
 			self.iso2_sc3.contour.contours = []
@@ -462,7 +462,7 @@ class allIsosurfaceOptions:
 				# Wait until user enters the values
 				pass
 		
-		if self.screen4_ts1:
+		if self.screen4_ts2:
 		
 			# First reset all contours
 			self.iso2_sc4.contour.contours = []
@@ -493,48 +493,52 @@ class allIsosurfaceOptions:
 	@on_trait_change('setThreshold3')
 	def setThreshold_fired3(self):
 		
-		# First reset all contours
-		self.iso3.contour.contours = []
+		if self.screen1_ts3:
 		
-		try:
-		
-			tmpthreshvals = self.threshold3.split(',')
-			self.iso3.contour.contours = [np.float32(i) for i in tmpthreshvals]
-	
-			# Update camera values
-			self.updateCurrentVals_button_fired()
+			# First reset all contours
+			self.iso3_sc1.contour.contours = []
 			
-			# If the checkbox is not active already, activate it
-			if self.chkBox3 == False:
-				self.chkBox3 = True
-		
-		except ValueError:
+			if self.colorFieldSet_sc1:
+				self.mesh1.remove() # remove mesh if already exists
+				self.colorFieldSet_sc1 = False
 			
-			# Wait until user enters the values
-			pass
+			try:
+			
+				tmpthreshvals = self.threshold3.split(',')
+				
+				self.iso3_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
 	
 	@on_trait_change('setThresholdPercent3')
 	def setThresholdPercent_fired3(self):
 		
-		# First reset all contours
-		self.iso3.contour.contours = []
+		if self.screen1_ts3:
 		
-		try:
-		
-			tmpthreshvals = self.thresholdPercent3.split(',')
-			self.iso3.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
-	
-			# Update camera values
-			self.updateCurrentVals_button_fired()
+			# First reset all contours
+			self.iso3_sc1.contour.contours = []
 			
-			# If the checkbox is not active already, activate it
-			if self.chkBox3 == False:
-				self.chkBox3 = True
-		
-		except ValueError:
+			if self.colorFieldSet_sc1:
+				self.mesh1.remove() # remove mesh if already exists
+				self.colorFieldSet_sc1 = False
 			
-			# Wait until user enters the values
-			pass
+			try:
+			
+				tmpthreshvals = self.thresholdPercent3.split(',')
+				
+				self.iso3_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
 	
 	@on_trait_change('threshold4, thresholdPercent4')
 	def threshold_changed4(self):

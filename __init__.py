@@ -66,11 +66,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	ts3max = Int()
 	ts4max = Int()
 	
-	whichTime1 = Range(0, 1000, 0, low_name = 'includeEmptySpace', high_name='ts1max') 
-	whichTime2 = Range(0, 1000, 0, low_name = 'includeEmptySpace', high_name='ts2max') 
-	whichTime3 = Range(0, 1000, 0, low_name = 'includeEmptySpace', high_name='ts3max') 
-	whichTime4 = Range(0, 1000, 0, low_name = 'includeEmptySpace', high_name='ts4max') 
-	whichTimeGlobal = Range(0, 1000, 0, low_name = 'includeEmptySpace', high_name='ts1max') 
+	whichTime1 = Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts1max') 
+	whichTime2 = Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts2max') 
+	whichTime3 = Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts3max') 
+	whichTime4 = Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts4max') 
+	whichTimeGlobal = Range(0, 10000, 0, low_name = 'includeEmptySpace', high_name='ts1max') 
 	
 	# Create radio button
 	radioButton1 = Enum('N', 'Y')
@@ -1082,6 +1082,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# Default options for Reconnection
 		self.altBBox = False
+		
+		# Global time update
+		self.globalTimeUpdate = False
 				
 	view = View(
 	
