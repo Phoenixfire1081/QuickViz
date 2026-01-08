@@ -330,6 +330,10 @@ class allLocalDatasetOptions:
 			self.x1 = xx
 			self.y1 = yy
 			self.z1 = zz
+			
+			self.dx_data1 = dx
+			self.dy_data1 = dy
+			self.dz_data1 = dz
 				
 			# Choose the last time step to force refresh
 			# Doesn't work when only one time step is calculated

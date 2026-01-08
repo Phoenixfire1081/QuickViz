@@ -228,7 +228,47 @@ class allAnalysisOptions:
 	@on_trait_change('calculate_DR')
 	def calculate_DR_fired(self):
 		
-		pass
+		from .Compute_DR_QuickViz.SFastDissVisqAllWaveCompact3D_f import SFastDissVisqAllWaveCompact3D_f
+		from .Compute_DR_QuickViz.SFastDRAllWaveCompact3D_f import SFastDRAllWaveCompact3D_f
+		
+		# TODO - assert that dx = dy = dz (otherwise, DR calculation is invalid), done
+		
+		if self.dx_data1 == self.dy_data1 == self.dz_data1:
+		
+			# First update l_c and l_c_eta (if eta is provided)
+			self.l_c_DR = np.pi / np.sqrt(self.a_DR * np.log(2)) * np.array(self.probedScale_DR) * self.dx_data1 # physcial size of the probed scale
+			
+			if self.eta_DR > 0:
+				self.l_c_eta_DR = self.l_c_DR / self.eta_DR # non dimensionalized size of the probed scale
+			
+			# Make dictionary to hold filter info
+			Filter = {'Scales': [self.probedScale_DR], 'a': self.a_DR}
+			
+			# Create velocity dictionary and assign data
+			Vfield3D = {}
+
+			Vfield3D['dx'] = self.dx_data1 
+			Vfield3D['dy'] = self.dx_data1 
+			Vfield3D['dz'] = self.dx_data1 
+			
+			Vfield3D['u'] = self.u1[:, :, :, 0]
+			Vfield3D['v'] = self.v1[:, :, :, 0]
+			Vfield3D['w'] = self.w1[:, :, :, 0]
+			
+			if self.allDROptions == "DR":
+			
+				DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
+			
+			elif self.allDROptions == "Dnu":
+				
+				Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
+			
+			else:
+				
+				DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
+				Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
+				
+			
 		
 	@on_trait_change('remove_DR')
 	def remove_DR_fired(self):
