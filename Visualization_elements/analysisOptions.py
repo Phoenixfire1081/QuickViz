@@ -311,6 +311,7 @@ class allAnalysisOptions:
 						self.whichTime2 = allTs-1
 						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
 						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
+						self.ts2max = allTs-1
 				
 				elif self.allDROptions == "Dnu":
 					
@@ -321,6 +322,7 @@ class allAnalysisOptions:
 						self.whichTime2 = allTs-1
 						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
 						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
+						self.ts2max = allTs-1
 				
 				else:
 					
@@ -337,6 +339,9 @@ class allAnalysisOptions:
 						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
 						self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, self._dataTs3[:, :, :, ts], figure=self.scene1.mayavi_scene)
 						self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[self._dataTs3[:, :, :, ts].min()])
+						
+						self.ts2max = allTs-1
+						self.ts3max = allTs-1
 			
 		
 	@on_trait_change('remove_DR')

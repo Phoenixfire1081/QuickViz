@@ -90,11 +90,21 @@ class allLocalDatasetOptions:
 				data = nc.Dataset(self.LocalData_path + '/' + self.fileList[0])
 				attribList = list(data.variables.keys())
 				
-				self.velxLabel = [i for i in attribList if 'v' in i and 'x' in i][0]
-				self.velyLabel = [i for i in attribList if 'v' in i and 'y' in i][1]
-				self.velzLabel = [i for i in attribList if 'v' in i and 'z' in i][0]
+				# Assign velocity labels only if they exist
+				
+				try:
+				
+					self.velxLabel = [i for i in attribList if 'v' in i and 'x' in i][0]
+					self.velyLabel = [i for i in attribList if 'v' in i and 'y' in i][1]
+					self.velzLabel = [i for i in attribList if 'v' in i and 'z' in i][0]
+				
+				except IndexError:
+					
+					pass
 				
 				self.allAttributes = ', '.join(list(data.variables.keys()))
+				
+				# print('shape:', np.shape(data[attribList[0]][:]))
 		
 		try:
 			# Remove and update BBox
@@ -274,6 +284,14 @@ class allLocalDatasetOptions:
 					velx = np.float32(data[self.velxLabel][:])
 					vely = np.float32(data[self.velyLabel][:])
 					velz = np.float32(data[self.velzLabel][:])
+					
+					# For delta-omega
+					# velx = velx[:, :, :, 0]
+					# vely = vely[:, :, :, 0]
+					# velz = velz[:, :, :, 0]
+					# velx = np.transpose(velx, (1, 0, 2))
+					# vely = np.transpose(vely, (1, 0, 2))
+					# velz = np.transpose(velz, (1, 0, 2))
 				
 				if self.altBBox:
 					velx = velx[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn]
