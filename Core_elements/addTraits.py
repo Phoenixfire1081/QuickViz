@@ -159,6 +159,8 @@ def include_all_traits(self):
 	self.on_trait_change(self.calculateQtensorChanged, "calculateQtensor")
 	self.on_trait_change(self.calculate_DR_fired, "calculate_DR")
 	self.on_trait_change(self.remove_DR_fired, "remove_DR")
+	self.on_trait_change(self.calculate_Pressure_fired, "calculate_Pressure")
+	self.on_trait_change(self.remove_Pressure_fired, "remove_Pressure")
 	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")

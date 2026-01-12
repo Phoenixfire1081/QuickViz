@@ -146,7 +146,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
 	
 	# All Analysis options
-	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert'], cols=3)
+	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure'], cols=3)
 	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
@@ -231,6 +231,10 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	l_c_eta_DR = Float(0)
 	calculate_DR = Button('Calculate')
 	remove_DR = Button('Remove')
+	
+	# Pressure
+	calculate_Pressure = Button('Calculate')
+	remove_Pressure = Button('Remove')
 	
 	# All Log lattice options
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 

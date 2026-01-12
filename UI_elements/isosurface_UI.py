@@ -29,6 +29,8 @@ localDatasetVisibilityRaw3D = 'allModeOptions == "Dataset" and allDatasetOptions
 localDatasetVisibilitynetCDF = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
 
 DRVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Duchon Robert"'
+DRPressureVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Pressure" or allAnalysisOptions == "Duchon Robert")'
+PressureVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Pressure"'
 
 isoUIelements = (Group(
 
@@ -218,14 +220,14 @@ isoUIelements = (Group(
 	),
 	
 	HGroup(
-	Item("cutoffTxt", style = 'readonly', show_label = False, height = tinyh, width = -80, visible_when = DRVisibility),
-	Item("a_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRVisibility),
+	Item("cutoffTxt", style = 'readonly', show_label = False, height = tinyh, width = -80, visible_when = DRPressureVisibility),
+	Item("a_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRPressureVisibility),
 	),
 	
 	HGroup(
-	Item("probedScaleTxt", style = 'readonly', show_label = False, height = tinyh, width = -100, visible_when = DRVisibility),
-	Item("probedScale_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRVisibility),
-	Item("probedScaleIdxTxt", style = 'readonly', show_label = False, height = tinyh, width = -150, visible_when = DRVisibility),
+	Item("probedScaleTxt", style = 'readonly', show_label = False, height = tinyh, width = -100, visible_when = DRPressureVisibility),
+	Item("probedScale_DR", show_label = False, height = tinyh, width = tinyw , visible_when = DRPressureVisibility),
+	Item("probedScaleIdxTxt", style = 'readonly', show_label = False, height = tinyh, width = -150, visible_when = DRPressureVisibility),
 	),
 	
 	HGroup(
@@ -247,6 +249,11 @@ isoUIelements = (Group(
 	HGroup(
 	Item("calculate_DR", show_label = False, visible_when = DRVisibility, height = buttonh, width = buttonw),
 	Item("remove_DR", show_label = False, visible_when = DRVisibility, height = buttonh, width = buttonw),
+	),
+	
+	HGroup(
+	Item("calculate_Pressure", show_label = False, visible_when = PressureVisibility, height = buttonh, width = buttonw),
+	Item("remove_Pressure", show_label = False, visible_when = PressureVisibility, height = buttonh, width = buttonw),
 	),
 	
 	# All Log lattice options

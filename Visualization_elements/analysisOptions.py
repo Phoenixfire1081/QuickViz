@@ -350,6 +350,89 @@ class allAnalysisOptions:
 		self.nts = 1 # Nothing is deleted but controls for both the time series are taken away
 		self.l_c_DR = 0
 		self.l_c_eta_DR = 0
+	
+	@on_trait_change('calculate_Pressure')
+	def calculate_Pressure_fired(self):
+		
+		from .Compute_DR_QuickViz.SFastDissVisqAllWaveCompact3D_f import SFastDissVisqAllWaveCompact3D_f
+		from .Compute_DR_QuickViz.SFastDRAllWaveCompact3D_f import SFastDRAllWaveCompact3D_f
+		from .Compute_DR_QuickViz.gaussianWavelet_compactSupport3D import gaussianWavelet_compactSupport3D
+		from .Compute_DR_QuickViz.waveletTransformFourier3D import waveletTransformFourier3D
+		from .Compute_Pressure_QuickViz.waveletPressure3D import waveletPressure3D
+		from .Compute_Pressure_QuickViz.waveVectors3D import waveVectors3D
+		
+		if self.dx_data1 == self.dy_data1 == self.dz_data1:
+			
+			# Make dictionary to hold filter info
+			Filter = {'Scales': [self.probedScale_DR], 'a': self.a_DR}
+			
+			# Create velocity dictionary and assign data
+			Vfield3D = {}
+
+			Vfield3D['dx'] = self.dx_data1 
+			Vfield3D['dy'] = self.dx_data1 
+			Vfield3D['dz'] = self.dx_data1 
+			
+			# Replace ts2 with new data for Pressure
+			# Calculate for all available data
+			
+			xres, yres, zres, allTs = np.shape(self.u1)
+				
+			# Copy all data from ts1
+			self.u2 = self.u1
+			self.v2 = self.v1
+			self.w2 = self.w1
+			self.omega1_2 = self.omega1
+			self.omega2_2 = self.omega2
+			self.omega3_2 = self.omega3
+			
+			self.x2 = self.x1
+			self.y2 = self.y1
+			self.z2 = self.z1
+			self.dx_data2 = self.dx_data1
+			self.dy_data2 = self.dy_data1
+			self.dz_data2 = self.dz_data1
+			
+			self._dataTs2 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
+			self.nts = 2
+			
+			# Gaussian wavelet
+			kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
+			
+			fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
+			
+			nkk = kx*kx + ky*ky + kz*kz
+			nkk[nkk==0] = 1
+			fftPdxdxWav, fftPdxdyWav, fftPdxdzWav, fftPdydyWav, fftPdydzWav, fftPdzdzWav = waveletPressure3D(fftGaussWav, kx, ky, kz, nkk)
+				
+			for ts in range(allTs):
+			
+				vx = self.u1[:, :, :, ts]
+				vy = self.v1[:, :, :, ts]
+				vz = self.w1[:, :, :, ts]
+
+				Pxx = waveletTransformFourier3D(np.fft.fftn(vx*vx), fftPdxdxWav)
+				Pxy = waveletTransformFourier3D(np.fft.fftn(vx*vy), fftPdxdyWav)
+				Pxz = waveletTransformFourier3D(np.fft.fftn(vx*vz), fftPdxdzWav)
+				Pyy = waveletTransformFourier3D(np.fft.fftn(vy*vy), fftPdydyWav)
+				Pyz = waveletTransformFourier3D(np.fft.fftn(vy*vz), fftPdydzWav)
+				Pzz = waveletTransformFourier3D(np.fft.fftn(vz*vz), fftPdzdzWav)
+				
+				# Total pressure
+				Ptot = np.real(Pxx+Pyy+Pzz + 2*(Pxy+Pyz+Pxz)).astype('float32') 
+				
+				self._dataTs2[:, :, :, ts] = Ptot[:, :, :, 0]
+				
+				if ts == allTs-1:
+					self.whichTime2 = allTs-1
+					self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
+					self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
+					self.ts2max = allTs-1
+		
+	@on_trait_change('remove_Pressure')
+	def remove_Pressure_fired(self):
+		
+		self.nts = 1 # Nothing is deleted but controls for Pressure is taken away
 			
 			
 		
