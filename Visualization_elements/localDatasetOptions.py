@@ -281,9 +281,9 @@ class allLocalDatasetOptions:
 					print('Processing:', self.LocalData_path + '/' + self.fileList[fileCtr])
 					
 					data = nc.Dataset(self.LocalData_path + '/' + self.fileList[fileCtr])
-					velx = np.float32(data[self.velxLabel][:])
-					vely = np.float32(data[self.velyLabel][:])
-					velz = np.float32(data[self.velzLabel][:])
+					velx = np.asarray(np.float32(data[self.velxLabel][:]))
+					vely = np.asarray(np.float32(data[self.velyLabel][:]))
+					velz = np.asarray(np.float32(data[self.velzLabel][:]))
 					
 					# For delta-omega
 					# velx = velx[:, :, :, 0]
