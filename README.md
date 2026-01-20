@@ -1,10 +1,10 @@
-# A fast and lightweight visualization package
+# A fast and lightweight post-processing framework
 
-A different UI built for the [mayavi](https://docs.enthought.com/mayavi/mayavi/) python package with TraitsUI. It supports 3D time series scalar data (currently up to 4) and can currently visualize the following:
+Based on [mayavi](https://docs.enthought.com/mayavi/mayavi/), this framework is useful to visualize and perform calculations on Fluid flow data. It supports the following visualization options:
 
 - Isosurfaces
 - Volume rendering
-- 2D slice (filled contours, streamlines with line integral convolution, vector slice)
+- 2D slice (filled and unfilled contours, streamlines with line integral convolution technique, vector slice)
 - 3D streamlines
 
 ## Required packages
@@ -19,7 +19,12 @@ pip install pyface==7.4.4
 
 ## UI
 
-The UI allows you to split the screen up to a maximum of 4 panels, each with it's own view control. The panels on the left and right are resizable.
+The framework has several modes: 
+
+- Dataset (allows local import, JHTDB support will be added later).
+- Visualization with options mentioned above.
+- Analysis (consult documentation for explanation on the various tools).
+- Log-lattice (interface for the log-lattice simulation code developed by Dr. Amaury Barral).
 
 ![Screenshot](resources/Layout.png)
 

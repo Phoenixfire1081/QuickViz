@@ -3,27 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to QikViz's documentation!
+Welcome to QuickViz's documentation!
 ====================================
 
 .. toctree::
    :maxdepth: 1
-   :caption: Getting started
+   :hidden:
+   :caption: Getting started & Help
    
    GettingStarted/InputData
-   
-.. toctree::
-   :maxdepth: 1
-   :caption: Data analysis
 
 .. toctree::
-   :maxdepth: 1
-   :caption: QikViz + pyloggrid
+    :maxdepth: 1
+    :hidden:
+    :caption: Misc
+
+    Unit test
+    Changelog
 
 About
 #####
 
-QikViz is a python-based visualization and data analysis framework built with the `Mayavi <https://docs.enthought.com/mayavi/mayavi/>`_ engine. The UI is built with Enthought's `TraitsUI <https://docs.enthought.com/traitsui/>`_ framework. QikViz as the name implies is intented for fast visualization of 3D time-series data, particularly those from numerical simulations and experimental datasets. 
+QuickViz is a python-based visualization and data analysis framework built with the `Mayavi <https://docs.enthought.com/mayavi/mayavi/>`_ engine. The UI is built with Enthought's `TraitsUI <https://docs.enthought.com/traitsui/>`_ framework. QuickViz as the name implies is intented for fast visualization of 3D time-series data, particularly those from numerical simulations and experimental datasets. 
 
 On the visualization side, the following are currently supported:
 .. - Isosurfaces
