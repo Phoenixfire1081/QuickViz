@@ -135,6 +135,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	xres_Local = Str('')
 	yres_Local = Str('')
 	zres_Local = Str('')
+	dx_Local = Str('')
+	dy_Local = Str('')
+	dz_Local = Str('')
 	
 	# All netcdf options
 	velxLabel = Str('')
@@ -545,6 +548,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	etaTxt = Str('Kolmogorov scale:')
 	lcetaTxt = Str('l_c_eta:')
 	lcetaKolmogorovTxt = Str('(if eta is provided)')
+	dxdydzTxt = Str('dx, dy, dz: ')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

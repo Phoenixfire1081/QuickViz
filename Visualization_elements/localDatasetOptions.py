@@ -121,6 +121,11 @@ class allLocalDatasetOptions:
 		y, dy = np.linspace(float(self.ymin_Local), float(self.ymax_Local), int(self.yres_Local), retstep = True)
 		z, dz = np.linspace(float(self.zmin_Local), float(self.zmax_Local), int(self.zres_Local), retstep = True)
 		
+		# Set dx, dy, dz
+		self.dx_Local = str(dx)
+		self.dy_Local = str(dy)
+		self.dz_Local = str(dz)
+		
 		xx, yy, zz = np.meshgrid(x, y, z, indexing = 'ij')
 		
 		# Take a backup
@@ -345,13 +350,29 @@ class allLocalDatasetOptions:
 			# Update x, y, z data as well. Necessary if the visualization was
 			# performed for different resolution
 			
-			self.x1 = xx
-			self.y1 = yy
-			self.z1 = zz
+			self.x1 = np.float32(xx)
+			self.y1 = np.float32(yy)
+			self.z1 = np.float32(zz)
 			
-			self.dx_data1 = dx
-			self.dy_data1 = dy
-			self.dz_data1 = dz
+			self.dx_data1 = np.float32(dx)
+			self.dy_data1 = np.float32(dy)
+			self.dz_data1 = np.float32(dz)
+			
+			if self.altBBox:
+				self.xlength_data1 = xmax_reconn - xmin_reconn
+				self.ylength_data1 = ymax_reconn - ymin_reconn
+				self.zlength_data1 = zmax_reconn - zmin_reconn
+			else:
+				self.xlength_data1 = int(self.xres_Local)
+				self.ylength_data1 = int(self.yres_Local)
+				self.zlength_data1 = int(self.zres_Local)
+			
+			self.xmin_data1 = float(self.xmin_Local)
+			self.xmax_data1 = float(self.xmax_Local)
+			self.ymin_data1 = float(self.ymin_Local)
+			self.ymax_data1 = float(self.ymax_Local)
+			self.zmin_data1 = float(self.zmin_Local)
+			self.zmax_data1 = float(self.zmax_Local)
 				
 			# Choose the last time step to force refresh
 			# Doesn't work when only one time step is calculated

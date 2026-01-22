@@ -94,6 +94,13 @@ isoUIelements = (Group(
 	Item("ymax_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
 	Item("zmax_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
 	),
+	
+	HGroup(
+	Item("dxdydzTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = localDatasetVisibility),
+	Item("dx_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("dy_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	Item("dz_Local", show_label = False, height = tinyh, width = tinyw , visible_when = localDatasetVisibility),
+	),
 
 	HGroup(
 	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = localDatasetVisibility),
