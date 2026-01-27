@@ -16,44 +16,74 @@ localUIelements = (Group(label = 'Local options:'),
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 
 	Group(
-	# Group(Item("OutOptionsTxt", show_label = False, style = 'readonly')),
-	# Group(label = 'Outline options:'),
 	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton1 == "Y"'),
+	Group(label = 'Outline options:'),
+	
+	# TS 1
+	
+	HGroup(
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton1 == "Y"'),
 	Item("outlineToggle1", show_label = False, visible_when='radioButton1 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton1 == "Y"'),
-	Item("outlineWidth1", show_label = False, visible_when='radioButton1 == "Y"', height = slidertinyh, width = slidertinyw)),
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton1 == "Y"'),
+	),
+	HGroup(
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton1 == "Y"'),
+	Item("outlineWidth1", show_label = False, visible_when='radioButton1 == "Y"', height = slidertinyh, width = slidertinyw)
+	),
+	
+	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='radioButton1 == "Y"'),
 	Item("outlineColorRed1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw)),
 	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton2 == "Y"'),
+	# TS 2
+	
+	HGroup(
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton2 == "Y"'),
 	Item("outlineToggle2", show_label = False, visible_when='radioButton2 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton2 == "Y"'),
-	Item("outlineWidth2", show_label = False, visible_when='radioButton2 == "Y"', height = slidertinyh, width = slidertinyw)),
+	),
+	HGroup(
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton2 == "Y"'),
+	Item("outlineWidth2", show_label = False, visible_when='radioButton2 == "Y"', height = slidertinyh, width = slidertinyw)
+	),
+	
 	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton2 == "Y"'),
 	Item("outlineColorRed2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw)),
 	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton3 == "Y"'),
+	# TS 3
+	
+	HGroup(
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton3 == "Y"'),
 	Item("outlineToggle3", show_label = False, visible_when='radioButton3 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton3 == "Y"'),
-	Item("outlineWidth3", show_label = False, visible_when='radioButton3 == "Y"', height = slidertinyh, width = slidertinyw)),
+	),
+	HGroup(
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton3 == "Y"'),
+	Item("outlineWidth3", show_label = False, visible_when='radioButton3 == "Y"', height = slidertinyh, width = slidertinyw)
+	),
+	
 	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton3 == "Y"'),
 	Item("outlineColorRed3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw)),
 	
-	HGroup(Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when='radioButton4 == "Y"'),
+	# TS 4
+	
+	HGroup(
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton4 == "Y"'),
 	Item("outlineToggle4", show_label = False, visible_when='radioButton4 == "Y"'),
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton4 == "Y"'),
-	Item("outlineWidth4", show_label = False, visible_when='radioButton4 == "Y"', height = slidertinyh, width = slidertinyw)),
+	),
+	HGroup(
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton4 == "Y"'),
+	Item("outlineWidth4", show_label = False, visible_when='radioButton4 == "Y"', height = slidertinyh, width = slidertinyw)
+	),
+	
 	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton4 == "Y"'),
 	Item("outlineColorRed4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw)),
 	
-	show_border = True, orientation = 'vertical', scrollable = True),),
+	show_border = True, orientation = 'vertical', scrollable = True),
+	),
+	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
