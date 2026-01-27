@@ -549,7 +549,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	lcetaTxt = Str('l_c_eta:')
 	lcetaKolmogorovTxt = Str('(if eta is provided)')
 	dxdydzTxt = Str('dx, dy, dz: ')
-	outlineTxt = Str('Outline options: ')
+	azimuthTxt = Str('Azimuth: ')
+	elevationTxt = Str('Elevation: ')
+	rollTxt = Str('Roll: ')
+	distanceTxt = Str('Distance: ')
+	focalPointTxt = Str('Focal point: ')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

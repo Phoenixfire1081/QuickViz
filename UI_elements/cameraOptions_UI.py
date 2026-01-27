@@ -38,14 +38,21 @@ cameraUIelements = (Group(label = 'Camera control'),
 	),
 	
 	HGroup(
-	Item("camAzimuthS", label = 'Azimuth:', height = sliderh, width = sliderw), 
-	Item("camElevationS", label = 'Elevation:', height = sliderh, width = sliderw), 
-	Item("camRollS", label = 'Roll:', height = sliderh, width = sliderw),
-	# ),
-	# HGroup(
-	Item("camDistanceS", label = 'Distance:', height = tinyh, width = tinyw), 
-	Item("focalPointS1", label = ' Focal point:', height = tinyh, width = tinyw),
+	Item("azimuthTxt", show_label = False, style = 'readonly', height = smallh, width = -60), 
+	Item("camAzimuthS", show_label = False, height = sliderh, width = sliderw), 
+	
+	Item("elevationTxt", show_label = False, style = 'readonly', height = smallh, width = -60), 
+	Item("camElevationS", show_label = False, height = sliderh, width = sliderw), 
+	
+	Item("rollTxt", show_label = False, style = 'readonly', height = smallh, width = -30), 
+	Item("camRollS", show_label = False, height = sliderh, width = sliderw),
+	
+	Item("distanceTxt", show_label = False, style = 'readonly', height = smallh, width = -60),
+	Item("camDistanceS", show_label = False, height = tinyh, width = tinyw), 
+	
+	Item("focalPointTxt", show_label = False, style = 'readonly', height = smallh, width = -70),
+	Item("focalPointS1", show_label = False, height = tinyh, width = tinyw),
 	Item("focalPointS2", show_label = False, height = tinyh, width = tinyw),
 	Item("focalPointS3", show_label = False, height = tinyh, width = tinyw)
-	),show_border = True, orientation = 'vertical', scrollable = True),
 	)
+	,show_border = True, orientation = 'vertical', scrollable = True),)
