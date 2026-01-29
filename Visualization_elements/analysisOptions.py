@@ -36,6 +36,8 @@ class allAnalysisOptions:
 			try:
 				if self.quiver_sc1:
 					self.quiver_sc1.remove()
+				if self.quiver_sc2:
+					self.quiver_sc2.remove()
 			except:
 				pass
 			
@@ -59,16 +61,24 @@ class allAnalysisOptions:
 			
 			vortVec = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
 			
-			QT, EigVec, EigVal = calculate_QTensor3D(vortVec,
+			Q, EigVec, EigVal = calculate_QTensor3D(vortVec,
 			self.dx_data1, self.dy_data1, self.dz_data1)
 			
-			print(EigVec, EigVal)
-			
+			print(Q,EigVec,EigVal)
+			assert np.isclose(Q,Q.T).all()
+			assert np.isclose(EigVec[0]@EigVec[1],0)
+			assert np.isclose(EigVec[1]@EigVec[2],0)
+			assert np.isclose(EigVec[2]@EigVec[0],0)
+
 			# For automatic scale factor, use the dimenion with the smallest length
 			allMaxLengths = np.array([np.max(self.x1), np.max(self.y1), np.max(self.z1)])
 			
 			# plot quiver of EigVecs
+			# self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0]*EigVal[0],EigVec[1]*EigVal[1],EigVec[2]*EigVal[2], scale_factor = 10*np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
+			# self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0]*EigVal[0],-EigVec[1]*EigVal[1],-EigVec[2]*EigVal[2], scale_factor = 10*np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
+			
 			self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
+			self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
 	
 	@on_trait_change('whichSliceX1_reconn, whichSliceY1_reconn, whichSliceZ1_reconn, whichSliceX2_reconn, whichSliceY2_reconn, whichSliceZ2_reconn')
 	def bboxChangedReconn(self):
