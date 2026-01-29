@@ -1107,9 +1107,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	sceneUIelements,
 	VGroup(
 	
-	# Layout options
-	Group(label = 'Screen layout:'),
-	Item("layout", label = 'Number of split screens:', style='custom'),
+	# Layout options - disabled feature, may be enabled later
+	# Group(label = 'Screen layout:'),
+	# Item("layout", label = 'Number of split screens:', style='custom'),
 	
 	globalUIelements,
 	localUIelements,
