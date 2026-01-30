@@ -4,6 +4,7 @@ from .UICustomization import UIOptionsClass
 # Initialize UI layout customization
 allUIOptions = UIOptionsClass()
 tinyw, tinyh = allUIOptions.textFieldTiny()
+tinyww, _ = allUIOptions.textFieldTinySmallWidth()
 smallw, smallh = allUIOptions.textFieldSmall()
 longw, longh = allUIOptions.textFieldLong()
 hugew, hugeh = allUIOptions.textFieldHuge()
@@ -16,7 +17,7 @@ DRVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Duchon R
 DRPressureVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Pressure" or allAnalysisOptions == "Duchon Robert")'
 PressureVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Pressure"'
 
-duchonRobertUIelements = Group(
+duchonRobertPressureUIelements = Group(
 
 	HGroup(
 	Item("allDROptions", show_label = False, style = 'custom', format_func=lambda x: x, visible_when = DRVisibility)

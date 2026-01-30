@@ -8,8 +8,9 @@ from .volumeRendering_UI import volumeRenderingUIelements
 from .realSpaceVisualization_UI import realSpaceVisualizationUIelements
 from .fieldLineTracking_UI import fieldLineTrackingUIelements
 from .dataset_UI import datasetUIelements
-from .duchonRobert_UI import duchonRobertUIelements
+from .duchonRobert_UI import duchonRobertPressureUIelements
 from .reconnection_UI import reconnectionUIelements
+from .blenderExport_UI import blenderExportUIelements
 
 # Initialize UI layout customization
 allUIOptions = UIOptionsClass()
@@ -24,9 +25,6 @@ buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
-
-DRPressureVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Pressure" or allAnalysisOptions == "Duchon Robert")'
-PressureVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Pressure"'
 
 isoUIelements = (Group(
 
@@ -58,7 +56,7 @@ isoUIelements = (Group(
 	
 	# Duchon Robert
 	
-	duchonRobertUIelements,
+	duchonRobertPressureUIelements,
 	
 	# All Log lattice options
 	Group(
@@ -77,8 +75,6 @@ isoUIelements = (Group(
 	
 	realSpaceVisualizationUIelements,
 	
-	# Group(Item("IsoOptionsTxt", show_label = False, visible_when = 'allLocalOptions == "Isosurface"', style = 'readonly')),
-	
 	HGroup(Item("thresholdMinimum1", label = 'Minimum threshold:', style='readonly', visible_when='radioButton1 == "Y" and allModeOptions == "Visualization"'), 
 	Item("thresholdMaximum1", label = ', Maximum threshold:', visible_when='radioButton1 == "Y" and allModeOptions == "Visualization"'), style='readonly'),
 	
@@ -93,6 +89,10 @@ isoUIelements = (Group(
 	# Fieldlines
 	
 	fieldLinesUIelements,
+	
+	# Blender export
+	
+	blenderExportUIelements,
 	
 	# Isosurface
 	
@@ -142,4 +142,5 @@ isoUIelements = (Group(
 	Item("setThresholdPercent4", show_label = False, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = buttonh, width = buttonw),
 	),
 	 
-	show_border = True, orientation = 'vertical', scrollable = True)),
+	show_border = True, orientation = 'vertical', scrollable = True)
+	),

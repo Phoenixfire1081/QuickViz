@@ -33,6 +33,7 @@ from .Visualization_elements.playgroundOptions import allPlaygroundOptions
 from .Visualization_elements.realSpaceVisualizationOptions import allRealSpaceVisualizationOptions
 from .Visualization_elements.analysisOptions import allAnalysisOptions
 from .Visualization_elements.localDatasetOptions import allLocalDatasetOptions
+from .Visualization_elements.blenderExportOptions import allBlenderExportOptions
 
 # Import UI elements
 from .UI_elements.activeData_UI import activeDataUIelements
@@ -52,7 +53,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allVolRenderingOptions, allSliceOptions, allStreamlineOptions,
 	allSurfaceExtractionOptions, allPlaygroundOptions, allAnalysisOptions,
 	allRealSpaceVisualizationOptions, allFieldLineTrackingOptions,
-	allLocalDatasetOptions):
+	allLocalDatasetOptions, allBlenderExportOptions):
 	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
@@ -284,7 +285,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
-	colorFields = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', \
+	colorFields = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', 
 	'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
 	
 	# Volume rendering options
@@ -299,7 +300,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Slice options
 	sliceType = Enum(['None', 'Fieldlines', 'Contour slice (filled)', 'Contour slice (unfilled)', 'Vector slice'])
 	planeOrientation = Enum(['X', 'Y', 'Z'], cols=3)
-	whichScalarSlice = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',\
+	whichScalarSlice = Enum(['Computed scalar (default)', 'Vorticity x', 'Vorticity y',
 	'Vorticity z', 'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
 	whichVector = Enum(['Velocity', 'Vorticity'], cols=2)
 	enableSlice = Button('Set')
@@ -349,7 +350,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	structVolume = Str('')
 	
 	# Blender exports
-	exportBlender = Button('Export')
+	allTimesBlender = Bool()
+	exportSTLBlender = Button('Export')
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -557,8 +559,17 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	rollTxt = Str('Roll: ')
 	distanceTxt = Str('Distance: ')
 	focalPointTxt = Str('Focal point: ')
-	adjustSurfaceTxt = Str('(Adjust surface with visualization mode first)')
+	adjustSurfaceTxt = Str('(If necessary, adjust surface with visualization mode before export)')
 	exportSTLTxt = Str('Export as STL: ')
+	allTimesTxt = Str('All times: ')
+	timeSeries1Txt = Str('Time series control 1: ')
+	timeSeries2Txt = Str('Time series control 2: ')
+	timeSeries3Txt = Str('Time series control 3: ')
+	timeSeries4Txt = Str('Time series control 4: ')
+	vectorField1Txt = Str('Vector field control 1: ')
+	vectorField2Txt = Str('Vector field control 2: ')
+	vectorField3Txt = Str('Vector field control 3: ')
+	vectorField4Txt = Str('Vector field control 4: ')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

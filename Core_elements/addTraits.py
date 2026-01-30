@@ -162,6 +162,9 @@ def include_all_traits(self):
 	self.on_trait_change(self.calculate_Pressure_fired, "calculate_Pressure")
 	self.on_trait_change(self.remove_Pressure_fired, "remove_Pressure")
 	
+	# allBlenderExportOptions
+	self.on_trait_change(self.exportSTLBlenderChanged, "exportSTLBlender")
+	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")
 	self.on_trait_change(self.time_changed2, "whichTime2")

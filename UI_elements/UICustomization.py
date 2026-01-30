@@ -3,6 +3,16 @@
 
 class UIOptionsClass:
 	
+	def textFieldTinySmallWidth(self):
+		
+		# For very small checkbox
+		# Values with 0 - 1 
+		
+		width = -20
+		height = -20
+		
+		return width, height
+	
 	def textFieldTiny(self):
 		
 		# For very small text field entries
