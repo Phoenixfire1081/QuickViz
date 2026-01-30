@@ -348,6 +348,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	structZmaxAct = Str('')
 	structVolume = Str('')
 	
+	# Blender exports
+	exportBlender = Button('Export')
+	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
 	colormapMax1 = Float(1.0)
@@ -554,6 +557,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	rollTxt = Str('Roll: ')
 	distanceTxt = Str('Distance: ')
 	focalPointTxt = Str('Focal point: ')
+	adjustSurfaceTxt = Str('(Adjust surface with visualization mode first)')
+	exportSTLTxt = Str('Export as STL: ')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
