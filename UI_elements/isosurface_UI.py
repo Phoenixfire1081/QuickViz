@@ -20,7 +20,7 @@ buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 reconnectionVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection"'
-reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor"'
+reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
 
 localDatasetVisibility = 'allModeOptions == "Dataset" and allDatasetOptions == "Local"'
