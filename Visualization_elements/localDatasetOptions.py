@@ -115,6 +115,7 @@ class allLocalDatasetOptions:
 			pass
 		
 		# Create a temp dataset to get the correct bounding box
+		print(self.xres_Local, self.yres_Local, self.zres_Local)
 		tmpData = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)), dtype = np.float32)
 		
 		x, dx = np.linspace(float(self.xmin_Local), float(self.xmax_Local), int(self.xres_Local), retstep = True)
@@ -196,6 +197,8 @@ class allLocalDatasetOptions:
 				minTs = int(self.timeStep_LocalData)
 				maxTs = int(self.timeStep_LocalData) + 1
 				skipTs = 1
+				
+				print(minTs, maxTs, skipTs)
 			
 			# Completely replace TS1 with new data
 			
