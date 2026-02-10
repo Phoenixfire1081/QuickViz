@@ -244,7 +244,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
 	
 	# All Playground options
-	allPlaygroundOptions = Enum(['Linear modes', 'Golden mean', 'Plastic number', 'Others'], cols = 4) 
+	allPlaygroundOptions = Enum(['Linear modes', 'Golden mean', 'Plastic number', 'Others']) 
+	allPredefinedVortices = Enum(['None', 'Vortex ring', 'Vortex tube', 'Vortex knot', 'Hairpin', 'Custom']) 
 	initCondition1 = Str('')
 	# initCondition2 = Str('')
 	# initCondition3 = Str('')
@@ -570,6 +571,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	vectorField2Txt = Str('Vector field control 2: ')
 	vectorField3Txt = Str('Vector field control 3: ')
 	vectorField4Txt = Str('Vector field control 4: ')
+	predefinedVortexTxt = Str('Predefined vortex structure: ')
+	addScalarFieldTxt = Str('Add to scalar field: ')
+	fourierGridTypeTxt = Str('Fourier grid type: ')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

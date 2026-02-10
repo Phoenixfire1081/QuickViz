@@ -12,26 +12,40 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
+playgroundVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"'
+playgroundCustomVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and allPredefinedVortices == "Custom"'
+
 LLPlayGroundUIelements = Group(
-	Group(
-	Item("allPlaygroundOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"')
+
+	# HGroup(
+	# Item("predefinedVortexTxt", style = 'readonly', show_label = False, visible_when = playgroundVisibility),
+	# ),
+	
+	HGroup(
+	Item("addScalarFieldTxt", style = 'readonly', show_label = False, visible_when = playgroundVisibility),
+	Item("allPredefinedVortices", show_label = False, visible_when = playgroundVisibility),
 	),
 	
 	HGroup(
-	Item("defineStructureTxt", style = 'readonly', show_label = False, visible_when='allModeOptions == "Log Lattice" and allLLOptions == "Playground"'),
+	Item("defineStructureTxt", style = 'readonly', show_label = False, visible_when = playgroundCustomVisibility),
 	),
 	HGroup(
-	Item("defineStructureDescriptionVorticityTxt", style = 'readonly', show_label = False, visible_when='allModeOptions == "Log Lattice" and allLLOptions == "Playground"'),
+	Item("defineStructureDescriptionVorticityTxt", style = 'readonly', show_label = False, visible_when = playgroundCustomVisibility),
 	),
 	HGroup(
-	Item("defineStructureDescriptionVelocityTxt", style = 'readonly', show_label = False, visible_when='allModeOptions == "Log Lattice" and allLLOptions == "Playground"'),
+	Item("defineStructureDescriptionVelocityTxt", style = 'readonly', show_label = False, visible_when = playgroundCustomVisibility),
 	),
 	HGroup(
-	Item("initCondition1", show_label = False, visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"', height = hugeh, width = hugew),
+	Item("initCondition1", show_label = False, visible_when = playgroundCustomVisibility, height = hugeh, width = hugew),
 	),
 	
 	HGroup(
-	Item("GenerateStructure", show_label = False, visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"', height = buttonh, width = buttonw),
-	Item("ResetStructure", show_label = False, visible_when = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"', height = buttonh, width = buttonw),
+	Item("fourierGridTypeTxt", style = 'readonly', show_label = False, visible_when = playgroundVisibility),
+	Item("allPlaygroundOptions", show_label = False, visible_when = playgroundVisibility)
+	),
+	
+	HGroup(
+	Item("GenerateStructure", show_label = False, visible_when = playgroundVisibility, height = buttonh, width = buttonw),
+	Item("ResetStructure", show_label = False, visible_when = playgroundVisibility, height = buttonh, width = buttonw),
 	),
 	),
