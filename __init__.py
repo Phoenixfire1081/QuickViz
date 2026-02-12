@@ -244,22 +244,20 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
 	
 	# All Playground options
-	allPlaygroundOptions = Enum(['Linear modes', 'Golden mean', 'Plastic number', 'Others']) 
+	allPlaygroundOptionsActual = Enum(['None', 'Linear', 'Logarithmic', 'Recurrent', 'Partially regular']) 
 	allPredefinedVortices = Enum(['None', 'Vortex ring', 'Vortex tube', 'Vortex knot', 'Hairpin', 'Custom']) 
 	initCondition1 = Str('')
-	# initCondition2 = Str('')
-	# initCondition3 = Str('')
-	# initCondition4 = Str('')
-	# initCondition5 = Str('') 
-	# Add1 = Button('Add')
-	# Add2 = Button('Add')
-	# Add3 = Button('Add')
-	# Add4 = Button('Add')
-	# Remove2 = Button('Remove')
-	# Remove3 = Button('Remove')
-	# Remove4 = Button('Remove')
-	GenerateStructure = Button('Generate')
+	timeStep_playground = Str('')
+	includeK0_playground = Bool()
+	numGridPoints_playground = Str('5') # Keep 10 grid points as default
+	GenerateStructure = Button('Add')
+	GenerateTS_playground = Button('Generate')
 	ResetStructure = Button('Reset')
+	ResetTS_playground = Button('Remove')
+	NextTS_playground = Button('Next TS')
+	seedScale_playground = Float(0.01)
+	a_playground = Int(1)
+	b_playground = Int(2)
 	
 	# All Real Space Visualization options
 	LL_path = Str(os.getcwd())
@@ -574,6 +572,13 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	predefinedVortexTxt = Str('Predefined vortex structure: ')
 	addScalarFieldTxt = Str('Add to scalar field: ')
 	fourierGridTypeTxt = Str('Fourier grid type: ')
+	scalarFieldOptionsTxt = Str('Real space options: ')
+	numberOfTimeStepsTxt = Str('Number of time steps: ')
+	numGridPointsTxt = Str('Number of grid points: ')
+	includeK0Txt = Str('Include zero modes? ')
+	seedScalePGTxt = Str('Scaling factor: ')
+	aTxt = Str('a: ')
+	bTxt = Str('b: ')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -1118,6 +1123,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# Global time update
 		self.globalTimeUpdate = False
+		
+		# Default options for playground
+		timeStep_playground = '1'
 				
 	view = View(
 	

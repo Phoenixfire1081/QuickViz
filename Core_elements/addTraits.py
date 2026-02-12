@@ -134,8 +134,14 @@ def include_all_traits(self):
 	self.on_trait_change(self.extractSpecificStructure, "chooseStructure")
 	
 	# allPlaygroundOptions
-	self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
+	# self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
 	# self.on_trait_change(self.removeStructure, "removeStructure")
+	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "allPlaygroundOptionsActual")
+	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "includeK0_playground")
+	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "seedScale_playground")
+	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "numGridPoints_playground")
+	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "a_playground")
+	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "b_playground")
 	
 	# allRealSpaceVisualizationOptions
 	self.on_trait_change(self.computeLL_fired, "computeLL")
