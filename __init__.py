@@ -245,7 +245,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# All Playground options
 	allPlaygroundOptionsActual = Enum(['None', 'Linear', 'Logarithmic', 'Recurrent', 'Partially regular']) 
-	allPredefinedVortices = Enum(['None', 'Vortex ring', 'Vortex tube', 'Vortex knot', 'Hairpin', 'Custom']) 
+	allPredefinedVortices = Enum(['None', 'Vortex ring', 'Vortex tube', 'Vortex knot', 'Vortex link', 'Hairpin', 'Custom']) 
+	allPredefinedKnots = Enum(['Trefoil', '(p,q) Torus'])
 	initCondition1 = Str('')
 	timeStep_playground = Str('')
 	includeK0_playground = Bool()
@@ -258,6 +259,18 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	seedScale_playground = Float(0.01)
 	a_playground = Int(1)
 	b_playground = Int(2)
+	visualizeGrid_playground = Bool()
+	ringRadius_playground = Float(0.1)
+	thickness_playground = Float(0.1)
+	translatex_playground = Range(-0.5, 0.5, 0, low_name = 'xmin_pg', high_name='xmax_pg')
+	translatey_playground = Range(-0.5, 0.5, 0, low_name = 'ymin_pg', high_name='ymax_pg')
+	translatez_playground = Range(-0.5, 0.5, 0, low_name = 'zmin_pg', high_name='zmax_pg')
+	rotationAngle_playground = Range(-90, 90, 0, low_name = 'minRot_pg',  high_name='maxRot_pg')
+	rotAxisX_playground = Str('1')
+	rotAxisY_playground = Str('0')
+	rotAxisZ_playground = Str('0')
+	p_torus = Str('2')
+	q_torus = Str('3')
 	
 	# All Real Space Visualization options
 	LL_path = Str(os.getcwd())
@@ -579,6 +592,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	seedScalePGTxt = Str('Scaling factor: ')
 	aTxt = Str('a: ')
 	bTxt = Str('b: ')
+	visualizeGridTxt = Str('Visualize grid? ')
+	ringRadiusTxt = Str('Ring radius:')
+	translatePlaygroundTxt = Str('Translation (x, y, z):')
+	rotationPlaygroundTxt = Str('Rotation axis (x, y, z):')
+	rotationAnglePlaygroundTxt = Str('Rotation angle:')
+	thicknessPlaygroundTxt = Str('Thickness:')
+	allPredefinedKnotsTxt = Str('Knot type:')
+	pTxt = Str('p:')
+	qTxt = Str('q:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -1126,6 +1148,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# Default options for playground
 		timeStep_playground = '1'
+		self.xmin_pg = -0.5
+		self.xmax_pg = 0.5
+		self.ymin_pg = -0.5
+		self.ymax_pg = 0.5
+		self.zmin_pg = -0.5
+		self.zmax_pg = 0.5
+		self.minRot_pg = -90
+		self.maxRot_pg = 90
 				
 	view = View(
 	
