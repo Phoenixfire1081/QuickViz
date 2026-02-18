@@ -8,13 +8,13 @@ from numba import jit
 @jit(nopython=True, cache=True)
 def _advance(vx, vy, x, y, fx, fy, w, h):
     if vx >= 0:
-        tx = (1 - fx) / vx
+        tx = (1 - fx) / vx if vx else 0
     else:
-        tx = -fx / vx
+        tx = (-fx / vx) if vx else 0
     if vy >= 0:
-        ty = (1 - fy) / vy
+        ty = (1 - fy) / vy if vy else 0
     else:
-        ty = -fy / vy
+        ty = (-fy / vy) if vy else 0
     if tx < ty:
         if vx >= 0:
             x += 1

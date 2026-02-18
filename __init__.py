@@ -244,22 +244,33 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
 	
 	# All Playground options
-	allPlaygroundOptions = Enum(['Linear modes', 'Golden mean', 'Plastic number', 'Others']) 
-	allPredefinedVortices = Enum(['None', 'Vortex ring', 'Vortex tube', 'Vortex knot', 'Hairpin', 'Custom']) 
+	allPlaygroundOptionsActual = Enum(['None', 'Linear', 'Logarithmic', 'Recurrent', 'Partially regular']) 
+	allPredefinedVortices = Enum(['None', 'Vortex ring', 'Vortex tube', 'Vortex knot', 'Vortex link', 'Hairpin', 'Custom']) 
+	allPredefinedKnots = Enum(['Trefoil', '(p,q) Torus'])
 	initCondition1 = Str('')
-	# initCondition2 = Str('')
-	# initCondition3 = Str('')
-	# initCondition4 = Str('')
-	# initCondition5 = Str('') 
-	# Add1 = Button('Add')
-	# Add2 = Button('Add')
-	# Add3 = Button('Add')
-	# Add4 = Button('Add')
-	# Remove2 = Button('Remove')
-	# Remove3 = Button('Remove')
-	# Remove4 = Button('Remove')
-	GenerateStructure = Button('Generate')
+	timeStep_playground = Str('')
+	includeK0_playground = Bool()
+	numGridPoints_playground = Str('5') # Keep 10 grid points as default
+	GenerateStructure = Button('Add')
+	GenerateTS_playground = Button('Generate')
 	ResetStructure = Button('Reset')
+	ResetTS_playground = Button('Remove')
+	NextTS_playground = Button('Next TS')
+	seedScale_playground = Float(0.01)
+	a_playground = Int(1)
+	b_playground = Int(2)
+	visualizeGrid_playground = Bool()
+	ringRadius_playground = Float(0.1)
+	thickness_playground = Float(0.1)
+	translatex_playground = Range(-0.5, 0.5, 0, low_name = 'xmin_pg', high_name='xmax_pg')
+	translatey_playground = Range(-0.5, 0.5, 0, low_name = 'ymin_pg', high_name='ymax_pg')
+	translatez_playground = Range(-0.5, 0.5, 0, low_name = 'zmin_pg', high_name='zmax_pg')
+	rotationAngle_playground = Range(-90, 90, 0, low_name = 'minRot_pg',  high_name='maxRot_pg')
+	rotAxisX_playground = Str('1')
+	rotAxisY_playground = Str('0')
+	rotAxisZ_playground = Str('0')
+	p_torus = Str('2')
+	q_torus = Str('3')
 	
 	# All Real Space Visualization options
 	LL_path = Str(os.getcwd())
@@ -307,10 +318,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	enableSlice = Button('Set')
 	removeSlice = Button('Remove')
 	numberOfContours = Int(10)
+	slice_minx1 = Int()
+	slice_miny1 = Int()
+	slice_minz1 = Int()
+	slice_maxx1 = Int()
+	slice_maxy1 = Int()
+	slice_maxz1 = Int()
 	
 	# vector slice
 	scaleFactorSlice = Float(1.0)
-	resolutionSlice = Int(8)
+	resolutionSlice = Float(1)
 	
 	# streamlines (2D)
 	kernelLengthSlice = Int(32)
@@ -574,6 +591,22 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	predefinedVortexTxt = Str('Predefined vortex structure: ')
 	addScalarFieldTxt = Str('Add to scalar field: ')
 	fourierGridTypeTxt = Str('Fourier grid type: ')
+	scalarFieldOptionsTxt = Str('Real space options: ')
+	numberOfTimeStepsTxt = Str('Number of time steps: ')
+	numGridPointsTxt = Str('Number of grid points: ')
+	includeK0Txt = Str('Include zero modes? ')
+	seedScalePGTxt = Str('Scaling factor: ')
+	aTxt = Str('a: ')
+	bTxt = Str('b: ')
+	visualizeGridTxt = Str('Visualize grid? ')
+	ringRadiusTxt = Str('Ring radius:')
+	translatePlaygroundTxt = Str('Translation (x, y, z):')
+	rotationPlaygroundTxt = Str('Rotation axis (x, y, z):')
+	rotationAnglePlaygroundTxt = Str('Rotation angle:')
+	thicknessPlaygroundTxt = Str('Thickness:')
+	allPredefinedKnotsTxt = Str('Knot type:')
+	pTxt = Str('p:')
+	qTxt = Str('q:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -711,17 +744,17 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.xlength_data2, self.ylength_data2, self.zlength_data2, _ = np.shape(self._dataTs2)
 		self.xlength_data3, self.ylength_data3, self.zlength_data3, _ = np.shape(self._dataTs3)
 		self.xlength_data4, self.ylength_data4, self.zlength_data4, _ = np.shape(self._dataTs4)
-		self.add_trait("whichSliceX", Range(int(0.0), self.xlength_data1-1, int(0)))
-		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
-		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
+		self.add_trait("whichSliceX", Range(0, 10000, 0, low_name = 'slice_minx1', high_name='slice_maxx1'))
+		self.add_trait("whichSliceY", Range(0, 10000, 0, low_name = 'slice_miny1', high_name='slice_maxy1'))
+		self.add_trait("whichSliceZ", Range(0, 10000, 0, low_name = 'slice_minz1', high_name='slice_maxz1'))
 		
-		self.add_trait("whichSliceX1_reconn", Range(int(0.0), 10000, int(0), low_name = 'minx1', high_name='maxx1'))
-		self.add_trait("whichSliceY1_reconn", Range(int(0.0), 10000, int(0), low_name = 'miny1', high_name='maxy1'))
-		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), 10000, int(0), low_name = 'minz1', high_name='maxz1'))
+		self.add_trait("whichSliceX1_reconn", Range(0, 10000, 0, low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY1_reconn", Range(0, 10000, 0, low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ1_reconn", Range(0, 10000, 0, low_name = 'minz1', high_name='maxz1'))
 		
-		self.add_trait("whichSliceX2_reconn", Range(int(0.0), 10000, int(1), low_name = 'minx1', high_name='maxx1'))
-		self.add_trait("whichSliceY2_reconn", Range(int(0.0), 10000, int(1), low_name = 'miny1', high_name='maxy1'))
-		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), 10000, int(1), low_name = 'minz1', high_name='maxz1'))
+		self.add_trait("whichSliceX2_reconn", Range(0, 10000, 0, low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY2_reconn", Range(0, 10000, 0, low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ2_reconn", Range(0, 10000, 0, low_name = 'minz1', high_name='maxz1'))
 		
 		self.minx1 = 0
 		self.miny1 = 0
@@ -1056,6 +1089,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		# By default, choose 1 screen
 		self.layout = '1'
 		
+		# Default slice lengths
+		self.slice_minx1 = 0
+		self.slice_maxx1 = self.xlength_data1-1
+		self.slice_miny1 = 0
+		self.slice_maxy1 = self.ylength_data1-1
+		self.slice_minz1 = 0
+		self.slice_maxz1 = self.zlength_data1-1
+		
 		# By default, choose screen 1 for all TS
 		self.screen1_ts1 = True
 		self.screen1_ts2 = True
@@ -1118,6 +1159,17 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# Global time update
 		self.globalTimeUpdate = False
+		
+		# Default options for playground
+		timeStep_playground = '1'
+		self.xmin_pg = -0.5
+		self.xmax_pg = 0.5
+		self.ymin_pg = -0.5
+		self.ymax_pg = 0.5
+		self.zmin_pg = -0.5
+		self.zmax_pg = 0.5
+		self.minRot_pg = -90
+		self.maxRot_pg = 90
 				
 	view = View(
 	

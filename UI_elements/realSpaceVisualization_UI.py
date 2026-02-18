@@ -21,80 +21,79 @@ visibilityGauss = visibilityRSV + ' and filterOptions_LL == "Gaussian"'
 
 realSpaceVisualizationUIelements = Group(
 
-HGroup(
-Item("LoadLLTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when = visibilityRSV),
-Item("LL_path", show_label = False, height = longh, width = longw, visible_when = visibilityRSV),
-Item("choose_folder_LLPath", show_label = False, height = buttonh, width = buttonw, visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("LoadLLTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when = visibilityRSV),
+	Item("LL_path", show_label = False, height = longh, width = longw, visible_when = visibilityRSV),
+	Item("choose_folder_LLPath", show_label = False, height = buttonh, width = buttonw, visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("parametersTxt", style = 'readonly', show_label = False, height = smallh, width = -200, visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("parametersTxt", style = 'readonly', show_label = False, height = smallh, width = -200, visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("whichTimeStepLLTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when = visibilityRSV),
-Item("timeStep_LL", show_label = False, height = longh, width = longw , visible_when = visibilityRSV),
-Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("whichTimeStepLLTxt", style = 'readonly', show_label = False, height = smallh, width = -130, visible_when = visibilityRSV),
+	Item("timeStep_LL", show_label = False, height = longh, width = longw , visible_when = visibilityRSV),
+	Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("minExtentTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = visibilityRSV),
-Item("xmin_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-Item("ymin_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-Item("zmin_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("minExtentTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = visibilityRSV),
+	Item("xmin_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	Item("ymin_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	Item("zmin_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("maxExtentTxt", style = 'readonly', show_label = False, height = tinyh, width = -80, visible_when = visibilityRSV),
-Item("xmax_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-Item("ymax_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-Item("zmax_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("maxExtentTxt", style = 'readonly', show_label = False, height = tinyh, width = -80, visible_when = visibilityRSV),
+	Item("xmax_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	Item("ymax_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	Item("zmax_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = visibilityRSV),
-Item("xres_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-Item("yres_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-Item("zres_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("resolutionTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when = visibilityRSV),
+	Item("xres_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	Item("yres_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	Item("zres_LL", show_label = False, height = tinyh, width = tinyw , visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("samplingPointsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when = visibilityRSV),
-Item("samplingPoints_LL", style = 'custom', show_label = False, visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("samplingPointsTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when = visibilityRSV),
+	Item("samplingPoints_LL", style = 'custom', show_label = False, visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("filterOptionsTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when = visibilityRSV),
-Item("filterOptions_LL", show_label = False, visible_when = visibilityRSV),
-),
+	HGroup(
+	Item("filterOptionsTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when = visibilityRSV),
+	Item("filterOptions_LL", show_label = False, visible_when = visibilityRSV),
+	),
 
-HGroup(
-Item("numModesLPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityLP),
-Item("numModesLP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityLP),
-),
+	HGroup(
+	Item("numModesLPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityLP),
+	Item("numModesLP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityLP),
+	),
 
-HGroup(
-Item("numModesHPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityHP),
-Item("numModesHP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityHP),
-),
+	HGroup(
+	Item("numModesHPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityHP),
+	Item("numModesHP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityHP),
+	),
 
-HGroup(
-Item("numModesMinBPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityBP),
-Item("numModesMinBP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityBP),
-Item("numModesMaxBPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityBP),
-Item("numModesMaxBP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityBP),
-),
+	HGroup(
+	Item("numModesMinBPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityBP),
+	Item("numModesMinBP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityBP),
+	Item("numModesMaxBPTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when = visibilityBP),
+	Item("numModesMaxBP", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityBP),
+	),
 
-HGroup(
-Item("gaussianSizeTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when = visibilityGauss),
-Item("gaussianSize", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityGauss),
-),
+	HGroup(
+	Item("gaussianSizeTxt", style = 'readonly', show_label = False, height = smallh, width = -50, visible_when = visibilityGauss),
+	Item("gaussianSize", show_label = False, height = tinyh, width = tinyw, visible_when = visibilityGauss),
+	),
 
-HGroup(
-Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = visibilityRSV),
-Item("whichScalar_LL", show_label = False, visible_when = visibilityRSV),
-Item("computeLL", height = buttonh, width = buttonw, show_label = False, visible_when = visibilityRSV),
-),
-
-),
+	HGroup(
+	Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = visibilityRSV),
+	Item("whichScalar_LL", show_label = False, visible_when = visibilityRSV),
+	Item("computeLL", height = buttonh, width = buttonw, show_label = False, visible_when = visibilityRSV),
+	),
+	),	
 
