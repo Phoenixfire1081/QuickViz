@@ -318,10 +318,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	enableSlice = Button('Set')
 	removeSlice = Button('Remove')
 	numberOfContours = Int(10)
+	slice_minx1 = Int()
+	slice_miny1 = Int()
+	slice_minz1 = Int()
+	slice_maxx1 = Int()
+	slice_maxy1 = Int()
+	slice_maxz1 = Int()
 	
 	# vector slice
 	scaleFactorSlice = Float(1.0)
-	resolutionSlice = Int(8)
+	resolutionSlice = Float(1)
 	
 	# streamlines (2D)
 	kernelLengthSlice = Int(32)
@@ -738,17 +744,17 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.xlength_data2, self.ylength_data2, self.zlength_data2, _ = np.shape(self._dataTs2)
 		self.xlength_data3, self.ylength_data3, self.zlength_data3, _ = np.shape(self._dataTs3)
 		self.xlength_data4, self.ylength_data4, self.zlength_data4, _ = np.shape(self._dataTs4)
-		self.add_trait("whichSliceX", Range(int(0.0), self.xlength_data1-1, int(0)))
-		self.add_trait("whichSliceY", Range(int(0.0), self.ylength_data1-1, int(0)))
-		self.add_trait("whichSliceZ", Range(int(0.0), self.zlength_data1-1, int(0)))
+		self.add_trait("whichSliceX", Range(0, 10000, 0, low_name = 'slice_minx1', high_name='slice_maxx1'))
+		self.add_trait("whichSliceY", Range(0, 10000, 0, low_name = 'slice_miny1', high_name='slice_maxy1'))
+		self.add_trait("whichSliceZ", Range(0, 10000, 0, low_name = 'slice_minz1', high_name='slice_maxz1'))
 		
-		self.add_trait("whichSliceX1_reconn", Range(int(0.0), 10000, int(0), low_name = 'minx1', high_name='maxx1'))
-		self.add_trait("whichSliceY1_reconn", Range(int(0.0), 10000, int(0), low_name = 'miny1', high_name='maxy1'))
-		self.add_trait("whichSliceZ1_reconn", Range(int(0.0), 10000, int(0), low_name = 'minz1', high_name='maxz1'))
+		self.add_trait("whichSliceX1_reconn", Range(0, 10000, 0, low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY1_reconn", Range(0, 10000, 0, low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ1_reconn", Range(0, 10000, 0, low_name = 'minz1', high_name='maxz1'))
 		
-		self.add_trait("whichSliceX2_reconn", Range(int(0.0), 10000, int(1), low_name = 'minx1', high_name='maxx1'))
-		self.add_trait("whichSliceY2_reconn", Range(int(0.0), 10000, int(1), low_name = 'miny1', high_name='maxy1'))
-		self.add_trait("whichSliceZ2_reconn", Range(int(0.0), 10000, int(1), low_name = 'minz1', high_name='maxz1'))
+		self.add_trait("whichSliceX2_reconn", Range(0, 10000, 0, low_name = 'minx1', high_name='maxx1'))
+		self.add_trait("whichSliceY2_reconn", Range(0, 10000, 0, low_name = 'miny1', high_name='maxy1'))
+		self.add_trait("whichSliceZ2_reconn", Range(0, 10000, 0, low_name = 'minz1', high_name='maxz1'))
 		
 		self.minx1 = 0
 		self.miny1 = 0
@@ -1082,6 +1088,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# By default, choose 1 screen
 		self.layout = '1'
+		
+		# Default slice lengths
+		self.slice_minx1 = 0
+		self.slice_maxx1 = self.xlength_data1-1
+		self.slice_miny1 = 0
+		self.slice_maxy1 = self.ylength_data1-1
+		self.slice_minz1 = 0
+		self.slice_maxz1 = self.zlength_data1-1
 		
 		# By default, choose screen 1 for all TS
 		self.screen1_ts1 = True

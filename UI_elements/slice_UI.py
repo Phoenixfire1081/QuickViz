@@ -32,9 +32,9 @@ Item("planeOrientation", show_label = False, visible_when = 'allLocalOptions == 
 ),
 HGroup(
 Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType != "None" and allModeOptions == "Visualization"'),
-Item("whichSliceX", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "X" and allModeOptions == "Visualization"', width = sliderw),
-Item("whichSliceY", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Y" and allModeOptions == "Visualization"', width = sliderw),
-Item("whichSliceZ", show_label = False, visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Z" and allModeOptions == "Visualization"', width = sliderw),
+Item("whichSliceX", show_label = False, editor=RangeEditor(mode='slider', low_name = 'slice_minx1',  high_name='slice_maxx1'), visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "X" and allModeOptions == "Visualization"', width = sliderw),
+Item("whichSliceY", show_label = False, editor=RangeEditor(mode='slider', low_name = 'slice_miny1',  high_name='slice_maxy1'), visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Y" and allModeOptions == "Visualization"', width = sliderw),
+Item("whichSliceZ", show_label = False, editor=RangeEditor(mode='slider', low_name = 'slice_minz1',  high_name='slice_maxz1'), visible_when = 'allLocalOptions == "Slice"  and sliceType != "None" and planeOrientation == "Z" and allModeOptions == "Visualization"', width = sliderw),
 ),
 HGroup(
 Item("scaleFactorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Slice" and sliceType == "Vector slice" and allModeOptions == "Visualization"'),

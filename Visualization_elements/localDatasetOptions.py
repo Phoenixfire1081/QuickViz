@@ -382,6 +382,16 @@ class allLocalDatasetOptions:
 			
 			self.whichTime1 = (maxTs-minTs)//skipTs - 1
 			
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx1 = self.xlength_data1
+			self.slice_maxy1 = self.ylength_data1
+			self.slice_maxz1 = self.zlength_data1
+			
+			self.maxx1 = self.xlength_data1
+			self.maxy1 = self.ylength_data1
+			self.maxz1 = self.zlength_data1
+			
 			# Remove existing outlines as well
 			self.out1_sc1.remove()
 			self.sf1_sc1.remove()
