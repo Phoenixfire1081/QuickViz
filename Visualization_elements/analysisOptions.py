@@ -73,8 +73,8 @@ class allAnalysisOptions:
 			# For automatic scale factor, use the dimenion with the smallest length
 			allMaxLengths = np.array([np.max(self.x1), np.max(self.y1), np.max(self.z1)])
 			
-			self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
-			self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
 	
 	@on_trait_change('whichSliceX1_reconn, whichSliceY1_reconn, whichSliceZ1_reconn, whichSliceX2_reconn, whichSliceY2_reconn, whichSliceZ2_reconn')
 	def bboxChangedReconn(self):
