@@ -23,6 +23,16 @@ Item("seedTypeTxt", style = 'readonly', show_label = False, height = smallh, wid
 Item("seedType", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', style = 'custom'),
 ),
 HGroup(
+Item("planeOrientationTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)" and seedType == "plane" and allModeOptions == "Visualization"'),
+Item("planeOrientation", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and seedType == "plane" and allModeOptions == "Visualization"', style = 'custom'),
+),
+HGroup(
+Item("whichSliceTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='allLocalOptions == "Fieldlines (3D)" and seedType == "plane" and allModeOptions == "Visualization"'),
+Item("whichSliceX", show_label = False, editor=RangeEditor(mode='slider', low_name = 'slice_minx1',  high_name='slice_maxx1'), visible_when = 'allLocalOptions == "Fieldlines (3D)" and seedType == "plane" and planeOrientation == "X" and allModeOptions == "Visualization"', width = sliderw),
+Item("whichSliceY", show_label = False, editor=RangeEditor(mode='slider', low_name = 'slice_miny1',  high_name='slice_maxy1'), visible_when = 'allLocalOptions == "Fieldlines (3D)" and seedType == "plane" and planeOrientation == "Y" and allModeOptions == "Visualization"', width = sliderw),
+Item("whichSliceZ", show_label = False, editor=RangeEditor(mode='slider', low_name = 'slice_minz1',  high_name='slice_maxz1'), visible_when = 'allLocalOptions == "Fieldlines (3D)" and seedType == "plane" and planeOrientation == "Z" and allModeOptions == "Visualization"', width = sliderw),
+),
+HGroup(
 Item("seedScaleTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"'),
 Item("seedScale", show_label = False, visible_when = 'allLocalOptions == "Fieldlines (3D)" and allModeOptions == "Visualization"', width = tinyw, height = tinyh),
 ),

@@ -390,7 +390,7 @@ class allSliceOptions:
         if self.screen1_ts1:
             try:
                 self.volSlice1_sc1.parent.parent.remove()
-                self.vf1_sc1()
+                self.vf1_sc1.remove()
             except (ValueError, AttributeError):
                 pass  # Set slice first
 
