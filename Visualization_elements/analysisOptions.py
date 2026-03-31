@@ -268,6 +268,15 @@ class allAnalysisOptions:
 			# Calculate for all available data
 			
 			xres, yres, zres, allTs = np.shape(self.u1)
+			
+			# Check if altBBox is active. Trim only DR data
+			if self.altBBox:
+				xmin_reconn = self.whichSliceX1_reconn
+				xmax_reconn = self.whichSliceX2_reconn
+				ymin_reconn = self.whichSliceY1_reconn
+				ymax_reconn = self.whichSliceY2_reconn
+				zmin_reconn = self.whichSliceZ1_reconn
+				zmax_reconn = self.whichSliceZ2_reconn
 				
 			# Copy all data from ts1
 			self.u2 = self.u1
@@ -317,7 +326,10 @@ class allAnalysisOptions:
 				if self.allDROptions == "DR":
 				
 					DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
-					self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
+					if self.altBBox:
+						self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = DRw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
+					else:
+						self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
 					
 					if ts == allTs-1:
 						self.whichTime2 = allTs-1
@@ -328,7 +340,10 @@ class allAnalysisOptions:
 				elif self.allDROptions == "Dnu":
 					
 					Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
-					self._dataTs2[:, :, :, ts] = Dnuw3d[:, :, :, 0]
+					if self.altBBox:
+						self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = Dnuw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
+					else:
+						self._dataTs2[:, :, :, ts] = Dnuw3d[:, :, :, 0]
 					
 					if ts == allTs-1:
 						self.whichTime2 = allTs-1
@@ -341,8 +356,12 @@ class allAnalysisOptions:
 					DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
 					Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
 					
-					self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
-					self._dataTs3[:, :, :, ts] = Dnuw3d[:, :, :, 0]
+					if self.altBBox:
+						self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = DRw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
+						self._dataTs3[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = Dnuw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
+					else:
+						self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
+						self._dataTs3[:, :, :, ts] = Dnuw3d[:, :, :, 0]
 					
 					if ts == allTs-1:
 						self.whichTime2 = allTs-1
@@ -389,6 +408,15 @@ class allAnalysisOptions:
 			# Calculate for all available data
 			
 			xres, yres, zres, allTs = np.shape(self.u1)
+			
+			# Check if altBBox is active. Trim only DR data
+			if self.altBBox:
+				xmin_reconn = self.whichSliceX1_reconn
+				xmax_reconn = self.whichSliceX2_reconn
+				ymin_reconn = self.whichSliceY1_reconn
+				ymax_reconn = self.whichSliceY2_reconn
+				zmin_reconn = self.whichSliceZ1_reconn
+				zmax_reconn = self.whichSliceZ2_reconn
 				
 			# Copy all data from ts1
 			self.u2 = self.u1
@@ -433,7 +461,10 @@ class allAnalysisOptions:
 				# Total pressure
 				Ptot = np.real(Pxx+Pyy+Pzz + 2*(Pxy+Pyz+Pxz)).astype('float32') 
 				
-				self._dataTs2[:, :, :, ts] = Ptot[:, :, :, 0]
+				if self.altBBox:
+					self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = Ptot[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
+				else:
+					self._dataTs2[:, :, :, ts] = Ptot[:, :, :, 0]
 				
 				if ts == allTs-1:
 					self.whichTime2 = allTs-1

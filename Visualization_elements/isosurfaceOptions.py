@@ -14,6 +14,24 @@ class allIsosurfaceOptions:
 		# Make no changes
 		pass
 	
+	@on_trait_change('threshold2, thresholdPercent2')
+	def threshold_changed2(self):
+		
+		# Make no changes
+		pass
+	
+	@on_trait_change('threshold3, thresholdPercent3')
+	def threshold_changed3(self):
+		
+		# Make no changes
+		pass
+	
+	@on_trait_change('threshold4, thresholdPercent4')
+	def threshold_changed4(self):
+		
+		# Make no changes
+		pass
+	
 	def plot_colorFieldData(self, scalar, colorData, tmpthreshvals, whichScreen, figureHandle, percent):
 				
 		# Extract contour data first
@@ -296,12 +314,6 @@ class allIsosurfaceOptions:
 				# Wait until user enters the values
 				pass
 	
-	@on_trait_change('threshold2, thresholdPercent2')
-	def threshold_changed2(self):
-		
-		# Make no changes
-		pass
-	
 	@on_trait_change('setThreshold2')
 	def setThreshold_fired2(self):
 		
@@ -320,14 +332,14 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, False)
+					self.plot_colorFieldData(self.iso2_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, False)
 			
 			except ValueError:
 				
 				# Wait until user enters the values
 				pass
 		
-		if self.screen2_ts1:
+		if self.screen2_ts2:
 		
 			# First reset all contours
 			self.iso2_sc2.contour.contours = []
@@ -342,14 +354,14 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, False)
+					self.plot_colorFieldData(self.iso2_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, False)
 			
 			except ValueError:
 				
 				# Wait until user enters the values
 				pass
 		
-		if self.screen3_ts1:
+		if self.screen3_ts2:
 		
 			# First reset all contours
 			self.iso2_sc3.contour.contours = []
@@ -364,14 +376,14 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, False)
+					self.plot_colorFieldData(self.iso2_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, False)
 			
 			except ValueError:
 				
 				# Wait until user enters the values
 				pass
 		
-		if self.screen4_ts1:
+		if self.screen4_ts2:
 		
 			# First reset all contours
 			self.iso2_sc4.contour.contours = []
@@ -386,7 +398,7 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, False)
+					self.plot_colorFieldData(self.iso2_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, False)
 			
 			except ValueError:
 				
@@ -411,7 +423,7 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum2 for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, True)
+					self.plot_colorFieldData(self.iso2_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, True)
 			
 			except ValueError:
 				
@@ -433,7 +445,7 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum2 for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, True)
+					self.plot_colorFieldData(self.iso2_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, True)
 			
 			except ValueError:
 				
@@ -455,7 +467,7 @@ class allIsosurfaceOptions:
 				
 				self.iso2_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum2 for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, True)
+					self.plot_colorFieldData(self.iso2_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, True)
 			
 			except ValueError:
 				
@@ -473,23 +485,17 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.thresholdPercent1.split(',')
+				tmpthreshvals = self.thresholdPercent2.split(',')
 				
 				self.iso2_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum2 for i in tmpthreshvals]
 				if self.colorFields != 'None':
-					self.plot_colorFieldData(self.iso1_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, True)
+					self.plot_colorFieldData(self.iso2_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, True)
 			
 			except ValueError:
 				
 				# Wait until user enters the values
 				pass
-	
-	@on_trait_change('threshold3, thresholdPercent3')
-	def threshold_changed3(self):
-		
-		# Make no changes
-		pass
-	
+
 	@on_trait_change('setThreshold3')
 	def setThreshold_fired3(self):
 		
@@ -509,6 +515,72 @@ class allIsosurfaceOptions:
 				self.iso3_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
 				if self.colorFields != 'None':
 					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen2_ts3:
+		
+			# First reset all contours
+			self.iso3_sc2.contour.contours = []
+			
+			if self.colorFieldSet_sc2:
+				self.mesh2.remove() # remove mesh if already exists
+				self.colorFieldSet_sc2 = False
+			
+			try:
+			
+				tmpthreshvals = self.threshold3.split(',')
+				
+				self.iso3_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts3:
+		
+			# First reset all contours
+			self.iso3_sc3.contour.contours = []
+			
+			if self.colorFieldSet_sc3:
+				self.mesh3.remove() # remove mesh if already exists
+				self.colorFieldSet_sc3 = False
+			
+			try:
+			
+				tmpthreshvals = self.threshold3.split(',')
+				
+				self.iso3_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts3:
+		
+			# First reset all contours
+			self.iso3_sc4.contour.contours = []
+			
+			if self.colorFieldSet_sc4:
+				self.mesh4.remove() # remove mesh if already exists
+				self.colorFieldSet_sc4 = False
+			
+			try:
+			
+				tmpthreshvals = self.threshold3.split(',')
+				
+				self.iso3_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, False)
 			
 			except ValueError:
 				
@@ -539,55 +611,251 @@ class allIsosurfaceOptions:
 				
 				# Wait until user enters the values
 				pass
-	
-	@on_trait_change('threshold4, thresholdPercent4')
-	def threshold_changed4(self):
 		
-		# Make no changes
-		pass
+		if self.screen2_ts3:
+		
+			# First reset all contours
+			self.iso3_sc2.contour.contours = []
+			
+			if self.colorFieldSet_sc2:
+				self.mesh2.remove() # remove mesh if already exists
+				self.colorFieldSet_sc2 = False
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent3.split(',')
+				
+				self.iso3_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts3:
+		
+			# First reset all contours
+			self.iso3_sc3.contour.contours = []
+			
+			if self.colorFieldSet_sc3:
+				self.mesh3.remove() # remove mesh if already exists
+				self.colorFieldSet_sc3 = False
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent3.split(',')
+				
+				self.iso3_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts3:
+		
+			# First reset all contours
+			self.iso3_sc4.contour.contours = []
+			
+			if self.colorFieldSet_sc4:
+				self.mesh4.remove() # remove mesh if already exists
+				self.colorFieldSet_sc4 = False
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent3.split(',')
+				
+				self.iso3_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso3_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
 	
 	@on_trait_change('setThreshold4')
 	def setThreshold_fired4(self):
 		
-		# First reset all contours
-		self.iso4.contour.contours = []
+		if self.screen1_ts4:
 		
-		try:
-		
-			tmpthreshvals = self.threshold4.split(',')
-			self.iso4.contour.contours = [np.float32(i) for i in tmpthreshvals]
-	
-			# Update camera values
-			self.updateCurrentVals_button_fired()
+			# First reset all contours
+			self.iso4_sc1.contour.contours = []
 			
-			# If the checkbox is not active already, activate it
-			if self.chkBox4 == False:
-				self.chkBox4 = True
-		
-		except ValueError:
+			if self.colorFieldSet_sc1:
+				self.mesh1.remove() # remove mesh if already exists
+				self.colorFieldSet_sc1 = False
 			
-			# Wait until user enters the values
-			pass
+			try:
+			
+				tmpthreshvals = self.threshold4.split(',')
+				
+				self.iso4_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen2_ts4:
+		
+			# First reset all contours
+			self.iso4_sc2.contour.contours = []
+			
+			if self.colorFieldSet_sc2:
+				self.mesh2.remove() # remove mesh if already exists
+				self.colorFieldSet_sc2 = False
+			
+			try:
+			
+				tmpthreshvals = self.threshold4.split(',')
+				
+				self.iso4_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts4:
+		
+			# First reset all contours
+			self.iso4_sc3.contour.contours = []
+			
+			if self.colorFieldSet_sc3:
+				self.mesh3.remove() # remove mesh if already exists
+				self.colorFieldSet_sc3 = False
+			
+			try:
+			
+				tmpthreshvals = self.threshold4.split(',')
+				
+				self.iso4_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts4:
+		
+			# First reset all contours
+			self.iso4_sc4.contour.contours = []
+			
+			if self.colorFieldSet_sc4:
+				self.mesh4.remove() # remove mesh if already exists
+				self.colorFieldSet_sc4 = False
+			
+			try:
+			
+				tmpthreshvals = self.threshold4.split(',')
+				
+				self.iso4_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, False)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
 	
 	@on_trait_change('setThresholdPercent4')
 	def setThresholdPercent_fired4(self):
 		
-		# First reset all contours
-		self.iso4.contour.contours = []
+		if self.screen1_ts4:
 		
-		try:
-		
-			tmpthreshvals = self.thresholdPercent4.split(',')
-			self.iso4.contour.contours = [np.float32(i)*self.thresholdMaximum4 for i in tmpthreshvals]
-	
-			# Update camera values
-			self.updateCurrentVals_button_fired()
+			# First reset all contours
+			self.iso4_sc1.contour.contours = []
 			
-			# If the checkbox is not active already, activate it
-			if self.chkBox4 == False:
-				self.chkBox4 = True
-		
-		except ValueError:
+			if self.colorFieldSet_sc1:
+				self.mesh1.remove() # remove mesh if already exists
+				self.colorFieldSet_sc1 = False
 			
-			# Wait until user enters the values
-			pass
+			try:
+			
+				tmpthreshvals = self.thresholdPercent4.split(',')
+				
+				self.iso4_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum4 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc1, self.whichColorFields(), tmpthreshvals, 1, self.scene1.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen2_ts4:
+		
+			# First reset all contours
+			self.iso4_sc2.contour.contours = []
+			
+			if self.colorFieldSet_sc2:
+				self.mesh2.remove() # remove mesh if already exists
+				self.colorFieldSet_sc2 = False
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent4.split(',')
+				
+				self.iso4_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum4 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc2, self.whichColorFields(), tmpthreshvals, 2, self.scene2.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen3_ts4:
+		
+			# First reset all contours
+			self.iso4_sc3.contour.contours = []
+			
+			if self.colorFieldSet_sc3:
+				self.mesh3.remove() # remove mesh if already exists
+				self.colorFieldSet_sc3 = False
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent4.split(',')
+				
+				self.iso3_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum4 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc3, self.whichColorFields(), tmpthreshvals, 3, self.scene3.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass
+		
+		if self.screen4_ts4:
+		
+			# First reset all contours
+			self.iso4_sc4.contour.contours = []
+			
+			if self.colorFieldSet_sc4:
+				self.mesh4.remove() # remove mesh if already exists
+				self.colorFieldSet_sc4 = False
+			
+			try:
+			
+				tmpthreshvals = self.thresholdPercent4.split(',')
+				
+				self.iso4_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum4 for i in tmpthreshvals]
+				if self.colorFields != 'None':
+					self.plot_colorFieldData(self.iso4_sc4, self.whichColorFields(), tmpthreshvals, 4, self.scene4.mayavi_scene, True)
+			
+			except ValueError:
+				
+				# Wait until user enters the values
+				pass

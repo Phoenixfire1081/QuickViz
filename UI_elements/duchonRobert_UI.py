@@ -15,6 +15,7 @@ buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 DRVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Duchon Robert"'
 DRPressureVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Pressure" or allAnalysisOptions == "Duchon Robert")'
+DRPressureVisibilityBBox = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Pressure" or allAnalysisOptions == "Duchon Robert") and altBBox == True'
 PressureVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Pressure"'
 
 duchonRobertPressureUIelements = Group(
@@ -48,6 +49,36 @@ duchonRobertPressureUIelements = Group(
 	Item("lcetaTxt", style = 'readonly', show_label = False, height = tinyh, width = -50, visible_when = DRVisibility),
 	Item("l_c_eta_DR", style = 'readonly', show_label = False, visible_when = DRVisibility),
 	Item("lcetaKolmogorovTxt", style = 'readonly', show_label = False, height = tinyh, width = -120, visible_when = DRVisibility),
+	),
+	
+	HGroup(
+	Item("altBBoxTxt", show_label = False, style = 'readonly', visible_when=DRPressureVisibility, height = smallh, width = -170,),
+	Item("altBBox", show_label = False, visible_when=DRPressureVisibility),
+	),
+	
+	HGroup(
+	Item("reconnX1Txt", show_label = False, style = 'readonly', visible_when=DRPressureVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceX1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minx1',  high_name='maxx1'), visible_when=DRPressureVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnX2Txt", show_label = False, style = 'readonly', visible_when=DRPressureVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceX2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minx1',  high_name='maxx1'), visible_when=DRPressureVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnY1Txt", show_label = False, style = 'readonly', visible_when=DRPressureVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceY1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'miny1',  high_name='maxy1'), visible_when=DRPressureVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnY2Txt", show_label = False, style = 'readonly', visible_when=DRPressureVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceY2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'miny1',  high_name='maxy1'), visible_when=DRPressureVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnZ1Txt", show_label = False, style = 'readonly', visible_when=DRPressureVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceZ1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=DRPressureVisibilityBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnZ2Txt", show_label = False, style = 'readonly', visible_when=DRPressureVisibilityBBox, height = smallh, width = -35,),
+	Item("whichSliceZ2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=DRPressureVisibilityBBox, width = sliderw),
 	),
 	
 	HGroup(

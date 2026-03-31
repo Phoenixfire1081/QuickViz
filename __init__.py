@@ -846,171 +846,181 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# DATA 2
 		
-		# if self.nts > 1:
+		if self.nts > 1:
 		
-			# self.x2 = args[7]
-			# self.y2 = args[8]
-			# self.z2 = args[9]
+			self.x2 = args[7]
+			self.y2 = args[8]
+			self.z2 = args[9]
 			
-			# self._dataTs2 = args[10]
-			# _data2 = self._dataTs2[:, :, :, 0]
+			self._dataTs2 = args[10]
+			_data2 = self._dataTs2[:, :, :, 0]
 			
-			# self.u2 = args[11][:, :, :, :, 0]
-			# self.v2 = args[11][:, :, :, :, 1]
-			# self.w2 = args[11][:, :, :, :, 2]
-			# self.omega1_2 = args[12][:, :, :, :, 0]
-			# self.omega2_2 = args[12][:, :, :, :, 1]
-			# self.omega3_2 = args[12][:, :, :, :, 2]
+			self.u2 = args[11][:, :, :, :, 0]
+			self.v2 = args[11][:, :, :, :, 1]
+			self.w2 = args[11][:, :, :, :, 2]
+			self.omega1_2 = args[12][:, :, :, :, 0]
+			self.omega2_2 = args[12][:, :, :, :, 1]
+			self.omega3_2 = args[12][:, :, :, :, 2]
 		
-		# else:
+		else:
 			
-			# self.x2 = args[1]
-			# self.y2 = args[2]
-			# self.z2 = args[3]
+			self.x2 = args[1]
+			self.y2 = args[2]
+			self.z2 = args[3]
 
-		# self.xmin_data2 = self.x2.min()
-		# self.ymin_data2 = self.y2.min()
-		# self.zmin_data2 = self.z2.min()
-		# self.dx_data2 = (self.x2.max() - self.x2.min())/(self.xlength_data2-1)
-		# self.dy_data2 = (self.y2.max() - self.y2.min())/(self.ylength_data2-1)
-		# self.dz_data2 = (self.z2.max() - self.z2.min())/(self.zlength_data2-1)
+		self.xmin_data2 = self.x2.min()
+		self.ymin_data2 = self.y2.min()
+		self.zmin_data2 = self.z2.min()
+		self.dx_data2 = (self.x2.max() - self.x2.min())/(self.xlength_data2-1)
+		self.dy_data2 = (self.y2.max() - self.y2.min())/(self.ylength_data2-1)
+		self.dz_data2 = (self.z2.max() - self.z2.min())/(self.zlength_data2-1)
 
-		# # Plot the isosurface with minimum value from data
-		# self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
-		# self.sf2_sc2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene2.mayavi_scene)
-		# self.sf2_sc3 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene3.mayavi_scene)
-		# self.sf2_sc4 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene4.mayavi_scene)
+		# Plot the isosurface with minimum value from data
+		self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
+		self.sf2_sc2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene2.mayavi_scene)
+		self.sf2_sc3 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene3.mayavi_scene)
+		self.sf2_sc4 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene4.mayavi_scene)
 		
-		# # Set the threshold
-		# self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[_data2.min()])
-		# self.iso2_sc2 = mlab.pipeline.iso_surface(self.sf2_sc2, contours=[_data2.min()])
-		# self.iso2_sc3 = mlab.pipeline.iso_surface(self.sf2_sc3, contours=[_data2.min()])
-		# self.iso2_sc4 = mlab.pipeline.iso_surface(self.sf2_sc4, contours=[_data2.min()])
+		# Set the threshold
+		self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[_data2.min()])
+		self.iso2_sc2 = mlab.pipeline.iso_surface(self.sf2_sc2, contours=[_data2.min()])
+		self.iso2_sc3 = mlab.pipeline.iso_surface(self.sf2_sc3, contours=[_data2.min()])
+		self.iso2_sc4 = mlab.pipeline.iso_surface(self.sf2_sc4, contours=[_data2.min()])
 		
-		# # Plot the outline
-		# self.out2_sc1 = mayavi.tools.pipeline.outline(self.iso2_sc1)
-		# self.out2_sc2 = mayavi.tools.pipeline.outline(self.iso2_sc2)
-		# self.out2_sc3 = mayavi.tools.pipeline.outline(self.iso2_sc3)
-		# self.out2_sc4 = mayavi.tools.pipeline.outline(self.iso2_sc4)
+		# Plot the outline
+		self.out2_sc1 = mayavi.tools.pipeline.outline(self.iso2_sc1)
+		self.out2_sc2 = mayavi.tools.pipeline.outline(self.iso2_sc2)
+		self.out2_sc3 = mayavi.tools.pipeline.outline(self.iso2_sc3)
+		self.out2_sc4 = mayavi.tools.pipeline.outline(self.iso2_sc4)
 		
-		# self.add_trait("threshold2", Str(''))
-		# self.add_trait("thresholdPercent2", Str(''))
-		# self.add_trait("thresholdMinimum2", Float(np.floor(float(_data2.min()))))
-		# self.add_trait("thresholdMaximum2", Float(np.ceil(float(_data2.max()))))
+		self.add_trait("threshold2", Str(''))
+		self.add_trait("thresholdPercent2", Str(''))
+		self.add_trait("thresholdMinimum2", Float(np.floor(float(_data2.min()))))
+		self.add_trait("thresholdMaximum2", Float(np.ceil(float(_data2.max()))))
 		
-		# # DATA 3
+		# DATA 3
 		
-		# if self.nts > 2:
+		if self.nts > 2:
 		
-			# self.x3 = args[13]
-			# self.y3 = args[14]
-			# self.z3 = args[15]
+			self.x3 = args[13]
+			self.y3 = args[14]
+			self.z3 = args[15]
 			
-			# self._dataTs3 = args[16]
-			# _data3 = self._dataTs3[:, :, :, 0]
+			self._dataTs3 = args[16]
+			_data3 = self._dataTs3[:, :, :, 0]
 			
-			# self.u3 = args[17][:, :, :, :, 0]
-			# self.v3 = args[17][:, :, :, :, 1]
-			# self.w3 = args[17][:, :, :, :, 2]
-			# self.omega1_3 = args[18][:, :, :, :, 0]
-			# self.omega2_3 = args[18][:, :, :, :, 1]
-			# self.omega3_3 = args[18][:, :, :, :, 2]
+			self.u3 = args[17][:, :, :, :, 0]
+			self.v3 = args[17][:, :, :, :, 1]
+			self.w3 = args[17][:, :, :, :, 2]
+			self.omega1_3 = args[18][:, :, :, :, 0]
+			self.omega2_3 = args[18][:, :, :, :, 1]
+			self.omega3_3 = args[18][:, :, :, :, 2]
 		
-		# else:
+		else:
 			
-			# self.x3 = args[1]
-			# self.y3 = args[2]
-			# self.z3 = args[3]
+			self.x3 = args[1]
+			self.y3 = args[2]
+			self.z3 = args[3]
 
-		# self.xmin_data3 = self.x3.min()
-		# self.ymin_data3 = self.y3.min()
-		# self.zmin_data3 = self.z3.min()
-		# self.dx_data3 = (self.x3.max() - self.x3.min())/(self.xlength_data3-1)
-		# self.dy_data3 = (self.y3.max() - self.y3.min())/(self.ylength_data3-1)
-		# self.dz_data3 = (self.z3.max() - self.z3.min())/(self.zlength_data3-1)
+		self.xmin_data3 = self.x3.min()
+		self.ymin_data3 = self.y3.min()
+		self.zmin_data3 = self.z3.min()
+		self.dx_data3 = (self.x3.max() - self.x3.min())/(self.xlength_data3-1)
+		self.dy_data3 = (self.y3.max() - self.y3.min())/(self.ylength_data3-1)
+		self.dz_data3 = (self.z3.max() - self.z3.min())/(self.zlength_data3-1)
 
-		# # Plot the isosurface with minimum value from data
-		# self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
-		# self.sf3_sc2 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene2.mayavi_scene)
-		# self.sf3_sc3 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene3.mayavi_scene)
-		# self.sf3_sc4 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene4.mayavi_scene)
+		# Plot the isosurface with minimum value from data
+		self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
+		self.sf3_sc2 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene2.mayavi_scene)
+		self.sf3_sc3 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene3.mayavi_scene)
+		self.sf3_sc4 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene4.mayavi_scene)
 		
-		# # Set the threshold
-		# self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[_data3.min()])
-		# self.iso3_sc2 = mlab.pipeline.iso_surface(self.sf3_sc2, contours=[_data3.min()])
-		# self.iso3_sc3 = mlab.pipeline.iso_surface(self.sf3_sc3, contours=[_data3.min()])
-		# self.iso3_sc4 = mlab.pipeline.iso_surface(self.sf3_sc4, contours=[_data3.min()])
+		# Set the threshold
+		self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[_data3.min()])
+		self.iso3_sc2 = mlab.pipeline.iso_surface(self.sf3_sc2, contours=[_data3.min()])
+		self.iso3_sc3 = mlab.pipeline.iso_surface(self.sf3_sc3, contours=[_data3.min()])
+		self.iso3_sc4 = mlab.pipeline.iso_surface(self.sf3_sc4, contours=[_data3.min()])
 		
-		# # Plot the outline
-		# self.out3_sc1 = mayavi.tools.pipeline.outline(self.iso3_sc1)
-		# self.out3_sc2 = mayavi.tools.pipeline.outline(self.iso3_sc2)
-		# self.out3_sc3 = mayavi.tools.pipeline.outline(self.iso3_sc3)
-		# self.out3_sc4 = mayavi.tools.pipeline.outline(self.iso3_sc4)
+		# Plot the outline
+		self.out3_sc1 = mayavi.tools.pipeline.outline(self.iso3_sc1)
+		self.out3_sc2 = mayavi.tools.pipeline.outline(self.iso3_sc2)
+		self.out3_sc3 = mayavi.tools.pipeline.outline(self.iso3_sc3)
+		self.out3_sc4 = mayavi.tools.pipeline.outline(self.iso3_sc4)
 		
-		# # DATA 4
+		self.add_trait("threshold3", Str(''))
+		self.add_trait("thresholdPercent3", Str(''))
+		self.add_trait("thresholdMinimum3", Float(np.floor(float(_data3.min()))))
+		self.add_trait("thresholdMaximum3", Float(np.ceil(float(_data3.max()))))
 		
-		# if self.nts > 3:
+		# DATA 4
 		
-			# self.x4 = args[19]
-			# self.y4 = args[20]
-			# self.z4 = args[21]
+		if self.nts > 3:
+		
+			self.x4 = args[19]
+			self.y4 = args[20]
+			self.z4 = args[21]
 			
-			# self._dataTs4 = args[22]
-			# _data4 = self._dataTs4[:, :, :, 0]
+			self._dataTs4 = args[22]
+			_data4 = self._dataTs4[:, :, :, 0]
 			
-			# self.u4 = args[23][:, :, :, :, 0]
-			# self.v4 = args[23][:, :, :, :, 1]
-			# self.w4 = args[23][:, :, :, :, 2]
-			# self.omega1_4 = args[24][:, :, :, :, 0]
-			# self.omega2_4 = args[24][:, :, :, :, 1]
-			# self.omega3_4 = args[24][:, :, :, :, 2]
+			self.u4 = args[23][:, :, :, :, 0]
+			self.v4 = args[23][:, :, :, :, 1]
+			self.w4 = args[23][:, :, :, :, 2]
+			self.omega1_4 = args[24][:, :, :, :, 0]
+			self.omega2_4 = args[24][:, :, :, :, 1]
+			self.omega3_4 = args[24][:, :, :, :, 2]
 		
-		# else:
+		else:
 			
-			# self.x4 = args[1]
-			# self.y4 = args[2]
-			# self.z4 = args[3]
+			self.x4 = args[1]
+			self.y4 = args[2]
+			self.z4 = args[3]
 
-		# self.xmin_data4 = self.x4.min()
-		# self.ymin_data4 = self.y4.min()
-		# self.zmin_data4 = self.z4.min()
-		# self.dx_data4 = (self.x4.max() - self.x4.min())/(self.xlength_data4-1)
-		# self.dy_data4 = (self.y4.max() - self.y4.min())/(self.ylength_data4-1)
-		# self.dz_data4 = (self.z4.max() - self.z4.min())/(self.zlength_data4-1)
+		self.xmin_data4 = self.x4.min()
+		self.ymin_data4 = self.y4.min()
+		self.zmin_data4 = self.z4.min()
+		self.dx_data4 = (self.x4.max() - self.x4.min())/(self.xlength_data4-1)
+		self.dy_data4 = (self.y4.max() - self.y4.min())/(self.ylength_data4-1)
+		self.dz_data4 = (self.z4.max() - self.z4.min())/(self.zlength_data4-1)
 
-		# # Plot the isosurface with minimum value from data
-		# self.sf4_sc1 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene1.mayavi_scene)
-		# self.sf4_sc2 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene2.mayavi_scene)
-		# self.sf4_sc3 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene3.mayavi_scene)
-		# self.sf4_sc4 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene4.mayavi_scene)
+		# Plot the isosurface with minimum value from data
+		self.sf4_sc1 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene1.mayavi_scene)
+		self.sf4_sc2 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene2.mayavi_scene)
+		self.sf4_sc3 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene3.mayavi_scene)
+		self.sf4_sc4 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene4.mayavi_scene)
 		
-		# # Set the threshold
-		# self.iso4_sc1 = mlab.pipeline.iso_surface(self.sf4_sc1, contours=[_data4.min()])
-		# self.iso4_sc2 = mlab.pipeline.iso_surface(self.sf4_sc2, contours=[_data4.min()])
-		# self.iso4_sc3 = mlab.pipeline.iso_surface(self.sf4_sc3, contours=[_data4.min()])
-		# self.iso4_sc4 = mlab.pipeline.iso_surface(self.sf4_sc4, contours=[_data4.min()])
+		# Set the threshold
+		self.iso4_sc1 = mlab.pipeline.iso_surface(self.sf4_sc1, contours=[_data4.min()])
+		self.iso4_sc2 = mlab.pipeline.iso_surface(self.sf4_sc2, contours=[_data4.min()])
+		self.iso4_sc3 = mlab.pipeline.iso_surface(self.sf4_sc3, contours=[_data4.min()])
+		self.iso4_sc4 = mlab.pipeline.iso_surface(self.sf4_sc4, contours=[_data4.min()])
 		
-		# # Plot the outline
-		# self.out4_sc1 = mayavi.tools.pipeline.outline(self.iso4_sc1)
-		# self.out4_sc2 = mayavi.tools.pipeline.outline(self.iso4_sc2)
-		# self.out4_sc3 = mayavi.tools.pipeline.outline(self.iso4_sc3)
-		# self.out4_sc4 = mayavi.tools.pipeline.outline(self.iso4_sc4)
+		# Plot the outline
+		self.out4_sc1 = mayavi.tools.pipeline.outline(self.iso4_sc1)
+		self.out4_sc2 = mayavi.tools.pipeline.outline(self.iso4_sc2)
+		self.out4_sc3 = mayavi.tools.pipeline.outline(self.iso4_sc3)
+		self.out4_sc4 = mayavi.tools.pipeline.outline(self.iso4_sc4)
+		
+		self.add_trait("threshold4", Str(''))
+		self.add_trait("thresholdPercent4", Str(''))
+		self.add_trait("thresholdMinimum4", Float(np.floor(float(_data4.min()))))
+		self.add_trait("thresholdMaximum4", Float(np.ceil(float(_data4.max()))))
 		
 		# By default, turn off other outlines
-		# self.out2_sc1.actor.actor.visibility = False
-		# self.out2_sc2.actor.actor.visibility = False
-		# self.out2_sc3.actor.actor.visibility = False
-		# self.out2_sc4.actor.actor.visibility = False
+		self.out2_sc1.actor.actor.visibility = False
+		self.out2_sc2.actor.actor.visibility = False
+		self.out2_sc3.actor.actor.visibility = False
+		self.out2_sc4.actor.actor.visibility = False
 		
-		# self.out3_sc1.actor.actor.visibility = False
-		# self.out3_sc2.actor.actor.visibility = False
-		# self.out3_sc3.actor.actor.visibility = False
-		# self.out3_sc4.actor.actor.visibility = False
+		self.out3_sc1.actor.actor.visibility = False
+		self.out3_sc2.actor.actor.visibility = False
+		self.out3_sc3.actor.actor.visibility = False
+		self.out3_sc4.actor.actor.visibility = False
 		
-		# self.out4_sc1.actor.actor.visibility = False
-		# self.out4_sc2.actor.actor.visibility = False
-		# self.out4_sc3.actor.actor.visibility = False
-		# self.out4_sc4.actor.actor.visibility = False
+		self.out4_sc1.actor.actor.visibility = False
+		self.out4_sc2.actor.actor.visibility = False
+		self.out4_sc3.actor.actor.visibility = False
+		self.out4_sc4.actor.actor.visibility = False
 		
 		# Set default contour representation
 		self.contourRepresentation1 = 'surface'
@@ -1099,9 +1109,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# By default, choose screen 1 for all TS
 		self.screen1_ts1 = True
-		self.screen1_ts2 = True
-		self.screen1_ts3 = True
-		self.screen1_ts4 = True
+		self.screen1_ts2 = False
+		self.screen1_ts3 = False
+		self.screen1_ts4 = False
 		
 		# By default set shade as true and set other default values too
 		self.shade_volRender = False
@@ -1179,9 +1189,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	sceneUIelements,
 	VGroup(
 	
-	# Layout options - disabled feature, may be enabled later
-	# Group(label = 'Screen layout:'),
-	# Item("layout", label = 'Number of split screens:', style='custom'),
+	# Layout options
+	Group(label = 'Screen layout:'),
+	Item("layout", label = 'Number of split screens:', style='custom'),
 	
 	globalUIelements,
 	localUIelements,
