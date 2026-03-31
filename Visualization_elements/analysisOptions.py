@@ -74,7 +74,7 @@ class allAnalysisOptions:
 			allMaxLengths = np.array([np.max(self.x1), np.max(self.y1), np.max(self.z1)])
 			
 			self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
-			self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			# self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
 	
 	@on_trait_change('whichSliceX1_reconn, whichSliceY1_reconn, whichSliceZ1_reconn, whichSliceX2_reconn, whichSliceY2_reconn, whichSliceZ2_reconn')
 	def bboxChangedReconn(self):
@@ -86,19 +86,24 @@ class allAnalysisOptions:
 			except:
 				pass
 			
-			xmin = np.unique(self.x1)[self.whichSliceX1_reconn]
-			ymin = np.unique(self.y1)[self.whichSliceY1_reconn]
-			zmin = np.unique(self.z1)[self.whichSliceZ1_reconn]
+			try:
 			
-			xmax = np.unique(self.x1)[self.whichSliceX2_reconn]
-			ymax = np.unique(self.y1)[self.whichSliceY2_reconn]
-			zmax = np.unique(self.z1)[self.whichSliceZ2_reconn]
+				xmin = np.unique(self.x1)[self.whichSliceX1_reconn]
+				ymin = np.unique(self.y1)[self.whichSliceY1_reconn]
+				zmin = np.unique(self.z1)[self.whichSliceZ1_reconn]
+				
+				xmax = np.unique(self.x1)[self.whichSliceX2_reconn]
+				ymax = np.unique(self.y1)[self.whichSliceY2_reconn]
+				zmax = np.unique(self.z1)[self.whichSliceZ2_reconn]
 			
-			if xmax > xmin and ymax > ymin and zmax > zmin:
-			
-				self.reconn_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1, 
-				color = (1, 0, 0), line_width = 2, opacity = 1, 
-				extent = [xmin, xmax, ymin, ymax, zmin, zmax])
+				if xmax > xmin and ymax > ymin and zmax > zmin:
+				
+					self.reconn_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1, 
+					color = (1, 0, 0), line_width = 2, opacity = 1, 
+					extent = [xmin, xmax, ymin, ymax, zmin, zmax])
+				
+			except IndexError: # Let the values be assigned first
+				pass
 	
 	@on_trait_change('calcReconnection')
 	def calcReconnectionChanged(self):
@@ -199,14 +204,15 @@ class allAnalysisOptions:
 				ET.append(E1[i] + E2[i] + E3[i])
 				
 				# Calculate q-tensor and recalculate enstrophy and its components in the new basis
-				vortVec = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
-				QT, EigVec, EigVal = calculate_QTensor3D(vortVec, 
-				self.dx_data1, self.dy_data1, self.dz_data1)
+				if i == 0:
+					vortVec = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
+					QT, EigVec, EigVal = calculate_QTensor3D(vortVec, 
+					self.dx_data1, self.dy_data1, self.dz_data1)
+					
+					# Sort the eigenvectors with the descending order of eigenvalues
+					EigVecSorted = EigVec[np.argsort(EigVal)[::-1]]
 				
 				points = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
-				
-				# Sort the eigenvectors with the descending order of eigenvalues
-				EigVecSorted = EigVec[np.argsort(EigVal)[::-1]]
 				
 				w_r = points@EigVecSorted
 				

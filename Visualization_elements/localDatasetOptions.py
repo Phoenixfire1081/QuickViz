@@ -146,9 +146,9 @@ class allLocalDatasetOptions:
 				extent = [float(self.xmin_Local), float(self.xmax_Local), float(self.ymin_Local), float(self.ymax_Local), float(self.zmin_Local), float(self.zmax_Local)])
 		
 		# Update max vals for BBox manipulation
-		self.maxx1 = int(self.xres_Local)-1
-		self.maxy1 = int(self.yres_Local)-1
-		self.maxz1 = int(self.zres_Local)-1
+		self.maxx1 = int(self.xres_Local)
+		self.maxy1 = int(self.yres_Local)
+		self.maxz1 = int(self.zres_Local)
 			
 	@on_trait_change('load_LocalData')
 	def load_LocalData_fired(self):
@@ -185,7 +185,7 @@ class allLocalDatasetOptions:
 			
 			if '-' in self.timeStep_LocalData:
 				minTs = int(self.timeStep_LocalData.split('-')[0])
-				maxTs = int(self.timeStep_LocalData.split('-')[1]) + 1
+				maxTs = int(self.timeStep_LocalData.split('-')[1])
 				
 				# Check if skip values are provided
 				try: 
@@ -195,10 +195,8 @@ class allLocalDatasetOptions:
 				
 			else:
 				minTs = int(self.timeStep_LocalData)
-				maxTs = int(self.timeStep_LocalData) + 1
+				maxTs = int(self.timeStep_LocalData)
 				skipTs = 1
-				
-				print(minTs, maxTs, skipTs)
 			
 			# Completely replace TS1 with new data
 			
@@ -214,21 +212,26 @@ class allLocalDatasetOptions:
 				zmin_reconn = self.whichSliceZ1_reconn
 				zmax_reconn = self.whichSliceZ2_reconn
 				
-				self.u1 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.v1 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.w1 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.omega1 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.omega2 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.omega3 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
-				self._dataTs1 = np.zeros((xres_alt, yres_alt, zres_alt, (maxTs - minTs)//skipTs), dtype = np.float32)
+				numFiles = int(np.ceil((maxTs - minTs)/skipTs))
+				
+				self.u1 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
+				self.v1 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
+				self.w1 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
+				self.omega1 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
+				self.omega2 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
+				self.omega3 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
+				self._dataTs1 = np.zeros((xres_alt, yres_alt, zres_alt, numFiles), dtype = np.float32)
 			else:
-				self.u1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.v1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.w1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.omega1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.omega2 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
-				self.omega3 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
-				self._dataTs1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), (maxTs - minTs)//skipTs), dtype = np.float32)
+				
+				numFiles = int(np.ceil((maxTs - minTs)/skipTs))
+				
+				self.u1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
+				self.v1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
+				self.w1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
+				self.omega1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
+				self.omega2 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
+				self.omega3 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
+				self._dataTs1 = np.zeros((int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles), dtype = np.float32)
 			
 			self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
 			
@@ -265,6 +268,7 @@ class allLocalDatasetOptions:
 				flist_y.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
 				flist_z.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
 			
+			print(minTs, maxTs, skipTs)
 			for ts in range(minTs, maxTs, skipTs):
 				
 				if self.allLocalDatasetOptions == 'Raw 3D':
@@ -380,7 +384,7 @@ class allLocalDatasetOptions:
 			# Choose the last time step to force refresh
 			# Doesn't work when only one time step is calculated
 			
-			self.whichTime1 = (maxTs-minTs)//skipTs - 1
+			self.whichTime1 = int(np.ceil((maxTs-minTs)/skipTs) - 2)
 			
 			# Adjust slice lengths and reconnection trim lengths
 
@@ -392,8 +396,14 @@ class allLocalDatasetOptions:
 			self.maxy1 = self.ylength_data1
 			self.maxz1 = self.zlength_data1
 			
-			# Remove existing outlines as well
-			self.out1_sc1.remove()
-			self.sf1_sc1.remove()
-			self.iso1_sc1.remove()
+			try:
+			
+				# Remove existing outlines as well
+				self.out1_sc1.remove()
+				self.sf1_sc1.remove()
+				self.iso1_sc1.remove()
+			
+			except ValueError: # Fixes issue when trying to load the data multiple times
+				
+				pass
 			

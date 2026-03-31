@@ -98,7 +98,7 @@ class timeUpdateBehavior:
 				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
 			
 			# If fieldlines are enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
+			if self.allLocalOptions == "Fieldlines (3D)":
 				
 				self.enableStreamlinesChanged()
 				# Keep the previous view

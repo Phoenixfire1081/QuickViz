@@ -62,24 +62,130 @@ class allStreamlineOptions:
 		if self.whichVector == 'Velocity':
 			
 			if scNumber == 1:
-				self.vf1_sc1 = mlab.pipeline.vector_field(self.x1, self.y1, self.z1, self.u1[:, :, :, self.whichTime1], \
-				self.v1[:, :, :, self.whichTime1], self.w1[:, :, :, self.whichTime1], figure=figureHandle)
-				magnitude = mlab.pipeline.extract_vector_norm(self.vf1_sc1)
+				
+				# custom scalar
+				import os
+				import netCDF4 as nc
+				case = '0.004Hz_contra_water'
+				run = 'run27'
+				
+				xmin = 12
+				xmax = -12
+				ymin = 12
+				ymax = -12
+				zmin = 12
+				zmax = -12
+
+				_dtype = 'f' # 'd' for double precision
+
+				scale = 1
+
+				which = 'DR'
+				
+				allFiles = os.listdir('/media/rosaline/experimental/GVK/NOVEMBRE_2023/ANGLES_22_FILTERS_ON/DR_Eul/' + case + '/BenProcd/ShortTracksMin10/' + run + '/')
+				allFiles = [i for i in allFiles if '.nc' in i]
+				allFiles = [i for i in allFiles if not 'Coordinates' in i]
+				allFiles.sort(key = lambda x: int(x.split('_')[2].split('.')[0][1:]))
+				
+				cdata = nc.Dataset('/media/rosaline/experimental/GVK/NOVEMBRE_2023/ANGLES_22_FILTERS_ON/FlowFit/' + case + '/BenProcd/ShortTracksMin10/'+run+'/CoordinatesCube.nc')
+				
+				# Get grid data and trim
+				x = np.unique(cdata['x_mesh'][:])
+				y = np.unique(cdata['y_mesh'][:])
+				z = np.unique(cdata['z_mesh'][:])
+				z = np.array(z)
+				# x = x[xmin:xmax]
+				# y = y[ymin:ymax]
+				# z = z[zmin:zmax]
+
+				# dx = np.diff(x)[0]
+				# dy = np.diff(y)[0]
+				# dz = np.diff(z)[0]
+
+				xlen = len(x)
+				ylen = len(y)
+				zlen = len(z)
+				
+				data = nc.Dataset('/media/rosaline/experimental/GVK/NOVEMBRE_2023/ANGLES_22_FILTERS_ON/DR_Eul/' + case + '/BenProcd/ShortTracksMin10/'+run+'/' + allFiles[50+self.whichTime1])
+				print('Processing DR:', '/media/rosaline/experimental/GVK/NOVEMBRE_2023/ANGLES_22_FILTERS_ON/DR_Eul/' + case + '/BenProcd/ShortTracksMin10/'+run+'/' + allFiles[50+self.whichTime1])
+				
+				scalar = np.array(data[which][:])
+				scalar = scalar[:, :, :, scale]
+				scalar = np.transpose(scalar, (1, 0, 2)) # Permute is necessary for visualization
+				
+				# Adjust for altBox
+				xmin_reconn = 1
+				xmax_reconn = -1
+				ymin_reconn = 1
+				ymax_reconn = -1
+				zmin_reconn = 1
+				zmax_reconn = -1
+				
+				scalar2 = np.zeros_like(scalar)
+				scalar2[xmin:xmax, ymin:ymax, zmin:zmax] = scalar[xmin:xmax, ymin:ymax, zmin:zmax]
+				# scalar = scalar[xmin:xmax, ymin:ymax, zmin:zmax]
+				
+				# print(xmin_reconn, xmax_reconn)
+				# print(ymin_reconn, ymax_reconn)
+				# print(zmin_reconn, zmax_reconn)
+				
+				scalar2 = scalar2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn]
+				
+				# print(np.shape(scalar))
+				# print(np.shape(scalar2))
+				# print(np.shape(self.x1))
+				
+				assert np.shape(scalar2) == np.shape(self.y1)
+				
+				print(scalar2.min(), scalar2.max())
+				
+				# custom scalar
+				
+				self.sf1_sc1 = mlab.pipeline.vector_field(self.x1, 
+				self.y1, 
+				self.z1, 
+				self.u1[:, :, :, self.whichTime1],
+				self.v1[:, :, :, self.whichTime1], 
+				self.w1[:, :, :, self.whichTime1], 
+				# scalars = np.sqrt(self.u1[:, :, :, self.whichTime1]**2 + self.v1[:, :, :, self.whichTime1]**2 + self.w1[:, :, :, self.whichTime1]**2), 
+				scalars = scalar2,
+				figure=figureHandle)
+				
+				# cb = mlab.colorbar(orientation='vertical', title='DR')
+				# cb.label_text_property.color = (0, 0, 0)  # Black labels
+				# cb.title_text_property.color = (0, 0, 0)  # Black title
 		
 		else:
 			
 			if scNumber == 1:
-				self.vf1_sc1 = mlab.pipeline.vector_field(self.x1, self.y1, self.z1, self.omega1[:, :, :, self.whichTime1], \
-				self.omega2[:, :, :, self.whichTime1], self.omega3[:, :, :, self.whichTime1], figure=figureHandle)
-				magnitude = mlab.pipeline.extract_vector_norm(self.vf1_sc1)
+				self.sf1_sc1 = mlab.pipeline.vector_field(self.x1, 
+				self.y1, 
+				self.z1, 
+				self.omega1[:, :, :, self.whichTime1], 
+				self.omega2[:, :, :, self.whichTime1], 
+				self.omega3[:, :, :, self.whichTime1], 
+				scalars = np.sqrt(self.omega1[:, :, :, self.whichTime1]**2 + self.omega2[:, :, :, self.whichTime1]**2 + self.omega3[:, :, :, self.whichTime1]**2), 
+				figure=figureHandle)
 		
 		# Apply streamlines on vector data
 		if scNumber == 1:
-			self.volStream1_sc1 = mlab.pipeline.streamline(magnitude, \
-			seedtype = self.seedType, seed_visible = self.seedRegionVisible, seed_scale = self.seedScale, \
-			seed_resolution = self.seedResolution, linetype = self.lineType, line_width = self.lineWidth, opacity = self.contourOpacity1, \
-			integration_direction = self.integrationDirection, colormap = self.contourColormap1, vmin = self.colormapMin1, \
-			vmax = self.colormapMax1, figure = figureHandle)
+			
+			self.volStream1_sc1 = mlab.pipeline.streamline(
+			self.sf1_sc1, 
+			seedtype = self.seedType, 
+			seed_visible = self.seedRegionVisible, 
+			seed_scale = self.seedScale, 
+			seed_resolution = self.seedResolution, 
+			linetype = self.lineType, 
+			line_width = self.lineWidth, 
+			opacity = self.contourOpacity1, 
+			integration_direction = self.integrationDirection, 
+			colormap = self.contourColormap1, 
+			vmin = self.colormapMin1, 
+			vmax = self.colormapMax1, 
+			figure = figureHandle
+			)
+			
 			if self.seedType == 'sphere':
 				self.volStream1_sc1.seed.widget.center = [self.seedCenterx, self.seedCentery, self.seedCenterz]
 				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
@@ -156,6 +262,7 @@ class allStreamlineOptions:
 				# Force an update
 				self.volStream1_sc1.seed.widget.enabled = False
 				self.volStream1_sc1.seed.widget.enabled = True
+				self.volStream1_sc1.seed.widget.enabled = False
 			
 		self.firstRun = True
 	
@@ -173,8 +280,8 @@ class allStreamlineOptions:
 					self.seedCenterx, self.seedCentery, self.seedCenterz = self.volStream1_sc1.seed.widget.center
 				try:
 					self.volStream1_sc1.parent.parent.remove()
-					self.vf1_sc1.remove()
-				except (AttributeError, ValueError):
+					self.sf1_sc1.remove()
+				except (ValueError, AttributeError):
 					pass # Set volume rendering first
 			
 			self.streamlineRender1_actual(1, self.scene1.mayavi_scene)
@@ -189,12 +296,12 @@ class allStreamlineOptions:
 				self.seedCenterx, self.seedCentery, self.seedCenterz = self.volStream1_sc1.seed.widget.center
 			if self.seedType == 'point':
 				self.seedCenterx, self.seedCentery, self.seedCenterz = self.volStream1_sc1.seed.widget.position
-			if self.firstRun and self.seedType == 'plane':
-					self.seedCenterx, self.seedCentery, self.seedCenterz = self.volStream1_sc1.seed.widget.center
+			if self.seedType == 'plane':
+				self.seedCenterx, self.seedCentery, self.seedCenterz = self.volStream1_sc1.seed.widget.center
 			try:
 				self.volStream1_sc1.parent.parent.remove()
-				self.vf1_sc1.remove()
-			except (AttributeError, ValueError):
+				self.sf1_sc1.remove()
+			except (ValueError, AttributeError):
 				pass # Set slice first
 			
 		self.justRemovedStreamlines = True

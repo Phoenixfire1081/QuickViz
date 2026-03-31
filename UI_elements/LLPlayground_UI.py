@@ -15,7 +15,7 @@ buttonLongw, buttonLongh = allUIOptions.buttonLong()
 playgroundVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground"'
 playgroundKnotVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and allPredefinedVortices == "Vortex knot"'
 playgroundTorusVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and allPredefinedVortices == "Vortex knot" and allPredefinedKnots == "(p,q) Torus"'
-playgroundRingVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and not allPredefinedVortices == "Vortex tube"'
+playgroundRingVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and not allPredefinedVortices == "Vortex tube" and not allPredefinedVortices == "None"'
 playgroundOthersVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and not allPredefinedVortices == "None"'
 playgroundGridVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and visualizeGrid_playground == True'
 playgroundCustomVisibility = 'allModeOptions == "Log Lattice" and allLLOptions == "Playground" and allPredefinedVortices == "Custom"'

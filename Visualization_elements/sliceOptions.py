@@ -156,13 +156,13 @@ class allSliceOptions:
 
             # Setup scalar data
             if scNumber == 1:
-                self.vf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
+                self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
 
             # Use image_plane_widget to show filled contour data
             if self.planeOrientation == "X":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.image_plane_widget(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="x_axes",
                         slice_index=self.whichSliceX,
                         colormap=self.contourColormap1,
@@ -175,7 +175,7 @@ class allSliceOptions:
             elif self.planeOrientation == "Y":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.image_plane_widget(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="y_axes",
                         slice_index=self.whichSliceY,
                         colormap=self.contourColormap1,
@@ -188,7 +188,7 @@ class allSliceOptions:
             elif self.planeOrientation == "Z":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.image_plane_widget(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="z_axes",
                         slice_index=self.whichSliceZ,
                         colormap=self.contourColormap1,
@@ -232,13 +232,13 @@ class allSliceOptions:
 
             # Setup scalar data
             if scNumber == 1:
-                self.vf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
+                self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, setScalarSlice, figure=figureHandle)
 
             # Use scalar_cut_plane to show unfilled contour data
             if self.planeOrientation == "X":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.scalar_cut_plane(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="x_axes",
                         line_width = 2,
                         colormap=self.contourColormap1,
@@ -256,7 +256,7 @@ class allSliceOptions:
             elif self.planeOrientation == "Y":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.scalar_cut_plane(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="y_axes",
                         colormap=self.contourColormap1,
                         opacity=self.contourOpacity1,
@@ -273,7 +273,7 @@ class allSliceOptions:
             elif self.planeOrientation == "Z":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.scalar_cut_plane(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="z_axes",
                         colormap=self.contourColormap1,
                         opacity=self.contourOpacity1,
@@ -295,7 +295,7 @@ class allSliceOptions:
 
             if self.whichVector == "Velocity":
                 if scNumber == 1:
-                    self.vf1_sc1 = mlab.pipeline.vector_field(
+                    self.sf1_sc1 = mlab.pipeline.vector_field(
                         self.x1,
                         self.y1,
                         self.z1,
@@ -307,7 +307,7 @@ class allSliceOptions:
 
             else:
                 if scNumber == 1:
-                    self.vf1_sc1 = mlab.pipeline.vector_field(
+                    self.sf1_sc1 = mlab.pipeline.vector_field(
                         self.x1,
                         self.y1,
                         self.z1,
@@ -321,7 +321,7 @@ class allSliceOptions:
             if self.planeOrientation == "X":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.vector_cut_plane(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="x_axes",
                         colormap=self.contourColormap1,
                         opacity=self.contourOpacity1,
@@ -338,7 +338,7 @@ class allSliceOptions:
             elif self.planeOrientation == "Y":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.vector_cut_plane(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="y_axes",
                         colormap=self.contourColormap1,
                         opacity=self.contourOpacity1,
@@ -356,7 +356,7 @@ class allSliceOptions:
             elif self.planeOrientation == "Z":
                 if scNumber == 1:
                     self.volSlice1_sc1 = mlab.pipeline.vector_cut_plane(
-                        self.vf1_sc1,
+                        self.sf1_sc1,
                         plane_orientation="z_axes",
                         colormap=self.contourColormap1,
                         opacity=self.contourOpacity1,
@@ -377,7 +377,7 @@ class allSliceOptions:
             if not self.justRemovedSlice:
                 try:
                     self.volSlice1_sc1.parent.parent.remove() # This always removes the complete tree
-                    self.vf1_sc1.remove()
+                    self.sf1_sc1.remove()
                 except (ValueError, AttributeError):
                     pass  # Set slice first
 
@@ -390,7 +390,7 @@ class allSliceOptions:
         if self.screen1_ts1:
             try:
                 self.volSlice1_sc1.parent.parent.remove()
-                self.vf1_sc1.remove()
+                self.sf1_sc1.remove()
             except (ValueError, AttributeError):
                 pass  # Set slice first
 
