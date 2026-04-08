@@ -79,16 +79,22 @@ class allSaveMovieOptions:
 			os.system('mv tmp_sc*.png snapshot.png')
 		
 		if nactive == 2: # If two exist, append horizontally in ascending order
-			os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append snapshot.png')
+			# os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append snapshot.png')
+			os.system('convert ' + activeImages[0] + ' ' + activeImages[1] + ' +append snapshot.png')
 			
 		if nactive == 3: # If three exist, append first two horizontally and third vertically
-			os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc9.png')
-			os.system('magick tmp_sc9.png ' + activeImages[2] + ' -append snapshot.png')
+			# os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc9.png')
+			os.system('convert ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc9.png')
+			# os.system('magick tmp_sc9.png ' + activeImages[2] + ' -append snapshot.png')
+			os.system('convert tmp_sc9.png ' + activeImages[2] + ' -append snapshot.png')
 		
 		if nactive == 4: # If four exist, append first two horizontally, next two horizontally and finally all vertically
-			os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc8.png')
-			os.system('magick ' + activeImages[2] + ' ' + activeImages[3] + ' +append tmp_sc9.png')
-			os.system('magick tmp_sc8.png tmp_sc9.png -append snapshot.png')
+			# os.system('magick ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc8.png')
+			os.system('convert ' + activeImages[0] + ' ' + activeImages[1] + ' +append tmp_sc8.png')
+			# os.system('magick ' + activeImages[2] + ' ' + activeImages[3] + ' +append tmp_sc9.png')
+			os.system('convert ' + activeImages[2] + ' ' + activeImages[3] + ' +append tmp_sc9.png')
+			# os.system('magick tmp_sc8.png tmp_sc9.png -append snapshot.png')
+			os.system('convert tmp_sc8.png tmp_sc9.png -append snapshot.png')
 		
 		# Clean up temporary images	
 		os.system('rm -rf tmp_sc*.png')

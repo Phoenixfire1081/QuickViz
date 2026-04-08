@@ -65,12 +65,28 @@ class allIsosurfaceOptions:
 				self.mesh1.module_manager.scalar_lut_manager.data_range = [self.colormapMin1, self.colormapMax1]
 				
 				# Plot colorbar
-				cb = mlab.colorbar(orientation='vertical', title='Vorticity y')
+				# cb = mlab.colorbar(orientation='vertical', title='Vorticity y')
+				cb = mlab.colorbar(orientation='vertical')
 				cb.label_text_property.color = (0, 0, 0)  # Black labels
 				cb.title_text_property.color = (0, 0, 0)  # Black title
 				
 				# Set color field
 				self.colorFieldSet_sc1 = True
+				
+				# Specify axes manually
+				oa = mlab.orientation_axes()
+
+				oa.axes.x_axis_label_text = 'X'
+				oa.axes.y_axis_label_text = 'Y'
+				oa.axes.z_axis_label_text = 'Z'
+				
+				# This changes the color for all text
+				oa.axes.x_axis_caption_actor2d.caption_text_property.color = (0., 0., 0.)
+				
+				# This adjusts the position
+				oa.axes.x_axis_caption_actor2d.position = [10., 10.]
+				oa.axes.y_axis_caption_actor2d.position = [10., 0.]
+				oa.axes.z_axis_caption_actor2d.position = [20., 10.]
 			
 			if whichScreen == 2:
 			
