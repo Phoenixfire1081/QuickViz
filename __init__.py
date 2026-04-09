@@ -59,6 +59,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Clamp for changing all TS
 	clamp = Bool()
+	clampTxt = 'All ts?'
 	
 	# Add time series
 	
@@ -297,8 +298,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Isosurface options
 	hideShowIsosurface = Bool()
-	colorFields = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', 
+	colorFields1 = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', 
 	'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
+	colorFields2 = deepcopy(colorFields1)
+	colorFields3 = deepcopy(colorFields1)
+	colorFields4 = deepcopy(colorFields1)
 	
 	# Volume rendering options
 	enableVolRendering = Button('Set')

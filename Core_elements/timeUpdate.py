@@ -8,10 +8,6 @@ import mayavi
 
 class timeUpdateBehavior:
 	
-	# def __init__(self):
-		# self.globalTimeUpdate = False
-		# TODO - fix global time update slider
-	
 	def update_camera_at_current_timestep_with_camPath(self, \
 	camAzimuth, camElevation, camDistance, focalPoint, camRoll, fig_handle):
 		
@@ -20,1143 +16,680 @@ class timeUpdateBehavior:
 			_, camAzimuth, camElevation, camDistance, fp1, fp2, fp3, camRoll, _ = np.loadtxt('cameraPath.txt')[self.whichTime1]
 		viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=fig_handle)
 		viewControlRoll = mlab.roll(camRoll, figure=fig_handle)
+	
+	def active_screen_counter(self):
+		
+		# Count the number of active screens for each time series
+		
+		ts1 = [0, 0, 0, 0]
+		ts2 = [0, 0, 0, 0]
+		ts3 = [0, 0, 0, 0]
+		ts4 = [0, 0, 0, 0]
+		
+		if self.screen1_ts1:
+			ts1[0] += 1
+		if self.screen2_ts1:
+			ts1[1] += 1
+		if self.screen3_ts1:
+			ts1[2] += 1
+		if self.screen4_ts1:
+			ts1[3] += 1
+		if self.screen1_ts2:
+			ts2[0] += 1
+		if self.screen2_ts2:
+			ts2[1] += 1
+		if self.screen3_ts2:
+			ts2[2] += 1
+		if self.screen4_ts2:
+			ts2[3] += 1
+		if self.screen1_ts3:
+			ts3[0] += 1
+		if self.screen2_ts3:
+			ts3[1] += 1
+		if self.screen3_ts3:
+			ts3[2] += 1
+		if self.screen4_ts3:
+			ts3[3] += 1
+		if self.screen1_ts4:
+			ts4[0] += 1
+		if self.screen2_ts4:
+			ts4[1] += 1
+		if self.screen3_ts4:
+			ts4[2] += 1
+		if self.screen4_ts4:
+			ts4[3] += 1
+		
+		return ts1, ts2, ts3, ts4
 
 	@on_trait_change('whichTime1')
 	def time_changed1(self):
 		
-		# if self.chkBox1: # Update only of checkbox is active
-		if self.screen1_ts1: # Update only if screen 1 of ts1 is active
+		# Check which screens are active and run accordingly
 		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene1.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data1 = self._dataTs1[:, :, :, self.whichTime1]
-			
-			# Update min, max data
-			self.thresholdMinimum1 = float(_data1.min())
-			self.thresholdMaximum1 = float(_data1.max())
-			
-			try:
-				
-				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					# if not self.globalTimeUpdate:
-						mlab.clf(figure=self.scene1.mayavi_scene)	
-					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
-			
-			# Set the threshold
-			self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[_data1.min()])
-			
-			if self.outlineToggle1:
-			
-				# Plot the outline
-				self.out1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1)
-				
-				# Change outline width
-				self.out1_sc1.actor.property.line_width = self.outlineWidth1
-				
-				# Set outline color
-				self.out1_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
-			
-			# Change contour opacity
-			self.iso1_sc1.actor.property.opacity = self.contourOpacity1
-			
-			# Change contour representation
-			self.iso1_sc1.actor.property.representation = self.contourRepresentation1
-			
-			# Change contour colormap
-			self.iso1_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
-			
-			# Change colormap range
-			self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			# If fieldlines are enabled, update that
-			if self.allLocalOptions == "Fieldlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			# If fieldline tracking is enabled, update that
-			if self.allAnalysisOptions == "Fieldline tracking":
-				
-				self.enableFieldlinesChanged1()
-				self.enableFieldlinesChanged2()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			# If Qtensor is enabled, update that
-			if self.allAnalysisOptions == "Q-tensor":
-				
-				self.calculateQtensorChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold1 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired1()
-					
-					# Keep the previous view
-					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-				
-				if not self.thresholdPercent1 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired1()
-					
-					# Keep the previous view
-					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			except ValueError:
-				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
-			
-			# self.globalTimeUpdate = False
+		ts1, _, _, _ = self.active_screen_counter()
+
+		for sc in range(len(ts1)):
 		
-		if self.screen2_ts1: # Update only if screen 2 of ts1 is active
-		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene2.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene2.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data1 = self._dataTs1[:, :, :, self.whichTime1]
-			
-			# Update min, max data
-			self.thresholdMinimum1 = float(_data1.min())
-			self.thresholdMaximum1 = float(_data1.max())
-			
-			try:
+			if ts1[sc] and sc == 0: 
 				
-				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					mlab.clf(figure=self.scene2.mayavi_scene)	
+				_figure = self.scene1.mayavi_scene
+			
+			elif ts1[sc] and sc == 1:
+				
+				_figure = self.scene2.mayavi_scene
+			
+			elif ts1[sc] and sc == 2:
+				
+				_figure = self.scene3.mayavi_scene
+			
+			elif ts1[sc] and sc == 3:
+				
+				_figure = self.scene4.mayavi_scene
+			
+			else:
+				
+				_figure = None
+			
+			if _figure is not None:
+			
+				# Get camera view
+				if not mlab.view() is None:
+					camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure = _figure)
+					camRoll = mlab.roll(figure = _figure)
+				
+				# Choose data at other timestep
+				_data1 = self._dataTs1[:, :, :, self.whichTime1]
+				
+				# Update min, max data
+				self.thresholdMinimum1 = float(_data1.min())
+				self.thresholdMaximum1 = float(_data1.max())
+				
+				try:
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf1_sc2 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene2.mayavi_scene)
-			
-			# Set the threshold
-			self.iso1_sc2 = mlab.pipeline.iso_surface(self.sf1_sc2, contours=[_data1.min()])
-			
-			if self.outlineToggle1:
-			
-				# Plot the outline
-				self.out1_sc2 = mayavi.tools.pipeline.outline(self.iso1_sc2)
-				
-				# Change outline width
-				self.out1_sc2.actor.property.line_width = self.outlineWidth1
-				
-				# Set outline color
-				self.out1_sc2.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
-			
-			# Change contour opacity
-			self.iso1_sc2.actor.property.opacity = self.contourOpacity1
-			
-			# Change contour representation
-			self.iso1_sc2.actor.property.representation = self.contourRepresentation1
-			
-			# Change contour colormap
-			self.iso1_sc2.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
-			
-			# Change colormap range
-			self.iso1_sc2.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold1 == '':
+					if not self.threshold1 == '' or not self.thresholdPercent1 == '' and not self.clamp:
+						mlab.clf(figure = _figure)	
+						
+				except AttributeError:
 					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired1()
+					# Wait until user enters the values
+					pass	
+				
+				# With same threshold update contour
+				
+				# Plot the isosurface with minimum value from data
+				self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure = _figure)
+				
+				# Set the threshold
+				self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[_data1.min()])
+				
+				if self.outlineToggle1:
+				
+					# Plot the outline
+					self.out1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1)
 					
+					# Change outline width
+					self.out1_sc1.actor.property.line_width = self.outlineWidth1
+					
+					# Set outline color
+					self.out1_sc1.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+				
+				# Change contour opacity
+				self.iso1_sc1.actor.property.opacity = self.contourOpacity1
+				
+				# Change contour representation
+				self.iso1_sc1.actor.property.representation = self.contourRepresentation1
+				
+				# Change contour colormap
+				self.iso1_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
+				
+				# Change colormap range
+				self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
+				
+				# If volume rendering is enabled, update that
+				if self.allLocalOptions == "Volume Rendering":
+					
+					self.enableVolRenderingChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent1 == '':
+				# If slice is enabled, update that
+				if self.allLocalOptions == "Slice":
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired1()
-					
+					self.enableSliceChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			except ValueError:
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
-		
-		if self.screen3_ts1: # Update only if screen 3 of ts1 is active
-		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene3.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene3.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data1 = self._dataTs1[:, :, :, self.whichTime1]
-			
-			# Update min, max data
-			self.thresholdMinimum1 = float(_data1.min())
-			self.thresholdMaximum1 = float(_data1.max())
-			
-			try:
-				
-				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					mlab.clf(figure=self.scene3.mayavi_scene)	
+				# If fieldlines are enabled, update that
+				if self.allLocalOptions == "Streamlines (3D)":
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf1_sc3 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene3.mayavi_scene)
-			
-			# Set the threshold
-			self.iso1_sc3 = mlab.pipeline.iso_surface(self.sf1_sc3, contours=[_data1.min()])
-			
-			if self.outlineToggle1:
-			
-				# Plot the outline
-				self.out1_sc3 = mayavi.tools.pipeline.outline(self.iso1_sc3)
-				
-				# Change outline width
-				self.out1_sc3.actor.property.line_width = self.outlineWidth1
-				
-				# Set outline color
-				self.out1_sc3.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
-			
-			# Change contour opacity
-			self.iso1_sc3.actor.property.opacity = self.contourOpacity1
-			
-			# Change contour representation
-			self.iso1_sc3.actor.property.representation = self.contourRepresentation1
-			
-			# Change contour colormap
-			self.iso1_sc3.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
-			
-			# Change colormap range
-			self.iso1_sc3.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold1 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired1()
-					
+					self.enableStreamlinesChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent1 == '':
+				# If fieldline tracking is enabled, update that
+				if self.allAnalysisOptions == "Fieldline tracking":
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired1()
-					
+					self.enableFieldlinesChanged1()
+					self.enableFieldlinesChanged2()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			except ValueError:
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
-		
-		if self.screen4_ts1: # Update only if screen 4 of ts1 is active
-		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene4.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene4.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data1 = self._dataTs1[:, :, :, self.whichTime1]
-			
-			# Update min, max data
-			self.thresholdMinimum1 = float(_data1.min())
-			self.thresholdMaximum1 = float(_data1.max())
-			
-			try:
-				
-				if not self.threshold1 == '' or not self.thresholdPercent1 == '':
-					mlab.clf(figure=self.scene4.mayavi_scene)	
+				# If Qtensor is enabled, update that
+				if self.allAnalysisOptions == "Q-tensor":
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf1_sc4 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene4.mayavi_scene)
-			
-			# Set the threshold
-			self.iso1_sc4 = mlab.pipeline.iso_surface(self.sf1_sc4, contours=[_data1.min()])
-			
-			if self.outlineToggle1:
-			
-				# Plot the outline
-				self.out1_sc4 = mayavi.tools.pipeline.outline(self.iso1_sc4)
-				
-				# Change outline width
-				self.out1_sc4.actor.property.line_width = self.outlineWidth1
-				
-				# Set outline color
-				self.out1_sc4.actor.property.color = (self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
-			
-			# Change contour opacity
-			self.iso1_sc4.actor.property.opacity = self.contourOpacity1
-			
-			# Change contour representation
-			self.iso1_sc4.actor.property.representation = self.contourRepresentation1
-			
-			# Change contour colormap
-			self.iso1_sc4.module_manager.scalar_lut_manager.lut_mode = self.contourColormap1
-			
-			# Change colormap range
-			self.iso1_sc4.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold1 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired1()
-					
+					self.calculateQtensorChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent1 == '':
+				try:
+				
+					if not self.threshold1 == '':
+						
+						self.setThreshold_fired1()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired1()
+					if not self.thresholdPercent1 == '':
+						
+						self.setThresholdPercent_fired1()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				except ValueError:
 					
-					# Keep the previous view
-					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			except ValueError:
+					# Wait until user enters the values
+					pass
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
+				except AttributeError:
+					
+					# Wait until user enters the values
+					pass
 		
 	@on_trait_change('whichTime2')
 	def time_changed2(self):
 		
-		# if self.chkBox1: # Update only of checkbox is active
-		if self.screen1_ts2: # Update only if screen 1 of ts2 is active
+		# Check which screens are active and run accordingly
 		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene1.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data2 = self._dataTs2[:, :, :, self.whichTime2]
-			
-			# Update min, max data
-			self.thresholdMinimum2 = float(_data2.min())
-			self.thresholdMaximum2 = float(_data2.max())
-			
-			try:
-				
-				if not self.threshold2 == '' or not self.thresholdPercent2 == '':
-					# if not self.globalTimeUpdate:
-						mlab.clf(figure=self.scene1.mayavi_scene)	
-					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene1.mayavi_scene)
-			
-			# Set the threshold
-			self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[_data2.min()])
-			
-			if self.outlineToggle2:
-			
-				# Plot the outline
-				self.out2_sc1 = mayavi.tools.pipeline.outline(self.iso2_sc1)
-				
-				# Change outline width
-				self.out2_sc1.actor.property.line_width = self.outlineWidth2
-				
-				# Set outline color
-				self.out2_sc1.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
-			
-			# Change contour opacity
-			self.iso2_sc1.actor.property.opacity = self.contourOpacity2
-			
-			# Change contour representation
-			self.iso2_sc1.actor.property.representation = self.contourRepresentation2
-			
-			# Change contour colormap
-			self.iso2_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
-			
-			# Change colormap range
-			self.iso2_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold2 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc1.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired2()
-					
-					# Keep the previous view
-					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-				
-				if not self.thresholdPercent2 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc1.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired2()
-					
-					# Keep the previous view
-					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			except ValueError:
-				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
-			
-			# self.globalTimeUpdate = False
+		_, ts2, _, _ = self.active_screen_counter()
+
+		for sc in range(len(ts2)):
 		
-		if self.screen2_ts2: # Update only if screen 2 of ts1 is active
+			if ts2[sc] and sc == 0: 
+				
+				_figure = self.scene1.mayavi_scene
+			
+			elif ts2[sc] and sc == 1:
+				
+				_figure = self.scene2.mayavi_scene
+			
+			elif ts2[sc] and sc == 2:
+				
+				_figure = self.scene3.mayavi_scene
+			
+			elif ts2[sc] and sc == 3:
+				
+				_figure = self.scene4.mayavi_scene
+			
+			else:
+				
+				_figure = None
+			
+			if _figure is not None:
 		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene2.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene2.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data2 = self._dataTs2[:, :, :, self.whichTime2]
-			
-			# Update min, max data
-			self.thresholdMinimum2 = float(_data2.min())
-			self.thresholdMaximum2 = float(_data2.max())
-			
-			try:
+				# Get camera view
+				if not mlab.view() is None:
+					camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure = _figure)
+					camRoll = mlab.roll(figure = _figure)
 				
-				if not self.threshold2 == '' or not self.thresholdPercent2 == '':
-					mlab.clf(figure=self.scene2.mayavi_scene)	
+				# Choose data at other timestep
+				_data2 = self._dataTs2[:, :, :, self.whichTime2]
+				
+				# Update min, max data
+				self.thresholdMinimum2 = float(_data2.min())
+				self.thresholdMaximum2 = float(_data2.max())
+				
+				try:
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf2_sc2 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene2.mayavi_scene)
-			
-			# Set the threshold
-			self.iso2_sc2 = mlab.pipeline.iso_surface(self.sf2_sc2, contours=[_data2.min()])
-			
-			if self.outlineToggle2:
-			
-				# Plot the outline
-				self.out2_sc2 = mayavi.tools.pipeline.outline(self.iso2_sc2)
-				
-				# Change outline width
-				self.out2_sc2.actor.property.line_width = self.outlineWidth2
-				
-				# Set outline color
-				self.out2_sc2.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
-			
-			# Change contour opacity
-			self.iso2_sc2.actor.property.opacity = self.contourOpacity2
-			
-			# Change contour representation
-			self.iso2_sc2.actor.property.representation = self.contourRepresentation2
-			
-			# Change contour colormap
-			self.iso2_sc2.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
-			
-			# Change colormap range
-			self.iso2_sc2.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold2 == '':
+					if not self.threshold2 == '' or not self.thresholdPercent2 == '' and not self.clamp:
+						mlab.clf(figure = _figure)	
+						
+				except AttributeError:
 					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc2.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired2()
+					# Wait until user enters the values
+					pass	
+				
+				# With same threshold update contour
+				
+				# Plot the isosurface with minimum value from data
+				self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure = _figure)
+				
+				# Set the threshold
+				self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[_data2.min()])
+				
+				if self.outlineToggle2:
+				
+					# Plot the outline
+					self.out2_sc1 = mayavi.tools.pipeline.outline(self.iso2_sc1)
 					
+					# Change outline width
+					self.out2_sc1.actor.property.line_width = self.outlineWidth2
+					
+					# Set outline color
+					self.out2_sc1.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
+				
+				# Change contour opacity
+				self.iso2_sc1.actor.property.opacity = self.contourOpacity2
+				
+				# Change contour representation
+				self.iso2_sc1.actor.property.representation = self.contourRepresentation2
+				
+				# Change contour colormap
+				self.iso2_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
+				
+				# Change colormap range
+				self.iso2_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
+				
+				# If volume rendering is enabled, update that
+				if self.allLocalOptions == "Volume Rendering":
+					
+					self.enableVolRenderingChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent1 == '':
+				# If slice is enabled, update that
+				if self.allLocalOptions == "Slice":
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc2.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired2()
-					
+					self.enableSliceChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene2.mayavi_scene)
-			
-			except ValueError:
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
-		
-		if self.screen3_ts2: # Update only if screen 3 of ts1 is active
-		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene3.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene3.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data2 = self._dataTs2[:, :, :, self.whichTime2]
-			
-			# Update min, max data
-			self.thresholdMinimum2 = float(_data2.min())
-			self.thresholdMaximum2 = float(_data2.max())
-			
-			try:
-				
-				if not self.threshold2 == '' or not self.thresholdPercent2 == '':
-					mlab.clf(figure=self.scene3.mayavi_scene)	
+				# If fieldlines are enabled, update that
+				if self.allLocalOptions == "Streamlines (3D)":
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf2_sc3 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene3.mayavi_scene)
-			
-			# Set the threshold
-			self.iso2_sc3 = mlab.pipeline.iso_surface(self.sf2_sc3, contours=[_data2.min()])
-			
-			if self.outlineToggle2:
-			
-				# Plot the outline
-				self.out2_sc3 = mayavi.tools.pipeline.outline(self.iso2_sc3)
-				
-				# Change outline width
-				self.out2_sc3.actor.property.line_width = self.outlineWidth2
-				
-				# Set outline color
-				self.out2_sc3.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
-			
-			# Change contour opacity
-			self.iso2_sc3.actor.property.opacity = self.contourOpacity2
-			
-			# Change contour representation
-			self.iso2_sc3.actor.property.representation = self.contourRepresentation2
-			
-			# Change contour colormap
-			self.iso2_sc3.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
-			
-			# Change colormap range
-			self.iso2_sc3.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold2 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc3.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired2()
-					
+					self.enableStreamlinesChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent2 == '':
+				# If fieldline tracking is enabled, update that
+				if self.allAnalysisOptions == "Fieldline tracking":
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc3.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired2()
-					
+					self.enableFieldlinesChanged1()
+					self.enableFieldlinesChanged2()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene3.mayavi_scene)
-			
-			except ValueError:
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
-		
-		if self.screen4_ts2: # Update only if screen 4 of ts1 is active
-		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure=self.scene4.mayavi_scene)
-				camRoll = mlab.roll(figure=self.scene4.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data2 = self._dataTs2[:, :, :, self.whichTime2]
-			
-			# Update min, max data
-			self.thresholdMinimum2 = float(_data2.min())
-			self.thresholdMaximum2 = float(_data2.max())
-			
-			try:
-				
-				if not self.threshold2 == '' or not self.thresholdPercent2 == '':
-					mlab.clf(figure=self.scene4.mayavi_scene)	
+				# If Qtensor is enabled, update that
+				if self.allAnalysisOptions == "Q-tensor":
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf2_sc4 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, _data2, figure=self.scene4.mayavi_scene)
-			
-			# Set the threshold
-			self.iso2_sc4 = mlab.pipeline.iso_surface(self.sf2_sc4, contours=[_data2.min()])
-			
-			if self.outlineToggle2:
-			
-				# Plot the outline
-				self.out2_sc4 = mayavi.tools.pipeline.outline(self.iso2_sc4)
-				
-				# Change outline width
-				self.out2_sc4.actor.property.line_width = self.outlineWidth2
-				
-				# Set outline color
-				self.out2_sc4.actor.property.color = (self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
-			
-			# Change contour opacity
-			self.iso2_sc4.actor.property.opacity = self.contourOpacity2
-			
-			# Change contour representation
-			self.iso2_sc4.actor.property.representation = self.contourRepresentation2
-			
-			# Change contour colormap
-			self.iso2_sc4.module_manager.scalar_lut_manager.lut_mode = self.contourColormap2
-			
-			# Change colormap range
-			self.iso2_sc4.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin2, self.colormapMax2])
-			
-			# If volume rendering is enabled, update that
-			if self.allLocalOptions == "Volume Rendering":
-				
-				self.enableVolRenderingChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Slice":
-				
-				self.enableSliceChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			# If slice is enabled, update that
-			if self.allLocalOptions == "Streamlines (3D)":
-				
-				self.enableStreamlinesChanged()
-				# Keep the previous view
-				self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-				camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			try:
-			
-				if not self.threshold2 == '':
-					
-					# Set threshold range
-					# tmpthreshvals = self.threshold1.split(',')
-					# self.iso1_sc4.contour.contours = [np.float32(i) for i in tmpthreshvals]
-					self.setThreshold_fired1()
-					
+					self.calculateQtensorChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent2 == '':
+				try:
+				
+					if not self.threshold2 == '':
+						
+						self.setThreshold_fired2()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent1.split(',')
-					# self.iso1_sc4.contour.contours = [np.float32(i)*self.thresholdMaximum1 for i in tmpthreshvals]
-					self.setThresholdPercent_fired1()
+					if not self.thresholdPercent2 == '':
+						
+						self.setThresholdPercent_fired2()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				except ValueError:
 					
-					# Keep the previous view
-					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene4.mayavi_scene)
-			
-			except ValueError:
+					# Wait until user enters the values
+					pass
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass
+				except AttributeError:
+					
+					# Wait until user enters the values
+					pass
 	
 	@on_trait_change('whichTime3')
 	def time_changed3(self):
 		
-		# if self.chkBox3: # Update only of checkbox is active
-		if self.screen1_ts3: # Update only if screen 1 of ts3 is active
+		# Check which screens are active and run accordingly
 		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view()
-				camRoll = mlab.roll(figure=self.scene1.mayavi_scene)
-			
-			# Choose data at other timestep
-			_data3 = self._dataTs3[:, :, :, self.whichTime3]
-			
-			# Update min, max data
-			self.thresholdMinimum3 = float(_data3.min())
-			self.thresholdMaximum3 = float(_data3.max())
-			
-			try:
+		_, _, ts3, _ = self.active_screen_counter()
+
+		for sc in range(len(ts3)):
+		
+			if ts3[sc] and sc == 0: 
 				
-				if not self.threshold3 == '' or not self.thresholdPercent3 == '':
-					# if not self.globalTimeUpdate:
-						mlab.clf(figure=self.scene1.mayavi_scene)
-					
-			except AttributeError:
+				_figure = self.scene1.mayavi_scene
+			
+			elif ts3[sc] and sc == 1:
 				
-				# Wait until user enters the values
-				pass	
+				_figure = self.scene2.mayavi_scene
 			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure=self.scene1.mayavi_scene)
-			
-			# Set the threshold
-			self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[_data3.min()])
-			
-			if self.outlineToggle3:
-			
-				# Plot the outline
-				self.out3_sc1 = mayavi.tools.pipeline.outline(self.iso3_sc1)
+			elif ts3[sc] and sc == 2:
 				
-				# Change outline width
-				self.out3_sc1.actor.property.line_width = self.outlineWidth3
+				_figure = self.scene3.mayavi_scene
+			
+			elif ts3[sc] and sc == 3:
 				
-				# Set outline color
-				self.out3_sc1.actor.property.color = (self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
+				_figure = self.scene4.mayavi_scene
 			
-			# Change contour opacity
-			self.iso3_sc1.actor.property.opacity = self.contourOpacity3
+			else:
+				
+				_figure = None
 			
-			# Change contour representation
-			self.iso3_sc1.actor.property.representation = self.contourRepresentation3
-			
-			# Change contour colormap
-			self.iso3_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap3
-			
-			# Change colormap range
-			self.iso3_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin3, self.colormapMax3])
-			
-			try:
-			
-				if not self.threshold3 == '':
+			if _figure is not None:
+		
+				# Get camera view
+				if not mlab.view() is None:
+					camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure = _figure)
+					camRoll = mlab.roll(figure = _figure)
+				
+				# Choose data at other timestep
+				_data3 = self._dataTs3[:, :, :, self.whichTime3]
+				
+				# Update min, max data
+				self.thresholdMinimum3 = float(_data3.min())
+				self.thresholdMaximum3 = float(_data3.max())
+				
+				try:
 					
-					# Set threshold range
-					# tmpthreshvals = self.threshold3.split(',')
-					# self.iso3.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					if not self.threshold3 == '' or not self.thresholdPercent3 == '' and not self.clamp:
+						mlab.clf(figure = _figure)	
+						
+				except AttributeError:
 					
-					# # Keep the previous view
-					# viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					# viewControlRoll = mlab.roll(camRoll)
-					self.setThreshold_fired3()
+					# Wait until user enters the values
+					pass	
+				
+				# With same threshold update contour
+				
+				# Plot the isosurface with minimum value from data
+				self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, _data3, figure = _figure)
+				
+				# Set the threshold
+				self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[_data3.min()])
+				
+				if self.outlineToggle3:
+				
+					# Plot the outline
+					self.out3_sc1 = mayavi.tools.pipeline.outline(self.iso3_sc1)
 					
+					# Change outline width
+					self.out3_sc1.actor.property.line_width = self.outlineWidth3
+					
+					# Set outline color
+					self.out3_sc1.actor.property.color = (self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
+				
+				# Change contour opacity
+				self.iso3_sc1.actor.property.opacity = self.contourOpacity3
+				
+				# Change contour representation
+				self.iso3_sc1.actor.property.representation = self.contourRepresentation3
+				
+				# Change contour colormap
+				self.iso3_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap3
+				
+				# Change colormap range
+				self.iso3_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin3, self.colormapMax3])
+				
+				# If volume rendering is enabled, update that
+				if self.allLocalOptions == "Volume Rendering":
+					
+					self.enableVolRenderingChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent3 == '':
+				# If slice is enabled, update that
+				if self.allLocalOptions == "Slice":
 					
-					# Set threshold range
-					# tmpthreshvals = self.thresholdPercent3.split(',')
-					# self.iso3.contour.contours = [np.float32(i)*self.thresholdMaximum3 for i in tmpthreshvals]
-					
-					# # Keep the previous view
-					# viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					# viewControlRoll = mlab.roll(camRoll)
-					self.setThresholdPercent_fired3()
-					
+					self.enableSliceChanged()
 					# Keep the previous view
 					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
-					camElevation, camDistance, focalPoint, camRoll, self.scene1.mayavi_scene)
-			
-			except ValueError:
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
+				# If fieldlines are enabled, update that
+				if self.allLocalOptions == "Streamlines (3D)":
+					
+					self.enableStreamlinesChanged()
+					# Keep the previous view
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			# self.globalTimeUpdate = False
+				# If fieldline tracking is enabled, update that
+				if self.allAnalysisOptions == "Fieldline tracking":
+					
+					self.enableFieldlinesChanged1()
+					self.enableFieldlinesChanged2()
+					# Keep the previous view
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				# If Qtensor is enabled, update that
+				if self.allAnalysisOptions == "Q-tensor":
+					
+					self.calculateQtensorChanged()
+					# Keep the previous view
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				try:
+				
+					if not self.threshold3 == '':
+						
+						self.setThreshold_fired3()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
+					
+					if not self.thresholdPercent3 == '':
+						
+						self.setThresholdPercent_fired3()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				except ValueError:
+					
+					# Wait until user enters the values
+					pass
+				
+				except AttributeError:
+					
+					# Wait until user enters the values
+					pass
 		
 	@on_trait_change('whichTime4')
 	def time_changed4(self):
 		
-		if self.chkBox4: # Update only of checkbox is active
+		# Check which screens are active and run accordingly
 		
-			# Get camera view
-			if not mlab.view() is None:
-				camAzimuth, camElevation, camDistance, focalPoint = mlab.view()
-				camRoll = mlab.roll()
-			
-			# Choose data at other timestep
-			_data4 = self._dataTs4[:, :, :, self.whichTime4]
-			
-			# Update min, max data
-			self.thresholdMinimum4 = float(_data4.min())
-			self.thresholdMaximum4 = float(_data4.max())
-			
-			try:
+		_, _, _, ts4 = self.active_screen_counter()
+
+		for sc in range(len(ts4)):
+		
+			if ts4[sc] and sc == 0: 
 				
-				if not self.threshold4 == '' or not self.thresholdPercent4 == '':
-					mlab.clf()	
+				_figure = self.scene1.mayavi_scene
+			
+			elif ts4[sc] and sc == 1:
+				
+				_figure = self.scene2.mayavi_scene
+			
+			elif ts4[sc] and sc == 2:
+				
+				_figure = self.scene3.mayavi_scene
+			
+			elif ts4[sc] and sc == 3:
+				
+				_figure = self.scene4.mayavi_scene
+			
+			else:
+				
+				_figure = None
+			
+			if _figure is not None:
+		
+				# Get camera view
+				if not mlab.view() is None:
+					camAzimuth, camElevation, camDistance, focalPoint = mlab.view(figure = _figure)
+					camRoll = mlab.roll(figure = _figure)
+				
+				# Choose data at other timestep
+				_data4 = self._dataTs4[:, :, :, self.whichTime4]
+				
+				# Update min, max data
+				self.thresholdMinimum4 = float(_data4.min())
+				self.thresholdMaximum4 = float(_data4.max())
+				
+				try:
 					
-			except AttributeError:
-				
-				# Wait until user enters the values
-				pass	
-			
-			# With same threshold update contour
-			
-			# Plot the isosurface with minimum value from data
-			self.sf4 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure=self.scene1.mayavi_scene)
-			
-			# Set the threshold
-			self.iso4 = mlab.pipeline.iso_surface(self.sf4, contours=[_data4.min()])
-			
-			if self.outlineToggle4:
-			
-				# Plot the outline
-				self.out4 = mayavi.tools.pipeline.outline(self.iso4)
-				
-				# Change outline width
-				self.out4.actor.property.line_width = self.outlineWidth4
-				
-				# Set outline color
-				self.out4.actor.property.color = (self.outlineColorRed4, self.outlineColorGreen4, self.outlineColorBlue4)
-			
-			# Change contour opacity
-			self.iso4.actor.property.opacity = self.contourOpacity4
-			
-			# Change contour representation
-			self.iso4.actor.property.representation = self.contourRepresentation4
-			
-			# Change contour colormap
-			self.iso4.module_manager.scalar_lut_manager.lut_mode = self.contourColormap4
-			
-			# Change colormap range
-			self.iso4.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin4, self.colormapMax4])
-			
-			try:
-			
-				if not self.threshold4 == '':
+					if not self.threshold4 == '' or not self.thresholdPercent4 == '' and not self.clamp:
+						mlab.clf(figure = _figure)	
+						
+				except AttributeError:
 					
-					# Set threshold range
-					tmpthreshvals = self.threshold4.split(',')
-					self.iso4.contour.contours = [np.float32(i) for i in tmpthreshvals]
+					# Wait until user enters the values
+					pass	
+				
+				# With same threshold update contour
+				
+				# Plot the isosurface with minimum value from data
+				self.sf4_sc1 = mlab.pipeline.scalar_field(self.x4, self.y4, self.z4, _data4, figure = _figure)
+				
+				# Set the threshold
+				self.iso4_sc1 = mlab.pipeline.iso_surface(self.sf4_sc1, contours=[_data4.min()])
+				
+				if self.outlineToggle4:
+				
+					# Plot the outline
+					self.out4_sc1 = mayavi.tools.pipeline.outline(self.iso4_sc1)
 					
+					# Change outline width
+					self.out4_sc1.actor.property.line_width = self.outlineWidth4
+					
+					# Set outline color
+					self.out4_sc1.actor.property.color = (self.outlineColorRed4, self.outlineColorGreen4, self.outlineColorBlue4)
+				
+				# Change contour opacity
+				self.iso4_sc1.actor.property.opacity = self.contourOpacity4
+				
+				# Change contour representation
+				self.iso4_sc1.actor.property.representation = self.contourRepresentation4
+				
+				# Change contour colormap
+				self.iso4_sc1.module_manager.scalar_lut_manager.lut_mode = self.contourColormap4
+				
+				# Change colormap range
+				self.iso4_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin4, self.colormapMax4])
+				
+				# If volume rendering is enabled, update that
+				if self.allLocalOptions == "Volume Rendering":
+					
+					self.enableVolRenderingChanged()
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					viewControlRoll = mlab.roll(camRoll)
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				if not self.thresholdPercent4 == '':
+				# If slice is enabled, update that
+				if self.allLocalOptions == "Slice":
 					
-					# Set threshold range
-					tmpthreshvals = self.thresholdPercent4.split(',')
-					self.iso4.contour.contours = [np.float32(i)*self.thresholdMaximum4 for i in tmpthreshvals]
-					
+					self.enableSliceChanged()
 					# Keep the previous view
-					viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint)
-					viewControlRoll = mlab.roll(camRoll)
-			
-			except ValueError:
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
-			
-			except AttributeError:
+				# If fieldlines are enabled, update that
+				if self.allLocalOptions == "Streamlines (3D)":
+					
+					self.enableStreamlinesChanged()
+					# Keep the previous view
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
 				
-				# Wait until user enters the values
-				pass
+				# If fieldline tracking is enabled, update that
+				if self.allAnalysisOptions == "Fieldline tracking":
+					
+					self.enableFieldlinesChanged1()
+					self.enableFieldlinesChanged2()
+					# Keep the previous view
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				# If Qtensor is enabled, update that
+				if self.allAnalysisOptions == "Q-tensor":
+					
+					self.calculateQtensorChanged()
+					# Keep the previous view
+					self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+					camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				try:
+				
+					if not self.threshold4 == '':
+						
+						self.setThreshold_fired4()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
+					
+					if not self.thresholdPercent4 == '':
+						
+						self.setThresholdPercent_fired4()
+						
+						# Keep the previous view
+						self.update_camera_at_current_timestep_with_camPath(camAzimuth, \
+						camElevation, camDistance, focalPoint, camRoll, _figure)
+				
+				except ValueError:
+					
+					# Wait until user enters the values
+					pass
+				
+				except AttributeError:
+					
+					# Wait until user enters the values
+					pass
 		
 	@on_trait_change('whichTimeGlobal')
 	def time_changedGlobal(self):
+		
+		# If global time slider is used, clear figures manually
+		if not self.threshold1 == '' or not self.thresholdPercent1 == ''\
+		or not self.threshold2 == '' or not self.thresholdPercent2 == ''\
+		or not self.threshold3 == '' or not self.thresholdPercent3 == ''\
+		or not self.threshold4 == '' or not self.thresholdPercent4 == '':
+			mlab.clf(figure = self.scene1.mayavi_scene)	
+			mlab.clf(figure = self.scene2.mayavi_scene)	
+			mlab.clf(figure = self.scene3.mayavi_scene)	
+			mlab.clf(figure = self.scene4.mayavi_scene)	
 		
 		# Change self.whichTimex and trigger time_changedx
 		self.whichTime1 = self.whichTimeGlobal
 		self.whichTime2 = self.whichTimeGlobal
 		self.whichTime3 = self.whichTimeGlobal
-		#self.whichTime1 = self.whichTimeGlobal
+		self.whichTime4 = self.whichTimeGlobal
 		
-		# self.globalTimeUpdate = True
+		

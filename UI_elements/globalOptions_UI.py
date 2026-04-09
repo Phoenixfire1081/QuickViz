@@ -29,7 +29,8 @@ Item("whichTime2", show_label = False, editor=RangeEditor(mode='slider', low_nam
 Item("whichTime3", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='ts3max'), visible_when = 'radioButton3 == "Y" and clamp == 0', width = sliderw),
 Item("whichTime4", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='ts4max'), visible_when = 'radioButton4 == "Y" and clamp == 0', width = sliderw),
 Item("whichTimeGlobal", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='ts1max'), visible_when = 'clamp == 1', width = sliderw),
-Item("clamp", label = 'All TS?', visible_when='nts > 1'),
+Item("clampTxt", style = 'readonly', show_label = False, visible_when='nts > 1', height = smallh, width = -40),
+Item("clamp", show_label = False, visible_when='nts > 1'),
 ),
 
 Group(label = 'Animation:'),

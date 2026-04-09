@@ -374,6 +374,15 @@ class allAnalysisOptions:
 						self.ts2max = allTs-1
 						self.ts3max = allTs-1
 			
+			# Update data min, max
+			if self.allDROptions == "DR" or self.allDROptions == "Dnu":
+				self.thresholdMinimum2 = float(self._dataTs2[:, :, :, self.whichTime2].min())
+				self.thresholdMaximum2 = float(self._dataTs2[:, :, :, self.whichTime2].max())
+			else:
+				self.thresholdMinimum2 = float(self._dataTs2[:, :, :, self.whichTime2].min())
+				self.thresholdMaximum2 = float(self._dataTs2[:, :, :, self.whichTime2].max())
+				self.thresholdMinimum3 = float(self._dataTs3[:, :, :, self.whichTime3].min())
+				self.thresholdMaximum3 = float(self._dataTs3[:, :, :, self.whichTime3].max())
 		
 	@on_trait_change('remove_DR')
 	def remove_DR_fired(self):
