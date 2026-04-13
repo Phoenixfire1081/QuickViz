@@ -62,7 +62,6 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	clampTxt = 'All ts?'
 	
 	# Add time series
-	
 	ts1max = Int()
 	ts2max = Int()
 	ts3max = Int()
@@ -407,6 +406,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	setThreshold4  = Button('Set')
 	setThresholdPercent4  = Button('Set')
 	
+	# Changing thresholds with time
+	changeThreshold1 = Bool()
+	changeThreshold2 = Bool()
+	changeThreshold3 = Bool()
+	changeThreshold4 = Bool()
+	finalThreshold = Str('')
+	finalThresholdPercent = Str('')
+	finalTime = Str('-1')
+	changeThresholdType = Enum(['Linear']) # Add more later
+	
 	# Initialize set threshold button press event
 	setThresholdFired1 = False
 	setThresholdFired2 = False
@@ -611,6 +620,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allPredefinedKnotsTxt = Str('Knot type:')
 	pTxt = Str('p:')
 	qTxt = Str('q:')
+	changeThresholdTxt = Str('Change threshold with time:')
+	finalThresholdTxt = Str('Final threshold:')
+	finalThresholdPercentTxt = Str('Final threshold %:')
+	finalTimeTxt = Str('Final time:')
+	changeThresholdTypeTxt = Str('Type:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

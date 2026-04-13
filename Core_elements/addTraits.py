@@ -114,6 +114,9 @@ def include_all_traits(self):
 	self.on_trait_change(self.threshold_changed4, "thresholdPercent4")
 	self.on_trait_change(self.setThresholdPercent_fired4, "setThresholdPercent4")
 	
+	# Change threshold with time
+	# self.on_trait_change(self.changeThresholdFired, "changeThreshold")
+	
 	# allVolRenderingOptions
 	self.on_trait_change(self.enableVolRenderingChanged, "enableVolRendering")
 	self.on_trait_change(self.removeVolRenderChanged, "removeVolRender")

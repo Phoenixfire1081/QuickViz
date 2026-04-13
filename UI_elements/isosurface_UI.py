@@ -105,6 +105,20 @@ isoUIelements = (Group(
 	Item("setThresholdPercent1", show_label = False, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = buttonh, width = buttonw),
 	),
 	HGroup(
+	Item("changeThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	Item("changeThreshold1", show_label = False, visible_when = 'radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	),
+	HGroup(
+	Item("finalThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True'),
+	Item("finalThreshold", show_label = False, visible_when = 'radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True', height = longh, width = tinyw),
+	Item("finalThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True'),
+	Item("finalThresholdPercent", show_label = False, visible_when = 'radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True', height = longh, width = tinyw),
+	Item("finalTimeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True'),
+	Item("finalTime", show_label = False, visible_when = 'radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True', height = longh, width = tinyw),
+	Item("changeThresholdTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -40, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True'),
+	Item("changeThresholdType", show_label = False, visible_when = 'radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold1 == True'),
+	),
+	HGroup(
 	Item("colorFieldsTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
 	Item("colorFields1", show_label = False, visible_when = 'radioButton1 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
 	),
@@ -118,6 +132,20 @@ isoUIelements = (Group(
 	HGroup(Item("ThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
 	Item("thresholdPercent2", show_label = False, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = longh, width = longw), 
 	Item("setThresholdPercent2", show_label = False, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = buttonh, width = buttonw),
+	),
+	HGroup(
+	Item("changeThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	Item("changeThreshold2", show_label = False, visible_when = 'radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	),
+	HGroup(
+	Item("finalThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True'),
+	Item("finalThreshold", show_label = False, visible_when = 'radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True', height = longh, width = tinyw),
+	Item("finalThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True'),
+	Item("finalThresholdPercent", show_label = False, visible_when = 'radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True', height = longh, width = tinyw),
+	Item("finalTimeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True'),
+	Item("finalTime", show_label = False, visible_when = 'radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True', height = longh, width = tinyw),
+	Item("changeThresholdTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -40, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True'),
+	Item("changeThresholdType", show_label = False, visible_when = 'radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold2 == True'),
 	),
 	HGroup(
 	Item("colorFieldsTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton2 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
@@ -135,6 +163,20 @@ isoUIelements = (Group(
 	Item("setThresholdPercent3", show_label = False, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = buttonh, width = buttonw),
 	),
 	HGroup(
+	Item("changeThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	Item("changeThreshold3", show_label = False, visible_when = 'radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	),
+	HGroup(
+	Item("finalThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True'),
+	Item("finalThreshold", show_label = False, visible_when = 'radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True', height = longh, width = tinyw),
+	Item("finalThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True'),
+	Item("finalThresholdPercent", show_label = False, visible_when = 'radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True', height = longh, width = tinyw),
+	Item("finalTimeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True'),
+	Item("finalTime", show_label = False, visible_when = 'radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True', height = longh, width = tinyw),
+	Item("changeThresholdTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -40, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True'),
+	Item("changeThresholdType", show_label = False, visible_when = 'radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold3 == True'),
+	),
+	HGroup(
 	Item("colorFieldsTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
 	Item("colorFields3", show_label = False, visible_when = 'radioButton3 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
 	),
@@ -148,6 +190,20 @@ isoUIelements = (Group(
 	HGroup(Item("ThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
 	Item("thresholdPercent4", show_label = False, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = longh, width = longw), 
 	Item("setThresholdPercent4", show_label = False, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"', height = buttonh, width = buttonw),
+	),
+	HGroup(
+	Item("changeThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -160, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	Item("changeThreshold4", show_label = False, visible_when = 'radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),
+	),
+	HGroup(
+	Item("finalThresholdTxt", style = 'readonly', show_label = False, height = smallh, width = -90, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True'),
+	Item("finalThreshold", show_label = False, visible_when = 'radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True', height = longh, width = tinyw),
+	Item("finalThresholdPercentTxt", style = 'readonly', show_label = False, height = smallh, width = -100, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True'),
+	Item("finalThresholdPercent", show_label = False, visible_when = 'radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True', height = longh, width = tinyw),
+	Item("finalTimeTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True'),
+	Item("finalTime", show_label = False, visible_when = 'radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True', height = longh, width = tinyw),
+	Item("changeThresholdTypeTxt", style = 'readonly', show_label = False, height = smallh, width = -40, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True'),
+	Item("changeThresholdType", show_label = False, visible_when = 'radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization" and changeThreshold4 == True'),
 	),
 	HGroup(
 	Item("colorFieldsTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='radioButton4 == "Y" and allLocalOptions == "Isosurface" and allModeOptions == "Visualization"'),

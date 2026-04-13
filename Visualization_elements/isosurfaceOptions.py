@@ -168,8 +168,18 @@ class allIsosurfaceOptions:
 				self.colorFieldSet_sc1 = False
 			
 			try:
-			
-				tmpthreshvals = self.threshold1.split(',')
+				
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs1+1)
+				
+				if self.changeThreshold1 and self.whichTime1 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.threshold1.split(',')[0]), np.float32(self.finalThreshold), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime1]]
+				
+				else:
+				
+					tmpthreshvals = self.threshold1.split(',')
 				
 				if self.colorFields1 != 'None':
 					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(self.colorFields1, 1), tmpthreshvals, _figure, False, 0, self.x1, self.y1, self.z1)
@@ -214,8 +224,16 @@ class allIsosurfaceOptions:
 				self.colorFieldSet_sc1 = False
 			
 			try:
-			
-				tmpthreshvals = self.thresholdPercent1.split(',')
+				
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs1+1)
+				
+				if self.changeThreshold1 and self.whichTime1 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.thresholdPercent1.split(',')[0]), np.float32(self.finalThresholdPercent), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime1]]
+				else:
+					tmpthreshvals = self.thresholdPercent1.split(',')
 				
 				if self.colorFields1 != 'None':
 					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(self.colorFields1, 1), tmpthreshvals, _figure, True, self.thresholdMaximum1, self.x1, self.y1, self.z1)
@@ -261,7 +279,17 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.threshold2.split(',')
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs2+1)
+				
+				if self.changeThreshold2 and self.whichTime2 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.threshold2.split(',')[0]), np.float32(self.finalThreshold), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime2]]
+				
+				else:
+				
+					tmpthreshvals = self.threshold2.split(',')
 				
 				if self.colorFields2 != 'None':
 					self.plot_colorFieldData(self.iso2_sc1, self.whichColorFields(self.colorFields2, 2), tmpthreshvals, _figure, False, 0, self.x2, self.y2, self.z2)
@@ -307,7 +335,15 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.thresholdPercent2.split(',')
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs2+1)
+				
+				if self.changeThreshold2 and self.whichTime2 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.thresholdPercent2.split(',')[0]), np.float32(self.finalThresholdPercent), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime2]]
+				else:
+					tmpthreshvals = self.thresholdPercent2.split(',')
 				
 				if self.colorFields2 != 'None':
 					self.plot_colorFieldData(self.iso2_sc1, self.whichColorFields(self.colorFields2, 2), tmpthreshvals, _figure, True, self.thresholdMaximum2, self.x2, self.y2, self.z2)
@@ -353,7 +389,17 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.threshold2.split(',')
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs3+1)
+				
+				if self.changeThreshold3 and self.whichTime3 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.threshold3.split(',')[0]), np.float32(self.finalThreshold), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime3]]
+				
+				else:
+				
+					tmpthreshvals = self.threshold3.split(',')
 				
 				if self.colorFields3 != 'None':
 					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(self.colorFields3, 2), tmpthreshvals, _figure, False, 0, self.x3, self.y3, self.z3)
@@ -399,7 +445,15 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.thresholdPercent3.split(',')
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs3+1)
+				
+				if self.changeThreshold3 and self.whichTime3 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.thresholdPercent3.split(',')[0]), np.float32(self.finalThresholdPercent), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime3]]
+				else:
+					tmpthreshvals = self.thresholdPercent3.split(',')
 				
 				if self.colorFields3 != 'None':
 					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(self.colorFields3, 2), tmpthreshvals, _figure, True, self.thresholdMaximum3, self.x3, self.y3, self.z3)
@@ -445,7 +499,17 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.threshold2.split(',')
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs4+1)
+				
+				if self.changeThreshold4 and self.whichTime4 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.threshold4.split(',')[0]), np.float32(self.finalThreshold), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime4]]
+				
+				else:
+				
+					tmpthreshvals = self.threshold4.split(',')
 				
 				if self.colorFields4 != 'None':
 					self.plot_colorFieldData(self.iso4_sc1, self.whichColorFields(self.colorFields4, 2), tmpthreshvals, _figure, False, 0, self.x4, self.y4, self.z4)
@@ -491,7 +555,15 @@ class allIsosurfaceOptions:
 			
 			try:
 			
-				tmpthreshvals = self.thresholdPercent3.split(',')
+				if self.finalTime == '-1':
+					self.finalTime = str(self.numTs4+1)
+				
+				if self.changeThreshold4 and self.whichTime4 < int(self.finalTime):
+					if self.changeThresholdType == 'Linear':
+						threshvals = np.linspace(np.float32(self.thresholdPercent4.split(',')[0]), np.float32(self.finalThresholdPercent), int(self.finalTime))
+						tmpthreshvals = [threshvals[self.whichTime4]]
+				else:
+					tmpthreshvals = self.thresholdPercent4.split(',')
 				
 				if self.colorFields4 != 'None':
 					self.plot_colorFieldData(self.iso4_sc1, self.whichColorFields(self.colorFields4, 2), tmpthreshvals, _figure, True, self.thresholdMaximum4, self.x4, self.y4, self.z4)
@@ -502,3 +574,9 @@ class allIsosurfaceOptions:
 				
 				# Wait until user enters the values
 				pass
+	
+	# @on_trait_change('changeThreshold')
+	# def changeThresholdFired(self):
+		
+		# pass
+		
