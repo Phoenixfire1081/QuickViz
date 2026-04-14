@@ -87,7 +87,7 @@ class allStreamlineOptions:
 				allFiles = [i for i in allFiles if not 'Coordinates' in i]
 				allFiles.sort(key = lambda x: int(x.split('_')[2].split('.')[0][1:]))
 				
-				cdata = nc.Dataset('/media/rosaline/experimental/GVK/NOVEMBRE_2023/ANGLES_22_FILTERS_ON/FlowFit/' + case + '/BenProcd/ShortTracksMin10/'+run+'/CoordinatesCube.nc')
+				cdata = nc.Dataset('/media/rosaline/experimental/GVK/NOVEMBRE_2023/ANGLES_22_FILTERS_ON/FlowFit/' + case + '/ShortTracksMin10/'+run+'/CoordinatesCube.nc')
 				
 				# Get grid data and trim
 				x = np.unique(cdata['x_mesh'][:])

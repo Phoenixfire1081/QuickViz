@@ -58,6 +58,9 @@ class allIsosurfaceOptions:
 				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), 
 				colormap = self.contourColormap1, figure = figureHandle)
 			
+			# Set the colormap min, max
+			self.mesh1.module_manager.scalar_lut_manager.data_range = [self.colormapMin1, self.colormapMax1]
+			
 	def whichColorFields(self, colorField, whichTs):
 		
 		if colorField == 'Vorticity x':

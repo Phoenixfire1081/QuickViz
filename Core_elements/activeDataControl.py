@@ -29,7 +29,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc1.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -50,7 +51,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(1, self.scene1.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen2_ts1')
 	def sc2_ts1_changed1(self):
@@ -75,7 +76,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc2.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -96,7 +98,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(2, self.scene2.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen3_ts1')
 	def sc3_ts1_changed1(self):
@@ -121,7 +123,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc3.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -142,7 +145,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(3, self.scene3.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen4_ts1')
 	def sc4_ts1_changed1(self):
@@ -167,7 +170,8 @@ class activeDataControlClass:
 				
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc4.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -188,7 +192,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(4, self.scene4.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen1_ts2')
 	def sc1_ts2_changed1(self):
@@ -212,7 +216,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc1.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -233,7 +238,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(1, self.scene1.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen2_ts2')
 	def sc2_ts2_changed1(self):
@@ -258,7 +263,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc2.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -279,7 +285,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(2, self.scene2.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen3_ts2')
 	def sc3_ts2_changed1(self):
@@ -304,7 +310,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc3.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -325,7 +332,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(3, self.scene3.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen4_ts2')
 	def sc4_ts2_changed1(self):
@@ -350,7 +357,8 @@ class activeDataControlClass:
 				
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc4.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -371,7 +379,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(4, self.scene4.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen1_ts3')
 	def sc1_ts3_changed1(self):
@@ -395,7 +403,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc1.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -416,7 +425,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(1, self.scene1.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen2_ts3')
 	def sc2_ts3_changed1(self):
@@ -441,7 +450,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc2.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -462,7 +472,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(2, self.scene2.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen3_ts3')
 	def sc3_ts3_changed1(self):
@@ -487,7 +497,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc3.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -508,7 +519,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(3, self.scene3.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen4_ts3')
 	def sc4_ts3_changed1(self):
@@ -533,7 +544,8 @@ class activeDataControlClass:
 				
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc4.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -554,7 +566,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(4, self.scene4.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen1_ts4')
 	def sc1_ts4_changed1(self):
@@ -578,7 +590,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc1.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -599,7 +612,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(1, self.scene1.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen2_ts4')
 	def sc2_ts4_changed1(self):
@@ -624,7 +637,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc2.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -645,7 +659,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(2, self.scene2.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen3_ts4')
 	def sc3_ts4_changed1(self):
@@ -670,7 +684,8 @@ class activeDataControlClass:
 			
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc3.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -691,7 +706,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(3, self.scene3.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('screen4_ts4')
 	def sc4_ts4_changed1(self):
@@ -716,7 +731,8 @@ class activeDataControlClass:
 				
 			elif self.allLocalOptions == "Slice":
 				try:
-					self.volSlice1_sc4.remove()
+					self.volSlice1_sc1.parent.parent.remove()
+					self.sf1_sc1.remove()
 				except AttributeError:
 					pass # Set slice first
 		
@@ -737,7 +753,7 @@ class activeDataControlClass:
 			
 			if self.allLocalOptions == "Slice":
 				
-				self.setSlice1_actual(4, self.scene4.mayavi_scene)
+				self.enableSliceChanged()
 	
 	@on_trait_change('radioButton1')
 	def radioButton1_changed(self):
