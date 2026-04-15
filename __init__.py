@@ -107,6 +107,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allModeOptions = Enum(['Dataset', 'Visualization', 'Analysis', 'Log Lattice', 'Blender exports'])
 	
 	# All Dataset options
+	allDatasetActions = Enum('Import', 'Export', 'Manipulate', cols = 3)
 	allDatasetOptions = Enum('Local', 'Turbulence Database (JHTDB)', cols = 2)
 	allLocalDatasetOptions = Enum('Raw 3D', 'netCDF', cols = 2)
 	
@@ -125,6 +126,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	'Vorticity z'])
 	timeStep_LocalData = Str('')
 	cancel_LocalData = Button('Cancel')
+	assignToTS = Enum(['Time Series 1', 'Time Series 2', 'Time Series 3', 'Time Series 4'])
 	
 	# Store min, max, res data separately from LL
 	xmin_Local = Str('')
@@ -298,7 +300,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Isosurface options
 	hideShowIsosurface = Bool()
 	colorFields1 = Enum(['None', 'Vorticity x', 'Vorticity y', 'Vorticity z', 
-	'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude'])
+	'Vorticity magnitude', 'Velocity x', 'Velocity y', 'Velocity z', 'Velocity magnitude', 'TS1 scalar', 'TS2 scalar', 'TS3 scalar', 'TS4 scalar'])
 	colorFields2 = deepcopy(colorFields1)
 	colorFields3 = deepcopy(colorFields1)
 	colorFields4 = deepcopy(colorFields1)
@@ -441,6 +443,72 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	contourColormap3 = deepcopy(contourColormap1)
 	contourColormap4 = deepcopy(contourColormap1)
 	
+	# Adjust text and location of default axis
+	default_axis_x_label = Str('$x$')
+	default_axis_y_label = Str('$y$')
+	default_axis_z_label = Str('$z$')
+	
+	default_axis_x_offset = Range(-5, 5, 0)
+	default_axis_y_offset = Range(-5, 5, 0)
+	default_axis_z_offset = Range(-5, 5, 0)
+	
+	# Text of data axis, number of points and color
+	
+	enableAxis_sc1 = Bool()
+	enableAxis_sc2 = Bool()
+	enableAxis_sc3 = Bool()
+	enableAxis_sc4 = Bool()
+	
+	data_axis_x_label_sc1 = Str('$x$')
+	data_axis_y_label_sc1 = Str('$y$')
+	data_axis_z_label_sc1 = Str('$z$')
+	
+	data_axis_x_label_sc2 = Str('$x$')
+	data_axis_y_label_sc2 = Str('$y$')
+	data_axis_z_label_sc2 = Str('$z$')
+	
+	data_axis_x_label_sc3 = Str('$x$')
+	data_axis_y_label_sc3 = Str('$y$')
+	data_axis_z_label_sc3 = Str('$z$')
+	
+	data_axis_x_label_sc4 = Str('$x$')
+	data_axis_y_label_sc4 = Str('$y$')
+	data_axis_z_label_sc4 = Str('$z$')
+	
+	data_axis_color_r_sc1 = Float(0.0)
+	data_axis_color_g_sc1 = Float(0.0)
+	data_axis_color_b_sc1 = Float(0.0)
+	
+	data_axis_color_r_sc2 = Float(0.0)
+	data_axis_color_g_sc2 = Float(0.0)
+	data_axis_color_b_sc2 = Float(0.0)
+	
+	data_axis_color_r_sc3 = Float(0.0)
+	data_axis_color_g_sc3 = Float(0.0)
+	data_axis_color_b_sc3 = Float(0.0)
+	
+	data_axis_color_r_sc4 = Float(0.0)
+	data_axis_color_g_sc4 = Float(0.0)
+	data_axis_color_b_sc4 = Float(0.0)
+	
+	data_axis_npts_sc1 = Int(10)
+	data_axis_npts_sc2 = Int(10)
+	data_axis_npts_sc3 = Int(10)
+	data_axis_npts_sc4 = Int(10)
+	
+	# Colorbar
+	
+	enableColorbar_sc1 = Bool()
+	enableColorbar_sc2 = Bool()
+	enableColorbar_sc3 = Bool()
+	enableColorbar_sc4 = Bool()
+	
+	colorbarTitle_sc1 = Str('cbar')
+	colorbarTitle_sc2 = Str('cbar')
+	colorbarTitle_sc3 = Str('cbar')
+	colorbarTitle_sc4 = Str('cbar')
+	
+	
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
 	# Global options
@@ -487,13 +555,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	SaveImgTxt = Str('Save images:')
 	OutlineWidthTxt = Str('Outline width:')
 	OutlineColorTxt = Str('Outline color (r,g,b):')
+	AxisColorTxt = Str('Axis color (r,g,b):')
 	ThresholdTxt = Str('Threshold(s):')
 	ThresholdPercentTxt = Str('Threshold(s) %:')
 	ThresholdPercentflTxt = Str('Threshold %:')
 	OpacityTxt = Str('Opacity:')
 	ColormapTxt = Str('Colormap:')
 	RepresentationTxt = Str('Representation:')
-	ColormapMinMaxTxt = Str('Colormap(min, max):')
+	ColormapMinMaxTxt = Str('Colormap (min, max):')
 	ShowHideOutlineTxt = Str('Show/Hide outline:')
 	ActiveDataTxt = Str('Active data:')
 	IsoOptionsTxt = Str('Isosurface options:')
@@ -625,6 +694,13 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	finalThresholdPercentTxt = Str('Final threshold %:')
 	finalTimeTxt = Str('Final time:')
 	changeThresholdTypeTxt = Str('Type:')
+	assignToTSTxt = Str('Assign to:')
+	xyzlabel = Str('Label (x, y, z):')
+	xyzoffset = Str('Offsets (x, y, z):')
+	nticks = Str('Number of ticks:')
+	enableAxisTxt = Str('Enable axis:')
+	enableCbarTxt = Str('Enable colorbar:')
+	cbarTitleTxt = Str('Title:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -658,6 +734,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	save_images = Bool(True)
 	
 	# Camera options
+	cam_screens = Enum(['1', '2', '3', '4'], cols = 4)
 	showHideCamera = Bool()
 	camAzimuthG = Float(0.0)
 	camElevationG = Float(0.0)
@@ -1198,6 +1275,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.zmax_pg = 0.5
 		self.minRot_pg = -90
 		self.maxRot_pg = 90
+		
+		# Default options for camera control
+		# self.cam_sc2 = ''
+		# self.cam_sc3 = ''
+		# self.cam_sc4 = ''
 				
 	view = View(
 	

@@ -1,7 +1,20 @@
 # Supplement to Mayavi Visualization
 # All UI customization options are defined here
 
+from collections import Counter
+import string
+
 class UIOptionsClass:
+	
+	def __init__(self):
+		
+		# Number of pixels for each letter
+		self.spacingFactorLetters = 6.5
+		self.spacingFactorOthers = 3
+	
+	def count_letters(self, word, valid_letters=string.ascii_letters):
+		count = Counter(word) 
+		return sum(count[letter] for letter in valid_letters) 
 	
 	def textFieldTinySmallWidth(self):
 		
@@ -94,5 +107,12 @@ class UIOptionsClass:
 		height = -30
 		
 		return width, height
+	
+	def determineWidth(self, _word):
+		
+		actual_letters = self.count_letters(_word)
+		_diff = len(_word) - actual_letters
+		
+		return -actual_letters * self.spacingFactorLetters - _diff * self.spacingFactorOthers
 	
 	

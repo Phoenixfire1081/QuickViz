@@ -11,17 +11,22 @@ sliderw, sliderh = allUIOptions.slider()
 slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
+determine_width = allUIOptions.determineWidth
 
 # Set visibility options
-localDatasetVisibility = 'allModeOptions == "Dataset" and allDatasetOptions == "Local"'
-localDatasetVisibilityBBox = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and altBBox == True'
-localDatasetVisibilityRaw3D = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "Raw 3D"'
-localDatasetVisibilitynetCDF = 'allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
+localDatasetVisibility = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local"'
+localDatasetVisibilityBBox = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and altBBox == True'
+localDatasetVisibilityRaw3D = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "Raw 3D"'
+localDatasetVisibilitynetCDF = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
 
 datasetUIelements = Group( 
 	
 	Group(
-	Item("allDatasetOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Dataset"')
+	Item("allDatasetActions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Dataset"')
+	),
+	
+	Group(
+	Item("allDatasetOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Dataset" and allDatasetActions == "Import"')
 	),
 	
 	# Local data
@@ -133,6 +138,11 @@ datasetUIelements = Group(
 	HGroup(
 	Item("reconnZ2Txt", show_label = False, style = 'readonly', visible_when=localDatasetVisibilityBBox, height = smallh, width = -35,),
 	Item("whichSliceZ2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=localDatasetVisibilityBBox, width = sliderw),
+	),
+	
+	HGroup(
+	Item("assignToTSTxt", show_label = False, style = 'readonly', visible_when=localDatasetVisibility, height = smallh, width = determine_width("Assign to:")),
+	Item("assignToTS", show_label = False, visible_when=localDatasetVisibility),
 	),
 	
 	HGroup(

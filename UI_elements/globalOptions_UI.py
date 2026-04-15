@@ -13,7 +13,7 @@ buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
 globalUIelements = (Group(label = 'Global options:'),
 Group(
-Group(label = 'Background options:'),
+Group(label = 'Background:'),
 HGroup(Item("BGtext", style='readonly', show_label=False, height = smallh, width = -120), 
 Item("BGColorRed", show_label = False, height = tinyh, width = tinyw),
 Item("BGColorGreen", show_label = False, height = tinyh, width = tinyw),

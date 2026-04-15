@@ -5,6 +5,10 @@ from traits.api import on_trait_change
 import numpy as np
 import scipy
 from mayavi import mlab
+from ..UI_elements.UIMessages import WarningDialog
+from traits.api import Str
+
+warning = WarningDialog
 
 class allIsosurfaceOptions:
 
@@ -135,6 +139,49 @@ class allIsosurfaceOptions:
 				whichColorData = np.sqrt(self.u3[:, :, :, self.whichTime3]**2 + self.v3[:, :, :, self.whichTime3]**2 + self.w3[:, :, :, self.whichTime3]**2)
 			elif whichTs == 4:
 				whichColorData = np.sqrt(self.u4[:, :, :, self.whichTime4]**2 + self.v4[:, :, :, self.whichTime4]**2 + self.w4[:, :, :, self.whichTime4]**2)
+		elif colorField == 'TS1 scalar' or (colorField == 'TS2 scalar' and self.nts == 1) or (colorField == 'TS3 scalar' and self.nts < 3) or (colorField == 'TS4 scalar' and self.nts < 4):
+			if whichTs == 1:
+				whichColorData = self._dataTs1[:, :, :, self.whichTime1]
+			elif whichTs == 2:
+				whichColorData = self._dataTs1[:, :, :, self.whichTime2]
+			elif whichTs == 3:
+				whichColorData = self._dataTs1[:, :, :, self.whichTime3]
+			elif whichTs == 4:
+				whichColorData = self._dataTs1[:, :, :, self.whichTime4]
+		elif colorField == 'TS2 scalar' and self.nts > 1:
+			if whichTs == 1:
+				whichColorData = self._dataTs2[:, :, :, self.whichTime1]
+			elif whichTs == 2:
+				whichColorData = self._dataTs2[:, :, :, self.whichTime2]
+			elif whichTs == 3:
+				whichColorData = self._dataTs2[:, :, :, self.whichTime3]
+			elif whichTs == 4:
+				whichColorData = self._dataTs2[:, :, :, self.whichTime4]
+		elif colorField == 'TS3 scalar' and self.nts > 2:
+			if whichTs == 1:
+				whichColorData = self._dataTs3[:, :, :, self.whichTime1]
+			elif whichTs == 2:
+				whichColorData = self._dataTs3[:, :, :, self.whichTime2]
+			elif whichTs == 3:
+				whichColorData = self._dataTs3[:, :, :, self.whichTime3]
+			elif whichTs == 4:
+				whichColorData = self._dataTs3[:, :, :, self.whichTime4]
+		elif colorField == 'TS4 scalar' and self.nts > 3:
+			if whichTs == 1:
+				whichColorData = self._dataTs4[:, :, :, self.whichTime1]
+			elif whichTs == 2:
+				whichColorData = self._dataTs4[:, :, :, self.whichTime2]
+			elif whichTs == 3:
+				whichColorData = self._dataTs4[:, :, :, self.whichTime3]
+			elif whichTs == 4:
+				whichColorData = self._dataTs4[:, :, :, self.whichTime4]
+		
+		if colorField == 'TS2 scalar' and self.nts == 1:
+			warning(msg = "Time Series 2 not available. Using Time Series 1 scalar instead.").configure_traits()
+		if colorField == 'TS3 scalar' and self.nts < 3:
+			warning(msg = "Time Series 3 not available. Using Time Series 1 scalar instead.").configure_traits()
+		if colorField == 'TS4 scalar' and self.nts < 4:
+			warning(msg = "Time Series 4 not available. Using Time Series 1 scalar instead.").configure_traits()
 		
 		return whichColorData
 	

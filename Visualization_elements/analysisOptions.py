@@ -446,9 +446,11 @@ class allAnalysisOptions:
 			self.nts = 2
 			
 			# Gaussian wavelet
-			kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
+			# kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
+			kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(yres, xres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
 			
-			fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
+			# fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
+			fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(yres, xres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
 			
 			nkk = kx*kx + ky*ky + kz*kz
 			nkk[nkk==0] = 1
@@ -480,6 +482,11 @@ class allAnalysisOptions:
 					self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
 					self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
 					self.ts2max = allTs-1
+			
+			# Update data min, max
+			# if self.allDROptions == "DR" or self.allDROptions == "Dnu":
+			self.thresholdMinimum2 = float(self._dataTs2[:, :, :, self.whichTime2].min())
+			self.thresholdMaximum2 = float(self._dataTs2[:, :, :, self.whichTime2].max())
 		
 	@on_trait_change('remove_Pressure')
 	def remove_Pressure_fired(self):

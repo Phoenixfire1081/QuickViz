@@ -37,7 +37,14 @@ class allLocalDatasetOptions:
 		except:
 			
 			pass # Nothing to do
+	
+	# def reset_specific_ts(self):
+		
+		
 			
+	# def write_to_specific_ts(self):
+		
+		
 	
 	@on_trait_change('choose_folder_LocalDataPath')
 	def choose_folder_LocalDataPath_fired(self):
@@ -341,15 +348,47 @@ class allLocalDatasetOptions:
 				elif self.whichScalar_LocalData == 'Vorticity z':
 					scalar = vortz
 				
-				# Assign data to time series 1. TODO - Backup if TS already exists.
+				# Assign data to the requested time series
 				
-				self.u1[:, :, :, ctr] = velx
-				self.v1[:, :, :, ctr] = vely
-				self.w1[:, :, :, ctr] = velz
-				self.omega1[:, :, :, ctr] = vortx
-				self.omega2[:, :, :, ctr] = vorty
-				self.omega3[:, :, :, ctr] = vortz
-				self._dataTs1[:, :, :, ctr] = scalar
+				if self.assignToTS == 'Time Series 1':
+				
+					self.u1[:, :, :, ctr] = velx
+					self.v1[:, :, :, ctr] = vely
+					self.w1[:, :, :, ctr] = velz
+					self.omega1[:, :, :, ctr] = vortx
+					self.omega2[:, :, :, ctr] = vorty
+					self.omega3[:, :, :, ctr] = vortz
+					self._dataTs1[:, :, :, ctr] = scalar
+				
+				elif self.assignToTS == 'Time Series 2':
+					
+					self.u1[:, :, :, ctr] = velx
+					self.v1[:, :, :, ctr] = vely
+					self.w1[:, :, :, ctr] = velz
+					self.omega1[:, :, :, ctr] = vortx
+					self.omega2[:, :, :, ctr] = vorty
+					self.omega3[:, :, :, ctr] = vortz
+					self._dataTs2[:, :, :, ctr] = scalar
+					
+				elif self.assignToTS == 'Time Series 3':
+					
+					self.u1[:, :, :, ctr] = velx
+					self.v1[:, :, :, ctr] = vely
+					self.w1[:, :, :, ctr] = velz
+					self.omega1[:, :, :, ctr] = vortx
+					self.omega2[:, :, :, ctr] = vorty
+					self.omega3[:, :, :, ctr] = vortz
+					self._dataTs3[:, :, :, ctr] = scalar
+					
+				elif self.assignToTS == 'Time Series 4':
+					
+					self.u1[:, :, :, ctr] = velx
+					self.v1[:, :, :, ctr] = vely
+					self.w1[:, :, :, ctr] = velz
+					self.omega1[:, :, :, ctr] = vortx
+					self.omega2[:, :, :, ctr] = vorty
+					self.omega3[:, :, :, ctr] = vortz
+					self._dataTs4[:, :, :, ctr] = scalar
 				
 				ctr += 1
 				fileCtr += skipTs
