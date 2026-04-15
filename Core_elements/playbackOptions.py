@@ -8,79 +8,76 @@ from pyface.api import GUI
 class allPlaybackOptions:
 	
 	def get_current_time(self):
-		if self.radioButton1:
+		if self.radioButton1 == 'Y':
 			current_time = self.whichTime1
-		elif self.radioButton2:
+		elif self.radioButton2 == 'Y':
 			current_time = self.whichTime2
-		elif self.radioButton3:
+		elif self.radioButton3 == 'Y':
 			current_time = self.whichTime3
-		elif self.radioButton4:
+		elif self.radioButton4 == 'Y':
 			current_time = self.whichTime4
 		
 		return current_time
+	
+	def get_total_time(self):
+		if self.radioButton1 == 'Y':
+			total_time = int(np.shape(self._dataTs1)[-1]-1)
+		elif self.radioButton2 == 'Y':
+			total_time = int(np.shape(self._dataTs2)[-1]-1)
+		elif self.radioButton3 == 'Y':
+			total_time = int(np.shape(self._dataTs3)[-1]-1)
+		elif self.radioButton4 == 'Y':
+			total_time = int(np.shape(self._dataTs4)[-1]-1)
+		return total_time
+	
+	def update_time(self, increase):
+		
+		current_time = self.get_current_time()
+		
+		if increase: 
+			update = 1 
+		else: 
+			update = -1
+		
+		if self.radioButton1 == 'Y' and not self.clamp:
+			if self.whichTime1 <= int(np.shape(self._dataTs1)[-1]-1):
+				self.whichTime1 = current_time + update
+		
+		if self.radioButton2 == 'Y' and not self.clamp:
+			if self.whichTime2 <= int(np.shape(self._dataTs2)[-1]-1):
+				self.whichTime2 = current_time + update
+		
+		if self.radioButton3 == 'Y' and not self.clamp:
+			if self.whichTime3 <= int(np.shape(self._dataTs3)[-1]-1):
+				self.whichTime3 = current_time + update
+		
+		if self.radioButton4 == 'Y' and not self.clamp:
+			if self.whichTime4 <= int(np.shape(self._dataTs4)[-1]-1):
+				self.whichTime4 = current_time + update
+		
+		if self.clamp:
+			if self.whichTimeGlobal <= int(np.shape(self._dataTs1)[-1]-1):
+				self.whichTimeGlobal = current_time + update
+		
 
 	@on_trait_change('next_timeSeries')
 	def next_timeseries_button_fired(self):
 		
-		if self.clamp: # For all ts
-			
-			current_time = self.get_current_time()
-			
-			if self.screen1_ts1:
-				self.whichTime1 = current_time + 1
-			if self.screen1_ts2:
-				self.whichTime2 = current_time + 1
-			if self.screen1_ts3:
-				self.whichTime3 = current_time + 1
-			if self.screen1_ts4:
-				self.whichTime4 = current_time + 1
-		
-		else:
-			
-			# Get current time first
-			current_time = self.whichTime1
-			
-			if self.whichTime1 < int(np.shape(self._dataTs1)[-1]-1):
-				self.whichTime1 = current_time + 1
-		
-		# Update camera values
-		# self.updateCurrentVals_button_fired()
+		self.update_time(True)
 		
 	@on_trait_change('previous_timeSeries')
 	def previous_timeseries_button_fired(self):
 		
-		if self.clamp: # For all ts
-			
-			current_time = self.get_current_time()
-			
-			if self.screen1_ts1:
-				self.whichTime1 = current_time - 1
-			if self.screen1_ts2:
-				self.whichTime2 = current_time - 1
-			if self.screen1_ts3:
-				self.whichTime3 = current_time - 1
-			if self.screen1_ts4:
-				self.whichTime4 = current_time - 1
-		
-		else:
-		
-			# Get current time first
-			current_time = self.whichTime1
-			
-			if self.whichTime1 > 0:
-				self.whichTime1 = current_time - 1
-		
-		# Update camera values
-		# self.updateCurrentVals_button_fired()	
+		self.update_time(False)
 	
 	@on_trait_change('play_timeSeries')
 	def play_timeseries_button_fired(self):
 		
 		# Get current time first
-		current_time = self.whichTime1
+		current_time = self.get_current_time()
 		
 		# Get total time
-		total_time = int(np.shape(self._dataTs1)[-1]-1)
+		total_time = self.get_total_time()
 		
 		# Fire next time series button
 		for i in range(current_time, total_time):
@@ -104,10 +101,10 @@ class allPlaybackOptions:
 	def play_timeseries_reverse_button_fired(self):
 		
 		# Get current time first
-		current_time = self.whichTime1
+		current_time = self.get_current_time()
 		
 		# Get total time
-		total_time = int(np.shape(self._dataTs1)[-1]-1)
+		total_time = self.get_total_time()
 		
 		# Fire previous time series button
 		for i in range(current_time):
