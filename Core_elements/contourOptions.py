@@ -3,8 +3,52 @@
 
 from traits.api import on_trait_change
 import numpy as np
+from mayavi import mlab
+# from pyface.api import GUI
 
 class allContourOptions:
+	
+	def default_axis_changed_actual(self, _figure, r, g, b):
+		
+		engine = mlab.get_engine()
+		engine.current_scene = _figure
+		
+		oa = mlab.orientation_axes(xlabel = self.default_axis_x_label, 
+		ylabel = self.default_axis_y_label, 
+		zlabel = self.default_axis_z_label, 
+		figure = _figure)
+		
+		oa.axes.x_axis_caption_actor2d.position = [self.default_axis_x_offset, 0.0]
+		oa.axes.y_axis_caption_actor2d.position = [0.0, self.default_axis_y_offset]
+		oa.axes.z_axis_caption_actor2d.position = [self.default_axis_z_offset, 0.0]
+		
+		oa.axes.x_axis_caption_actor2d.caption_text_property.color = (r, g, b)
+	
+	@on_trait_change('default_axis_x_label, default_axis_y_label, default_axis_z_label,\
+	default_axis_x_offset, default_axis_y_offset, default_axis_z_offset')
+	def default_axis_changed(self):
+		
+		self.default_axis_changed_actual(self.scene1.mayavi_scene, self.outlineColorRed1, self.outlineColorGreen1, self.outlineColorBlue1)
+		self.default_axis_changed_actual(self.scene2.mayavi_scene, self.outlineColorRed2, self.outlineColorGreen2, self.outlineColorBlue2)
+		self.default_axis_changed_actual(self.scene3.mayavi_scene, self.outlineColorRed3, self.outlineColorGreen3, self.outlineColorBlue3)
+		self.default_axis_changed_actual(self.scene4.mayavi_scene, self.outlineColorRed4, self.outlineColorGreen4, self.outlineColorBlue4)
+		
+		
+		# self.oa1.axes.x_axis_label_text = self.default_axis_x_label
+		# self.oa1.axes.y_axis_label_text = self.default_axis_y_label
+		# self.oa1.axes.z_axis_label_text = self.default_axis_z_label
+		
+		# self.oa2.axes.x_axis_label_text = self.default_axis_x_label
+		# self.oa2.axes.y_axis_label_text = self.default_axis_y_label
+		# self.oa2.axes.z_axis_label_text = self.default_axis_z_label
+		
+		# self.oa3.axes.x_axis_label_text = self.default_axis_x_label
+		# self.oa3.axes.y_axis_label_text = self.default_axis_y_label
+		# self.oa3.axes.z_axis_label_text = self.default_axis_z_label
+		
+		# self.oa4.axes.x_axis_label_text = self.default_axis_x_label
+		# self.oa4.axes.y_axis_label_text = self.default_axis_y_label
+		# self.oa4.axes.z_axis_label_text = self.default_axis_z_label
 
 	@on_trait_change('outlineWidth1, outlineColorRed1, outlineColorGreen1,\
 	outlineColorBlue1, outlineToggle1')

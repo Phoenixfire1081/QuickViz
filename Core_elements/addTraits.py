@@ -49,6 +49,14 @@ def include_all_traits(self):
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
 	# allContourOptions
+	self.on_trait_change(self.default_axis_changed, "default_axis_x_label")
+	self.on_trait_change(self.default_axis_changed, "default_axis_y_label")
+	self.on_trait_change(self.default_axis_changed, "default_axis_z_label")
+	
+	self.on_trait_change(self.default_axis_changed, "default_axis_x_offset")
+	self.on_trait_change(self.default_axis_changed, "default_axis_y_offset")
+	self.on_trait_change(self.default_axis_changed, "default_axis_z_offset")
+	
 	self.on_trait_change(self.outline_changed1, "outlineWidth1")
 	self.on_trait_change(self.outline_changed1, "outlineColorRed1")
 	self.on_trait_change(self.outline_changed1, "outlineColorGreen1")

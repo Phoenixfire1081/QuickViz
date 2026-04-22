@@ -148,7 +148,6 @@ class allPlaygroundOptions:
 				y = float(self.ringRadius_playground) * (r * np.sin(int(self.p_torus) * theta))
 				z = float(self.ringRadius_playground) * (- np.sin(float(self.q_torus) * theta))
 			
-		
 		if not self.allPredefinedVortices == 'None':
 		
 			# Rotate the object before applying any translation
