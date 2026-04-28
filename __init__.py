@@ -925,7 +925,23 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.dy_data1 = (self.y1.max() - self.y1.min())/(self.ylength_data1-1)
 		self.dz_data1 = (self.z1.max() - self.z1.min())/(self.zlength_data1-1)
 
+		# Plot the isosurface with minimum value from data
+		self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene1.mayavi_scene)
+		self.sf1_sc2 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene2.mayavi_scene)
+		self.sf1_sc3 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene3.mayavi_scene)
+		self.sf1_sc4 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, _data1, figure=self.scene4.mayavi_scene)
 		
+		# Set the threshold
+		self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[_data1.min()])
+		self.iso1_sc2 = mlab.pipeline.iso_surface(self.sf1_sc2, contours=[_data1.min()])
+		self.iso1_sc3 = mlab.pipeline.iso_surface(self.sf1_sc3, contours=[_data1.min()])
+		self.iso1_sc4 = mlab.pipeline.iso_surface(self.sf1_sc4, contours=[_data1.min()])
+		
+		# Plot the outline
+		self.out1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1)
+		self.out1_sc2 = mayavi.tools.pipeline.outline(self.iso1_sc2)
+		self.out1_sc3 = mayavi.tools.pipeline.outline(self.iso1_sc3)
+		self.out1_sc4 = mayavi.tools.pipeline.outline(self.iso1_sc4)
 		
 		# DATA 2
 		

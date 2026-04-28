@@ -145,8 +145,10 @@ def include_all_traits(self):
 	self.on_trait_change(self.extractSpecificStructure, "chooseStructure")
 	
 	# allPlaygroundOptions
-	# self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
-	# self.on_trait_change(self.removeStructure, "removeStructure")
+	self.on_trait_change(self.generateStructure_fired, "GenerateStructure")
+	self.on_trait_change(self.GenerateTS_playground_fired, "GenerateTS_playground")
+	self.on_trait_change(self.ResetTS_playground_fired, "ResetTS_playground")
+	self.on_trait_change(self.removeStructure_fired, "removeStructure")
 	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "allPlaygroundOptionsActual")
 	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "includeK0_playground")
 	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "seedScale_playground")
