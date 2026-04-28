@@ -22,9 +22,11 @@ sliderw, sliderh = allUIOptions.slider()
 slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
+determine_width = allUIOptions.determineWidth
 
 reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
+pdfVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Probability density function"'
 
 isoUIelements = (Group(
 
@@ -57,6 +59,13 @@ isoUIelements = (Group(
 	# Duchon Robert
 	
 	duchonRobertPressureUIelements,
+	
+	# PDF
+	
+	HGroup(
+	Item("generatePDFTxt", style = 'readonly', show_label = False, height = tinyh, width = determine_width("Generate PDF plot:"), visible_when = pdfVisibility),
+	Item("generatePDF", show_label = False, visible_when = pdfVisibility),
+	),
 	
 	# All Log lattice options
 	Group(

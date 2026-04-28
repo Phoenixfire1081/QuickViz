@@ -192,6 +192,7 @@ def include_all_traits(self):
 	self.on_trait_change(self.remove_DR_fired, "remove_DR")
 	self.on_trait_change(self.calculate_Pressure_fired, "calculate_Pressure")
 	self.on_trait_change(self.remove_Pressure_fired, "remove_Pressure")
+	self.on_trait_change(self.generatePDF_fired, "generatePDF")
 	
 	# allBlenderExportOptions
 	self.on_trait_change(self.exportSTLBlenderChanged, "exportSTLBlender")

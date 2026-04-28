@@ -4,7 +4,7 @@
 from traits.api import on_trait_change
 import numpy as np
 import mayavi
-from mayavi import mlab
+from mayavi import mlab	
 import os
 import matplotlib.pyplot as plt
 from numba import jit
@@ -493,6 +493,31 @@ class allAnalysisOptions:
 		
 		self.nts = 1 # Nothing is deleted but controls for Pressure is taken away
 			
-			
+	@on_trait_change('generatePDF')		
+	def generatePDF_fired(self)	:
 		
+		from scipy.stats.kde import gaussian_kde
+		import matplotlib.pyplot as plt
+		
+		if self.radioButton1 == 'Y':
+			allData = self._dataTs1[:, :, :, self.whichTime1].ravel()
+		elif self.radioButton2 == 'Y':
+			allData = self._dataTs2[:, :, :, self.whichTime2].ravel()
+		elif self.radioButton3 == 'Y':
+			allData = self._dataTs3[:, :, :, self.whichTime3].ravel()
+		elif self.radioButton4 == 'Y':
+			allData = self._dataTs4[:, :, :, self.whichTime4].ravel()
+		
+		plt.ion()
+		plt.rc('text', usetex=True)
+		plt.rc('font', family='serif')
+		ax = plt.figure().gca()
+
+		kde_df = gaussian_kde(allData)
+		x = np.linspace(np.min(allData), np.max(allData), 1000)
+
+		y = kde_df(x)
+
+		ax.semilogy(x, y,'-', color = 'black')
+		ax.set_ylabel(r'PDF')
 		
