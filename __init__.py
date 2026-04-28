@@ -152,7 +152,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
 	
 	# All Analysis options
-	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure'], cols=3)
+	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure', 'Probability density function'], cols=3)
 	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
@@ -241,6 +241,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Pressure
 	calculate_Pressure = Button('Calculate')
 	remove_Pressure = Button('Remove')
+	
+	# PDF
+	generatePDF = Button('Generate')
 	
 	# All Log lattice options
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
@@ -701,6 +704,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	enableAxisTxt = Str('Enable axis:')
 	enableCbarTxt = Str('Enable colorbar:')
 	cbarTitleTxt = Str('Title:')
+	generatePDFTxt = Str('Generate PDF plot:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

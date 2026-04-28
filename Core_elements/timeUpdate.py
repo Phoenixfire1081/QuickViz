@@ -691,5 +691,19 @@ class timeUpdateBehavior:
 		self.whichTime2 = self.whichTimeGlobal
 		self.whichTime3 = self.whichTimeGlobal
 		self.whichTime4 = self.whichTimeGlobal
+	
+	def force_update(self):
+		
+		# Force update all the screens
+		mlab.clf(figure = self.scene1.mayavi_scene)	
+		mlab.clf(figure = self.scene2.mayavi_scene)	
+		mlab.clf(figure = self.scene3.mayavi_scene)	
+		mlab.clf(figure = self.scene4.mayavi_scene)	
+	
+		# Change self.whichTimex and trigger time_changedx
+		self.time_changed1()
+		self.time_changed2()
+		self.time_changed3()
+		self.time_changed4()
 		
 		

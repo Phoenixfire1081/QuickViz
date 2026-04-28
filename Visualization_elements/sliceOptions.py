@@ -266,6 +266,8 @@ class allSliceOptions:
 
 			# Keep the previous view
 			self.update_camera_at_current_timestep_with_camPath(camAzimuth, camElevation, camDistance, focalPoint, camRoll, figureHandle)
+			print('min:', image.min())
+			print('max:', image.max())
 
 		elif self.sliceType == "Contour slice (filled)":
 			# Get camera view
@@ -298,6 +300,8 @@ class allSliceOptions:
 
 			# Setup scalar data
 			self.sf1_sc1 = mlab.pipeline.scalar_field(_x, _y, _z, setScalarSlice, figure=figureHandle)
+			print('min:', setScalarSlice.min())
+			print('max:', setScalarSlice.max())
 
 			# Use image_plane_widget to show filled contour data
 			if self.planeOrientation == "X":
@@ -370,6 +374,8 @@ class allSliceOptions:
 
 			# Setup scalar data
 			self.sf1_sc1 = mlab.pipeline.scalar_field(_x, _y, _z, setScalarSlice, figure=figureHandle)
+			print('min:', setScalarSlice.min())
+			print('max:', setScalarSlice.max())
 
 			# Use scalar_cut_plane to show unfilled contour data
 			if self.planeOrientation == "X":
