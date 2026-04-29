@@ -49,6 +49,14 @@ def include_all_traits(self):
 	# ------------------- CHANGEABLE FOR EACH TIME SERIES ------------------- #
 	
 	# allContourOptions
+	self.on_trait_change(self.default_axis_changed, "default_axis_x_label")
+	self.on_trait_change(self.default_axis_changed, "default_axis_y_label")
+	self.on_trait_change(self.default_axis_changed, "default_axis_z_label")
+	
+	self.on_trait_change(self.default_axis_changed, "default_axis_x_offset")
+	self.on_trait_change(self.default_axis_changed, "default_axis_y_offset")
+	self.on_trait_change(self.default_axis_changed, "default_axis_z_offset")
+	
 	self.on_trait_change(self.outline_changed1, "outlineWidth1")
 	self.on_trait_change(self.outline_changed1, "outlineColorRed1")
 	self.on_trait_change(self.outline_changed1, "outlineColorGreen1")
@@ -137,8 +145,10 @@ def include_all_traits(self):
 	self.on_trait_change(self.extractSpecificStructure, "chooseStructure")
 	
 	# allPlaygroundOptions
-	# self.on_trait_change(self.generateStructureChanged, "GenerateStructure")
-	# self.on_trait_change(self.removeStructure, "removeStructure")
+	self.on_trait_change(self.generateStructure_fired, "GenerateStructure")
+	self.on_trait_change(self.GenerateTS_playground_fired, "GenerateTS_playground")
+	self.on_trait_change(self.ResetTS_playground_fired, "ResetTS_playground")
+	self.on_trait_change(self.removeStructure_fired, "removeStructure")
 	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "allPlaygroundOptionsActual")
 	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "includeK0_playground")
 	self.on_trait_change(self.allPlaygroundOptionsActualChanged, "seedScale_playground")

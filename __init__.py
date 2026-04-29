@@ -460,9 +460,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	default_axis_y_label = Str('$y$')
 	default_axis_z_label = Str('$z$')
 	
-	default_axis_x_offset = Range(-5, 5, 0)
-	default_axis_y_offset = Range(-5, 5, 0)
-	default_axis_z_offset = Range(-5, 5, 0)
+	default_axis_x_offset = Range(-25, 25, 0)
+	default_axis_y_offset = Range(-25, 25, 0)
+	default_axis_z_offset = Range(-25, 25, 0)
 	
 	# Text of data axis, number of points and color
 	
@@ -1302,6 +1302,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		# self.cam_sc2 = ''
 		# self.cam_sc3 = ''
 		# self.cam_sc4 = ''
+	
+	# def _scene1_default(self): 	
+		# scene1 = MlabSceneModel()
+		# oa1 = mlab.orientation_axes()
+		# return scene1
 				
 	view = View(
 	
