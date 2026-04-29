@@ -197,6 +197,8 @@ class allAnalysisOptions:
 					w2 = self.omega2[:, :, :, self.whichTime1]
 					w3 = self.omega3[:, :, :, self.whichTime1]
 				
+				wmag = np.sqrt(w1**2 + w2**2 + w3**2)
+				
 				# Calculate enstrophy and its components
 				E1.append(0.5 * np.sum(w1**2) * self.dx_data1  * self.dy_data1  * self.dz_data1)
 				E2.append(0.5 * np.sum(w2**2) * self.dx_data1  * self.dy_data1  * self.dz_data1)
@@ -220,6 +222,20 @@ class allAnalysisOptions:
 				E2_q.append(0.5 * np.sum(w_r[:, 1]**2) * self.dx_data1  * self.dy_data1  * self.dz_data1)
 				E3_q.append(0.5 * np.sum(w_r[:, 2]**2) * self.dx_data1  * self.dy_data1  * self.dz_data1)
 				ET_q.append(E1_q[i] + E2_q[i] + E3_q[i])
+				
+				# Add this as an option later
+				
+				fw = open('vort_comp.txt', 'a')
+				fw.write(str(i) + ' ' + str(wmag.max()) + '\n')
+				fw.close()
+				
+				fw = open('ens_comp.txt', 'a')
+				fw.write(str(i) + ' ' + str(E1[i]) + ' ' + str(E2[i]) + ' ' + str(E3[i]) + ' ' + str(ET[i]) + '\n')
+				fw.close()
+				
+				fw = open('ens_comp_qtensor.txt', 'a')
+				fw.write(str(i) + ' ' + str(E1_q[i]) + ' ' + str(E2_q[i]) + ' ' + str(E3_q[i]) + ' ' + str(ET_q[i]) + '\n')
+				fw.close()
 			
 			
 			fig, ax = plt.subplots(1, 2)

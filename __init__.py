@@ -152,7 +152,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
 	
 	# All Analysis options
-	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure', 'Probability density function'], cols=3)
+	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure', 'Plots', 'Skeletonize'], cols=3)
 	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
@@ -355,6 +355,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Structure extraction
 	thresholdExtractionSet = Str('')
+	thresholdPercentExtractionSet = Str('')
 	verboseStructureExtraction = Bool()
 	useMarchingCubes = Bool()
 	extractStructures = Button('Extract')
@@ -374,6 +375,14 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	structZminAct = Str('')
 	structZmaxAct = Str('')
 	structVolume = Str('')
+	structVolumeAct = Str('')
+	meanVelocityWithinStructure = Str('')
+	maxVelocityWithinStructure = Str('')
+	meanVorticityWithinStructure = Str('')
+	maxVorticityWithinStructure = Str('')
+	polStrengthWithinStructureX = Str('')
+	polStrengthWithinStructureY = Str('')
+	polStrengthWithinStructureZ = Str('')
 	
 	# Blender exports
 	allTimesBlender = Bool()
@@ -705,6 +714,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	enableCbarTxt = Str('Enable colorbar:')
 	cbarTitleTxt = Str('Title:')
 	generatePDFTxt = Str('Generate PDF plot:')
+	structureVolumeActualTxt = Str('Structure volume (Act):')
+	thresholdPercentExtractionSetTxt = Str('Threshold %:')
+	meanVelocityWithinStructureTxt = Str('Mean velocity within structure (ux, uy, uz):')
+	maxVelocityWithinStructureTxt = Str('Max velocity within structure (ux, uy, uz):')
+	meanVorticityWithinStructureTxt = Str('Mean vorticity within structure (wx, wy, wz):')
+	maxVorticityWithinStructureTxt = Str('Max vorticity within structure (wx, wy, wz):')
+	polStrengthWithinStructureXTxt = Str('Polarization strength at maximum velocity in ux (qx, qy, qz):')
+	polStrengthWithinStructureYTxt = Str('Polarization strength at maximum velocity in uy (qx, qy, qz):')
+	polStrengthWithinStructureZTxt = Str('Polarization strength at maximum velocity in uz (qx, qy, qz):')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

@@ -11,12 +11,17 @@ sliderw, sliderh = allUIOptions.slider()
 slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
+determine_width = allUIOptions.determineWidth
 
 structureExtractionUIelements = Group(
 
 HGroup(
 Item("thresholdExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = -70, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
 Item("thresholdExtractionSet", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = longh, width = longw),
+),
+HGroup(
+Item("thresholdPercentExtractionSetTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Threshold %:"), visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
+Item("thresholdPercentExtractionSet", show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"', height = longh, width = longw),
 ),
 HGroup(
 Item("verboseStructureExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction"'),
@@ -61,6 +66,38 @@ Item("structZmaxAct", style = 'readonly', show_label = False, visible_when = 'al
 HGroup(
 Item("structVolTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
 Item("structVolume", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("structureVolumeActualTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Structure volume (Act):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("structVolumeAct", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("meanVelocityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Mean velocity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("meanVelocityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("maxVelocityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Max velocity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("maxVelocityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("meanVorticityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Mean vorticity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("meanVorticityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("maxVorticityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Max velocity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("maxVorticityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("polStrengthWithinStructureXTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Polarization strength at maximum velocity in ux (qx, qy, qz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("polStrengthWithinStructureX", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("polStrengthWithinStructureYTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Polarization strength at maximum velocity in ux (qx, qy, qz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("polStrengthWithinStructureY", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+),
+HGroup(
+Item("polStrengthWithinStructureZTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Polarization strength at maximum velocity in ux (qx, qy, qz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("polStrengthWithinStructureZ", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
 ),
 Group(
 Item("allLocalOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Visualization"')

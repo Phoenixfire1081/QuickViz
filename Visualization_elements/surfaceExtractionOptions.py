@@ -152,9 +152,80 @@ class allSurfaceExtractionOptions:
 			self.structZmaxIdx = str(largeArrayIdx[6])
 			
 			self.structVolume = str((largeArrayIdx[2] - largeArrayIdx[1]) * (largeArrayIdx[4] - largeArrayIdx[3]) * (largeArrayIdx[6] - largeArrayIdx[5]))
+			self.structVolumeAct = str(np.sum(self.structuredGrid == self.chooseStructure))
 			
 			self.structure1_sc1 = mayavi.tools.pipeline.outline(self.iso1_sc1, 
 			color = (1, 0, 0), line_width = 2, opacity = 1, extent = [xmin, xmax, ymin, ymax, zmin, zmax])
+			
+			# Calculate structure properties (mean velocity and vorticity within structure)
+			
+			if self.altBBox:
+			
+				xmin_reconn = self.whichSliceX1_reconn
+				xmax_reconn = self.whichSliceX2_reconn
+				ymin_reconn = self.whichSliceY1_reconn
+				ymax_reconn = self.whichSliceY2_reconn
+				zmin_reconn = self.whichSliceZ1_reconn
+				zmax_reconn = self.whichSliceZ2_reconn
+			
+				ubox = self.u1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				vbox = self.v1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				wbox = self.w1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				
+				om1box = self.omega1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				om2box = self.omega2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				om3box = self.omega3[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+			
+				structuredGridBox = np.reshape(self.structuredGrid, np.shape(self.u1[:, :, :, self.whichTime1]))
+				structuredGridBox = structuredGridBox[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn].ravel()
+			
+			else:
+				
+				ubox = self.u1[:, :, :, self.whichTime1]
+				vbox = self.v1[:, :, :, self.whichTime1]
+				wbox = self.w1[:, :, :, self.whichTime1]
+				
+				om1box = self.omega1[:, :, :, self.whichTime1]
+				om2box = self.omega2[:, :, :, self.whichTime1]
+				om3box = self.omega3[:, :, :, self.whichTime1]
+			
+				structuredGridBox = self.structuredGrid
+			
+			self.meanVelocityWithinStructure = str(np.mean(ubox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(vbox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(wbox.ravel()[structuredGridBox == self.chooseStructure]))
+			self.maxVelocityWithinStructure = str(np.max(ubox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(vbox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(wbox.ravel()[structuredGridBox == self.chooseStructure]))
+			
+			self.meanVorticityWithinStructure = str(np.mean(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(om3box.ravel()[structuredGridBox == self.chooseStructure]))
+			self.maxVorticityWithinStructure = str(np.max(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om3box.ravel()[structuredGridBox == self.chooseStructure]))
+			
+			# This is polStrength in the log lattice simulations. polStrength = u_z / \int u_z d^2x = peak axial flow / peak axial flow rate, where u_z is the axial velocity
+			# We will calculate the peak velocity and along all directions calculate the flow rate
+			
+			peakVelx = np.max(np.abs(ubox.ravel()[structuredGridBox == self.chooseStructure]))
+			peakVely = np.max(np.abs(vbox.ravel()[structuredGridBox == self.chooseStructure]))
+			peakVelz = np.max(np.abs(wbox.ravel()[structuredGridBox == self.chooseStructure]))
+			
+			peakVelx_loc = np.where(np.abs(ubox) == peakVelx)
+			peakVely_loc = np.where(np.abs(vbox) == peakVely)
+			peakVelz_loc = np.where(np.abs(wbox) == peakVelz)
+			
+			self.polStrengthWithinStructureX = str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
+			str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
+			str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
+			
+			self.polStrengthWithinStructureY = str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
+			str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
+			str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
+			
+			self.polStrengthWithinStructureZ = str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
+			str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
+			str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
+			
+			print(peakVelx, peakVely, peakVelz)
+			print(peakVelx_loc, peakVely_loc, peakVelz_loc)
+			print(np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
+			print(np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
+			print(np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
+			
 		
 	def actualExtraction(self, _threshVal, data, 
 	xlen, ylen, zlen, _zFastest, _verbose, 
@@ -174,7 +245,12 @@ class allSurfaceExtractionOptions:
 		
 		# Perform extraction for objects on screen 1
 		
-		self.structuredGrid = self.actualExtraction(float(self.thresholdExtractionSet), self._dataTs1[:, :, :, self.whichTime1], 
+		if self.thresholdExtractionSet == '':
+			self.chosenThreshold = float(self.thresholdPercentExtractionSet) * self.thresholdMaximum1
+		else:
+			self.chosenThreshold = float(self.thresholdExtractionSet)
+		
+		self.structuredGrid = self.actualExtraction(self.chosenThreshold, self._dataTs1[:, :, :, self.whichTime1], 
 		self.xlength_data1, self.ylength_data1, self.zlength_data1, True, self.verboseStructureExtraction,
 		True, False, self.useMarchingCubes)
 		

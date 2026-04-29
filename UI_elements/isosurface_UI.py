@@ -26,7 +26,7 @@ determine_width = allUIOptions.determineWidth
 
 reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
-pdfVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Probability density function"'
+pdfVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Plots"'
 
 isoUIelements = (Group(
 
