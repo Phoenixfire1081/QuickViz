@@ -224,18 +224,36 @@ class allAnalysisOptions:
 				ET_q.append(E1_q[i] + E2_q[i] + E3_q[i])
 				
 				# Add this as an option later
+				if self.altBBox:
+					u = self.u1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+					v = self.v1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+					w = self.w1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				else:
+					u = self.u1[:, :, :, self.whichTime1]
+					v = self.v1[:, :, :, self.whichTime1]
+					w = self.w1[:, :, :, self.whichTime1]
 				
-				fw = open('vort_comp.txt', 'a')
-				fw.write(str(i) + ' ' + str(wmag.max()) + '\n')
+				vMag = np.sqrt(u**2 + v**2 + w**2)
+				
+				helicity = w1/wmag * u/vMag + w2/wmag * v/vMag + w3/wmag * w/vMag
+				helicity = w1 * u + w2 * v + w3 * w
+				helTot = np.sum(helicity) * self.dx_data1  * self.dy_data1  * self.dz_data1
+				
+				fw = open('helicity_comp.txt', 'a')
+				fw.write(str(i) + ' ' + str(helTot) + '\n')
 				fw.close()
 				
-				fw = open('ens_comp.txt', 'a')
-				fw.write(str(i) + ' ' + str(E1[i]) + ' ' + str(E2[i]) + ' ' + str(E3[i]) + ' ' + str(ET[i]) + '\n')
-				fw.close()
+				# fw = open('vort_comp.txt', 'a')
+				# fw.write(str(i) + ' ' + str(wmag.max()) + '\n')
+				# fw.close()
 				
-				fw = open('ens_comp_qtensor.txt', 'a')
-				fw.write(str(i) + ' ' + str(E1_q[i]) + ' ' + str(E2_q[i]) + ' ' + str(E3_q[i]) + ' ' + str(ET_q[i]) + '\n')
-				fw.close()
+				# fw = open('ens_comp.txt', 'a')
+				# fw.write(str(i) + ' ' + str(E1[i]) + ' ' + str(E2[i]) + ' ' + str(E3[i]) + ' ' + str(ET[i]) + '\n')
+				# fw.close()
+				
+				# fw = open('ens_comp_qtensor.txt', 'a')
+				# fw.write(str(i) + ' ' + str(E1_q[i]) + ' ' + str(E2_q[i]) + ' ' + str(E3_q[i]) + ' ' + str(ET_q[i]) + '\n')
+				# fw.close()
 			
 			
 			fig, ax = plt.subplots(1, 2)

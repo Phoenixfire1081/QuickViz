@@ -195,7 +195,7 @@ class allSurfaceExtractionOptions:
 			self.maxVelocityWithinStructure = str(np.max(ubox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(vbox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(wbox.ravel()[structuredGridBox == self.chooseStructure]))
 			
 			self.meanVorticityWithinStructure = str(np.mean(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(om3box.ravel()[structuredGridBox == self.chooseStructure]))
-			self.maxVorticityWithinStructure = str(np.max(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om3box.ravel()[structuredGridBox == self.chooseStructure]))
+			# self.maxVorticityWithinStructure = str(np.max(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om3box.ravel()[structuredGridBox == self.chooseStructure]))
 			
 			# This is polStrength in the log lattice simulations. polStrength = u_z / \int u_z d^2x = peak axial flow / peak axial flow rate, where u_z is the axial velocity
 			# We will calculate the peak velocity and along all directions calculate the flow rate

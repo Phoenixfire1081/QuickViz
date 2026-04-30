@@ -110,14 +110,39 @@ localUIelements = (Group(label = 'Local options:'),
 	Group(label = 'Colorbar:'),
 	
 	HGroup(
-	Item("enableCbarTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Enable colorbar:")),
-	Item("enableColorbar_sc1", show_label = False, height = tinyh, width = tinyw)
+	Item("enableCbarTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Enable colorbar:"), visible_when='radioButton1 == "Y"'),
+	Item("enableColorbar_sc1", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton1 == "Y"')
+	),
+	HGroup(
+	Item("enableCbarTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Enable colorbar:"), visible_when='radioButton2 == "Y"'),
+	Item("enableColorbar_sc2", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton2 == "Y"')
+	),
+	HGroup(
+	Item("enableCbarTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Enable colorbar:"), visible_when='radioButton3 == "Y"'),
+	Item("enableColorbar_sc3", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton3 == "Y"')
+	),
+	HGroup(
+	Item("enableCbarTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Enable colorbar:"), visible_when='radioButton4 == "Y"'),
+	Item("enableColorbar_sc4", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton4 == "Y"')
 	),
 	
 	HGroup(
-	Item("cbarTitleTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Title:")),
-	Item("colorbarTitle_sc1", show_label = False, height = tinyh, width = tinyw)
+	Item("cbarTitleTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Title:"), visible_when='radioButton1 == "Y"'),
+	Item("colorbarTitle_sc1", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton1 == "Y"')
 	),
+	HGroup(
+	Item("cbarTitleTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Title:"), visible_when='radioButton2 == "Y"'),
+	Item("colorbarTitle_sc2", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton2 == "Y"')
+	),
+	HGroup(
+	Item("cbarTitleTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Title:"), visible_when='radioButton3 == "Y"'),
+	Item("colorbarTitle_sc3", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton3 == "Y"')
+	),
+	HGroup(
+	Item("cbarTitleTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Title:"), visible_when='radioButton4 == "Y"'),
+	Item("colorbarTitle_sc4", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton4 == "Y"')
+	),
+	
 	
 	Group(label = 'Static axis:'),
 	

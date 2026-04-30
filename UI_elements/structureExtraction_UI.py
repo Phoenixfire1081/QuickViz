@@ -80,13 +80,13 @@ Item("maxVelocityWithinStructureTxt", style = 'readonly', show_label = False, he
 Item("maxVelocityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
 ),
 HGroup(
-Item("meanVorticityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Mean vorticity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+Item("meanVorticityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Circulation within structure (Gx, Gy, Gz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
 Item("meanVorticityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
 ),
-HGroup(
-Item("maxVorticityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Max velocity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-Item("maxVorticityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
-),
+# HGroup(
+# Item("maxVorticityWithinStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Max velocity within structure (ux, uy, uz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+# Item("maxVorticityWithinStructure", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
+# ),
 HGroup(
 Item("polStrengthWithinStructureXTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Polarization strength at maximum velocity in ux (qx, qy, qz):"), visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),
 Item("polStrengthWithinStructureX", style = 'readonly', show_label = False, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure extraction" and chooseStructure > 0'),

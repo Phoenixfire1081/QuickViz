@@ -185,6 +185,42 @@ class allIsosurfaceOptions:
 		
 		return whichColorData
 	
+	def setColorbar(self, obj):
+		
+		ctr = 0
+		
+		if self.enableColorbar_sc1:
+			_figure = self.scene1.mayavi_scene
+			_title = self.colorbarTitle_sc1
+			ctr += 1
+		if self.enableColorbar_sc2:
+			_figure = self.scene2.mayavi_scene
+			_title = self.colorbarTitle_sc2
+			ctr += 1
+		if self.enableColorbar_sc3:
+			_figure = self.scene3.mayavi_scene
+			_title = self.colorbarTitle_sc3
+			ctr += 1
+		if self.enableColorbar_sc4:
+			_figure = self.scene4.mayavi_scene
+			_title = self.colorbarTitle_sc4
+			ctr += 1
+		
+		if not ctr == 0:
+			cb = mlab.colorbar(object = obj, orientation='vertical', title=_title)	
+			
+			cb.label_text_property.color = (0, 0, 0)  # Black labels
+			cb.label_text_property.font_family = 'times'
+			cb.label_text_property.font_size = 10
+			cb.label_text_property.bold = False
+			cb.label_text_property.italic = False
+			
+			cb.title_text_property.color = (0, 0, 0)  # Black title
+			cb.title_text_property.font_family = 'times'
+			cb.title_text_property.font_size = 6
+			cb.title_text_property.bold = False
+			cb.title_text_property.italic = False
+	
 	@on_trait_change('setThreshold1')
 	def setThreshold_fired1(self):
 		
@@ -230,6 +266,8 @@ class allIsosurfaceOptions:
 				else:
 				
 					tmpthreshvals = self.threshold1.split(',')
+				
+				self.setColorbar(self.iso1_sc1)
 				
 				if self.colorFields1 != 'None':
 					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(self.colorFields1, 1), tmpthreshvals, _figure, False, 0, self.x1, self.y1, self.z1)
@@ -284,6 +322,8 @@ class allIsosurfaceOptions:
 						tmpthreshvals = [threshvals[self.whichTime1]]
 				else:
 					tmpthreshvals = self.thresholdPercent1.split(',')
+				
+				self.setColorbar(self.iso1_sc1)
 				
 				if self.colorFields1 != 'None':
 					self.plot_colorFieldData(self.iso1_sc1, self.whichColorFields(self.colorFields1, 1), tmpthreshvals, _figure, True, self.thresholdMaximum1, self.x1, self.y1, self.z1)
@@ -341,6 +381,8 @@ class allIsosurfaceOptions:
 				
 					tmpthreshvals = self.threshold2.split(',')
 				
+				self.setColorbar(self.iso2_sc1)
+				
 				if self.colorFields2 != 'None':
 					self.plot_colorFieldData(self.iso2_sc1, self.whichColorFields(self.colorFields2, 2), tmpthreshvals, _figure, False, 0, self.x2, self.y2, self.z2)
 				else:
@@ -394,6 +436,8 @@ class allIsosurfaceOptions:
 						tmpthreshvals = [threshvals[self.whichTime2]]
 				else:
 					tmpthreshvals = self.thresholdPercent2.split(',')
+				
+				self.setColorbar(self.iso2_sc1)
 				
 				if self.colorFields2 != 'None':
 					self.plot_colorFieldData(self.iso2_sc1, self.whichColorFields(self.colorFields2, 2), tmpthreshvals, _figure, True, self.thresholdMaximum2, self.x2, self.y2, self.z2)
@@ -451,6 +495,8 @@ class allIsosurfaceOptions:
 				
 					tmpthreshvals = self.threshold3.split(',')
 				
+				self.setColorbar(self.iso3_sc1)
+				
 				if self.colorFields3 != 'None':
 					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(self.colorFields3, 2), tmpthreshvals, _figure, False, 0, self.x3, self.y3, self.z3)
 				else:
@@ -504,6 +550,8 @@ class allIsosurfaceOptions:
 						tmpthreshvals = [threshvals[self.whichTime3]]
 				else:
 					tmpthreshvals = self.thresholdPercent3.split(',')
+				
+				self.setColorbar(self.iso3_sc1)
 				
 				if self.colorFields3 != 'None':
 					self.plot_colorFieldData(self.iso3_sc1, self.whichColorFields(self.colorFields3, 2), tmpthreshvals, _figure, True, self.thresholdMaximum3, self.x3, self.y3, self.z3)
@@ -561,6 +609,8 @@ class allIsosurfaceOptions:
 				
 					tmpthreshvals = self.threshold4.split(',')
 				
+				self.setColorbar(self.iso4_sc1)
+				
 				if self.colorFields4 != 'None':
 					self.plot_colorFieldData(self.iso4_sc1, self.whichColorFields(self.colorFields4, 2), tmpthreshvals, _figure, False, 0, self.x4, self.y4, self.z4)
 				else:
@@ -614,6 +664,8 @@ class allIsosurfaceOptions:
 						tmpthreshvals = [threshvals[self.whichTime4]]
 				else:
 					tmpthreshvals = self.thresholdPercent4.split(',')
+				
+				self.setColorbar(self.iso4_sc1)
 				
 				if self.colorFields4 != 'None':
 					self.plot_colorFieldData(self.iso4_sc1, self.whichColorFields(self.colorFields4, 2), tmpthreshvals, _figure, True, self.thresholdMaximum4, self.x4, self.y4, self.z4)

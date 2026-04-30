@@ -43,6 +43,12 @@ isoUIelements = (Group(
 	Item("allAnalysisOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis"')
 	),
 	
+	# Structure tracking
+	
+	Group(
+	Item("allStructureTrackingOptions", show_label = False, style = 'custom', format_func=lambda x: x, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking"')
+	),
+	
 	# Fieldline tracking
 	fieldLineTrackingUIelements,
 	

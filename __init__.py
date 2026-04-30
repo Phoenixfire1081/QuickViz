@@ -154,6 +154,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# All Analysis options
 	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure', 'Plots', 'Skeletonize'], cols=3)
 	
+	# Structure tracking options
+	allStructureTrackingOptions = Enum(['Overlap', 'Overlap with branching', 'Overlap with registration', 'MLPT'], cols=4)
+	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
 	# This ensures visualization and analysis options remain separate.
@@ -718,7 +721,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	thresholdPercentExtractionSetTxt = Str('Threshold %:')
 	meanVelocityWithinStructureTxt = Str('Mean velocity within structure (ux, uy, uz):')
 	maxVelocityWithinStructureTxt = Str('Max velocity within structure (ux, uy, uz):')
-	meanVorticityWithinStructureTxt = Str('Mean vorticity within structure (wx, wy, wz):')
+	meanVorticityWithinStructureTxt = Str('Circulation within structure (Gx, Gy, Gz):')
 	maxVorticityWithinStructureTxt = Str('Max vorticity within structure (wx, wy, wz):')
 	polStrengthWithinStructureXTxt = Str('Polarization strength at maximum velocity in ux (qx, qy, qz):')
 	polStrengthWithinStructureYTxt = Str('Polarization strength at maximum velocity in uy (qx, qy, qz):')
@@ -1297,6 +1300,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.zmax_pg = 0.5
 		self.minRot_pg = -90
 		self.maxRot_pg = 90
+		
+		# Default options for colorbar
+		self.enableColorbar_sc1 = False
+		self.enableColorbar_sc2 = False
+		self.enableColorbar_sc3 = False
+		self.enableColorbar_sc4 = False
 		
 		# Default options for camera control
 		# self.cam_sc2 = ''
