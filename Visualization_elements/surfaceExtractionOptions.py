@@ -194,7 +194,36 @@ class allSurfaceExtractionOptions:
 			self.meanVelocityWithinStructure = str(np.mean(ubox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(vbox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(wbox.ravel()[structuredGridBox == self.chooseStructure]))
 			self.maxVelocityWithinStructure = str(np.max(ubox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(vbox.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(wbox.ravel()[structuredGridBox == self.chooseStructure]))
 			
-			self.meanVorticityWithinStructure = str(np.mean(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.mean(om3box.ravel()[structuredGridBox == self.chooseStructure]))
+			structuredGridBoxGrid = np.reshape(structuredGridBox, np.shape(om1box))
+			
+			# Calculate peak circulation along all directions
+			
+			peakom1 = 0
+			peakom2 = 0
+			peakom3 = 0
+			
+			xlenB, ylenB, zlenB = np.shape(om1box)
+			
+			for i in range(xlenB):
+				
+				if np.abs(np.sum(om1box[i, :, :].ravel()[structuredGridBoxGrid[i, :, :].ravel() == self.chooseStructure]) * self.dy_data1 * self.dz_data1) > np.abs(peakom1):
+					peakom1 = np.sum(om1box[i, :, :].ravel()[structuredGridBoxGrid[i, :, :].ravel() == self.chooseStructure]) * self.dy_data1 * self.dz_data1
+			
+			xlenB, ylenB, zlenB = np.shape(om2box)
+			
+			for i in range(ylenB):
+				
+				if np.abs(np.sum(om2box[:, i, :].ravel()[structuredGridBoxGrid[:, i, :].ravel() == self.chooseStructure]) * self.dx_data1 * self.dz_data1) > np.abs(peakom2):
+					peakom2 = np.sum(om2box[:, i, :].ravel()[structuredGridBoxGrid[:, i, :].ravel() == self.chooseStructure]) * self.dx_data1 * self.dz_data1
+			
+			xlenB, ylenB, zlenB = np.shape(om3box)
+			
+			for i in range(zlenB):
+				
+				if np.abs(np.sum(om3box[:, :, i].ravel()[structuredGridBoxGrid[:, :, i].ravel() == self.chooseStructure]) * self.dx_data1 * self.dy_data1) > np.abs(peakom3):
+					peakom3 = np.sum(om3box[:, :, i].ravel()[structuredGridBoxGrid[:, :, i].ravel() == self.chooseStructure]) * self.dx_data1 * self.dy_data1
+			
+			self.meanVorticityWithinStructure = str(peakom1) + ' ' + str(peakom2) + ' ' + str(peakom3)
 			# self.maxVorticityWithinStructure = str(np.max(om1box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om2box.ravel()[structuredGridBox == self.chooseStructure])) + ' ' + str(np.max(om3box.ravel()[structuredGridBox == self.chooseStructure]))
 			
 			# This is polStrength in the log lattice simulations. polStrength = u_z / \int u_z d^2x = peak axial flow / peak axial flow rate, where u_z is the axial velocity
@@ -225,7 +254,6 @@ class allSurfaceExtractionOptions:
 			print(np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
 			print(np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
 			print(np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
-			
 		
 	def actualExtraction(self, _threshVal, data, 
 	xlen, ylen, zlen, _zFastest, _verbose, 

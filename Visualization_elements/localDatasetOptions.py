@@ -39,6 +39,168 @@ class allLocalDatasetOptions:
 			
 			pass # Nothing to do
 	
+	def save_data_actual(self):
+		
+		if not self.timeStep_LocalData == '':
+		
+			if '-' in self.timeStep_LocalData:
+				minTs = int(self.timeStep_LocalData.split('-')[0])
+				maxTs = int(self.timeStep_LocalData.split('-')[1])
+				
+				# Check if skip values are provided
+				try: 
+					skipTs = int(self.timeStep_LocalData.split('-')[2])
+				except:
+					skipTs = 1
+				
+			else:
+				minTs = int(self.timeStep_LocalData)
+				maxTs = int(self.timeStep_LocalData)
+				skipTs = 1
+			
+			# Create appropriate folders first
+			
+			os.makedirs(self.save_path + '/' + self.folderNameExport, exist_ok=True)
+			
+			if self.saveWhatOptions == 'Computed scalar':
+				# if not os.path.exists(self.save_path + '/' + self.folderNameExport):
+				os.makedirs(self.save_path + '/' + self.folderNameExport + '/scalar', exist_ok=True)
+				folderPath = self.save_path + '/' + self.folderNameExport + '/scalar/'
+			
+			elif self.saveWhatOptions == 'Velocity data':
+				# if not os.path.exists(self.save_path + '/' + self.folderNameExport):
+				os.makedirs(self.save_path + '/' + self.folderNameExport + '/velComp', exist_ok=True)
+				folderPath = self.save_path + '/' + self.folderNameExport + '/velComp/'
+			
+			elif self.saveWhatOptions == 'Vorticity data':
+				# if not os.path.exists(self.save_path + '/' + self.folderNameExport):
+				os.makedirs(self.save_path + '/' + self.folderNameExport + '/vortComp', exist_ok=True)
+				folderPath = self.save_path + '/' + self.folderNameExport + '/vortComp/'
+			
+			ctr = 1
+			
+			if self.altBBox:
+				
+				xmin_reconn = self.whichSliceX1_reconn
+				xmax_reconn = self.whichSliceX2_reconn
+				ymin_reconn = self.whichSliceY1_reconn
+				ymax_reconn = self.whichSliceY2_reconn
+				zmin_reconn = self.whichSliceZ1_reconn
+				zmax_reconn = self.whichSliceZ2_reconn
+			
+			for ts in range(minTs, maxTs, skipTs):
+			
+				if self.assignToTS == 'Time Series 1': # Save data from TS1
+					
+					if self.saveWhatOptions == 'Computed scalar':
+						scalar = self._dataTs1[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						u = self.u1[:, :, :, ts]
+						v = self.v1[:, :, :, ts]
+						w = self.w1[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						om1 = self.omega1[:, :, :, ts]
+						om2 = self.omega2[:, :, :, ts]
+						om3 = self.omega3[:, :, :, ts]
+					
+				if self.assignToTS == 'Time Series 2': # Save data from TS2
+					
+					if self.saveWhatOptions == 'Computed scalar':
+						scalar = self._dataTs2[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						u = self.u2[:, :, :, ts]
+						v = self.v2[:, :, :, ts]
+						w = self.w2[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						om1 = self.omega1_2[:, :, :, ts]
+						om2 = self.omega2_2[:, :, :, ts]
+						om3 = self.omega3_2[:, :, :, ts]
+					
+				if self.assignToTS == 'Time Series 3': # Save data from TS3
+					
+					if self.saveWhatOptions == 'Computed scalar':
+						scalar = self._dataTs3[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						u = self.u3[:, :, :, ts]
+						v = self.v3[:, :, :, ts]
+						w = self.w3[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						om1 = self.omega1_3[:, :, :, ts]
+						om2 = self.omega2_3[:, :, :, ts]
+						om3 = self.omega3_3[:, :, :, ts]
+					
+				if self.assignToTS == 'Time Series 4': # Save data from TS4
+					
+					if self.saveWhatOptions == 'Computed scalar':
+						scalar = self._dataTs4[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						u = self.u4[:, :, :, ts]
+						v = self.v4[:, :, :, ts]
+						w = self.w4[:, :, :, ts]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						om1 = self.omega1_4[:, :, :, ts]
+						om2 = self.omega2_4[:, :, :, ts]
+						om3 = self.omega3_4[:, :, :, ts]
+				
+				if self.altBBox:
+					
+					if self.saveWhatOptions == 'Computed scalar':
+						scalar = scalar[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						u = u[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+						v = v[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+						w = w[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+					
+					elif self.saveWhatOptions == 'Velocity data':
+						om1 = om1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+						om2 = om2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+						om3 = om3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]
+					
+				if self.saveWhatOptions == 'Computed scalar':
+					
+					fw = open(folderPath + 'scalar_' + str(ctr).zfill(4) + '.bin', 'wb')
+					scalar.tofile(fw)
+					fw.close()
+				
+				elif self.saveWhatOptions == 'Velocity data':
+					
+					fw = open(folderPath + 'velx_' + str(ctr).zfill(4) + '.bin', 'wb')
+					u.tofile(fw)
+					fw.close()
+					
+					fw = open(folderPath + 'vely_' + str(ctr).zfill(4) + '.bin', 'wb')
+					v.tofile(fw)
+					fw.close()
+					
+					fw = open(folderPath + 'velz_' + str(ctr).zfill(4) + '.bin', 'wb')
+					w.tofile(fw)
+					fw.close()
+				
+				elif self.saveWhatOptions == 'Vorticity data':
+					
+					fw = open(folderPath + 'velx_' + str(ctr).zfill(4) + '.bin', 'wb')
+					om1.tofile(fw)
+					fw.close()
+					
+					fw = open(folderPath + 'vely_' + str(ctr).zfill(4) + '.bin', 'wb')
+					om2.tofile(fw)
+					fw.close()
+					
+					fw = open(folderPath + 'velz_' + str(ctr).zfill(4) + '.bin', 'wb')
+					om3.tofile(fw)
+					fw.close()
+				
+				ctr += 1
+	
 	def reset_specific_ts(self, xres, yres, zres, numFiles, whichTs):
 		
 		if whichTs == 1:
@@ -276,8 +438,7 @@ class allLocalDatasetOptions:
 			self.whichTime4 = 0
 			
 			self.ts4max = (maxTs - minTs)//skipTs - 1 # This updates the slider
-		
-	
+			
 	@on_trait_change('choose_folder_LocalDataPath')
 	def choose_folder_LocalDataPath_fired(self):
 		
@@ -593,14 +754,125 @@ class allLocalDatasetOptions:
 				ctr += 1
 				fileCtr += skipTs
 			
-			try:
+			# try:
 			
-				# Remove existing outlines as well
-				self.out1_sc1.remove()
-				self.sf1_sc1.remove()
-				self.iso1_sc1.remove()
+				# # Remove existing outlines as well
+				# self.out1_sc1.remove()
+				# self.sf1_sc1.remove()
+				# self.iso1_sc1.remove()
 			
-			except ValueError: # Fixes issue when trying to load the data multiple times
+			# except ValueError: # Fixes issue when trying to load the data multiple times
 				
-				pass
+				# pass
 			
+			# After loading is completed, restore original data to TS1. NOTE: Data is reset while choosing the folder
+			
+			# Restore original data
+			self.x1 = self.x1_bk
+			self.y1 = self.y1_bk
+			self.z1 = self.z1_bk
+			
+			# Remove modified data
+			self.out1_sc1.remove()
+			self.sf1_sc1.remove()
+			self.iso1_sc1.remove()
+			
+			self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, self._dataTs1[:, :, :, self.whichTime1], figure=self.scene1.mayavi_scene)
+			self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[self._dataTs1[:, :, :, self.whichTime1].min()])
+			
+	@on_trait_change('exportNow')
+	def exportNow_fired(self):
+		
+		print('Save path:', self.save_path)
+		print('Folder:', self.folderNameExport)
+		print(self.save_path + '/' + self.folderNameExport)
+		
+		self.save_data_actual()
+		
+		# Write how to read file
+		
+		if self.altBBox:
+			xres = self.whichSliceX2_reconn - self.whichSliceX1_reconn
+			yres = self.whichSliceY2_reconn - self.whichSliceY1_reconn
+			zres = self.whichSliceZ2_reconn - self.whichSliceZ1_reconn
+			
+			xmin_reconn = self.whichSliceX1_reconn
+			xmax_reconn = self.whichSliceX2_reconn
+			ymin_reconn = self.whichSliceY1_reconn
+			ymax_reconn = self.whichSliceY2_reconn
+			zmin_reconn = self.whichSliceZ1_reconn
+			zmax_reconn = self.whichSliceZ2_reconn
+		
+		if self.assignToTS ==  'Time Series 1':
+			if self.altBBox:
+				xmin = np.min(np.unique(self.x1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				xmax = np.max(np.unique(self.x1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymin = np.min(np.unique(self.y1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymax = np.max(np.unique(self.y1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmin = np.min(np.unique(self.z1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmax = np.max(np.unique(self.z1[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+			else:
+				xmin = np.min(np.unique(self.x1))
+				xmax = np.max(np.unique(self.x1))
+				ymin = np.min(np.unique(self.y1))
+				ymax = np.max(np.unique(self.y1))
+				zmin = np.min(np.unique(self.z1))
+				zmax = np.max(np.unique(self.z1))
+				xres, yres, zres = np.shape(self.x1)
+		elif self.assignToTS ==  'Time Series 2':
+			if self.altBBox:
+				xmin = np.min(np.unique(self.x2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				xmax = np.max(np.unique(self.x2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymin = np.min(np.unique(self.y2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymax = np.max(np.unique(self.y2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmin = np.min(np.unique(self.z2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmax = np.max(np.unique(self.z2[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+			else:
+				xmin = np.min(np.unique(self.x2))
+				xmax = np.max(np.unique(self.x2))
+				ymin = np.min(np.unique(self.y2))
+				ymax = np.max(np.unique(self.y2))
+				zmin = np.min(np.unique(self.z2))
+				zmax = np.max(np.unique(self.z2))
+				xres, yres, zres = np.shape(self.x2)
+		elif self.assignToTS ==  'Time Series 3':
+			if self.altBBox:
+				xmin = np.min(np.unique(self.x3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				xmax = np.max(np.unique(self.x3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymin = np.min(np.unique(self.y3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymax = np.max(np.unique(self.y3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmin = np.min(np.unique(self.z3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmax = np.max(np.unique(self.z3[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+			else:
+				xmin = np.min(np.unique(self.x3))
+				xmax = np.max(np.unique(self.x3))
+				ymin = np.min(np.unique(self.y3))
+				ymax = np.max(np.unique(self.y3))
+				zmin = np.min(np.unique(self.z3))
+				zmax = np.max(np.unique(self.z3))
+				xres, yres, zres = np.shape(self.x3)
+		elif self.assignToTS ==  'Time Series 4':
+			if self.altBBox:
+				xmin = np.min(np.unique(self.x4[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				xmax = np.max(np.unique(self.x4[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymin = np.min(np.unique(self.y4[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				ymax = np.max(np.unique(self.y4[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmin = np.min(np.unique(self.z4[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+				zmax = np.max(np.unique(self.z4[xmin_reconn: xmax_reconn, ymin_reconn: ymax_reconn, zmin_reconn: zmax_reconn]))
+			else:
+				xmin = np.min(np.unique(self.x4))
+				xmax = np.max(np.unique(self.x4))
+				ymin = np.min(np.unique(self.y4))
+				ymax = np.max(np.unique(self.y4))
+				zmin = np.min(np.unique(self.z4))
+				zmax = np.max(np.unique(self.z4))
+				xres, yres, zres = np.shape(self.x4)
+		
+		fw = open(self.save_path + '/' + self.folderNameExport + '/howToRead.txt', 'w+')
+		fw.write('Bounding Box:\n\
+xmin xmax ymin ymax zmin zmax\n')
+		fw.write(str(xmin) + ' ' + str(xmax) + ' ' + str(ymin) + ' ' + str(ymax) + ' ' + str(zmin) + ' ' + str(zmax) + '\n')
+		fw.write('Resolution:\n\
+xres yres zres\n')
+		fw.write(str(xres) + ' ' + str(yres) + ' ' + str(zres))
+		fw.close()

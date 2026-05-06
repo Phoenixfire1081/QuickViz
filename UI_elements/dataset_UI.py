@@ -18,6 +18,8 @@ localDatasetVisibility = 'allDatasetActions == "Import" and allModeOptions == "D
 localDatasetVisibilityBBox = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and altBBox == True'
 localDatasetVisibilityRaw3D = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "Raw 3D"'
 localDatasetVisibilitynetCDF = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
+exportData = 'allModeOptions == "Dataset" and allDatasetActions == "Export"'
+exportDataBBox = 'allModeOptions == "Dataset" and allDatasetActions == "Export" and altBBox == True'
 
 datasetUIelements = Group( 
 	
@@ -27,6 +29,63 @@ datasetUIelements = Group(
 	
 	Group(
 	Item("allDatasetOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Dataset" and allDatasetActions == "Import"')
+	),
+	
+	# Export
+	
+	HGroup(
+	Item("SaveTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Save location:'), visible_when = exportData),
+	Item("save_path", show_label = False, height = longh, width = longw, visible_when = exportData),
+	Item("choose_folder", show_label = False, height = buttonh, width = buttonw, visible_when = exportData),
+	),
+	HGroup(
+	Item("folderNameExportTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Save location:'), visible_when = exportData),
+	Item("folderNameExport", show_label = False, height = smallh, width = smallw, visible_when = exportData),
+	),
+	HGroup(
+	Item("saveWhatOptionsTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Save what?'), visible_when = exportData),
+	Item("assignToTS", show_label = False, visible_when = exportData),
+	Item("saveWhatOptions", show_label = False, visible_when = exportData),
+	),
+	
+	HGroup(
+	Item("whichTimeStepLLTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Which time step (s):'), visible_when = exportData),
+	Item("timeStep_LocalData", show_label = False, height = longh, width = longw , visible_when = exportData),
+	Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('(ex:1 or 3-6 or 1-100-10)'), visible_when = exportData),
+	),
+	
+	HGroup(
+	Item("altBBoxTxt", show_label = False, style = 'readonly', visible_when=exportData, height = smallh, width = determine_width('Use alternate bounding box:')),
+	Item("altBBox", show_label = False, visible_when=exportData),
+	),
+	
+	HGroup(
+	Item("reconnX1Txt", show_label = False, style = 'readonly', visible_when=exportDataBBox, height = smallh, width = determine_width('xmin:')),
+	Item("whichSliceX1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minx1',  high_name='maxx1'), visible_when=exportDataBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnX2Txt", show_label = False, style = 'readonly', visible_when=exportDataBBox, height = smallh, width = determine_width('xmax:')),
+	Item("whichSliceX2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minx1',  high_name='maxx1'), visible_when=exportDataBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnY1Txt", show_label = False, style = 'readonly', visible_when=exportDataBBox, height = smallh, width = determine_width('ymin:')),
+	Item("whichSliceY1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'miny1',  high_name='maxy1'), visible_when=exportDataBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnY2Txt", show_label = False, style = 'readonly', visible_when=exportDataBBox, height = smallh, width = determine_width('ymax:')),
+	Item("whichSliceY2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'miny1',  high_name='maxy1'), visible_when=exportDataBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnZ1Txt", show_label = False, style = 'readonly', visible_when=exportDataBBox, height = smallh, width = determine_width('zmin:')),
+	Item("whichSliceZ1_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=exportDataBBox, width = sliderw),
+	),
+	HGroup(
+	Item("reconnZ2Txt", show_label = False, style = 'readonly', visible_when=exportDataBBox, height = smallh, width = determine_width('zmax:')),
+	Item("whichSliceZ2_reconn", show_label = False, editor=RangeEditor(mode='slider', low_name = 'minz1',  high_name='maxz1'), visible_when=exportDataBBox, width = sliderw),
+	),
+	
+	HGroup(
+	Item("exportNow", show_label = False, height = buttonh, width = buttonw, visible_when = exportData),
 	),
 	
 	# Local data

@@ -111,6 +111,11 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allDatasetOptions = Enum('Local', 'Turbulence Database (JHTDB)', cols = 2)
 	allLocalDatasetOptions = Enum('Raw 3D', 'netCDF', cols = 2)
 	
+	# Export options
+	folderNameExport = Str('data')
+	saveWhatOptions = Enum(['Computed scalar', 'Velocity data', 'Vorticity data'])
+	exportNow = Button('Export')
+	
 	# Local data options
 	LocalData_path = Str(os.getcwd())
 	choose_folder_LocalDataPath = Button('Browse')
@@ -726,6 +731,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	polStrengthWithinStructureXTxt = Str('Polarization strength at maximum velocity in ux (qx, qy, qz):')
 	polStrengthWithinStructureYTxt = Str('Polarization strength at maximum velocity in uy (qx, qy, qz):')
 	polStrengthWithinStructureZTxt = Str('Polarization strength at maximum velocity in uz (qx, qy, qz):')
+	folderNameExportTxt = Str('Folder name:')
+	saveWhatOptionsTxt = Str('Save what?')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
