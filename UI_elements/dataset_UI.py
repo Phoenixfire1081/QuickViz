@@ -39,7 +39,7 @@ datasetUIelements = Group(
 	Item("choose_folder", show_label = False, height = buttonh, width = buttonw, visible_when = exportData),
 	),
 	HGroup(
-	Item("folderNameExportTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Save location:'), visible_when = exportData),
+	Item("folderNameExportTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Folder name:'), visible_when = exportData),
 	Item("folderNameExport", show_label = False, height = smallh, width = smallw, visible_when = exportData),
 	),
 	HGroup(

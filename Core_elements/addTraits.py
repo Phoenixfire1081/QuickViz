@@ -143,6 +143,7 @@ def include_all_traits(self):
 	# allSurfaceExtractionOptions
 	self.on_trait_change(self.enableExtractStructures, "extractStructures")
 	self.on_trait_change(self.extractSpecificStructure, "chooseStructure")
+	self.on_trait_change(self.trackNow_fired, "trackNow")
 	
 	# allPlaygroundOptions
 	self.on_trait_change(self.generateStructure_fired, "GenerateStructure")

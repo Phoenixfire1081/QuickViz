@@ -161,6 +161,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# Structure tracking options
 	allStructureTrackingOptions = Enum(['Overlap', 'Overlap with branching', 'Overlap with registration', 'MLPT'], cols=4)
+	overlapPercentage = Float(0.5)
+	trackNow = Button('Track selected structure')
 	
 	# Fieldline tracking options
 	# Some fieldline options are repeated. 
@@ -733,6 +735,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	polStrengthWithinStructureZTxt = Str('Polarization strength at maximum velocity in uz (qx, qy, qz):')
 	folderNameExportTxt = Str('Folder name:')
 	saveWhatOptionsTxt = Str('Save what?')
+	overlapPercentageTxt = Str('Overlap percentage:')
+	structureExtractionTxt = Str('Run structure extraction first')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

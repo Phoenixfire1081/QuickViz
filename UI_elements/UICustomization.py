@@ -9,8 +9,8 @@ class UIOptionsClass:
 	def __init__(self):
 		
 		# Number of pixels for each letter
-		self.spacingFactorLetters = 6.5
-		self.spacingFactorOthers = 3
+		self.spacingFactorLetters = 7
+		self.spacingFactorOthers = 5
 	
 	def count_letters(self, word, valid_letters=string.ascii_letters):
 		count = Counter(word) 

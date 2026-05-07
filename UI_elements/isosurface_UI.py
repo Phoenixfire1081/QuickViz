@@ -27,6 +27,9 @@ determine_width = allUIOptions.determineWidth
 reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
 reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
 pdfVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Plots"'
+trackingAll = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking" and totalNumberOfExtractedStructures == 0'
+trackingBasicOverlap = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking" and not totalNumberOfExtractedStructures == 0'
+trackingBasicOverlapStructure = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking" and chooseStructure > 0 and not totalNumberOfExtractedStructures == 0'
 
 isoUIelements = (Group(
 
@@ -47,6 +50,34 @@ isoUIelements = (Group(
 	
 	Group(
 	Item("allStructureTrackingOptions", show_label = False, style = 'custom', format_func=lambda x: x, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking"')
+	),
+	HGroup(
+	Item("structureExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Run structure extraction first"), visible_when = trackingAll),
+	),
+	HGroup(
+	Item("chooseStructureTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Select structure:"), visible_when = trackingBasicOverlap),
+	Item("chooseStructure", show_label = False, editor=RangeEditor(mode='slider', low_name = 'includeEmptySpace',  high_name='totalNumberOfExtractedStructures'), visible_when = trackingBasicOverlap),
+	),
+	HGroup(
+	Item("overlapPercentageTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Overlap percentage:"), visible_when = trackingBasicOverlap),
+	Item("overlapPercentage", show_label = False, height = tinyh, width = tinyw, visible_when = trackingBasicOverlap),
+	),
+	HGroup(
+	Item("SaveTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Save location:'), visible_when = trackingBasicOverlap),
+	Item("save_path", show_label = False, height = longh, width = longw, visible_when = trackingBasicOverlap),
+	Item("choose_folder", show_label = False, height = buttonh, width = buttonw, visible_when = trackingBasicOverlap),
+	),
+	HGroup(
+	Item("folderNameExportTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Folder name:'), visible_when = trackingBasicOverlap),
+	Item("folderNameExport", show_label = False, height = smallh, width = smallw, visible_when = trackingBasicOverlap),
+	),
+	HGroup(
+	Item("whichTimeStepLLTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Which time step (s):'), visible_when = trackingBasicOverlap),
+	Item("timeStep_LocalData", show_label = False, height = longh, width = longw , visible_when = trackingBasicOverlap),
+	Item("exampleTSTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('(ex:1 or 3-6 or 1-100-10)'), visible_when = trackingBasicOverlap),
+	),
+	HGroup(
+	Item("trackNow", show_label = False, height = buttonh, width = determine_width("Track selected structure"), visible_when = trackingBasicOverlapStructure),
 	),
 	
 	# Fieldline tracking

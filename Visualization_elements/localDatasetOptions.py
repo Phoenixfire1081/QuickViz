@@ -88,7 +88,7 @@ class allLocalDatasetOptions:
 				zmin_reconn = self.whichSliceZ1_reconn
 				zmax_reconn = self.whichSliceZ2_reconn
 			
-			for ts in range(minTs, maxTs, skipTs):
+			for ts in range(minTs, maxTs+1, skipTs):
 			
 				if self.assignToTS == 'Time Series 1': # Save data from TS1
 					
