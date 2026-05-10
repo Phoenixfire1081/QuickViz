@@ -687,10 +687,15 @@ class timeUpdateBehavior:
 			mlab.clf(figure = self.scene4.mayavi_scene)	
 		
 		# Change self.whichTimex and trigger time_changedx
-		self.whichTime1 = self.whichTimeGlobal
-		self.whichTime2 = self.whichTimeGlobal
-		self.whichTime3 = self.whichTimeGlobal
-		self.whichTime4 = self.whichTimeGlobal
+		# Change only if the time steps are available
+		if self.whichTimeGlobal <= self.ts1max:
+			self.whichTime1 = self.whichTimeGlobal
+		if self.whichTimeGlobal <= self.ts2max:
+			self.whichTime2 = self.whichTimeGlobal
+		if self.whichTimeGlobal <= self.ts3max:
+			self.whichTime3 = self.whichTimeGlobal
+		if self.whichTimeGlobal <= self.ts4max:
+			self.whichTime4 = self.whichTimeGlobal
 	
 	def force_update(self):
 		
