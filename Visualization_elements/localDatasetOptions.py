@@ -767,18 +767,19 @@ class allLocalDatasetOptions:
 			
 			# After loading is completed, restore original data to TS1. NOTE: Data is reset while choosing the folder
 			
-			# Restore original data
-			self.x1 = self.x1_bk
-			self.y1 = self.y1_bk
-			self.z1 = self.z1_bk
-			
-			# Remove modified data
-			self.out1_sc1.remove()
-			self.sf1_sc1.remove()
-			self.iso1_sc1.remove()
-			
-			self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, self._dataTs1[:, :, :, self.whichTime1], figure=self.scene1.mayavi_scene)
-			self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[self._dataTs1[:, :, :, self.whichTime1].min()])
+			if not self.assignToTS == 'Time Series 1':
+				# Restore original data
+				self.x1 = self.x1_bk
+				self.y1 = self.y1_bk
+				self.z1 = self.z1_bk
+				
+				# Remove modified data
+				self.out1_sc1.remove()
+				self.sf1_sc1.remove()
+				self.iso1_sc1.remove()
+				
+				self.sf1_sc1 = mlab.pipeline.scalar_field(self.x1, self.y1, self.z1, self._dataTs1[:, :, :, self.whichTime1], figure=self.scene1.mayavi_scene)
+				self.iso1_sc1 = mlab.pipeline.iso_surface(self.sf1_sc1, contours=[self._dataTs1[:, :, :, self.whichTime1].min()])
 			
 	@on_trait_change('exportNow')
 	def exportNow_fired(self):
