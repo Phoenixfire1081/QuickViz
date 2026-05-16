@@ -241,6 +241,8 @@ class allLocalDatasetOptions:
 			
 	def write_to_specific_ts(self, velx, vely, velz, vortx, vorty, vortz, scalar, xx, yy, zz, dx, dy, dz, xres, yres, zres, ctr, maxTs, minTs, skipTs):
 		
+		# TODO - calculate on demand, vorticity data can be calculated on demand to save RAM space. Loading velocity data can be made optional
+		
 		if self.assignToTS == 'Time Series 1':
 				
 			self.u1[:, :, :, ctr] = velx

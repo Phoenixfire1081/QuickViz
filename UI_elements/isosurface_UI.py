@@ -104,6 +104,11 @@ isoUIelements = (Group(
 	Item("generatePDF", show_label = False, visible_when = pdfVisibility),
 	),
 	
+	# All BS options
+	Group(
+	Item("allBSOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Biot-Savart"')
+	),
+	
 	# All Log lattice options
 	Group(
 	Item("allLLOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Log Lattice"')
