@@ -174,14 +174,16 @@ class allRealSpaceVisualizationOptions:
 			# Strictly speaking, this is unnecessary. However, it was noted multiple times
 			# that building this back aids with visualization. 
 			
-			ux = self.build_full_grid(ux, N, k0.all())
-			uy = self.build_full_grid(uy, N, k0.all())
-			uz = self.build_full_grid(uz, N, k0.all())
+			if not grid.l_params.get("DNS"):
 			
-			kx, ky, kz = self.build_full_grid_kmodes(kx, ky, kz, N, k0.all())
-			
-			if tempExists:
-				temperature = self.build_full_grid(temp, N, k0.all())
+				ux = self.build_full_grid(ux, N, k0.all())
+				uy = self.build_full_grid(uy, N, k0.all())
+				uz = self.build_full_grid(uz, N, k0.all())
+				
+				kx, ky, kz = self.build_full_grid_kmodes(kx, ky, kz, N, k0.all())
+				
+				if tempExists:
+					temperature = self.build_full_grid(temp, N, k0.all())
 			
 			# Apply filters if chosen
 			if self.filterOptions_LL == 'Low-pass':
