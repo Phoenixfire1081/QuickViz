@@ -204,39 +204,71 @@ class allLocalDatasetOptions:
 	def reset_specific_ts(self, xres, yres, zres, numFiles, whichTs):
 		
 		if whichTs == 1:
-			self.u1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.v1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.w1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			if not self.scalarOnly:	
+				self.u1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:	
+				self.u1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 			self._dataTs1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
 		
 		if whichTs == 2:
-			self.u2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.v2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.w2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega1_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega2_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega3_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			if not self.scalarOnly:	
+				self.u2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 			self._dataTs2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
 		
 		if whichTs == 3:
-			self.u3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.v3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.w3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega1_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega2_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega3_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			if not self.scalarOnly:	
+				self.u3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 			self._dataTs3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
 		
 		if whichTs == 4:
-			self.u4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.v4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.w4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega1_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega2_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega3_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			if not self.scalarOnly:	
+				self.u4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 			self._dataTs4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
 			
 	def write_to_specific_ts(self, velx, vely, velz, vortx, vorty, vortz, scalar, xx, yy, zz, dx, dy, dz, xres, yres, zres, ctr, maxTs, minTs, skipTs):
@@ -244,13 +276,14 @@ class allLocalDatasetOptions:
 		# TODO - calculate on demand, vorticity data can be calculated on demand to save RAM space. Loading velocity data can be made optional
 		
 		if self.assignToTS == 'Time Series 1':
-				
-			self.u1[:, :, :, ctr] = velx
-			self.v1[:, :, :, ctr] = vely
-			self.w1[:, :, :, ctr] = velz
-			self.omega1[:, :, :, ctr] = vortx
-			self.omega2[:, :, :, ctr] = vorty
-			self.omega3[:, :, :, ctr] = vortz
+			
+			if not self.scalarOnly:	
+				self.u1[:, :, :, ctr] = velx
+				self.v1[:, :, :, ctr] = vely
+				self.w1[:, :, :, ctr] = velz
+				self.omega1[:, :, :, ctr] = vortx
+				self.omega2[:, :, :, ctr] = vorty
+				self.omega3[:, :, :, ctr] = vortz
 			self._dataTs1[:, :, :, ctr] = scalar
 			
 			# Update x, y, z data as well. Necessary if the visualization was
@@ -293,12 +326,13 @@ class allLocalDatasetOptions:
 		
 		elif self.assignToTS == 'Time Series 2':
 			
-			self.u2[:, :, :, ctr] = velx
-			self.v2[:, :, :, ctr] = vely
-			self.w2[:, :, :, ctr] = velz
-			self.omega1_2[:, :, :, ctr] = vortx
-			self.omega2_2[:, :, :, ctr] = vorty
-			self.omega3_2[:, :, :, ctr] = vortz
+			if not self.scalarOnly:	
+				self.u2[:, :, :, ctr] = velx
+				self.v2[:, :, :, ctr] = vely
+				self.w2[:, :, :, ctr] = velz
+				self.omega1_2[:, :, :, ctr] = vortx
+				self.omega2_2[:, :, :, ctr] = vorty
+				self.omega3_2[:, :, :, ctr] = vortz
 			self._dataTs2[:, :, :, ctr] = scalar
 			
 			# Update x, y, z data as well. Necessary if the visualization was
@@ -343,12 +377,13 @@ class allLocalDatasetOptions:
 			
 		elif self.assignToTS == 'Time Series 3':
 			
-			self.u3[:, :, :, ctr] = velx
-			self.v3[:, :, :, ctr] = vely
-			self.w3[:, :, :, ctr] = velz
-			self.omega1_3[:, :, :, ctr] = vortx
-			self.omega2_3[:, :, :, ctr] = vorty
-			self.omega3_3[:, :, :, ctr] = vortz
+			if not self.scalarOnly:	
+				self.u3[:, :, :, ctr] = velx
+				self.v3[:, :, :, ctr] = vely
+				self.w3[:, :, :, ctr] = velz
+				self.omega1_3[:, :, :, ctr] = vortx
+				self.omega2_3[:, :, :, ctr] = vorty
+				self.omega3_3[:, :, :, ctr] = vortz
 			self._dataTs3[:, :, :, ctr] = scalar
 			
 			# Update x, y, z data as well. Necessary if the visualization was
@@ -393,12 +428,13 @@ class allLocalDatasetOptions:
 			
 		elif self.assignToTS == 'Time Series 4':
 			
-			self.u4[:, :, :, ctr] = velx
-			self.v4[:, :, :, ctr] = vely
-			self.w4[:, :, :, ctr] = velz
-			self.omega1_4[:, :, :, ctr] = vortx
-			self.omega2_4[:, :, :, ctr] = vorty
-			self.omega3_4[:, :, :, ctr] = vortz
+			if not self.scalarOnly:	
+				self.u4[:, :, :, ctr] = velx
+				self.v4[:, :, :, ctr] = vely
+				self.w4[:, :, :, ctr] = velz
+				self.omega1_4[:, :, :, ctr] = vortx
+				self.omega2_4[:, :, :, ctr] = vorty
+				self.omega3_4[:, :, :, ctr] = vortz
 			self._dataTs4[:, :, :, ctr] = scalar
 			
 			# Update x, y, z data as well. Necessary if the visualization was
@@ -473,8 +509,11 @@ class allLocalDatasetOptions:
 			
 			if self.allLocalDatasetOptions == 'Raw 3D':
 			
-				# Get time step data (calculate from velocity folder)
-				self.timeSteps_LocalData = str(len(os.listdir(self.LocalData_path + '/velComp/'))//3)
+				# Get time step data (calculate from velocity folder or scalar folder)
+				try:
+					self.timeSteps_LocalData = str(len(os.listdir(self.LocalData_path + '/velComp/'))//3)
+				except FileNotFoundError:
+					self.timeSteps_LocalData = str(len(os.listdir(self.LocalData_path + '/scalar/')))
 			
 			elif self.allLocalDatasetOptions == 'netCDF': # For netCDF data
 				
@@ -631,8 +670,6 @@ class allLocalDatasetOptions:
 				numFiles = int(np.ceil((maxTs - minTs)/skipTs))
 				self.reset_specific_ts(int(self.xres_Local), int(self.yres_Local), int(self.zres_Local), numFiles, whichTs)
 			
-			
-			
 			if self.precision_LocalData == 'Single':
 				_dtype = 'f'
 			if self.precision_LocalData == 'Double':
@@ -656,15 +693,23 @@ class allLocalDatasetOptions:
 			fileCtr = minTs
 			
 			if self.allLocalDatasetOptions == 'Raw 3D':
+				
+				if self.whichScalar_LocalData == 'Available scalar':
+					flist_sc = os.listdir(self.LocalData_path + '/scalar/')
+					flist_sc.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
+				
+				else:
 			
-				# Get file list
-				flist = os.listdir(self.LocalData_path + '/velComp/')
-				flist_x = [i for i in flist if 'velx' in i]
-				flist_y = [i for i in flist if 'vely' in i]
-				flist_z = [i for i in flist if 'velz' in i]
-				flist_x.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
-				flist_y.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
-				flist_z.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
+					# Get file list
+					flist = os.listdir(self.LocalData_path + '/velComp/')
+					flist_x = [i for i in flist if 'velx' in i]
+					flist_y = [i for i in flist if 'vely' in i]
+					flist_z = [i for i in flist if 'velz' in i]
+					flist_x.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
+					flist_y.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
+					flist_z.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
+				
+				
 			
 			print(minTs, maxTs, skipTs)
 			for ts in range(minTs, maxTs, skipTs):
@@ -674,17 +719,19 @@ class allLocalDatasetOptions:
 					# Use array.array to dump velocity data into memory
 					# For now, force data as single precision. TODO - support double precision data
 					
-					velx = array.array(_dtype)
-					vely = array.array(_dtype)
-					velz = array.array(_dtype)
+					if not self.whichScalar_LocalData == 'Available scalar':
 					
-					velx.fromfile(open(self.LocalData_path + '/velComp/' + flist_x[fileCtr], 'rb'), (DataRes))
-					vely.fromfile(open(self.LocalData_path + '/velComp/' + flist_y[fileCtr], 'rb'), (DataRes))
-					velz.fromfile(open(self.LocalData_path + '/velComp/' + flist_z[fileCtr], 'rb'), (DataRes))
-					
-					velx = np.reshape(velx, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
-					vely = np.reshape(vely, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
-					velz = np.reshape(velz, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
+						velx = array.array(_dtype)
+						vely = array.array(_dtype)
+						velz = array.array(_dtype)
+						
+						velx.fromfile(open(self.LocalData_path + '/velComp/' + flist_x[fileCtr], 'rb'), (DataRes))
+						vely.fromfile(open(self.LocalData_path + '/velComp/' + flist_y[fileCtr], 'rb'), (DataRes))
+						velz.fromfile(open(self.LocalData_path + '/velComp/' + flist_z[fileCtr], 'rb'), (DataRes))
+						
+						velx = np.reshape(velx, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
+						vely = np.reshape(vely, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
+						velz = np.reshape(velz, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
 				
 				elif self.allLocalDatasetOptions == 'netCDF': # For netCDF data
 					
@@ -708,11 +755,31 @@ class allLocalDatasetOptions:
 					vely = vely[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn]
 					velz = velz[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn]
 					
-				# Compute vorticity vector and requested scalar
-				vortices = vortexExtract(velx, vely, velz, dx, dy, dz)
-				vortx, vorty, vortz = vortices.vorticityComponents()
+				# Compute vorticity vector if not scalar only and requested scalar
+				if not self.whichScalar_LocalData == 'Available scalar':
+					vortices = vortexExtract(velx, vely, velz, dx, dy, dz)
+					vortx, vorty, vortz = vortices.vorticityComponents()
+				else:
+					velx = np.zeros((3, 3, 3, 1), dtype = float)
+					vely = np.zeros((3, 3, 3, 1), dtype = float)
+					velz = np.zeros((3, 3, 3, 1), dtype = float)
+					vortx = np.zeros((3, 3, 3, 1), dtype = float)
+					vorty = np.zeros((3, 3, 3, 1), dtype = float)
+					vortz = np.zeros((3, 3, 3, 1), dtype = float)
 				
-				if self.whichScalar_LocalData == 'Velocity magnitude':
+				if self.whichScalar_LocalData == 'Available scalar' and self.allLocalDatasetOptions == 'Raw 3D':
+					tmp = array.array(_dtype)
+					tmp.fromfile(open(self.LocalData_path + '/scalar/' + flist_sc[fileCtr], 'rb'), (DataRes))
+					tmp = np.reshape(tmp, [int(self.xres_Local), int(self.yres_Local), int(self.zres_Local)])
+					if self.altBBox:
+						tmp = tmp[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn]
+					scalar = tmp
+				elif self.whichScalar_LocalData == 'Available scalar' and self.allLocalDatasetOptions == 'netCDF':
+					tmp = np.asarray(np.float32(data[self.scalarLabel][:]))
+					if self.altBBox:
+						tmp = tmp[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn]
+					scalar = tmp
+				elif self.whichScalar_LocalData == 'Velocity magnitude':
 					scalar = vortices.velocityMagnitude()
 				elif self.whichScalar_LocalData == 'Vorticity magnitude':
 					scalar = vortices.vorticityMagnitude()

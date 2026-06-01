@@ -17,6 +17,63 @@ class timeUpdateBehavior:
 		viewControl = mlab.view(camAzimuth, camElevation, camDistance, focalPoint, figure=fig_handle)
 		viewControlRoll = mlab.roll(camRoll, figure=fig_handle)
 	
+	def determineDataType(self):
+		
+		#TS1
+		
+		if self.numTs1 == 0:
+			if np.sum(self.u1) == 0:
+				self.ts1Type = 'ScalarF'
+			else:
+				 self.ts1Type = 'VectorF'
+		else:
+			if np.sum(self.u1) == 0:
+				self.ts1Type = 'ScalarTs'
+			else:
+				 self.ts1Type = 'VectorTs'
+		
+		# TS2
+		
+		if self.nts >= 2:
+			if self.numTs2 == 0:
+				if np.sum(self.u2) == 0:
+					self.ts2Type = 'ScalarF'
+				else:
+					 self.ts2Type = 'VectorF'
+			else:
+				if np.sum(self.u2) == 0:
+					self.ts2Type = 'ScalarTs'
+				else:
+					 self.ts2Type = 'VectorTs'
+		
+		# TS3
+		
+		if self.nts >= 3:		 
+			if self.numTs3 == 0:
+				if np.sum(self.u3) == 0:
+					self.ts3Type = 'ScalarF'
+				else:
+					 self.ts3Type = 'VectorF'
+			else:
+				if np.sum(self.u3) == 0:
+					self.ts3Type = 'ScalarTs'
+				else:
+					 self.ts3Type = 'VectorTs'
+		
+		# TS4
+		
+		if self.nts >= 4:	
+			if self.numTs4 == 0:
+				if np.sum(self.u4) == 0:
+					self.ts4Type = 'ScalarF'
+				else:
+					 self.ts4Type = 'VectorF'
+			else:
+				if np.sum(self.u4) == 0:
+					self.ts4Type = 'ScalarTs'
+				else:
+					 self.ts4Type = 'VectorTs'
+	
 	def active_screen_counter(self):
 		
 		# Count the number of active screens for each time series
@@ -63,6 +120,9 @@ class timeUpdateBehavior:
 
 	@on_trait_change('whichTime1')
 	def time_changed1(self):
+		
+		# Determine data type
+		self.determineDataType()
 		
 		# Check which screens are active and run accordingly
 		
@@ -217,6 +277,9 @@ class timeUpdateBehavior:
 	@on_trait_change('whichTime2')
 	def time_changed2(self):
 		
+		# Determine data type
+		self.determineDataType()
+		
 		# Check which screens are active and run accordingly
 		
 		_, ts2, _, _ = self.active_screen_counter()
@@ -369,6 +432,9 @@ class timeUpdateBehavior:
 	
 	@on_trait_change('whichTime3')
 	def time_changed3(self):
+		
+		# Determine data type
+		self.determineDataType()
 		
 		# Check which screens are active and run accordingly
 		
@@ -523,6 +589,9 @@ class timeUpdateBehavior:
 	@on_trait_change('whichTime4')
 	def time_changed4(self):
 		
+		# Determine data type
+		self.determineDataType()
+		
 		# Check which screens are active and run accordingly
 		
 		_, _, _, ts4 = self.active_screen_counter()
@@ -676,6 +745,9 @@ class timeUpdateBehavior:
 	@on_trait_change('whichTimeGlobal')
 	def time_changedGlobal(self):
 		
+		# Determine data type
+		self.determineDataType()
+		
 		# If global time slider is used, clear figures manually
 		if not self.threshold1 == '' or not self.thresholdPercent1 == ''\
 		or not self.threshold2 == '' or not self.thresholdPercent2 == ''\
@@ -698,6 +770,9 @@ class timeUpdateBehavior:
 			self.whichTime4 = self.whichTimeGlobal
 	
 	def force_update(self):
+		
+		# Determine data type
+		self.determineDataType()
 		
 		# Force update all the screens
 		mlab.clf(figure = self.scene1.mayavi_scene)	

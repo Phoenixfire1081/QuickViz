@@ -57,11 +57,11 @@ class allPlaygroundOptions:
 		gridPts_x = gridPts_x * float(self.xmax_LL) # This ensures that data is within the preferred extent
 		gridPts_x = gridPts_x.ravel()
 		
-		gridPts_y = gridPts[1] / np.max(gridPts[0])
+		gridPts_y = gridPts[1] / np.max(gridPts[1])
 		gridPts_y = gridPts_y * float(self.ymax_LL) # This ensures that data is within the preferred extent
 		gridPts_y = gridPts_y.ravel()
 		
-		gridPts_z = gridPts[2] / np.max(gridPts[0])
+		gridPts_z = gridPts[2] / np.max(gridPts[2])
 		gridPts_z = gridPts_z * float(self.zmax_LL) # This ensures that data is within the preferred extent
 		gridPts_z = gridPts_z.ravel()
 		
@@ -138,6 +138,50 @@ class allPlaygroundOptions:
 			
 			self.gridPlot = mlab.pipeline.scalar_scatter(gridPts_x, gridPts_y, gridPts_z, s, figure = self.scene1.mayavi_scene)
 			self.gridPlotGlyph = mlab.pipeline.glyph(self.gridPlot, scale_mode = 'none', scale_factor = self.seedScale_playground)
+			
+			import matplotlib.pyplot as plt
+			plt.ion()
+			fig, ax = plt.subplots()
+			
+			# print(np.shape(gridPts[0][:, np.shape(gridPts[0])[1]//2 + 1, :]))
+			
+			# Scale and plot the grid
+			
+			gridPts_x = gridPts[0][:, np.shape(gridPts[0])[1]//2:, np.shape(gridPts[0])[1]//2 + 1] / np.max(gridPts[0][:, np.shape(gridPts[0])[1]//2:, np.shape(gridPts[0])[1]//2 + 1])
+			gridPts_x = gridPts_x * float(self.xmax_LL) # This ensures that data is within the preferred extent
+			gridPts_x = gridPts_x.ravel()
+			
+			gridPts_y = gridPts[1][:, np.shape(gridPts[0])[1]//2:, np.shape(gridPts[0])[1]//2 + 1] / np.max(gridPts[1][:, np.shape(gridPts[0])[1]//2:, np.shape(gridPts[0])[1]//2 + 1])
+			gridPts_y = gridPts_y * float(self.ymax_LL) # This ensures that data is within the preferred extent
+			gridPts_y = gridPts_y.ravel()
+			
+			gridPts_z = gridPts[2][:, np.shape(gridPts[0])[1]//2:, np.shape(gridPts[0])[1]//2 + 1] / np.max(gridPts[2][:, :, np.shape(gridPts[0])[1]//2 + 1])
+			gridPts_z = gridPts_z * float(self.zmax_LL) # This ensures that data is within the preferred extent
+			gridPts_z = gridPts_z.ravel()
+			
+			ax.scatter(gridPts_x, -gridPts_y, c = 'r', s = 4)
+			ax.scatter(gridPts_x, gridPts_y, c = 'b', s = 4)
+			ax.axis('equal')
+			plt.savefig('ll_extended_domain.png')
+			# fig.tight_layout()
+			
+			# gridPts_x1 = gridPts[0][:, :np.shape(gridPts[0])[1]//2, np.shape(gridPts[0])[1]//2 + 1] / np.max(gridPts[0][:, :np.shape(gridPts[0])[1]//2, np.shape(gridPts[0])[1]//2 + 1])
+			# gridPts_x1 = gridPts_x1 * float(self.xmax_LL) # This ensures that data is within the preferred extent
+			# gridPts_x1 = gridPts_x1.ravel()
+			
+			# gridPts_y1 = gridPts[1][:, :np.shape(gridPts[0])[1]//2, np.shape(gridPts[0])[1]//2 + 1] / np.max(gridPts[1][:, :np.shape(gridPts[0])[1]//2, np.shape(gridPts[0])[1]//2 + 1])
+			# gridPts_y1 = gridPts_y1 * float(self.ymax_LL) # This ensures that data is within the preferred extent
+			# gridPts_y1 = gridPts_y1.ravel()
+			
+			# gridPts_z1 = gridPts[2][:, :np.shape(gridPts[0])[1]//2, np.shape(gridPts[0])[1]//2 + 1] / np.max(gridPts[2][:, :np.shape(gridPts[0])[1]//2, np.shape(gridPts[0])[1]//2 + 1])
+			# gridPts_z1 = gridPts_z1 * float(self.zmax_LL) # This ensures that data is within the preferred extent
+			# gridPts_z1 = gridPts_z1.ravel()
+			
+			# ax.scatter(gridPts_x1, gridPts_y1, c = 'b')
+			
+			# plt.show()
+			
+			
 			
 			
 			

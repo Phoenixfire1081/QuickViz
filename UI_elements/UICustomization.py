@@ -10,9 +10,11 @@ class UIOptionsClass:
 		
 		# Number of pixels for each letter
 		self.spacingFactorLetters = 7
-		self.spacingFactorOthers = 5
+		self.spacingFactorPunctuation = 6
+		self.spacingFactorWhitespace = 4
+		self.spacingFactorOthers = 0
 	
-	def count_letters(self, word, valid_letters=string.ascii_letters):
+	def count_letters(self, word, valid_letters):
 		count = Counter(word) 
 		return sum(count[letter] for letter in valid_letters) 
 	
@@ -110,9 +112,11 @@ class UIOptionsClass:
 	
 	def determineWidth(self, _word):
 		
-		actual_letters = self.count_letters(_word)
-		_diff = len(_word) - actual_letters
+		actual_letters = self.count_letters(_word, string.ascii_letters)
+		whitespace = self.count_letters(_word, string.whitespace)
+		punctuation = self.count_letters(_word, string.punctuation)
+		_diff = len(_word) - actual_letters - whitespace - punctuation
 		
-		return -actual_letters * self.spacingFactorLetters - _diff * self.spacingFactorOthers
+		return -actual_letters * self.spacingFactorLetters - _diff * self.spacingFactorOthers - punctuation * self.spacingFactorPunctuation - whitespace * self.spacingFactorWhitespace
 	
 	

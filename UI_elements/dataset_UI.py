@@ -20,6 +20,7 @@ localDatasetVisibilityRaw3D = 'allDatasetActions == "Import" and allModeOptions 
 localDatasetVisibilitynetCDF = 'allDatasetActions == "Import" and allModeOptions == "Dataset" and allDatasetOptions == "Local" and allLocalDatasetOptions == "netCDF"'
 exportData = 'allModeOptions == "Dataset" and allDatasetActions == "Export"'
 exportDataBBox = 'allModeOptions == "Dataset" and allDatasetActions == "Export" and altBBox == True'
+localDatasetVisibilitynetCDFscalar = localDatasetVisibilitynetCDF + ' and whichScalar_LocalData == "Available scalar"'
 
 datasetUIelements = Group( 
 	
@@ -109,16 +110,20 @@ datasetUIelements = Group(
 	),
 	
 	HGroup(
-	Item("velxTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilitynetCDF),
+	Item("velxTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Velocity x:'), visible_when = localDatasetVisibilitynetCDF),
 	Item("velxLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDF),
 	),
 	HGroup(
-	Item("velyTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilitynetCDF),
+	Item("velyTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Velocity y:'), visible_when = localDatasetVisibilitynetCDF),
 	Item("velyLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDF),
 	),
 	HGroup(
-	Item("velzTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when = localDatasetVisibilitynetCDF),
+	Item("velzTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Velocity z:'), visible_when = localDatasetVisibilitynetCDF),
 	Item("velzLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDF),
+	),
+	HGroup(
+	Item("scalarTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Scalar:'), visible_when = localDatasetVisibilitynetCDFscalar),
+	Item("scalarLabel", show_label = False, height = longh, width = longw , visible_when = localDatasetVisibilitynetCDFscalar),
 	),
 	
 	HGroup(
@@ -207,6 +212,12 @@ datasetUIelements = Group(
 	HGroup(
 	Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = localDatasetVisibility),
 	Item("whichScalar_LocalData", show_label = False, visible_when = localDatasetVisibility),
+	),
+	HGroup(
+	Item("scalarOnlyTxt", style = 'readonly', height = smallh, width = determine_width('Import scalar only? '), show_label = False, visible_when = localDatasetVisibility),
+	Item("scalarOnly", show_label = False, visible_when = localDatasetVisibility),
+	),
+	HGroup(
 	Item("load_LocalData", height = buttonh, width = buttonw, show_label = False, visible_when = localDatasetVisibility),
 	Item("cancel_LocalData", height = buttonh, width = buttonw, show_label = False, visible_when = localDatasetVisibility),
 	),
