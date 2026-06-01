@@ -563,7 +563,9 @@ class allAnalysisOptions:
 		if not self.timeStep_LocalData == '':
 		
 			print('fired')
-			initializeTracking = TrackStructures(self.xlength_data1, self.ylength_data1, self.zlength_data1, self._dataTs1, self.save_path, self.folderNameExport)
+			initializeTracking = TrackStructures(self.x1.min(), self.x1.max(), \
+			self.y1.min(), self.y1.max(), self.z1.min(), self.z1.max(), \
+			self.xlength_data1, self.ylength_data1, self.zlength_data1, self._dataTs1, self.save_path, self.folderNameExport)
 
 			if self.thresholdExtractionSet == '':
 				initializeTracking.precompute_alt(self.structuredGrid, self.whichTime1, float(self.thresholdPercentExtractionSet), True)
@@ -589,31 +591,34 @@ class allAnalysisOptions:
 			
 			xres, yres, zres, numFiles = np.shape(timeSeriesTrack1)
 			
-			self.u2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.v2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.w2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega1_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega2_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
-			self.omega3_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			if not 'Vector' in self.ts2Type:
+				self.u2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
 			self._dataTs2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
 			
 			for i in range(numFiles):
-			
-				# Assign time series and associated data to TS2
-				self.u2[:, :, :, i] = self.u1[:, :, :, i]
-				self.v2[:, :, :, i] = self.v1[:, :, :, i]
-				self.w2[:, :, :, i] = self.w1[:, :, :, i]
-				self.omega1_2[:, :, :, i] = self.omega1[:, :, :, i]
-				self.omega2_2[:, :, :, i] = self.omega2[:, :, :, i]
-				self.omega3_2[:, :, :, i] = self.omega3[:, :, :, i]
+				
+				if not 'Vector' in self.ts2Type:
+					# Assign time series and associated data to TS2
+					self.u2[:, :, :, i] = self.u1[:, :, :, i]
+					self.v2[:, :, :, i] = self.v1[:, :, :, i]
+					self.w2[:, :, :, i] = self.w1[:, :, :, i]
+					self.omega1_2[:, :, :, i] = self.omega1[:, :, :, i]
+					self.omega2_2[:, :, :, i] = self.omega2[:, :, :, i]
+					self.omega3_2[:, :, :, i] = self.omega3[:, :, :, i]
 				self._dataTs2[:, :, :, i] = timeSeriesTrack1[:, :, :, i]
 				
-				# Mask the velocity and vorticity data appropriately
-				self.u2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
-				self.v2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
-				self.w2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
-				self.omega1_2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
-				self.omega2_2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
+				if not 'Vector' in self.ts2Type:
+					# Mask the velocity and vorticity data appropriately
+					self.u2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
+					self.v2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
+					self.w2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
+					self.omega1_2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
+					self.omega2_2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
 				self.omega3_2[:, :, :, i][timeSeriesTrack1[:, :, :, i]==0] = 0
 			
 			# Update x, y, z data as well. Necessary if the visualization was

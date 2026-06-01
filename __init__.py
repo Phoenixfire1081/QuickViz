@@ -1,3 +1,11 @@
+from pyface.qt.QtGui import QApplication
+
+app = QApplication.instance()
+if app is None:
+    app = QApplication([])
+
+app.setStyle("Fusion")
+
 import numpy as np
 from mayavi import mlab
 import mayavi
@@ -45,6 +53,10 @@ from .UI_elements.contourOptions_UI import contourUIelements
 from .UI_elements.cameraOptions_UI import cameraUIelements
 
 # Allow for a maximum of 4 time series datasets
+
+from traits.etsconfig.api import ETSConfig
+# ETSConfig.toolkit = "qt"
+print(ETSConfig.toolkit)
 
 class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allBackgroundOptions, allPlaybackOptions, allSaveMovieOptions, 
@@ -104,7 +116,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	outlineColorBlue4 = Float(0.0)	
 	
 	# Mode
-	allModeOptions = Enum(['Dataset', 'Visualization', 'Analysis', 'Log Lattice', 'Blender exports'])
+	allModeOptions = Enum(['Dataset', 'Visualization', 'Analysis', 'Biot-Savart', 'Log Lattice', 'Blender exports'])
 	
 	# All Dataset options
 	allDatasetActions = Enum('Import', 'Export', 'Manipulate', cols = 3)
@@ -122,7 +134,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	timeSteps_LocalData = Str('')
 	load_LocalData = Button('Load')
 	precision_LocalData = Enum(['Single', 'Double'], cols = 2)
-	whichScalar_LocalData = Enum(['Velocity magnitude', 'Vorticity magnitude', 
+	whichScalar_LocalData = Enum(['Available scalar', 'Velocity magnitude', 'Vorticity magnitude', 
 	'Q-criterion', 'Lambda_2', 
 	'Delta criterion', 'Enstrophy density', 
 	'Enstrophy Prod. Rate', 'Velocity x', 
@@ -132,6 +144,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	timeStep_LocalData = Str('')
 	cancel_LocalData = Button('Cancel')
 	assignToTS = Enum(['Time Series 1', 'Time Series 2', 'Time Series 3', 'Time Series 4'])
+	scalarOnly = Bool()
 	
 	# Store min, max, res data separately from LL
 	xmin_Local = Str('')
@@ -151,6 +164,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	velxLabel = Str('')
 	velyLabel = Str('')
 	velzLabel = Str('')
+	scalarLabel = Str('')
 	allAttributes = Str('')
 	
 	# All Visualization options
@@ -254,6 +268,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# PDF
 	generatePDF = Button('Generate')
+	
+	# All Biot-Savart options
+	allBSOptions = Enum(['Local Induction Approximation', 'M1 Klein-Knio'])
 	
 	# All Log lattice options
 	allLLOptions = Enum(['Playground', 'Real Space Visualization'], cols = 2) 
@@ -684,14 +701,30 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	adjustSurfaceTxt = Str('(If necessary, adjust surface with visualization mode before export)')
 	exportSTLTxt = Str('Export as STL: ')
 	allTimesTxt = Str('All times: ')
-	timeSeries1Txt = Str('Time series control 1: ')
-	timeSeries2Txt = Str('Time series control 2: ')
-	timeSeries3Txt = Str('Time series control 3: ')
-	timeSeries4Txt = Str('Time series control 4: ')
-	vectorField1Txt = Str('Vector field control 1: ')
-	vectorField2Txt = Str('Vector field control 2: ')
-	vectorField3Txt = Str('Vector field control 3: ')
-	vectorField4Txt = Str('Vector field control 4: ')
+	timeSeries1Txt = Str('Vector time series 1: ')
+	timeSeries2Txt = Str('Vector time series 2: ')
+	timeSeries3Txt = Str('Vector time series 3: ')
+	timeSeries4Txt = Str('Vector time series 4: ')
+	StimeSeries1Txt = Str('Scalar time series 1: ')
+	StimeSeries2Txt = Str('Scalar time series 2: ')
+	StimeSeries3Txt = Str('Scalar time series 3: ')
+	StimeSeries4Txt = Str('Scalar time series 4: ')
+	LTimeSeries1Txt = Str('Lagrangian time series 1: ')
+	LTimeSeries2Txt = Str('Lagrangian time series 2: ')
+	LTimeSeries3Txt = Str('Lagrangian time series 3: ')
+	LTimeSeries4Txt = Str('Lagrangian time series 4: ')
+	vectorField1Txt = Str('Vector field 1: ')
+	vectorField2Txt = Str('Vector field 2: ')
+	vectorField3Txt = Str('Vector field 3: ')
+	vectorField4Txt = Str('Vector field 4: ')
+	scalarField1Txt = Str('Scalar field 1: ')
+	scalarField2Txt = Str('Scalar field 2: ')
+	scalarField3Txt = Str('Scalar field 3: ')
+	scalarField4Txt = Str('Scalar field 4: ')
+	L1Txt = Str('Lagrangian field 1: ')
+	L2Txt = Str('Lagrangian field 2: ')
+	L3Txt = Str('Lagrangian field 3: ')
+	L4Txt = Str('Lagrangian field 4: ')
 	predefinedVortexTxt = Str('Predefined vortex structure: ')
 	addScalarFieldTxt = Str('Add to scalar field: ')
 	fourierGridTypeTxt = Str('Fourier grid type: ')
@@ -737,6 +770,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	saveWhatOptionsTxt = Str('Save what?')
 	overlapPercentageTxt = Str('Overlap percentage:')
 	structureExtractionTxt = Str('Run structure extraction first')
+	scalarOnlyTxt = Str('Import scalar only?')
+	scalarTxt = Str('Scalar:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')
@@ -848,6 +883,12 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self._dataTs2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 		self._dataTs3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
 		self._dataTs4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+		
+		# Which type of time series
+		self.ts1Type = 'VectorTs' #'ScalarTs, LagrangianTs, VectorF, ScalarF, Lagrangian'
+		self.ts2Type = 'VectorTs' 
+		self.ts3Type = 'VectorTs' 
+		self.ts4Type = 'VectorTs'
 		
 		# Number of input time series
 		self.nts = int(args[0])

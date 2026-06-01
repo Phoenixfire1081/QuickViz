@@ -21,15 +21,15 @@ localUIelements = (Group(label = 'Local options:'),
 	# TS 1
 	
 	HGroup(
-	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton1 == "Y"'),
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Show/Hide outline:'), visible_when='radioButton1 == "Y"'),
 	Item("outlineToggle1", show_label = False, visible_when='radioButton1 == "Y"'),
 	),
 	HGroup(
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton1 == "Y"'),
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline width:'), visible_when='radioButton1 == "Y"'),
 	Item("outlineWidth1", show_label = False, visible_when='radioButton1 == "Y"', height = slidertinyh, width = slidertinyw)
 	),
 	
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -120, visible_when='radioButton1 == "Y"'),
+	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline color (r,g,b):'), visible_when='radioButton1 == "Y"'),
 	Item("outlineColorRed1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw)),
@@ -37,15 +37,15 @@ localUIelements = (Group(label = 'Local options:'),
 	# TS 2
 	
 	HGroup(
-	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton2 == "Y"'),
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Show/Hide outline:'), visible_when='radioButton2 == "Y"'),
 	Item("outlineToggle2", show_label = False, visible_when='radioButton2 == "Y"'),
 	),
 	HGroup(
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton2 == "Y"'),
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline width:'), visible_when='radioButton2 == "Y"'),
 	Item("outlineWidth2", show_label = False, visible_when='radioButton2 == "Y"', height = slidertinyh, width = slidertinyw)
 	),
 	
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton2 == "Y"'),
+	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline color (r,g,b):'), visible_when='radioButton2 == "Y"'),
 	Item("outlineColorRed2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw)),
@@ -53,15 +53,15 @@ localUIelements = (Group(label = 'Local options:'),
 	# TS 3
 	
 	HGroup(
-	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton3 == "Y"'),
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Show/Hide outline:'), visible_when='radioButton3 == "Y"'),
 	Item("outlineToggle3", show_label = False, visible_when='radioButton3 == "Y"'),
 	),
 	HGroup(
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton3 == "Y"'),
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline width:'), visible_when='radioButton3 == "Y"'),
 	Item("outlineWidth3", show_label = False, visible_when='radioButton3 == "Y"', height = slidertinyh, width = slidertinyw)
 	),
 	
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton3 == "Y"'),
+	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline color (r,g,b):'), visible_when='radioButton3 == "Y"'),
 	Item("outlineColorRed3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue3", show_label = False, visible_when='radioButton3 == "Y"', height = tinyh, width = tinyw)),
@@ -69,15 +69,15 @@ localUIelements = (Group(label = 'Local options:'),
 	# TS 4
 	
 	HGroup(
-	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = -110, visible_when='radioButton4 == "Y"'),
+	Item("ShowHideOutlineTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Show/Hide outline:'), visible_when='radioButton4 == "Y"'),
 	Item("outlineToggle4", show_label = False, visible_when='radioButton4 == "Y"'),
 	),
 	HGroup(
-	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = -80, visible_when='radioButton4 == "Y"'),
+	Item("OutlineWidthTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline width:'), visible_when='radioButton4 == "Y"'),
 	Item("outlineWidth4", show_label = False, visible_when='radioButton4 == "Y"', height = slidertinyh, width = slidertinyw)
 	),
 	
-	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = -140, visible_when='radioButton4 == "Y"'),
+	HGroup(Item("OutlineColorTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Outline color (r,g,b):'), visible_when='radioButton4 == "Y"'),
 	Item("outlineColorRed4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorGreen4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw),
 	Item("outlineColorBlue4", show_label = False, visible_when='radioButton4 == "Y"', height = tinyh, width = tinyw)),
