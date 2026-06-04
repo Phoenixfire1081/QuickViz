@@ -6,6 +6,7 @@ import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 from .vortexExtraction import vortexExtract
 from ..Core_elements.tKinter import folderBrowser
+import scipy as sp
 try:
 	from pyloggrid.LogGrid.DataExplorer import DataExplorer
 except:
@@ -174,7 +175,8 @@ class allRealSpaceVisualizationOptions:
 			# Strictly speaking, this is unnecessary. However, it was noted multiple times
 			# that building this back aids with visualization. 
 			
-			if not grid.l_params.get("DNS"):
+			# if not grid.l_params.get("DNS") :
+			if "DNS" not in grid.l_params and "Smagorinsky" not in grid.l_params :
 			
 				ux = self.build_full_grid(ux, N, k0.all())
 				uy = self.build_full_grid(uy, N, k0.all())
@@ -252,14 +254,41 @@ class allRealSpaceVisualizationOptions:
 				uy = uy * radius * np.exp(-(radius*ks)**2)
 				uz = uz * radius * np.exp(-(radius*ks)**2)
 			
-			# Get the required sampling points based on whether the grid is
-			# linearly spaced or logarithmic
-			x, y, z, dx, dy, dz, xx, yy, zz = self.get_sampling_points(grid.l, N)
+			if "DNS" not in grid.l_params and "Smagorinsky" not in grid.l_params:
 			
-			# Compute inverse DFT
-			velx, vely, velz = inverseDFT(len(x), len(y), len(z), 
-			kx.ravel(), ky.ravel(), kz.ravel(), xx, yy, zz, 
-			ux.ravel(), uy.ravel(), uz.ravel())
+				# Get the required sampling points based on whether the grid is
+				# linearly spaced or logarithmic
+				x, y, z, dx, dy, dz, xx, yy, zz = self.get_sampling_points(grid.l, N)
+				
+				# Compute inverse DFT
+				velx, vely, velz = inverseDFT(len(x), len(y), len(z), 
+				kx.ravel(), ky.ravel(), kz.ravel(), xx, yy, zz, 
+				ux.ravel(), uy.ravel(), uz.ravel())
+			else:
+				
+				velx = np.float32(np.real(sp.fft.ifftshift(sp.fft.ifftn(sp.fft.ifftshift(ux), norm = 'forward', workers = 2))))
+				vely = np.float32(np.real(sp.fft.ifftshift(sp.fft.ifftn(sp.fft.ifftshift(uy), norm = 'forward', workers = 2))))
+				velz = np.float32(np.real(sp.fft.ifftshift(sp.fft.ifftn(sp.fft.ifftshift(uz), norm = 'forward', workers = 2))))
+				
+				self.xres_LL = str(np.shape(velx)[0])
+				self.yres_LL = str(np.shape(velx)[1])
+				self.zres_LL = str(np.shape(velx)[2])
+				
+				x, dx = np.linspace(float(self.xmin_LL), float(self.xmax_LL), int(self.xres_LL), retstep = True)
+				y, dy = np.linspace(float(self.ymin_LL), float(self.ymax_LL), int(self.yres_LL), retstep = True)
+				z, dz = np.linspace(float(self.zmin_LL), float(self.zmax_LL), int(self.zres_LL), retstep = True)
+				
+				xx, yy, zz = np.meshgrid(x, y, z, indexing = 'ij')
+				
+				if ts == minTs:
+				
+					self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
 			
 			if tempExists:
 				temperature = inverseDFTsingleScalar(len(x), len(y), len(z), 

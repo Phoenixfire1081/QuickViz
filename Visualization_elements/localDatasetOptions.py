@@ -696,6 +696,7 @@ class allLocalDatasetOptions:
 				
 				if self.whichScalar_LocalData == 'Available scalar':
 					flist_sc = os.listdir(self.LocalData_path + '/scalar/')
+					flist_sc = [i for i in flist_sc if not i.startswith('.')] # ignores hidden files
 					flist_sc.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
 				
 				else:

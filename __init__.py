@@ -414,6 +414,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	# Blender exports
 	allTimesBlender = Bool()
 	exportSTLBlender = Button('Export')
+	exportPLYBlender = Button('Export')
 	
 	# Create colormap range
 	colormapMin1 = Float(0.0)
@@ -699,7 +700,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	distanceTxt = Str('Distance: ')
 	focalPointTxt = Str('Focal point: ')
 	adjustSurfaceTxt = Str('(If necessary, adjust surface with visualization mode before export)')
+	adjustSurfacePLYTxt = Str('(Exports with color field data, if chosen in visualization mode)')
 	exportSTLTxt = Str('Export as STL: ')
+	exportPLYTxt = Str('Export as PLY: ')
 	allTimesTxt = Str('All times: ')
 	timeSeries1Txt = Str('Vector time series 1: ')
 	timeSeries2Txt = Str('Vector time series 2: ')

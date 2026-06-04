@@ -239,23 +239,27 @@ class allSurfaceExtractionOptions:
 				peakVely_loc = np.where(np.abs(vbox) == peakVely)
 				peakVelz_loc = np.where(np.abs(wbox) == peakVelz)
 				
-				self.polStrengthWithinStructureX = str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
-				str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
-				str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
+				self.polStrengthWithinStructureX = str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1)
+				self.polStrengthWithinStructureY = str(np.sum(om2box[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1/np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1)
+				self.polStrengthWithinStructureZ = str(np.sum(om3box[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1/np.sum(wbox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
 				
-				self.polStrengthWithinStructureY = str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
-				str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
-				str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
+				# self.polStrengthWithinStructureX = str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1)# + ' ' +\
+				# #str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
+				# #str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
 				
-				self.polStrengthWithinStructureZ = str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
-				str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
-				str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
+				# self.polStrengthWithinStructureY = #str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
+				# str(np.sum(om2box[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1/np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
+				# #str(np.sum(om2box[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
 				
-				print(peakVelx, peakVely, peakVelz)
-				print(peakVelx_loc, peakVely_loc, peakVelz_loc)
-				print(np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
-				print(np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
-				print(np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
+				# self.polStrengthWithinStructureZ = str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1) + ' ' +\
+				# str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
+				# str(np.sum(om3box[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
+				
+				# print(peakVelx, peakVely, peakVelz)
+				# print(peakVelx_loc, peakVely_loc, peakVelz_loc)
+				# print(np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
+				# print(np.sum(vbox[peakVely_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(vbox[:, :, peakVely_loc[2]]) * self.dx_data1 * self.dy_data1)
+				# print(np.sum(wbox[peakVelz_loc[0], :, :]) * self.dy_data1 * self.dz_data1, np.sum(wbox[:, peakVelz_loc[1], :]) * self.dx_data1 * self.dz_data1, np.sum(wbox[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1)
 		
 	def actualExtraction(self, _threshVal, data, 
 	xlen, ylen, zlen, _zFastest, _verbose, 

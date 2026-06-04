@@ -200,6 +200,7 @@ def include_all_traits(self):
 	
 	# allBlenderExportOptions
 	self.on_trait_change(self.exportSTLBlenderChanged, "exportSTLBlender")
+	self.on_trait_change(self.exportPLYBlenderChanged, "exportPLYBlender")
 	
 	# timeUpdateBehavior
 	self.on_trait_change(self.time_changed1, "whichTime1")

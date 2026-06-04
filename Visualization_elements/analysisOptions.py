@@ -238,7 +238,12 @@ class allAnalysisOptions:
 				
 				helicity = w1/wmag * u/vMag + w2/wmag * v/vMag + w3/wmag * w/vMag
 				helicity = w1 * u + w2 * v + w3 * w
+				helAbs = np.sum(np.abs(helicity)) * self.dx_data1  * self.dy_data1  * self.dz_data1
 				helTot = np.sum(helicity) * self.dx_data1  * self.dy_data1  * self.dz_data1
+				
+				fw = open('helicity_comp_abs.txt', 'a')
+				fw.write(str(i) + ' ' + str(helAbs) + '\n')
+				fw.close()
 				
 				fw = open('helicity_comp.txt', 'a')
 				fw.write(str(i) + ' ' + str(helTot) + '\n')
