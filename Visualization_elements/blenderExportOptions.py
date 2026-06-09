@@ -149,25 +149,26 @@ class allBlenderExportOptions:
 							scalar = self.whichColorFields(self.colorFields1, 1)
 							
 							# Use interpolation to map it to the verts
-							vertex_values = map_coordinates(scalar, [verts[:, 0], verts[:, 1], verts[:, 2]], order=1, mode="nearest")
+							vertex_values = map_coordinates(scalar, [verts[:, 0], verts[:, 1], verts[:, 2]], order=3, mode="nearest")
+							vmin, vmax = self.mesh1.module_manager.scalar_lut_manager.data_range
 							
-							# Get cmap min, max values
-							# If min, max exceeds actual min, max, this leads to issues in blender
-							if self.colormapMin1 <= vertex_values.min():
-								vmin = vertex_values.min()
-							else:
-								vmin = self.colormapMin1
-							if self.colormapMax1 >= vertex_values.max():
-								vmax = vertex_values.max()
-							else:
-								vmax = self.colormapMax1
+							# vertex_values_clipped = np.clip(vertex_values, vmin, vmax)
+							
+							# # vmin, vmax = self.mesh1.module_manager.scalar_lut_manager.data_range
 
-							norm = (vertex_values - vmin) / (vmax - vmin)
+							# norm = (vertex_values_clipped - vmin) / (vmax - vmin)
 							
-							# Get the cmap data from mayavi itself
+							# # Get the cmap data from mayavi itself
 							lut_table = self.mesh1.module_manager.scalar_lut_manager.lut.table.to_array()
-							idx = np.clip((norm * 255).astype(np.int32), 0, 255)
+							# print(self.mesh1.module_manager.scalar_lut_manager.data_range)
+							# print(self.mesh1.module_manager.scalar_lut_manager.lut_mode)
+							# idx = np.clip((norm * 255).astype(np.int32), 0, 255)
+							norm = np.clip((vertex_values - vmin) / (vmax - vmin), 0.0, 1.0)
+							idx = np.round(norm * 255).astype(np.uint8)
 							rgb = lut_table[idx, :3]
+							
+							print(np.shape(vertex_values), np.shape(lut_table), np.shape(rgb))
+							print(rgb[:10])
 
 							# Create vertex table
 							vertex_dtype = np.dtype([

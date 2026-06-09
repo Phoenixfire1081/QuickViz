@@ -116,7 +116,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	outlineColorBlue4 = Float(0.0)	
 	
 	# Mode
-	allModeOptions = Enum(['Dataset', 'Visualization', 'Analysis', 'Biot-Savart', 'Log Lattice', 'Blender exports'])
+	allModeOptions = Enum(['Dataset', 'Visualization', 'Analysis', 'PTV tools', 'Biot-Savart', 'Log Lattice', 'Blender exports'])
 	
 	# All Dataset options
 	allDatasetActions = Enum('Import', 'Export', 'Manipulate', cols = 3)
@@ -268,6 +268,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	
 	# PDF
 	generatePDF = Button('Generate')
+	
+	# All PTV tools options
+	allPTVtoolsOptions = Enum(['Shake the box', 'Trackfit'], cols = 2)
 	
 	# All Biot-Savart options
 	allBSOptions = Enum(['Local Induction Approximation', 'M1 Klein-Knio'])
