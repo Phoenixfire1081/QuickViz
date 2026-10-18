@@ -907,14 +907,13 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.ts3Type = 'VectorTs' 
 		self.ts4Type = 'VectorTs'
 		
-		# Number of input time series
-		self.nts = int(args[0])
+		# Number of input time series. This is zero by default.
+		self.nts = int(0)
 		
-		# Get data first
-		self._dataTs1 = args[4]
-		self._dataTs2 = args[4]
-		self._dataTs3 = args[4]
-		self._dataTs4 = args[4]
+		# Create x, y, z data for initial load
+		dmin = -0.5
+		dmax = 0.5
+		xx, yy, zz = np.mgrid[dmin:dmax:3*1j, dmin:dmax:3*1j, dmin:dmax:3*1j]
 		
 		# Check if data is 4d
 		
@@ -997,16 +996,16 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		# DATA 1
 		
-		self.x1 = args[1]
-		self.y1 = args[2]
-		self.z1 = args[3]
+		self.x1 = xx
+		self.y1 = yy
+		self.z1 = zz
 		
-		self.u1 = args[5][:, :, :, :, 0]
-		self.v1 = args[5][:, :, :, :, 1]
-		self.w1 = args[5][:, :, :, :, 2]
-		self.omega1 = args[6][:, :, :, :, 0]
-		self.omega2 = args[6][:, :, :, :, 1]
-		self.omega3 = args[6][:, :, :, :, 2]
+		self.u1 = self._dataTs1[:, :, :, 0]
+		self.v1 = self._dataTs1[:, :, :, 0]
+		self.w1 = self._dataTs1[:, :, :, 0]
+		self.omega1 = self._dataTs1[:, :, :, 0]
+		self.omega2 = self._dataTs1[:, :, :, 0]
+		self.omega3 = self._dataTs1[:, :, :, 0]
 		
 		self.xmin_data1 = self.x1.min()
 		self.ymin_data1 = self.y1.min()
@@ -1053,9 +1052,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		else:
 			
-			self.x2 = args[1]
-			self.y2 = args[2]
-			self.z2 = args[3]
+			self.x2 = self.x1
+			self.y2 = self.y1
+			self.z2 = self.z1
 
 		self.xmin_data2 = self.x2.min()
 		self.ymin_data2 = self.y2.min()
@@ -1107,9 +1106,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		else:
 			
-			self.x3 = args[1]
-			self.y3 = args[2]
-			self.z3 = args[3]
+			self.x3 = self.x1
+			self.y3 = self.y1
+			self.z3 = self.z1
 
 		self.xmin_data3 = self.x3.min()
 		self.ymin_data3 = self.y3.min()
@@ -1161,9 +1160,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		
 		else:
 			
-			self.x4 = args[1]
-			self.y4 = args[2]
-			self.z4 = args[3]
+			self.x4 = self.x1
+			self.y4 = self.y1
+			self.z4 = self.z1
 
 		self.xmin_data4 = self.x4.min()
 		self.ymin_data4 = self.y4.min()
@@ -1195,7 +1194,13 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 		self.add_trait("thresholdMinimum4", Float(np.floor(float(_data4.min()))))
 		self.add_trait("thresholdMaximum4", Float(np.ceil(float(_data4.max()))))
 		
-		# By default, turn off other outlines
+		# By default, turn off all outlines
+		
+		self.out1_sc1.actor.actor.visibility = False
+		self.out1_sc2.actor.actor.visibility = False
+		self.out1_sc3.actor.actor.visibility = False
+		self.out1_sc4.actor.actor.visibility = False
+		
 		self.out2_sc1.actor.actor.visibility = False
 		self.out2_sc2.actor.actor.visibility = False
 		self.out2_sc3.actor.actor.visibility = False
