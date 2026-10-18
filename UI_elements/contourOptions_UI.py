@@ -10,6 +10,7 @@ sliderw, sliderh = allUIOptions.slider()
 slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
+determine_width = allUIOptions.determineWidth
 
 contourUIelements = (Group(
 	# Group(
@@ -27,6 +28,17 @@ contourUIelements = (Group(
 	Item("ColormapMinMaxTxt", style = 'readonly', show_label = False, height = smallh, width = -145, visible_when='radioButton1 == "Y"'),
 	Item("colormapMin1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw),
 	Item("colormapMax1", show_label = False, visible_when='radioButton1 == "Y"', height = tinyh, width = tinyw)),
+	
+	HGroup(
+	Item("SetIsoColorTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width('Set Iso color:'), visible_when='radioButton1 == "Y"'),
+	Item("set_iso_color_1", show_label = False, visible_when='radioButton1 == "Y"'),
+	),
+	
+	HGroup(Item("Isotext", style='readonly', show_label=False, height = smallh, width = -120, visible_when='radioButton1 == "Y" and set_iso_color_1 == 1'), 
+	Item("iso_color_r_1", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton1 == "Y" and set_iso_color_1 == 1'),
+	Item("iso_color_g_1", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton1 == "Y" and set_iso_color_1 == 1'),
+	Item("iso_color_b_1", show_label = False, height = tinyh, width = tinyw, visible_when='radioButton1 == "Y" and set_iso_color_1 == 1'),
+	),
 	
 	HGroup(Item("OpacityTxt", style = 'readonly', show_label = False, height = smallh, width = -60, visible_when='radioButton2 == "Y"'),
 	Item("contourOpacity2", show_label = False, visible_when='radioButton2 == "Y"', height = tinyh, width = tinyw),

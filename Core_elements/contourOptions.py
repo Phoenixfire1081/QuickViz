@@ -173,3 +173,27 @@ class allContourOptions:
 		
 		# Change colormap range
 		self.iso4_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin4, self.colormapMax4])
+	
+	@on_trait_change('iso_color_r_1, iso_color_g_1, iso_color_b_1')
+	def isosurfaceColorChanged(self):
+		
+		if self.radioButton1 == "Y":
+			
+			self.iso1_sc1.actor.mapper.scalar_visibility = False
+			self.iso1_sc1.actor.property.color = (self.iso_color_r_1, self.iso_color_g_1, self.iso_color_b_1)
+		
+		elif self.radioButton2 == "Y":
+		
+			self.iso2_sc1.actor.mapper.scalar_visibility = False
+			self.iso2_sc1.actor.property.color = (self.iso_color_r_1, self.iso_color_g_1, self.iso_color_b_1)
+		
+		elif self.radioButton3 == "Y":
+			
+			self.iso3_sc1.actor.mapper.scalar_visibility = False
+			self.iso3_sc1.actor.property.color = (self.iso_color_r_1, self.iso_color_g_1, self.iso_color_b_1)
+		
+		elif self.radioButton4 == "Y":
+			
+			self.iso4_sc1.actor.mapper.scalar_visibility = False
+			self.iso4_sc1.actor.property.color = (self.iso_color_r_1, self.iso_color_g_1, self.iso_color_b_1)
+		

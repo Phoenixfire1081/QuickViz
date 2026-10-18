@@ -102,6 +102,10 @@ def include_all_traits(self):
 	self.on_trait_change(self.contour_changed4, "colormapMax4")
 	
 	# allIsosurfaceOptions
+	self.on_trait_change(self.isosurfaceColorChanged, "iso_color_r_1")
+	self.on_trait_change(self.isosurfaceColorChanged, "iso_color_g_1")
+	self.on_trait_change(self.isosurfaceColorChanged, "iso_color_b_1")
+	
 	self.on_trait_change(self.threshold_changed1, "threshold1")
 	self.on_trait_change(self.setThreshold_fired1, "setThreshold1")
 	self.on_trait_change(self.threshold_changed1, "thresholdPercent1")

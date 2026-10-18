@@ -483,6 +483,15 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	contourColormap3 = deepcopy(contourColormap1)
 	contourColormap4 = deepcopy(contourColormap1)
 	
+	iso_color_r_1 = Float(0.0)
+	iso_color_g_1 = Float(0.0)
+	iso_color_b_1 = Float(0.0)
+	
+	set_iso_color_1 = Bool()
+	set_iso_color_2 = Bool()
+	set_iso_color_3 = Bool()
+	set_iso_color_4 = Bool()
+	
 	# Adjust text and location of default axis
 	default_axis_x_label = Str('$x$')
 	default_axis_y_label = Str('$y$')
@@ -775,6 +784,8 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	structureExtractionTxt = Str('Run structure extraction first')
 	scalarOnlyTxt = Str('Import scalar only?')
 	scalarTxt = Str('Scalar:')
+	Isotext = Str('Iso color (r,g,b):')
+	SetIsoColorTxt = Str('Set iso color:')
 	
 	# Create next time button
 	next_timeSeries  = Button('Next')

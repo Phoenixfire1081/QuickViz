@@ -55,8 +55,7 @@ class allIsosurfaceOptions:
 			actualTriangles = actualTriangles.reshape(actualTriangles.size//4, 4)
 
 			# Interpolate on the points to get the scalar data
-			interp0 = scipy.interpolate.NearestNDInterpolator((x.ravel(), y.ravel(), z.ravel()), \
-			colorData.ravel())
+			interp0 = scipy.interpolate.NearestNDInterpolator((x.ravel(), y.ravel(), z.ravel()), colorData.ravel())
 			
 			self.mesh1 = mlab.triangular_mesh(actualPts[:, 0], actualPts[:, 1], \
 				actualPts[:, 2], actualTriangles[:, 1:], scalars = interp0(actualPts), 

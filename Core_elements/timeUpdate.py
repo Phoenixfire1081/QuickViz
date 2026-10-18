@@ -205,6 +205,10 @@ class timeUpdateBehavior:
 				# Change colormap range
 				self.iso1_sc1.module_manager.scalar_lut_manager.data_range = np.array([self.colormapMin1, self.colormapMax1])
 				
+				# Set iso color if chosen
+				if self.set_iso_color_1:
+					self.isosurfaceColorChanged()
+				
 				# If volume rendering is enabled, update that
 				if self.allLocalOptions == "Volume Rendering":
 					

@@ -159,8 +159,8 @@ class allPlaygroundOptions:
 			gridPts_z = gridPts_z * float(self.zmax_LL) # This ensures that data is within the preferred extent
 			gridPts_z = gridPts_z.ravel()
 			
-			ax.scatter(gridPts_x, -gridPts_y, c = 'r', s = 4)
-			ax.scatter(gridPts_x, gridPts_y, c = 'b', s = 4)
+			ax.scatter(gridPts_x, -gridPts_y, c = 'k', s = 4)
+			ax.scatter(gridPts_x, gridPts_y, c = 'k', s = 4)
 			ax.axis('equal')
 			plt.savefig('ll_extended_domain.png')
 			# fig.tight_layout()

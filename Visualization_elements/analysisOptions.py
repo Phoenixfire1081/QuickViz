@@ -55,6 +55,11 @@ class allAnalysisOptions:
 				w1 = self.omega1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
 				w2 = self.omega2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
 				w3 = self.omega3[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, self.whichTime1]
+				
+				# Get mid-point when origin is not 0
+				x1_mid = np.mean(self.x1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn])
+				y1_mid = np.mean(self.y1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn])
+				z1_mid = np.mean(self.z1[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn])
 			else:
 				w1 = self.omega1[:, :, :, self.whichTime1]
 				w2 = self.omega2[:, :, :, self.whichTime1]
@@ -67,14 +72,28 @@ class allAnalysisOptions:
 			
 			print(Q,EigVec,EigVal)
 			assert np.isclose(Q,Q.T).all()
-			assert np.isclose(EigVec[0]@EigVec[1],0)
-			assert np.isclose(EigVec[1]@EigVec[2],0)
-			assert np.isclose(EigVec[2]@EigVec[0],0)
+			assert np.isclose(EigVec[:,0]@EigVec[:,1],0)
+			assert np.isclose(EigVec[:,1]@EigVec[:,2],0)
+			assert np.isclose(EigVec[:,2]@EigVec[:,0],0)
+			assert np.isclose(Q@EigVec[:,0],EigVal[0]*EigVec[:,0]).all()
+			assert np.isclose(Q@EigVec[:,1],EigVal[1]*EigVec[:,1]).all()
+			assert np.isclose(Q@EigVec[:,2],EigVal[2]*EigVec[:,2]).all()
 
 			# For automatic scale factor, use the dimenion with the smallest length
 			allMaxLengths = np.array([np.max(self.x1), np.max(self.y1), np.max(self.z1)])
 			
-			self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			EigVecSorted = EigVec[:,np.argsort(EigVal)[::-1]]
+			EigValSorted = EigVal[np.argsort(EigVal)[::-1]]
+			# print(EigVecSorted)
+			# print(EigVecSorted[0])
+			print(Q,EigVecSorted,EigValSorted)
+			
+			# self.quiver_sc1 = mlab.quiver3d([0],[0],[0], -EigVecSorted[0][0], -EigVecSorted[0][1], -EigVecSorted[0][2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			
+			# self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][0], y1_mid+EigVecSorted[1][0], z1_mid+EigVecSorted[2][0], scale_factor = 0.3*np.min(allMaxLengths), color = (1, 0, 0), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][1], y1_mid+EigVecSorted[1][1], z1_mid+EigVecSorted[2][1], scale_factor = 0.3*np.min(allMaxLengths), color = (0, 1, 0), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][2], y1_mid+EigVecSorted[1][2], z1_mid+EigVecSorted[2][2], scale_factor = 0.3*np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
 			# self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
 	
 	@on_trait_change('whichSliceX1_reconn, whichSliceY1_reconn, whichSliceZ1_reconn, whichSliceX2_reconn, whichSliceY2_reconn, whichSliceZ2_reconn')
@@ -249,17 +268,17 @@ class allAnalysisOptions:
 				fw.write(str(i) + ' ' + str(helTot) + '\n')
 				fw.close()
 				
-				# fw = open('vort_comp.txt', 'a')
-				# fw.write(str(i) + ' ' + str(wmag.max()) + '\n')
-				# fw.close()
+				fw = open('vort_comp.txt', 'a')
+				fw.write(str(i) + ' ' + str(wmag.max()) + '\n')
+				fw.close()
 				
-				# fw = open('ens_comp.txt', 'a')
-				# fw.write(str(i) + ' ' + str(E1[i]) + ' ' + str(E2[i]) + ' ' + str(E3[i]) + ' ' + str(ET[i]) + '\n')
-				# fw.close()
+				fw = open('ens_comp.txt', 'a')
+				fw.write(str(i) + ' ' + str(E1[i]) + ' ' + str(E2[i]) + ' ' + str(E3[i]) + ' ' + str(ET[i]) + '\n')
+				fw.close()
 				
-				# fw = open('ens_comp_qtensor.txt', 'a')
-				# fw.write(str(i) + ' ' + str(E1_q[i]) + ' ' + str(E2_q[i]) + ' ' + str(E3_q[i]) + ' ' + str(ET_q[i]) + '\n')
-				# fw.close()
+				fw = open('ens_comp_qtensor.txt', 'a')
+				fw.write(str(i) + ' ' + str(E1_q[i]) + ' ' + str(E2_q[i]) + ' ' + str(E3_q[i]) + ' ' + str(ET_q[i]) + '\n')
+				fw.close()
 			
 			
 			fig, ax = plt.subplots(1, 2)
