@@ -11,6 +11,7 @@ from .dataset_UI import datasetUIelements
 from .duchonRobert_UI import duchonRobertPressureUIelements
 from .reconnection_UI import reconnectionUIelements
 from .blenderExport_UI import blenderExportUIelements
+from .PTVtools_UI import PTVtoolsUIelements
 
 # Initialize UI layout customization
 allUIOptions = UIOptionsClass()
@@ -103,6 +104,10 @@ isoUIelements = (Group(
 	Item("generatePDFTxt", style = 'readonly', show_label = False, height = tinyh, width = determine_width("Generate PDF plot:"), visible_when = pdfVisibility),
 	Item("generatePDF", show_label = False, visible_when = pdfVisibility),
 	),
+	
+	# All PTV tools options
+	
+	PTVtoolsUIelements,
 	
 	# All BS options
 	Group(

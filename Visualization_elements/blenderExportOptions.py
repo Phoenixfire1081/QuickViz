@@ -149,28 +149,7 @@ class allBlenderExportOptions:
 							scalar = self.whichColorFields(self.colorFields1, 1)
 							
 							# Use interpolation to map it to the verts
-							vertex_values = map_coordinates(scalar, [verts[:, 0]/ self.dx_data1, verts[:, 1]/ self.dy_data1, verts[:, 2]/ self.dz_data1], order=5, mode="nearest") # Ordering 0, 1, 2 is correct. 
-							
-							# Get cmap min, max values
-							# If min, max exceeds actual min, max, this leads to issues in blender
-							if self.colormapMin1 <= vertex_values.min():
-								vmin = vertex_values.min()
-							else:
-								vmin = self.colormapMin1
-							if self.colormapMax1 >= vertex_values.max():
-								vmax = vertex_values.max()
-							else:
-								vmax = self.colormapMax1
 
-							norm = (vertex_values - vmin) / (vmax - vmin)
-							
-							# Get the cmap data from mayavi itself
-							lut_table = self.mesh1.module_manager.scalar_lut_manager.lut.table.to_array()
-							rgb = lut_table[:, :3]
-							n_lut = rgb.shape[0]
-							idx = np.round(norm * (n_lut - 1)).astype(np.int32)
-							idx = np.clip(idx, 0, n_lut - 1)
-							rgb = rgb[idx]
 
 							# Create vertex table
 							vertex_dtype = np.dtype([

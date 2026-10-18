@@ -130,13 +130,15 @@ class allRealSpaceVisualizationOptions:
 			
 		# Completely replace TS1 with new data
 		
-		self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-		self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-		self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-		self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-		self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+		finalRes = ((maxTs - minTs)//skipTs) + 1
+		
+		self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
 		
 		self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
 		
@@ -282,13 +284,13 @@ class allRealSpaceVisualizationOptions:
 				
 				if ts == minTs:
 				
-					self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-					self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-					self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-					self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-					self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-					self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
-					self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), (maxTs - minTs)//skipTs), dtype = np.float32)
+					self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+					self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+					self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+					self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+					self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+					self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+					self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
 			
 			if tempExists:
 				temperature = inverseDFTsingleScalar(len(x), len(y), len(z), 
