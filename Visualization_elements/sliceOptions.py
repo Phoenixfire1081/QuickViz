@@ -65,9 +65,9 @@ class allSliceOptions:
 			_v = self.v2[:, :, :, self.whichTime2]
 			_w = self.w2[:, :, :, self.whichTime2]
 			
-			_omega2 = self.omega1[:, :, :, self.whichTime2]
-			_omega2 = self.omega2[:, :, :, self.whichTime2]
-			_omega3 = self.omega3[:, :, :, self.whichTime2]
+			_omega2 = self.omega1_2[:, :, :, self.whichTime2]
+			_omega2 = self.omega2_2[:, :, :, self.whichTime2]
+			_omega3 = self.omega3_2[:, :, :, self.whichTime2]
 			
 			_xlength_data = self.xlength_data2
 			_ylength_data = self.ylength_data2
@@ -513,39 +513,46 @@ class allSliceOptions:
 			self.sf1_sc1.remove()
 		except (ValueError, AttributeError):
 			pass  # Set slice first
+		
+		# if self.screen1_ts1:
+			# self.setSlice_actual(1, self.scene1.mayavi_scene)
+			# print('ssss')
+		# elif self.screen1_ts2:
+			# self.setSlice_actual(2, self.scene1.mayavi_scene)
+			# print('ttt')
 
 		if self.screen1_ts1 and self.radioButton1:
 			self.setSlice_actual(1, self.scene1.mayavi_scene)
-		elif self.screen1_ts2 and self.radioButton1: 
+		elif self.screen1_ts2 and self.radioButton2: 
 			self.setSlice_actual(2, self.scene1.mayavi_scene)
-		elif self.screen1_ts3 and self.radioButton1:
+		elif self.screen1_ts3 and self.radioButton3:
 			self.setSlice_actual(3, self.scene1.mayavi_scene)
-		elif self.screen1_ts4 and self.radioButton1: 
+		elif self.screen1_ts4 and self.radioButton4: 
 			self.setSlice_actual(4, self.scene1.mayavi_scene)
 		
-		elif self.screen2_ts1 and self.radioButton2:
+		elif self.screen2_ts1 and self.radioButton1:
 			self.setSlice_actual(1, self.scene2.mayavi_scene)
 		elif self.screen2_ts2 and self.radioButton2: 
 			self.setSlice_actual(2, self.scene2.mayavi_scene)
-		elif self.screen2_ts3 and self.radioButton2:
+		elif self.screen2_ts3 and self.radioButton3:
 			self.setSlice_actual(3, self.scene2.mayavi_scene)
-		elif self.screen2_ts4 and self.radioButton2: 
+		elif self.screen2_ts4 and self.radioButton4: 
 			self.setSlice_actual(4, self.scene2.mayavi_scene)
 		
-		elif self.screen3_ts1 and self.radioButton3:
+		elif self.screen3_ts1 and self.radioButton1:
 			self.setSlice_actual(1, self.scene3.mayavi_scene)
-		elif self.screen3_ts2 and self.radioButton3: 
+		elif self.screen3_ts2 and self.radioButton2: 
 			self.setSlice_actual(2, self.scene3.mayavi_scene)
 		elif self.screen3_ts3 and self.radioButton3:
 			self.setSlice_actual(3, self.scene3.mayavi_scene)
-		elif self.screen3_ts4 and self.radioButton3: 
+		elif self.screen3_ts4 and self.radioButton4: 
 			self.setSlice_actual(4, self.scene3.mayavi_scene)
 		
-		elif self.screen4_ts1 and self.radioButton4:
+		elif self.screen4_ts1 and self.radioButton1:
 			self.setSlice_actual(1, self.scene4.mayavi_scene)
-		elif self.screen4_ts2 and self.radioButton4: 
+		elif self.screen4_ts2 and self.radioButton2: 
 			self.setSlice_actual(2, self.scene4.mayavi_scene)
-		elif self.screen4_ts3 and self.radioButton4:
+		elif self.screen4_ts3 and self.radioButton3:
 			self.setSlice_actual(3, self.scene4.mayavi_scene)
 		elif self.screen4_ts4 and self.radioButton4: 
 			self.setSlice_actual(4, self.scene4.mayavi_scene)

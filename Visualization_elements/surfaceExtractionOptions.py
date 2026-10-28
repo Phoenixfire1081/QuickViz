@@ -243,6 +243,9 @@ class allSurfaceExtractionOptions:
 				self.polStrengthWithinStructureY = str(np.sum(om2box[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1/np.sum(vbox[:, peakVely_loc[1], :]) * self.dx_data1 * self.dz_data1)
 				self.polStrengthWithinStructureZ = str(np.sum(om3box[:, :, peakVelz_loc[2]]) * self.dx_data1 * self.dy_data1/np.sum(wbox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)
 				
+				# Calculate circulation
+				print('Circ', np.sum(om3box[:, :, 0].ravel()[structuredGridBoxGrid[:, :, 0].ravel() == self.chooseStructure] * self.dx_data1 * self.dy_data1))
+				
 				# self.polStrengthWithinStructureX = str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1)# + ' ' +\
 				# #str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, peakVelx_loc[1], :]) * self.dx_data1 * self.dz_data1) + ' ' +\
 				# #str(np.sum(om1box[peakVelx_loc[0], :, :]) * self.dy_data1 * self.dz_data1/np.sum(ubox[:, :, peakVelx_loc[2]]) * self.dx_data1 * self.dy_data1)

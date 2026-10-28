@@ -20,7 +20,7 @@ def calculate_QTensor3D(vortVec, dx, dy, dz):
 		dotProd = np.dot(vortVec[i], vortVec[i])
 		Q_tensor += outerMul - ((dotProd/3) * np.eye(3))
 	
-	Q_tensor = Q_tensor * dx * dy * dz
+	Q_tensor = (Q_tensor/len(vortVec)) * dx * dy * dz
 	
 	# Calculate eigenvalues and eigenvectors
 	eigenvalue, eigenvectors = np.linalg.eigh(Q_tensor)
@@ -91,9 +91,17 @@ class allAnalysisOptions:
 			# self.quiver_sc1 = mlab.quiver3d([0],[0],[0], -EigVecSorted[0][0], -EigVecSorted[0][1], -EigVecSorted[0][2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
 			
 			# self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
-			self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][0], y1_mid+EigVecSorted[1][0], z1_mid+EigVecSorted[2][0], scale_factor = 0.3*np.min(allMaxLengths), color = (1, 0, 0), figure=self.scene1.mayavi_scene)
-			self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][1], y1_mid+EigVecSorted[1][1], z1_mid+EigVecSorted[2][1], scale_factor = 0.3*np.min(allMaxLengths), color = (0, 1, 0), figure=self.scene1.mayavi_scene)
-			self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][2], y1_mid+EigVecSorted[1][2], z1_mid+EigVecSorted[2][2], scale_factor = 0.3*np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			# self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][0], y1_mid+EigVecSorted[1][0], z1_mid+EigVecSorted[2][0], scale_factor = 0.3*np.min(allMaxLengths), color = (1, 0, 0), figure=self.scene1.mayavi_scene)
+			# self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][1], y1_mid+EigVecSorted[1][1], z1_mid+EigVecSorted[2][1], scale_factor = 0.3*np.min(allMaxLengths), color = (0, 1, 0), figure=self.scene1.mayavi_scene)
+			# self.quiver_sc1 = mlab.quiver3d([x1_mid],[y1_mid],[z1_mid], x1_mid+EigVecSorted[0][2], y1_mid+EigVecSorted[1][2], z1_mid+EigVecSorted[2][2], scale_factor = 0.3*np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+
+			# self.quiver_sc1 = mlab.quiver3d([0],[0],[0], -EigVecSorted[0][0], -EigVecSorted[0][1], -EigVecSorted[0][2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			
+			# self.quiver_sc1 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],EigVec[0],EigVec[1],EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([0],[0],[0], EigVecSorted[0][0], EigVecSorted[1][0], EigVecSorted[2][0], scale_factor = np.min(allMaxLengths), color = (1, 0, 0), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([0],[0],[0], EigVecSorted[0][1], EigVecSorted[1][1], EigVecSorted[2][1], scale_factor = np.min(allMaxLengths), color = (0, 1, 0), figure=self.scene1.mayavi_scene)
+			self.quiver_sc1 = mlab.quiver3d([0],[0],[0], EigVecSorted[0][2], EigVecSorted[1][2], EigVecSorted[2][2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
+
 			# self.quiver_sc2 = mlab.quiver3d([0,0,0],[0,0,0],[0,0,0],-EigVec[0],-EigVec[1],-EigVec[2], scale_factor = np.min(allMaxLengths), color = (0, 0, 1), figure=self.scene1.mayavi_scene)
 	
 	@on_trait_change('whichSliceX1_reconn, whichSliceY1_reconn, whichSliceZ1_reconn, whichSliceX2_reconn, whichSliceY2_reconn, whichSliceZ2_reconn')
@@ -232,7 +240,7 @@ class allAnalysisOptions:
 					self.dx_data1, self.dy_data1, self.dz_data1)
 					
 					# Sort the eigenvectors with the descending order of eigenvalues
-					EigVecSorted = EigVec[np.argsort(EigVal)[::-1]]
+					EigVecSorted = EigVec[:,np.argsort(EigVal)[::-1]]
 				
 				points = np.c_[w1.ravel(), w2.ravel(), w3.ravel()]
 				
@@ -279,7 +287,6 @@ class allAnalysisOptions:
 				fw = open('ens_comp_qtensor.txt', 'a')
 				fw.write(str(i) + ' ' + str(E1_q[i]) + ' ' + str(E2_q[i]) + ' ' + str(E3_q[i]) + ' ' + str(ET_q[i]) + '\n')
 				fw.close()
-			
 			
 			fig, ax = plt.subplots(1, 2)
 			ax[0].plot(E1, '--r', linewidth = 0.5, label = 'E1')
@@ -455,7 +462,8 @@ class allAnalysisOptions:
 		
 		from .Compute_DR_QuickViz.SFastDissVisqAllWaveCompact3D_f import SFastDissVisqAllWaveCompact3D_f
 		from .Compute_DR_QuickViz.SFastDRAllWaveCompact3D_f import SFastDRAllWaveCompact3D_f
-		from .Compute_DR_QuickViz.gaussianWavelet_compactSupport3D import gaussianWavelet_compactSupport3D
+		from .Compute_Pressure_QuickViz.gaussianWavelet_compactSupport3D import gaussianWavelet_compactSupport3D
+		# from .Compute_DR_QuickViz.gaussianWavelet_compactSupport3D import gaussianWavelet_compactSupport3D
 		from .Compute_DR_QuickViz.waveletTransformFourier3D import waveletTransformFourier3D
 		from .Compute_Pressure_QuickViz.waveletPressure3D import waveletPressure3D
 		from .Compute_Pressure_QuickViz.waveVectors3D import waveVectors3D
@@ -505,11 +513,11 @@ class allAnalysisOptions:
 			self.nts = 2
 			
 			# Gaussian wavelet
-			# kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
-			kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(yres, xres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
+			kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
+			# kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(yres, xres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
 			
-			# fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
-			fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(yres, xres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
+			fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
+			# fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(yres, xres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
 			
 			nkk = kx*kx + ky*ky + kz*kz
 			nkk[nkk==0] = 1

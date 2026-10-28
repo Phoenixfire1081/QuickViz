@@ -155,21 +155,6 @@ class allBlenderExportOptions:
 							vertex_values = map_coordinates(scalar, [verts[:, 0], verts[:, 1], verts[:, 2]], order=3, mode="nearest")
 							vmin, vmax = self.mesh1.module_manager.scalar_lut_manager.data_range
 
-							
-							# vertex_values_clipped = np.clip(vertex_values, vmin, vmax)
-							
-							# # vmin, vmax = self.mesh1.module_manager.scalar_lut_manager.data_range
-
-							# norm = (vertex_values_clipped - vmin) / (vmax - vmin)
-							
-							# # Get the cmap data from mayavi itself
-							lut_table = self.mesh1.module_manager.scalar_lut_manager.lut.table.to_array()
-
-							rgb = lut_table[:, :3]
-							n_lut = rgb.shape[0]
-							idx = np.round(norm * (n_lut - 1)).astype(np.int32)
-							idx = np.clip(idx, 0, n_lut - 1)
-							rgb = rgb[idx]
 							# print(self.mesh1.module_manager.scalar_lut_manager.data_range)
 							# print(self.mesh1.module_manager.scalar_lut_manager.lut_mode)
 							# idx = np.clip((norm * 255).astype(np.int32), 0, 255)
