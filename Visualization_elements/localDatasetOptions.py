@@ -712,8 +712,6 @@ class allLocalDatasetOptions:
 					flist_y.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
 					flist_z.sort(key = lambda x:int(x.split('_')[1].split('.')[0]))
 				
-				
-			
 			print(minTs, maxTs, skipTs)
 			for ts in range(minTs, maxTs, skipTs):
 				

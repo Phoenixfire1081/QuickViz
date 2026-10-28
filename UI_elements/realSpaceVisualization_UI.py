@@ -12,6 +12,7 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 buttonLongerw, buttonLongerh = allUIOptions.buttonLonger()
+determine_width = allUIOptions.determineWidth
 
 visibilityRSV = 'allModeOptions == "Log Lattice" and allLLOptions == "Real Space Visualization"'
 visibilityLP = visibilityRSV + ' and filterOptions_LL == "Low-pass"'
@@ -91,9 +92,20 @@ realSpaceVisualizationUIelements = Group(
 	),
 
 	HGroup(
+	Item("assignToTSTxt", show_label = False, style = 'readonly', visible_when=visibilityRSV, height = smallh, width = determine_width("Assign to:")),
+	Item("assignToTS", show_label = False, visible_when=visibilityRSV),
+	),
+	
+	HGroup(
+	Item("scalarOnlyTxt", style = 'readonly', height = smallh, width = determine_width('Import scalar only? '), show_label = False, visible_when = visibilityRSV),
+	Item("scalarOnly", show_label = False, visible_when = visibilityRSV),
+	),
+	
+	HGroup(
 	Item("whichScalarTxt", style = 'readonly', height = smallh, width = -100, show_label = False, visible_when = visibilityRSV),
 	Item("whichScalar_LL", show_label = False, visible_when = visibilityRSV),
 	Item("computeLL", height = buttonh, width = buttonw, show_label = False, visible_when = visibilityRSV),
 	),
+	
 	),	
 

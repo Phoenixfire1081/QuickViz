@@ -24,6 +24,287 @@ except:
 
 class allRealSpaceVisualizationOptions:
 	
+	def reset_specific_ts(self, xres, yres, zres, numFiles, whichTs):
+		
+		if whichTs == 1:
+			if not self.scalarOnly:	
+				self.u1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:	
+				self.u1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+		
+		if whichTs == 2:
+			if not self.scalarOnly:	
+				self.u2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+		
+		if whichTs == 3:
+			if not self.scalarOnly:	
+				self.u3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+		
+		if whichTs == 4:
+			if not self.scalarOnly:	
+				self.u4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+	
+	def write_to_specific_ts(self, velx, vely, velz, vortx, vorty, vortz, scalar, xx, yy, zz, dx, dy, dz, xres, yres, zres, ctr, maxTs, minTs, skipTs):
+		
+		# TODO - calculate on demand, vorticity data can be calculated on demand to save RAM space. Loading velocity data can be made optional
+		
+		if self.assignToTS == 'Time Series 1':
+			
+			if not self.scalarOnly:	
+				self.u1[:, :, :, ctr] = velx
+				self.v1[:, :, :, ctr] = vely
+				self.w1[:, :, :, ctr] = velz
+				self.omega1[:, :, :, ctr] = vortx
+				self.omega2[:, :, :, ctr] = vorty
+				self.omega3[:, :, :, ctr] = vortz
+			self._dataTs1[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x1 = np.float32(xx)
+			self.y1 = np.float32(yy)
+			self.z1 = np.float32(zz)
+
+			self.dx_data1 = np.float32(dx)
+			self.dy_data1 = np.float32(dy)
+			self.dz_data1 = np.float32(dz)
+			
+			self.xlength_data1 = int(xres)
+			self.ylength_data1 = int(yres)
+			self.zlength_data1 = int(zres)
+
+			self.xmin_data1 = float(self.xmin_LL)
+			self.xmax_data1 = float(self.xmax_LL)
+			self.ymin_data1 = float(self.ymin_LL)
+			self.ymax_data1 = float(self.ymax_LL)
+			self.zmin_data1 = float(self.zmin_LL)
+			self.zmax_data1 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx1 = self.xlength_data1
+			self.slice_maxy1 = self.ylength_data1
+			self.slice_maxz1 = self.zlength_data1
+
+			self.maxx1 = self.xlength_data1
+			self.maxy1 = self.ylength_data1
+			self.maxz1 = self.zlength_data1
+			
+			if not self.nts > 1:
+				self.nts = 1
+			self.numTs1 = ctr
+			
+			self.whichTime1 = 1
+			self.whichTime1 = 0
+			
+			self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+		
+		elif self.assignToTS == 'Time Series 2':
+			
+			if not self.scalarOnly:	
+				self.u2[:, :, :, ctr] = velx
+				self.v2[:, :, :, ctr] = vely
+				self.w2[:, :, :, ctr] = velz
+				self.omega1_2[:, :, :, ctr] = vortx
+				self.omega2_2[:, :, :, ctr] = vorty
+				self.omega3_2[:, :, :, ctr] = vortz
+			self._dataTs2[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x2 = np.float32(xx)
+			self.y2 = np.float32(yy)
+			self.z2 = np.float32(zz)
+
+			self.dx_data2 = np.float32(dx)
+			self.dy_data2 = np.float32(dy)
+			self.dz_data2 = np.float32(dz)
+			
+			self.xlength_data2 = int(xres)
+			self.ylength_data2 = int(yres)
+			self.zlength_data2 = int(zres)
+
+			self.xmin_data2 = float(self.xmin_LL)
+			self.xmax_data2 = float(self.xmax_LL)
+			self.ymin_data2 = float(self.ymin_LL)
+			self.ymax_data2 = float(self.ymax_LL)
+			self.zmin_data2 = float(self.zmin_LL)
+			self.zmax_data2 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx2 = self.xlength_data2
+			self.slice_maxy2 = self.ylength_data2
+			self.slice_maxz2 = self.zlength_data2
+
+			self.maxx2 = self.xlength_data2
+			self.maxy2 = self.ylength_data2
+			self.maxz2 = self.zlength_data2
+			
+			if not self.nts > 2:
+				self.nts = 2
+			self.numTs2 = ctr
+			
+			self.whichTime2 = 1
+			self.whichTime2 = 0
+			
+			self.ts2max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+			
+		elif self.assignToTS == 'Time Series 3':
+			
+			if not self.scalarOnly:	
+				self.u3[:, :, :, ctr] = velx
+				self.v3[:, :, :, ctr] = vely
+				self.w3[:, :, :, ctr] = velz
+				self.omega1_3[:, :, :, ctr] = vortx
+				self.omega2_3[:, :, :, ctr] = vorty
+				self.omega3_3[:, :, :, ctr] = vortz
+			self._dataTs3[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x3 = np.float32(xx)
+			self.y3 = np.float32(yy)
+			self.z3 = np.float32(zz)
+
+			self.dx_data3 = np.float32(dx)
+			self.dy_data3 = np.float32(dy)
+			self.dz_data3 = np.float32(dz)
+			
+			self.xlength_data3 = int(xres)
+			self.ylength_data3 = int(yres)
+			self.zlength_data3 = int(zres)
+
+			self.xmin_data3 = float(self.xmin_LL)
+			self.xmax_data3 = float(self.xmax_LL)
+			self.ymin_data3 = float(self.ymin_LL)
+			self.ymax_data3 = float(self.ymax_LL)
+			self.zmin_data3 = float(self.zmin_LL)
+			self.zmax_data3 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx3 = self.xlength_data3
+			self.slice_maxy3 = self.ylength_data3
+			self.slice_maxz3 = self.zlength_data3
+
+			self.maxx3 = self.xlength_data3
+			self.maxy3 = self.ylength_data3
+			self.maxz3 = self.zlength_data3
+			
+			if not self.nts > 3:
+				self.nts = 3
+			self.numTs3 = ctr
+			
+			self.whichTime3 = 1
+			self.whichTime3 = 0
+			
+			self.ts3max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+			
+		elif self.assignToTS == 'Time Series 4':
+			
+			if not self.scalarOnly:	
+				self.u4[:, :, :, ctr] = velx
+				self.v4[:, :, :, ctr] = vely
+				self.w4[:, :, :, ctr] = velz
+				self.omega1_4[:, :, :, ctr] = vortx
+				self.omega2_4[:, :, :, ctr] = vorty
+				self.omega3_4[:, :, :, ctr] = vortz
+			self._dataTs4[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x4 = np.float32(xx)
+			self.y4 = np.float32(yy)
+			self.z4 = np.float32(zz)
+
+			self.dx_data4 = np.float32(dx)
+			self.dy_data4 = np.float32(dy)
+			self.dz_data4 = np.float32(dz)
+			
+			self.xlength_data4 = int(xres)
+			self.ylength_data4 = int(yres)
+			self.zlength_data4 = int(zres)
+
+			self.xmin_data4 = float(self.xmin_LL)
+			self.xmax_data4 = float(self.xmax_LL)
+			self.ymin_data4 = float(self.ymin_LL)
+			self.ymax_data4 = float(self.ymax_LL)
+			self.zmin_data4 = float(self.zmin_LL)
+			self.zmax_data4 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx4 = self.xlength_data4
+			self.slice_maxy4 = self.ylength_data4
+			self.slice_maxz4 = self.zlength_data4
+
+			self.maxx4 = self.xlength_data4
+			self.maxy4 = self.ylength_data4
+			self.maxz4 = self.zlength_data4
+			
+			self.nts = 4
+			self.numTs4 = ctr
+			
+			self.whichTime4 = 1
+			self.whichTime4 = 0
+			
+			self.ts4max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+	
 	@on_trait_change('choose_folder_LLPath')
 	def choose_folder_LLPath_fired(self):
 		
@@ -105,7 +386,14 @@ class allRealSpaceVisualizationOptions:
 	@on_trait_change('computeLL')
 	def computeLL_fired(self):
 		
-		# TODO - Show dialog box that this will overwrite time series 1
+		if self.assignToTS == 'Time Series 1':
+			whichTs = 1
+		if self.assignToTS == 'Time Series 2':
+			whichTs = 2
+		if self.assignToTS == 'Time Series 3':
+			whichTs = 3
+		if self.assignToTS == 'Time Series 4':
+			whichTs = 4
 		
 		print('Chosen path:', self.LL_path)
 		print('Timestep (s):', self.timeStep_LL)
@@ -130,20 +418,24 @@ class allRealSpaceVisualizationOptions:
 			
 		# Completely replace TS1 with new data
 		
-		finalRes = ((maxTs - minTs)//skipTs) + 1
+		# finalRes = ((maxTs - minTs)//skipTs) + 1
 		
-		self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
-		self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
-		self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
-		self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
-		self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
-		self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
-		self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self.u1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self.v1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self.w1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self.omega1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self.omega2 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self.omega3 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
+		# self._dataTs1 = np.zeros((int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), finalRes), dtype = np.float32)
 		
-		self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+		# self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
 		
 		# Initialize counter
 		ctr = 0
+		
+		# Reset requested time series
+		numFiles = int(np.ceil((maxTs - minTs)/skipTs))
+		self.reset_specific_ts(int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), numFiles, whichTs)
 		
 		for ts in range(minTs, maxTs, skipTs):
 	
@@ -347,15 +639,17 @@ class allRealSpaceVisualizationOptions:
 			elif self.whichScalar_LL == 'Temperature':
 				scalar = temperature
 			
-			# Assign data to time series 1. TODO - Backup if TS already exists.
+			# Assign data to specified time series
 			
-			self.u1[:, :, :, ctr] = velx
-			self.v1[:, :, :, ctr] = vely
-			self.w1[:, :, :, ctr] = velz
-			self.omega1[:, :, :, ctr] = vortx
-			self.omega2[:, :, :, ctr] = vorty
-			self.omega3[:, :, :, ctr] = vortz
-			self._dataTs1[:, :, :, ctr] = scalar
+			self.write_to_specific_ts(velx, vely, velz, vortx, vorty, vortz, scalar, xx, yy, zz, dx, dy, dz, int(self.xres_LL), int(self.yres_LL), int(self.zres_LL), ctr, maxTs, minTs, skipTs)
+			
+			# self.u1[:, :, :, ctr] = velx
+			# self.v1[:, :, :, ctr] = vely
+			# self.w1[:, :, :, ctr] = velz
+			# self.omega1[:, :, :, ctr] = vortx
+			# self.omega2[:, :, :, ctr] = vorty
+			# self.omega3[:, :, :, ctr] = vortz
+			# self._dataTs1[:, :, :, ctr] = scalar
 			
 			ctr += 1
 		
