@@ -318,7 +318,8 @@ class allLocalDatasetOptions:
 			self.maxy1 = self.ylength_data1
 			self.maxz1 = self.zlength_data1
 			
-			self.nts = 1
+			if not self.nts > 1:
+				self.nts = 1
 			self.numTs1 = ctr
 			
 			self.whichTime1 = 1
@@ -369,7 +370,8 @@ class allLocalDatasetOptions:
 			self.maxy2 = self.ylength_data2
 			self.maxz2 = self.zlength_data2
 			
-			self.nts = 2
+			if not self.nts > 2:
+				self.nts = 2
 			self.numTs2 = ctr
 			
 			self.whichTime2 = 1
@@ -420,7 +422,8 @@ class allLocalDatasetOptions:
 			self.maxy3 = self.ylength_data3
 			self.maxz3 = self.zlength_data3
 			
-			self.nts = 3
+			if not self.nts > 3:
+				self.nts = 3
 			self.numTs3 = ctr
 			
 			self.whichTime3 = 1

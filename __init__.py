@@ -171,7 +171,9 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	allLocalOptions = Enum(['Isosurface', 'Volume Rendering', 'Slice', 'Fieldlines (3D)'], cols=4)
 	
 	# All Analysis options
-	allAnalysisOptions = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Duchon Robert', 'Pressure', 'Plots', 'Skeletonize'], cols=3)
+	allAnalysisOptions = Enum(['Single-scale', 'Multi-scale', 'Plots'], cols=3)
+	allAnalysisOptions_feature = Enum(['Structure extraction', 'Structure Tracking', 'Fieldline tracking', 'Reconnection', 'Q-tensor', 'Skeletonize'], cols=3)
+	allAnalysisOptions_multiscale = Enum(['Component fields', 'Duchon-Robert', 'Pressure'], cols=3)
 	
 	# Structure tracking options
 	allStructureTrackingOptions = Enum(['Overlap', 'Overlap with branching', 'Overlap with registration', 'MLPT'], cols=4)
@@ -253,7 +255,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	calculateQtensor = Button('Calculate')
 	
 	# Duchon Robert
-	allDROptions = Enum(['DR', 'Dnu', 'Both'], cols=3)
+	allDROptions = Enum(['DR', 'Dnu'], cols=3)
 	a_DR = Float(30)
 	probedScale_DR = Int(1)
 	l_c_DR = Float(0)
@@ -771,7 +773,7 @@ class mayaviVisualizeTimeSeries(HasTraits, allIsosurfaceOptions,
 	enableAxisTxt = Str('Enable axis:')
 	enableCbarTxt = Str('Enable colorbar:')
 	cbarTitleTxt = Str('Title:')
-	generatePDFTxt = Str('Generate PDF plot:')
+	generatePDFTxt = Str('Probability Density Function:')
 	structureVolumeActualTxt = Str('Structure volume (Act):')
 	thresholdPercentExtractionSetTxt = Str('Threshold %:')
 	meanVelocityWithinStructureTxt = Str('Mean velocity within structure (ux, uy, uz):')

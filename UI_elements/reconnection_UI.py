@@ -12,9 +12,9 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
-reconnectionVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Reconnection"'
-reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
-reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
+reconnectionVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Reconnection"'
+reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and (allAnalysisOptions_feature == "Reconnection" or allAnalysisOptions_feature == "Q-tensor")'
+reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and altBBox == True and (allAnalysisOptions_feature == "Q-tensor" or allAnalysisOptions_feature == "Reconnection")'
 
 reconnectionUIelements = Group(
 

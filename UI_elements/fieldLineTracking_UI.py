@@ -12,7 +12,7 @@ slidertinyw, slidertinyh = allUIOptions.slidertiny()
 buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 
-visibilityFLT = 'allModeOptions == "Analysis" and allAnalysisOptions == "Fieldline tracking"'
+visibilityFLT = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Fieldline tracking"'
 
 visibilityFLTM_fl1 = visibilityFLT + ' and trackingOptions_fl1 == "Manual"'
 visibilityFLTMM_fl1 = visibilityFLT + ' and trackingOptions_fl2 == "Manual" and Mirror_fl1 == True'

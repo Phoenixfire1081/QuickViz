@@ -9,6 +9,9 @@ import os
 import matplotlib.pyplot as plt
 from numba import jit
 from .StructureTracking_QuickViz.TrackVolumeOverlap import TrackStructures
+from ..UI_elements.UIMessages import WarningDialog
+
+warning = WarningDialog
 
 @jit(nopython = True, cache = True)
 def calculate_QTensor3D(vortVec, dx, dy, dz):
@@ -28,6 +31,287 @@ def calculate_QTensor3D(vortVec, dx, dy, dz):
 	return Q_tensor, eigenvectors, eigenvalue
 
 class allAnalysisOptions:	
+	
+	def reset_specific_ts(self, xres, yres, zres, numFiles, whichTs):
+		
+		if whichTs == 1:
+			if not self.scalarOnly:	
+				self.u1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:	
+				self.u1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs1 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+		
+		if whichTs == 2:
+			if not self.scalarOnly:	
+				self.u2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_2 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs2 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+		
+		if whichTs == 3:
+			if not self.scalarOnly:	
+				self.u3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_3 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs3 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+		
+		if whichTs == 4:
+			if not self.scalarOnly:	
+				self.u4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.v4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.w4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega1_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega2_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+				self.omega3_4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+			else:
+				self.u4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.v4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.w4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega1_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega2_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+				self.omega3_4 = np.zeros((3, 3, 3, 1), dtype = np.float32)
+			self._dataTs4 = np.zeros((xres, yres, zres, numFiles), dtype = np.float32)
+	
+	def write_to_specific_ts(self, velx, vely, velz, vortx, vorty, vortz, scalar, xx, yy, zz, dx, dy, dz, xres, yres, zres, ctr, maxTs, minTs, skipTs):
+		
+		# TODO - calculate on demand, vorticity data can be calculated on demand to save RAM space. Loading velocity data can be made optional
+		
+		if self.assignToTS == 'Time Series 1':
+			
+			if not self.scalarOnly:	
+				self.u1[:, :, :, ctr] = velx
+				self.v1[:, :, :, ctr] = vely
+				self.w1[:, :, :, ctr] = velz
+				self.omega1[:, :, :, ctr] = vortx
+				self.omega2[:, :, :, ctr] = vorty
+				self.omega3[:, :, :, ctr] = vortz
+			self._dataTs1[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x1 = np.float32(xx)
+			self.y1 = np.float32(yy)
+			self.z1 = np.float32(zz)
+
+			self.dx_data1 = np.float32(dx)
+			self.dy_data1 = np.float32(dy)
+			self.dz_data1 = np.float32(dz)
+			
+			self.xlength_data1 = int(xres)
+			self.ylength_data1 = int(yres)
+			self.zlength_data1 = int(zres)
+
+			self.xmin_data1 = float(self.xmin_LL)
+			self.xmax_data1 = float(self.xmax_LL)
+			self.ymin_data1 = float(self.ymin_LL)
+			self.ymax_data1 = float(self.ymax_LL)
+			self.zmin_data1 = float(self.zmin_LL)
+			self.zmax_data1 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx1 = self.xlength_data1
+			self.slice_maxy1 = self.ylength_data1
+			self.slice_maxz1 = self.zlength_data1
+
+			self.maxx1 = self.xlength_data1
+			self.maxy1 = self.ylength_data1
+			self.maxz1 = self.zlength_data1
+			
+			if not self.nts > 1:
+				self.nts = 1
+			self.numTs1 = ctr
+			
+			self.whichTime1 = 1
+			self.whichTime1 = 0
+			
+			self.ts1max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+		
+		elif self.assignToTS == 'Time Series 2':
+			
+			if not self.scalarOnly:	
+				self.u2[:, :, :, ctr] = velx
+				self.v2[:, :, :, ctr] = vely
+				self.w2[:, :, :, ctr] = velz
+				self.omega1_2[:, :, :, ctr] = vortx
+				self.omega2_2[:, :, :, ctr] = vorty
+				self.omega3_2[:, :, :, ctr] = vortz
+			self._dataTs2[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x2 = np.float32(xx)
+			self.y2 = np.float32(yy)
+			self.z2 = np.float32(zz)
+
+			self.dx_data2 = np.float32(dx)
+			self.dy_data2 = np.float32(dy)
+			self.dz_data2 = np.float32(dz)
+			
+			self.xlength_data2 = int(xres)
+			self.ylength_data2 = int(yres)
+			self.zlength_data2 = int(zres)
+
+			self.xmin_data2 = float(self.xmin_LL)
+			self.xmax_data2 = float(self.xmax_LL)
+			self.ymin_data2 = float(self.ymin_LL)
+			self.ymax_data2 = float(self.ymax_LL)
+			self.zmin_data2 = float(self.zmin_LL)
+			self.zmax_data2 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx2 = self.xlength_data2
+			self.slice_maxy2 = self.ylength_data2
+			self.slice_maxz2 = self.zlength_data2
+
+			self.maxx2 = self.xlength_data2
+			self.maxy2 = self.ylength_data2
+			self.maxz2 = self.zlength_data2
+			
+			if not self.nts > 2:
+				self.nts = 2
+			self.numTs2 = ctr
+			
+			self.whichTime2 = 1
+			self.whichTime2 = 0
+			
+			self.ts2max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+			
+		elif self.assignToTS == 'Time Series 3':
+			
+			if not self.scalarOnly:	
+				self.u3[:, :, :, ctr] = velx
+				self.v3[:, :, :, ctr] = vely
+				self.w3[:, :, :, ctr] = velz
+				self.omega1_3[:, :, :, ctr] = vortx
+				self.omega2_3[:, :, :, ctr] = vorty
+				self.omega3_3[:, :, :, ctr] = vortz
+			self._dataTs3[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x3 = np.float32(xx)
+			self.y3 = np.float32(yy)
+			self.z3 = np.float32(zz)
+
+			self.dx_data3 = np.float32(dx)
+			self.dy_data3 = np.float32(dy)
+			self.dz_data3 = np.float32(dz)
+			
+			self.xlength_data3 = int(xres)
+			self.ylength_data3 = int(yres)
+			self.zlength_data3 = int(zres)
+
+			self.xmin_data3 = float(self.xmin_LL)
+			self.xmax_data3 = float(self.xmax_LL)
+			self.ymin_data3 = float(self.ymin_LL)
+			self.ymax_data3 = float(self.ymax_LL)
+			self.zmin_data3 = float(self.zmin_LL)
+			self.zmax_data3 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx3 = self.xlength_data3
+			self.slice_maxy3 = self.ylength_data3
+			self.slice_maxz3 = self.zlength_data3
+
+			self.maxx3 = self.xlength_data3
+			self.maxy3 = self.ylength_data3
+			self.maxz3 = self.zlength_data3
+			
+			if not self.nts > 3:
+				self.nts = 3
+			self.numTs3 = ctr
+			
+			self.whichTime3 = 1
+			self.whichTime3 = 0
+			
+			self.ts3max = (maxTs - minTs)//skipTs - 1 # This updates the slider
+			
+		elif self.assignToTS == 'Time Series 4':
+			
+			if not self.scalarOnly:	
+				self.u4[:, :, :, ctr] = velx
+				self.v4[:, :, :, ctr] = vely
+				self.w4[:, :, :, ctr] = velz
+				self.omega1_4[:, :, :, ctr] = vortx
+				self.omega2_4[:, :, :, ctr] = vorty
+				self.omega3_4[:, :, :, ctr] = vortz
+			self._dataTs4[:, :, :, ctr] = scalar
+			
+			# Update x, y, z data as well. Necessary if the visualization was
+			# performed for different resolution
+
+			self.x4 = np.float32(xx)
+			self.y4 = np.float32(yy)
+			self.z4 = np.float32(zz)
+
+			self.dx_data4 = np.float32(dx)
+			self.dy_data4 = np.float32(dy)
+			self.dz_data4 = np.float32(dz)
+			
+			self.xlength_data4 = int(xres)
+			self.ylength_data4 = int(yres)
+			self.zlength_data4 = int(zres)
+
+			self.xmin_data4 = float(self.xmin_LL)
+			self.xmax_data4 = float(self.xmax_LL)
+			self.ymin_data4 = float(self.ymin_LL)
+			self.ymax_data4 = float(self.ymax_LL)
+			self.zmin_data4 = float(self.zmin_LL)
+			self.zmax_data4 = float(self.zmax_LL)
+				
+			# Adjust slice lengths and reconnection trim lengths
+
+			self.slice_maxx4 = self.xlength_data4
+			self.slice_maxy4 = self.ylength_data4
+			self.slice_maxz4 = self.zlength_data4
+
+			self.maxx4 = self.xlength_data4
+			self.maxy4 = self.ylength_data4
+			self.maxz4 = self.zlength_data4
+			
+			self.nts = 4
+			self.numTs4 = ctr
+			
+			self.whichTime4 = 1
+			self.whichTime4 = 0
+			
+			self.ts4max = (maxTs - minTs)//skipTs - 1 # This updates the slider
 	
 	@on_trait_change('calculateQtensor')
 	def calculateQtensorChanged(self):
@@ -309,148 +593,142 @@ class allAnalysisOptions:
 		from .Compute_DR_QuickViz.SFastDissVisqAllWaveCompact3D_f import SFastDissVisqAllWaveCompact3D_f
 		from .Compute_DR_QuickViz.SFastDRAllWaveCompact3D_f import SFastDRAllWaveCompact3D_f
 		
-		# TODO - assert that dx = dy = dz (otherwise, DR calculation is invalid), done
+		if self.assignToTS == 'Time Series 1':
+			whichTs = 1
+		if self.assignToTS == 'Time Series 2':
+			whichTs = 2
+		if self.assignToTS == 'Time Series 3':
+			whichTs = 3
+		if self.assignToTS == 'Time Series 4':
+			whichTs = 4
 		
-		if self.dx_data1 == self.dy_data1 == self.dz_data1:
+		skipTs = 1 # skipping not allowed by default
+			
+		# Which Ts is active?
+		if self.radioButton1 == "Y":
+			activeTs = 1
+			minTs = self.whichTime1
+			maxTs = np.shape(self.u1)[-1]
+			uvel = self.u1
+			vvel = self.v1
+			wvel = self.w1
+			dx_data = self.dx_data1
+			dy_data = self.dy_data1
+			dz_data = self.dz_data1
+			vortx_all = self.omega1
+			vorty_all = self.omega2
+			vortz_all = self.omega3
+			xx = self.x1
+			yy = self.y1
+			zz = self.z1
+			
+		if self.radioButton2 == "Y":
+			activeTs = 2
+			minTs = self.whichTime2
+			maxTs = np.shape(self.u2)[-1]
+			uvel = self.u2
+			vvel = self.v2
+			wvel = self.w2
+			dx_data = self.dx_data2
+			dy_data = self.dy_data2
+			dz_data = self.dz_data2
+			vortx_all = self.omega1_2
+			vorty_all = self.omega2_2
+			vortz_all = self.omega3_2
+			xx = self.x2
+			yy = self.y2
+			zz = self.z2
+			
+		if self.radioButton3 == "Y":
+			activeTs = 3
+			minTs = self.whichTime3
+			maxTs = np.shape(self.u3)[-1]
+			uvel = self.u3
+			vvel = self.v3
+			wvel = self.w3
+			dx_data = self.dx_data3
+			dy_data = self.dy_data3
+			dz_data = self.dz_data3
+			vortx_all = self.omega1_3
+			vorty_all = self.omega2_3
+			vortz_all = self.omega3_3
+			xx = self.x3
+			yy = self.y3
+			zz = self.z3
+			
+		if self.radioButton4 == "Y":
+			activeTs = 4
+			minTs = self.whichTime4
+			maxTs = np.shape(self.u4)[-1]
+			uvel = self.u4
+			vvel = self.v4
+			wvel = self.w4
+			dx_data = self.dx_data4
+			dy_data = self.dy_data4
+			dz_data = self.dz_data4
+			vortx_all = self.omega1_4
+			vorty_all = self.omega2_4
+			vortz_all = self.omega3_4
+			xx = self.x4
+			yy = self.y4
+			zz = self.z4
 		
-			# First update l_c and l_c_eta (if eta is provided)
-			self.l_c_DR = np.pi / np.sqrt(self.a_DR * np.log(2)) * np.array(self.probedScale_DR) * self.dx_data1 # physcial size of the probed scale
+		# Check if activeTs is the same as assigned Ts
+		
+		if activeTs == whichTs:
 			
-			if self.eta_DR > 0:
-				self.l_c_eta_DR = self.l_c_DR / self.eta_DR # non dimensionalized size of the probed scale
+			warning(msg = "Assign to different time series").configure_traits()
 			
-			# Make dictionary to hold filter info
-			Filter = {'Scales': [self.probedScale_DR], 'a': self.a_DR}
+		else:
 			
-			# Create velocity dictionary and assign data
-			Vfield3D = {}
+			xres, yres, zres, _ = np.shape(uvel)	
+			numFiles = int(np.ceil((maxTs - minTs)/skipTs))
+			self.reset_specific_ts(xres, yres, zres, numFiles, whichTs)
+			
+			# TODO - assert that dx = dy = dz (otherwise, DR calculation is invalid), done
+			
+			if dx_data == dy_data == dz_data:
+			
+				# First update l_c and l_c_eta (if eta is provided)
+				self.l_c_DR = np.pi / np.sqrt(self.a_DR * np.log(2)) * np.array(self.probedScale_DR) * dx_data # physcial size of the probed scale
+				
+				if self.eta_DR > 0:
+					self.l_c_eta_DR = self.l_c_DR / self.eta_DR # non dimensionalized size of the probed scale
+				
+				# Make dictionary to hold filter info
+				Filter = {'Scales': [self.probedScale_DR], 'a': self.a_DR}
+				
+				# Create velocity dictionary and assign data
+				Vfield3D = {}
 
-			Vfield3D['dx'] = self.dx_data1 
-			Vfield3D['dy'] = self.dx_data1 
-			Vfield3D['dz'] = self.dx_data1 
-			
-			# Replace ts2 with new data for DR
-			# If both are activated, replace ts2 and ts3 with DR and Dnu respectively
-			# Calculate for all available data
-			
-			xres, yres, zres, allTs = np.shape(self.u1)
-			
-			# Check if altBBox is active. Trim only DR data
-			if self.altBBox:
-				xmin_reconn = self.whichSliceX1_reconn
-				xmax_reconn = self.whichSliceX2_reconn
-				ymin_reconn = self.whichSliceY1_reconn
-				ymax_reconn = self.whichSliceY2_reconn
-				zmin_reconn = self.whichSliceZ1_reconn
-				zmax_reconn = self.whichSliceZ2_reconn
+				Vfield3D['dx'] = dx_data 
+				Vfield3D['dy'] = dx_data 
+				Vfield3D['dz'] = dx_data 
 				
-			# Copy all data from ts1
-			self.u2 = self.u1
-			self.v2 = self.v1
-			self.w2 = self.w1
-			self.omega1_2 = self.omega1
-			self.omega2_2 = self.omega2
-			self.omega3_2 = self.omega3
-			
-			self.x2 = self.x1
-			self.y2 = self.y1
-			self.z2 = self.z1
-			self.dx_data2 = self.dx_data1
-			self.dy_data2 = self.dy_data1
-			self.dz_data2 = self.dz_data1
-			
-			if self.allDROptions == "DR" or self.allDROptions == "Dnu":
-				self._dataTs2 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
-				self.nts = 2
-				
-			else:
-				self._dataTs2 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
-				self._dataTs3 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
-				self.nts = 3
-				
-				# Copy all data from ts1
-				self.u3 = self.u1
-				self.v3 = self.v1
-				self.w3 = self.w1
-				self.omega1_3 = self.omega1
-				self.omega2_3 = self.omega2
-				self.omega3_3 = self.omega3
-				
-				self.x3 = self.x1
-				self.y3 = self.y1
-				self.z3 = self.z1
-				self.dx_data3 = self.dx_data1
-				self.dy_data3 = self.dy_data1
-				self.dz_data3 = self.dz_data1
-			
-			for ts in range(allTs):
-			
-				Vfield3D['u'] = self.u1[:, :, :, ts]
-				Vfield3D['v'] = self.v1[:, :, :, ts]
-				Vfield3D['w'] = self.w1[:, :, :, ts]
-				
-				if self.allDROptions == "DR":
-				
-					DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
-					if self.altBBox:
-						self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = DRw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
-					else:
-						self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
-					
-					if ts == allTs-1:
-						self.whichTime2 = allTs-1
-						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
-						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
-						self.ts2max = allTs-1
-				
-				elif self.allDROptions == "Dnu":
-					
-					Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
-					if self.altBBox:
-						self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = Dnuw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
-					else:
-						self._dataTs2[:, :, :, ts] = Dnuw3d[:, :, :, 0]
-					
-					if ts == allTs-1:
-						self.whichTime2 = allTs-1
-						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
-						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
-						self.ts2max = allTs-1
-				
-				else:
-					
-					DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)
-					Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)
-					
-					if self.altBBox:
-						self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = DRw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
-						self._dataTs3[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = Dnuw3d[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
-					else:
-						self._dataTs2[:, :, :, ts] = DRw3d[:, :, :, 0]
-						self._dataTs3[:, :, :, ts] = Dnuw3d[:, :, :, 0]
-					
-					if ts == allTs-1:
-						self.whichTime2 = allTs-1
-						self.whichTime3 = allTs-1
-						self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
-						self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
-						self.sf3_sc1 = mlab.pipeline.scalar_field(self.x3, self.y3, self.z3, self._dataTs3[:, :, :, ts], figure=self.scene1.mayavi_scene)
-						self.iso3_sc1 = mlab.pipeline.iso_surface(self.sf3_sc1, contours=[self._dataTs3[:, :, :, ts].min()])
-						
-						self.ts2max = allTs-1
-						self.ts3max = allTs-1
-			
-			# Update data min, max
-			if self.allDROptions == "DR" or self.allDROptions == "Dnu":
-				self.thresholdMinimum2 = float(self._dataTs2[:, :, :, self.whichTime2].min())
-				self.thresholdMaximum2 = float(self._dataTs2[:, :, :, self.whichTime2].max())
-			else:
-				self.thresholdMinimum2 = float(self._dataTs2[:, :, :, self.whichTime2].min())
-				self.thresholdMaximum2 = float(self._dataTs2[:, :, :, self.whichTime2].max())
-				self.thresholdMinimum3 = float(self._dataTs3[:, :, :, self.whichTime3].min())
-				self.thresholdMaximum3 = float(self._dataTs3[:, :, :, self.whichTime3].max())
+				# Replace ts2 with new data for DR
+				# If both are activated, replace ts2 and ts3 with DR and Dnu respectively
+				# Calculate for all available data
 		
-	@on_trait_change('remove_DR')
+				for ts in range(minTs, maxTs, skipTs):
+				
+					Vfield3D['u'] = uvel[:, :, :, ts]
+					Vfield3D['v'] = vvel[:, :, :, ts]
+					Vfield3D['w'] = wvel[:, :, :, ts]
+					vortx = vortz_all[:, :, :, ts]
+					vorty = vortz_all[:, :, :, ts]
+					vortz = vortz_all[:, :, :, ts]
+					
+					if self.allDROptions == "DR":
+					
+						DRw3d = SFastDRAllWaveCompact3D_f(Vfield3D, Filter)[:, :, :, 0]
+						self.write_to_specific_ts(uvel[:, :, :, ts], vvel[:, :, :, ts], wvel[:, :, :, ts], vortx, vorty, vortz, DRw3d, xx, yy, zz, dx_data, dx_data, dx_data, xres, yres, zres, ts, maxTs, minTs, skipTs)
+					
+					elif self.allDROptions == "Dnu":
+						
+						Dnuw3d = SFastDissVisqAllWaveCompact3D_f(Vfield3D, Filter)[:, :, :, 0]
+						self.write_to_specific_ts(uvel[:, :, :, ts], vvel[:, :, :, ts], wvel[:, :, :, ts], vortx, vorty, vortz, Dnuw3d, xx, yy, zz, dx_data, dx_data, dx_data, xres, yres, zres, ts, maxTs, minTs, skipTs)
+		
+	@on_trait_change('remove_DR') # Deprecated
 	def remove_DR_fired(self):
 		
 		self.nts = 1 # Nothing is deleted but controls for both the time series are taken away
@@ -468,94 +746,143 @@ class allAnalysisOptions:
 		from .Compute_Pressure_QuickViz.waveletPressure3D import waveletPressure3D
 		from .Compute_Pressure_QuickViz.waveVectors3D import waveVectors3D
 		
-		if self.dx_data1 == self.dy_data1 == self.dz_data1:
-			
-			# Make dictionary to hold filter info
-			Filter = {'Scales': [self.probedScale_DR], 'a': self.a_DR}
-			
-			# Create velocity dictionary and assign data
-			Vfield3D = {}
-
-			Vfield3D['dx'] = self.dx_data1 
-			Vfield3D['dy'] = self.dx_data1 
-			Vfield3D['dz'] = self.dx_data1 
-			
-			# Replace ts2 with new data for Pressure
-			# Calculate for all available data
-			
-			xres, yres, zres, allTs = np.shape(self.u1)
-			
-			# Check if altBBox is active. Trim only DR data
-			if self.altBBox:
-				xmin_reconn = self.whichSliceX1_reconn
-				xmax_reconn = self.whichSliceX2_reconn
-				ymin_reconn = self.whichSliceY1_reconn
-				ymax_reconn = self.whichSliceY2_reconn
-				zmin_reconn = self.whichSliceZ1_reconn
-				zmax_reconn = self.whichSliceZ2_reconn
-				
-			# Copy all data from ts1
-			self.u2 = self.u1
-			self.v2 = self.v1
-			self.w2 = self.w1
-			self.omega1_2 = self.omega1
-			self.omega2_2 = self.omega2
-			self.omega3_2 = self.omega3
-			
-			self.x2 = self.x1
-			self.y2 = self.y1
-			self.z2 = self.z1
-			self.dx_data2 = self.dx_data1
-			self.dy_data2 = self.dy_data1
-			self.dz_data2 = self.dz_data1
-			
-			self._dataTs2 = np.zeros((xres, yres, zres, allTs), dtype = np.float32)
-			self.nts = 2
-			
-			# Gaussian wavelet
-			kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
-			# kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(yres, xres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
-			
-			fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
-			# fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(yres, xres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
-			
-			nkk = kx*kx + ky*ky + kz*kz
-			nkk[nkk==0] = 1
-			fftPdxdxWav, fftPdxdyWav, fftPdxdzWav, fftPdydyWav, fftPdydzWav, fftPdzdzWav = waveletPressure3D(fftGaussWav, kx, ky, kz, nkk)
-				
-			for ts in range(allTs):
-			
-				vx = self.u1[:, :, :, ts]
-				vy = self.v1[:, :, :, ts]
-				vz = self.w1[:, :, :, ts]
-
-				Pxx = waveletTransformFourier3D(np.fft.fftn(vx*vx), fftPdxdxWav)
-				Pxy = waveletTransformFourier3D(np.fft.fftn(vx*vy), fftPdxdyWav)
-				Pxz = waveletTransformFourier3D(np.fft.fftn(vx*vz), fftPdxdzWav)
-				Pyy = waveletTransformFourier3D(np.fft.fftn(vy*vy), fftPdydyWav)
-				Pyz = waveletTransformFourier3D(np.fft.fftn(vy*vz), fftPdydzWav)
-				Pzz = waveletTransformFourier3D(np.fft.fftn(vz*vz), fftPdzdzWav)
-				
-				# Total pressure
-				Ptot = np.real(Pxx+Pyy+Pzz + 2*(Pxy+Pyz+Pxz)).astype('float32') 
-				
-				if self.altBBox:
-					self._dataTs2[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, ts] = Ptot[xmin_reconn:xmax_reconn, ymin_reconn:ymax_reconn, zmin_reconn:zmax_reconn, 0]
-				else:
-					self._dataTs2[:, :, :, ts] = Ptot[:, :, :, 0]
-				
-				if ts == allTs-1:
-					self.whichTime2 = allTs-1
-					self.sf2_sc1 = mlab.pipeline.scalar_field(self.x2, self.y2, self.z2, self._dataTs2[:, :, :, ts], figure=self.scene1.mayavi_scene)
-					self.iso2_sc1 = mlab.pipeline.iso_surface(self.sf2_sc1, contours=[self._dataTs2[:, :, :, ts].min()])
-					self.ts2max = allTs-1
-			
-			# Update data min, max
-			# if self.allDROptions == "DR" or self.allDROptions == "Dnu":
-			self.thresholdMinimum2 = float(self._dataTs2[:, :, :, self.whichTime2].min())
-			self.thresholdMaximum2 = float(self._dataTs2[:, :, :, self.whichTime2].max())
+		if self.assignToTS == 'Time Series 1':
+			whichTs = 1
+		if self.assignToTS == 'Time Series 2':
+			whichTs = 2
+		if self.assignToTS == 'Time Series 3':
+			whichTs = 3
+		if self.assignToTS == 'Time Series 4':
+			whichTs = 4
 		
-	@on_trait_change('remove_Pressure')
+		skipTs = 1 # skipping not allowed by default
+			
+		# Which Ts is active?
+		if self.radioButton1 == "Y":
+			activeTs = 1
+			minTs = self.whichTime1
+			maxTs = np.shape(self.u1)[-1]
+			uvel = self.u1
+			vvel = self.v1
+			wvel = self.w1
+			dx_data = self.dx_data1
+			dy_data = self.dy_data1
+			dz_data = self.dz_data1
+			vortx_all = self.omega1
+			vorty_all = self.omega2
+			vortz_all = self.omega3
+			xx = self.x1
+			yy = self.y1
+			zz = self.z1
+			
+		if self.radioButton2 == "Y":
+			activeTs = 2
+			minTs = self.whichTime2
+			maxTs = np.shape(self.u2)[-1]
+			uvel = self.u2
+			vvel = self.v2
+			wvel = self.w2
+			dx_data = self.dx_data2
+			dy_data = self.dy_data2
+			dz_data = self.dz_data2
+			vortx_all = self.omega1_2
+			vorty_all = self.omega2_2
+			vortz_all = self.omega3_2
+			xx = self.x2
+			yy = self.y2
+			zz = self.z2
+			
+		if self.radioButton3 == "Y":
+			activeTs = 3
+			minTs = self.whichTime3
+			maxTs = np.shape(self.u3)[-1]
+			uvel = self.u3
+			vvel = self.v3
+			wvel = self.w3
+			dx_data = self.dx_data3
+			dy_data = self.dy_data3
+			dz_data = self.dz_data3
+			vortx_all = self.omega1_3
+			vorty_all = self.omega2_3
+			vortz_all = self.omega3_3
+			xx = self.x3
+			yy = self.y3
+			zz = self.z3
+			
+		if self.radioButton4 == "Y":
+			activeTs = 4
+			minTs = self.whichTime4
+			maxTs = np.shape(self.u4)[-1]
+			uvel = self.u4
+			vvel = self.v4
+			wvel = self.w4
+			dx_data = self.dx_data4
+			dy_data = self.dy_data4
+			dz_data = self.dz_data4
+			vortx_all = self.omega1_4
+			vorty_all = self.omega2_4
+			vortz_all = self.omega3_4
+			xx = self.x4
+			yy = self.y4
+			zz = self.z4
+		
+		# Check if activeTs is the same as assigned Ts
+		
+		if activeTs == whichTs:
+			
+			warning(msg = "Assign to different time series").configure_traits()
+			
+		else:
+			
+			if dx_data == dy_data == dz_data:
+				
+				xres, yres, zres, _ = np.shape(uvel)
+				numFiles = int(np.ceil((maxTs - minTs)/skipTs))
+				self.reset_specific_ts(xres, yres, zres, numFiles, whichTs)
+				
+				# Make dictionary to hold filter info
+				Filter = {'Scales': [self.probedScale_DR], 'a': self.a_DR}
+				
+				# Create velocity dictionary and assign data
+				Vfield3D = {}
+
+				Vfield3D['dx'] = dx_data 
+				Vfield3D['dy'] = dx_data 
+				Vfield3D['dz'] = dx_data
+				
+				# Gaussian wavelet
+				kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(xres, yres, zres, dx_data, dx_data, dx_data, [self.probedScale_DR])
+				# kx, ky, kz, kx_adim, ky_adim, kz_adim = waveVectors3D(yres, xres, zres, self.dx_data1, self.dx_data1, self.dx_data1, [self.probedScale_DR])
+				
+				fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(xres, yres, zres, [self.probedScale_DR], np.sqrt(3)*dx_data, self.a_DR)
+				# fftGaussWav, _, _, _, _, _, _, _, _, _ = gaussianWavelet_compactSupport3D(yres, xres, zres, [self.probedScale_DR], np.sqrt(3)*self.dx_data1, self.a_DR)
+				
+				nkk = kx*kx + ky*ky + kz*kz
+				nkk[nkk==0] = 1
+				fftPdxdxWav, fftPdxdyWav, fftPdxdzWav, fftPdydyWav, fftPdydzWav, fftPdzdzWav = waveletPressure3D(fftGaussWav, kx, ky, kz, nkk)
+					
+				for ts in range(minTs, maxTs, skipTs):
+				
+					vx = uvel[:, :, :, ts]
+					vy = vvel[:, :, :, ts]
+					vz = wvel[:, :, :, ts]
+					vortx = vortz_all[:, :, :, ts]
+					vorty = vortz_all[:, :, :, ts]
+					vortz = vortz_all[:, :, :, ts]
+
+					Pxx = waveletTransformFourier3D(np.fft.fftn(vx*vx), fftPdxdxWav)
+					Pxy = waveletTransformFourier3D(np.fft.fftn(vx*vy), fftPdxdyWav)
+					Pxz = waveletTransformFourier3D(np.fft.fftn(vx*vz), fftPdxdzWav)
+					Pyy = waveletTransformFourier3D(np.fft.fftn(vy*vy), fftPdydyWav)
+					Pyz = waveletTransformFourier3D(np.fft.fftn(vy*vz), fftPdydzWav)
+					Pzz = waveletTransformFourier3D(np.fft.fftn(vz*vz), fftPdzdzWav)
+					
+					# Total pressure
+					Ptot = np.real(Pxx+Pyy+Pzz + 2*(Pxy+Pyz+Pxz)).astype('float32') 
+					
+					self.write_to_specific_ts(vx, vy, vz, vortx, vorty, vortz, Ptot[:, :, :, 0], xx, yy, zz, dx_data, dx_data, dx_data, xres, yres, zres, ts, maxTs, minTs, skipTs)
+		
+	@on_trait_change('remove_Pressure') # Deprecated
 	def remove_Pressure_fired(self):
 		
 		self.nts = 1 # Nothing is deleted but controls for Pressure is taken away

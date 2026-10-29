@@ -25,12 +25,12 @@ buttonw, buttonh = allUIOptions.button()
 buttonLongw, buttonLongh = allUIOptions.buttonLong()
 determine_width = allUIOptions.determineWidth
 
-reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and (allAnalysisOptions == "Reconnection" or allAnalysisOptions == "Q-tensor")'
-reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and altBBox == True and (allAnalysisOptions == "Q-tensor" or allAnalysisOptions == "Reconnection")'
+reconnectionQtensorVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and (allAnalysisOptions_feature == "Reconnection" or allAnalysisOptions_feature == "Q-tensor")'
+reconnectionQtensorBBoxVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and altBBox == True and (allAnalysisOptions_feature == "Q-tensor" or allAnalysisOptions_feature == "Reconnection")'
 pdfVisibility = 'allModeOptions == "Analysis" and allAnalysisOptions == "Plots"'
-trackingAll = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking" and totalNumberOfExtractedStructures == 0'
-trackingBasicOverlap = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking" and not totalNumberOfExtractedStructures == 0'
-trackingBasicOverlapStructure = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking" and chooseStructure > 0 and not totalNumberOfExtractedStructures == 0'
+trackingAll = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Structure Tracking" and totalNumberOfExtractedStructures == 0'
+trackingBasicOverlap = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Structure Tracking" and not totalNumberOfExtractedStructures == 0'
+trackingBasicOverlapStructure = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Structure Tracking" and chooseStructure > 0 and not totalNumberOfExtractedStructures == 0'
 
 isoUIelements = (Group(
 
@@ -47,10 +47,18 @@ isoUIelements = (Group(
 	Item("allAnalysisOptions", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis"')
 	),
 	
+	Group(
+	Item("allAnalysisOptions_feature", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale"')
+	),
+	
+	Group(
+	Item("allAnalysisOptions_multiscale", show_label = False, style = 'custom', visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Multi-scale"')
+	),
+	
 	# Structure tracking
 	
 	Group(
-	Item("allStructureTrackingOptions", show_label = False, style = 'custom', format_func=lambda x: x, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Structure Tracking"')
+	Item("allStructureTrackingOptions", show_label = False, style = 'custom', format_func=lambda x: x, visible_when = 'allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Structure Tracking"')
 	),
 	HGroup(
 	Item("structureExtractionTxt", style = 'readonly', show_label = False, height = smallh, width = determine_width("Run structure extraction first"), visible_when = trackingAll),
@@ -91,7 +99,7 @@ isoUIelements = (Group(
 	# Q-tensor
 	
 	HGroup(
-	Item("calculateQtensor", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Q-tensor"', height = buttonh, width = buttonw),
+	Item("calculateQtensor", show_label = False, visible_when='allModeOptions == "Analysis" and allAnalysisOptions == "Single-scale" and allAnalysisOptions_feature == "Q-tensor"', height = buttonh, width = buttonw),
 	),
 	
 	# Duchon Robert
@@ -101,7 +109,7 @@ isoUIelements = (Group(
 	# PDF
 	
 	HGroup(
-	Item("generatePDFTxt", style = 'readonly', show_label = False, height = tinyh, width = determine_width("Generate PDF plot:"), visible_when = pdfVisibility),
+	Item("generatePDFTxt", style = 'readonly', show_label = False, height = tinyh, width = determine_width("Probability Density Function:"), visible_when = pdfVisibility),
 	Item("generatePDF", show_label = False, visible_when = pdfVisibility),
 	),
 	
